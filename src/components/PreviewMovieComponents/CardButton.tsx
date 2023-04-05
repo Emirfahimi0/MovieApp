@@ -1,40 +1,31 @@
 import { FlatList, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { useState } from "react";
-import { GenreCard } from "./genreCard";
+import { GenreCard } from "./GenreCard";
 import { ItemSeparator } from "./ItemSeparator";
 import COLORS from "../../constants/Color";
+import { listGenres } from "../../screens";
 
-export const CardButtons = ({ genres }) => {
+export const CardButtons = ({ genres }: listGenres) => {
+  //console.log("Card Button", genres);
   const [active, setActive] = useState<number>(0);
   return (
-    <View>
+    <View style={{ marginLeft: 8 }}>
       <FlatList
         data={genres}
         horizontal
-        keyExtractor={(item) => item}
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={() => <ItemSeparator width={20} />}
         ListFooterComponent={() => <ItemSeparator width={20} />}
         renderItem={({ item, index }) => {
           const handleActive = () => {
-            if (item === "All") {
-              console.log(item);
-              setActive(index);
-            } else if (item === "Action") {
-              setActive(index);
-            } else if (item === "Comedy") {
-              setActive(index);
-            } else if (item === "Romance") {
-              setActive(index);
-            } else if (item === "Horror") {
-              setActive(index);
-            } else setActive(index);
+            //console.log(item.name);
+            setActive(index);
           };
           const selectedButton: ViewStyle = active === index ? { backgroundColor: COLORS.ACTIVE } : { backgroundColor: COLORS.WHITE };
-          const selectedText: TextStyle = active === index ? { color: COLORS.WHITE } : { color: COLORS.BLACK };
+          const selectedText: TextStyle = active === index ? { color: COLORS.WHITE, fontWeight: "800" } : { color: COLORS.BLACK };
 
           return (
-            <TouchableOpacity onPress={handleActive}>
+            <TouchableOpacity onPress={handleActive} key={index}>
               <GenreCard genre={item} isSelected={selectedButton} selectedText={selectedText} />
             </TouchableOpacity>
           );

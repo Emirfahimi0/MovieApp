@@ -1,7 +1,10 @@
 export type RootStackParamList = {
-   SplashScreen:undefined,
+   DetailScreen: {item}
+   HomeScreen:undefined
    LoginScreen:undefined
-   MovieScreen:undefined
+   SplashScreen:undefined,
+   WatchListScreen:undefined
 
   };
   
+export declare type RootNavigationProp = import("@react-navigation/native-stack").NativeStackNavigationProp<RootStackParamList>;

@@ -1,88 +1,91 @@
-import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { Fragment, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ButtonContainerRating, CardContainer, InputContainer, Logincontainer } from "../constants/Styling/ContainerStyling";
+import { InputLogin, genreText, loginText } from "../constants/Styling/TextStyleComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Color from "../constants/Color";
+import Icon from "react-native-vector-icons/Ionicons";
+import React, { useContext, useState } from "react";
+import { GlobalContext } from "../Context/GlobalState";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const { getUser } = useContext(GlobalContext);
   //const [loading, setLoading] = useState(false);
-  const [errortext, setErrortext] = useState("");
-  const dispatch = useDispatch();
+  //const [errortext, setErrortext] = useState("");
+  //const dispatch = useDispatch();
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = async () => {
     if (userEmail === "") {
       Alert.alert("User email is empty");
-    } else if (userPassword === "") {
+    }
+    if (userPassword === "") {
       Alert.alert("User password is empty");
     } else {
+      let checkLogin = getUser(userEmail, userPassword);
+      if (await checkLogin) {
+        navigation.navigate("HomeScreen");
+      }
       //To do
     }
   };
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.appContainer}>
-            <TextInput style={styles.Input} placeholder="Email" value={userEmail} onChangeText={(text) => setUserEmail(text)} />
-          </View>
-          <View style={styles.appContainer}>
-            <TextInput style={styles.Input} placeholder="password" value={userPassword} onChangeText={(text) => setUserPassword(text)} />
-          </View>
+    <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: Color.BLUE }}>
+      <View style={Logincontainer}>
+        <View style={{ alignItems: "center" }}>
+          <Text style={[genreText, { color: Color.WHITE }]}>WELCOME!</Text>
+          <Text style={[genreText, { color: Color.WHITE }]}>BACK!</Text>
         </View>
-        <TouchableOpacity style={styles.btn} onPress={() => onSubmitHandler()}>
-          <Text style={styles.txt_input}>Login</Text>
-        </TouchableOpacity>
-      </ScrollView>
+
+        <View style={InputContainer}>
+          <TextInput style={InputLogin} placeholder="Email" value={userEmail} onChangeText={(text) => setUserEmail(text)} />
+        </View>
+        <View style={InputContainer}>
+          <TextInput
+            style={InputLogin}
+            placeholder="password"
+            value={userPassword}
+            onChangeText={(text) => setUserPassword(text)}
+            textContentType={"password"}
+            secureTextEntry={true}
+          />
+        </View>
+
+        <View style={[ButtonContainerRating, { marginRight: 40, padding: 20 }]}>
+          <TouchableOpacity style={[CardContainer, { backgroundColor: Color.HEART }]} onPress={() => onSubmitHandler()}>
+            <Text style={loginText}>Login</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View
+          style={{
+            justifyContent: "space-around",
+            flexDirection: "row",
+            flex: 1,
+            alignContent: "space-between",
+          }}>
+          <TouchableOpacity>
+            <View style={[CardContainer, { borderRadius: 15, width: 100 }]}>
+              <Icon name="md-logo-instagram" size={20} color="purple" />
+              <Text style={[genreText, { marginLeft: 5 }]}>Instagram</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={[CardContainer, { borderRadius: 15, width: 100 }]}>
+              <Icon name="md-logo-twitter" size={20} color="#1DBAFA" />
+              <Text style={[genreText, { marginLeft: 5 }]}>Twitter</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={[CardContainer, { borderRadius: 15, width: 100 }]}>
+              <Icon name="md-logo-facebook" size={20} color="blue" />
+              <Text style={[genreText, { marginLeft: 5 }]}>Facebook</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
 
 export default LoginScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    paddingTop: 100,
-    margin: 20,
-  },
-
-  btn: {
-    padding: 20,
-    margin: 50,
-    width: "73%",
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 3,
-    borderRadius: 20,
-    backgroundColor: "#0A1537",
-  },
-  textStyle: {
-    padding: 5,
-    fontSize: 12,
-    fontWeight: "bold",
-    textAlign: "left",
-    color: "#EEF3F0",
-  },
-  txt_input: {
-    color: "white",
-    fontSize: 15,
-    fontWeight: "600",
-  },
-
-  appContainer: {
-    padding: 10,
-    margin: 10,
-    flexDirection: "row",
-    backgroundColor: "#DCDFDE",
-    borderRadius: 10,
-    alignItems: "center",
-  },
-
-  Input: {
-    fontSize: 15,
-    width: "100%",
-  },
-});
