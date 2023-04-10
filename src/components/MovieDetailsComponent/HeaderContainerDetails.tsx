@@ -11,7 +11,6 @@ import {
 } from "../../constants/Styling/ContainerStyling";
 import { additionalDetailText, genreText, MovieDetailTitle, RatingText } from "../../constants/Styling/TextStyleComponent";
 import { ButtonModalRating } from "./ButtonModalRating";
-import { MovieType } from "../../screens";
 import { ItemSeparator } from "../PreviewMovieComponents/ItemSeparator";
 import Color from "../../constants/Color";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -20,7 +19,7 @@ import { toWatchList } from "../../services/APIservices";
 import { Genre, MovieDetail, accountState, watchListResponse } from "../../services";
 
 interface IHeaderContainerDetails {
-  movie: MovieDetail | MovieType;
+  movie: MovieDetail;
   onPress: () => void;
   state: accountState;
 }
@@ -52,11 +51,11 @@ export const HeaderContainerDetails = ({ movie, onPress, state }: IHeaderContain
 
   return (
     <Fragment>
-      <View style={{ backgroundColor: Color.BLACK, paddingBottom: 15 }}>
+      <View style={{ backgroundColor: Color.BLACK }}>
         <View style={ImagePosterDetail}>
           <ScrollView>{<Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}${movie.poster_path}` }} />}</ScrollView>
         </View>
-        <View style={[MovieDetailContainer, { paddingTop: 40 }]}>
+        <View style={[MovieDetailContainer, { paddingTop: setHeight(3) }]}>
           <TouchableOpacity onPress={onPress}>
             <Icon name="arrow-back-circle" size={35} color={Color.EXTRA_LIGHT_GRAY} />
           </TouchableOpacity>
@@ -75,8 +74,8 @@ export const HeaderContainerDetails = ({ movie, onPress, state }: IHeaderContain
           <Text style={additionalDetailText}>Genre: </Text>
           {movie.genres.map((value: Genre, index: number) => (
             <Text key={index} style={additionalDetailText}>
-              {"|"}
-              {value.name} |
+              {" | "}
+              {value.name}
             </Text>
           ))}
         </View>

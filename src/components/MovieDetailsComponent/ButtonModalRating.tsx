@@ -21,7 +21,6 @@ export const ButtonModalRating = ({ movie, state }: IbuttonModalRating) => {
   const [postRatingDisable, setPostRatingDisable] = useState<boolean | object>(state.rated);
   const [ratingVal, setRatingVal] = useState<number>(0);
   const review: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const [active, setActive] = useState<number>(0);
   if (typeof postRatingDisable === "object") {
     setPostRatingDisable(true);
     setRatingVal(state.rated.value);

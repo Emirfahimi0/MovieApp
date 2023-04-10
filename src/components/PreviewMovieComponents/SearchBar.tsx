@@ -1,6 +1,6 @@
 import { TextInput, View, ViewStyle } from "react-native";
 import React from "react";
-import { SearchBar } from "../../constants/Styling/ContainerStyling";
+import { SearchBar, setHeight } from "../../constants/Styling/ContainerStyling";
 import Icon from "react-native-vector-icons/Ionicons";
 import Color from "../../constants/Color";
 import { InputSearcbBar } from "../../constants/Styling/TextStyleComponent";
@@ -22,6 +22,6 @@ const styleView: ViewStyle = {
   paddingBottom: 10,
   paddingLeft: 10,
   paddingRight: 10,
-  paddingTop: 50,
+  paddingTop: setHeight(7),
   width: "100%",
 };

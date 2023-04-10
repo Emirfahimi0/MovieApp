@@ -4,7 +4,7 @@ import { MovieCard } from "../components/PreviewMovieComponents/MovieCard";
 import { SearchBarComponent } from "../components/PreviewMovieComponents/SearchBar";
 import Icon from "react-native-vector-icons/Entypo";
 import { MovieDetail, Review, accountState } from "../services";
-import { fetchAccountState, fetchMovieDetails, fetchReviewMovieDetails } from "../components/PreviewMovieComponents/handlingFunction";
+import { fetchAccountState, fetchMovieDetails, fetchReviewMovieDetails } from "../components/appRender/handlingFunction";
 
 const WatchListScreen = ({ navigation, route }) => {
   //Access watchlist movie with context

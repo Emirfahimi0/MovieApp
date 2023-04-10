@@ -9,17 +9,16 @@ import { Genre, MovieType } from "../../screens";
 import { RootNavigationProp } from "types";
 import { getGenreMovie } from "../../services/APIservices";
 import { MovieDetail, Review, accountState } from "../../services";
-import { fetchAccountState, fetchMovieDetails, fetchReviewMovieDetails, fetchWatchlist } from "./handlingFunction";
+import { fetchAccountState, fetchMovieDetails, fetchReviewMovieDetails, fetchWatchlist } from "../appRender/handlingFunction";
 
 interface IMovieComponent {
   searchInput: string;
   navigation: RootNavigationProp;
   Movie: MovieType[];
+  Genres: Genre[];
 }
 
-export const MovieComponent = ({ searchInput, navigation, Movie }: IMovieComponent) => {
-  const [genre, setGenre] = useState<Genre[]>([]);
-
+export const MovieComponent = ({ searchInput, navigation, Movie, Genres }: IMovieComponent) => {
   const handleMovieDetail = async (id: number) => {
     const resDetail: MovieDetail = await fetchMovieDetails(id);
     const resReview: Review[] = await fetchReviewMovieDetails(id);
@@ -42,15 +41,6 @@ export const MovieComponent = ({ searchInput, navigation, Movie }: IMovieCompone
     }
   };
 
-  useEffect(() => {
-    const fetchGenre = async (): Promise<void> => {
-      const responseGenre: Genre[] = await getGenreMovie();
-      setGenre(responseGenre);
-    };
-
-    fetchGenre().catch(console.error);
-  }, []);
-
   return (
     <ScrollView contentContainerStyle={container}>
       <View style={headerContainer}>
@@ -63,7 +53,7 @@ export const MovieComponent = ({ searchInput, navigation, Movie }: IMovieCompone
           </View>
         </TouchableWithoutFeedback>
       </View>
-      <CardButtons Genre={genre} />
+      <CardButtons Genre={Genres} />
       <MovieCard handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} navigation={navigation} />
     </ScrollView>
   );

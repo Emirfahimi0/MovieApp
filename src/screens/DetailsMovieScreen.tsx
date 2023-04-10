@@ -1,5 +1,5 @@
 import { HeaderContainerDetails } from "../components/MovieDetailsComponent/HeaderContainerDetails";
-import { ScrollView, ViewStyle } from "react-native";
+import { ScrollView, ViewStyle, Dimensions, View } from "react-native";
 import { SubContainerDetail } from "../components/MovieDetailsComponent/SubContainerDetail";
 import React, { useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -13,8 +13,8 @@ interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParam
 
 const DetailsMovieScreen = ({ route, navigation }: IDetailsMovieScreenProps) => {
   const { item, review, state } = route.params;
-  console.log("Movie from params to detail screen --- ", item);
   const overview = item.overview;
+  const { height } = Dimensions.get("screen");
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -29,7 +29,7 @@ const DetailsMovieScreen = ({ route, navigation }: IDetailsMovieScreenProps) => 
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ minHeight: height, backgroundColor: Color.BLACK }}>
       <HeaderContainerDetails movie={item} onPress={handleGoBack} state={state} />
       <SubContainerDetail overview={overview} overViewStyle={overViewTextArea} />
       <ReviewContainerDetails review={review} overViewStyle={overViewTextArea} />

@@ -3,7 +3,7 @@ const h = 40
 const w = 145
 export const setHeight = (h:number) => (height/100) *h
 export const setWidth = (w:number) => (width / 100) * w;
-import { Dimensions, ImageStyle, ViewStyle } from "react-native";
+import { Dimensions, ImageStyle, StatusBar, ViewStyle } from "react-native";
 import Color from "../Color";
 
 //Login
@@ -102,9 +102,9 @@ export const  ImagePosterDetail:ViewStyle = {
 }
 export const posterImage:ImageStyle = {
 
-  height:setHeight(h),
+  height:Dimensions.get('window').height ,
   resizeMode:"cover",
-  width:setWidth(w),
+  width: setWidth(w),
 }
 
 export const HeaderDetail:ViewStyle = {

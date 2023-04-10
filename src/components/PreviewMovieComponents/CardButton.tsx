@@ -1,5 +1,5 @@
 import { FlatList, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { GenreCard } from "./GenreCard";
 import { ItemSeparator } from "./ItemSeparator";
 import COLORS from "../../constants/Color";
