@@ -1,8 +1,8 @@
 const { height, width } = Dimensions.get("screen");
 const h = 40
 const w = 145
-export const setHeight = (h) => (height/100) *h
-export const setWidth = (w) => (width / 100) * w;
+export const setHeight = (h:number) => (height/100) *h
+export const setWidth = (w:number) => (width / 100) * w;
 import { Dimensions, ImageStyle, ViewStyle } from "react-native";
 import Color from "../Color";
 
@@ -93,8 +93,6 @@ export const movieContainer:ViewStyle= {
 export const  ImagePosterDetail:ViewStyle = {
 
   alignItems:"center",
-  borderBottomLeftRadius:500,
-  borderBottomRightRadius:500,
   elevation: 8,
   height:setHeight(h),
   left: setWidth((100-145)/2),
@@ -104,7 +102,7 @@ export const  ImagePosterDetail:ViewStyle = {
 }
 export const posterImage:ImageStyle = {
 
-  height:setHeight(120),
+  height:setHeight(h),
   resizeMode:"cover",
   width:setWidth(w),
 }
@@ -119,7 +117,7 @@ export const HeaderDetail:ViewStyle = {
   paddingHorizontal:20,
   position:"absolute",
   right:0,
-  top:50,
+  top:30,
 }
 
 export const MovieDetailContainer:ViewStyle = {
