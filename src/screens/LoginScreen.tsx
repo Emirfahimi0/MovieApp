@@ -10,7 +10,7 @@ import { GlobalContext } from "../Context/GlobalState";
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const { getUser } = useContext(GlobalContext);
+  const { getUser, getGenre } = useContext(GlobalContext);
   //const [loading, setLoading] = useState(false);
   //const [errortext, setErrortext] = useState("");
   //const dispatch = useDispatch();
