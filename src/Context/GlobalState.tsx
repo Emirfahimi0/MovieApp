@@ -1,34 +1,19 @@
-import {
-  ADD_MOVIE_WATCHLIST,
-  LOAD_MOVIE,
-  REMOVE_MOVIE_WATCH_LIST,
-  REMOVE_STORED_RATING,
-  STORE_RATING,
-  SUCCESS_LOAD_MOVIE,
-} from "../constants/MovieConstant";
-import { IMovie, MovieType } from "../screens";
-import { USER_SUCCESS } from "../constants/userConstant";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import MovieReducer from "../reducer/MovieReducer";
-import React, { createContext, useEffect, useReducer, useState } from "react";
-import axios from "axios";
-import { ENDPOINTS } from "../constants/utilities";
-import { createRequestToken, getTrendingmovie, sessionWithLogIn } from "../services/APIservices";
+import { Genre, MovieType, user, userRating } from "../screens";
+import React, { createContext, useState } from "react";
+import { sessionWithLogIn } from "../services/APIservices";
+import { MovieDetail } from "src/services";
 
 export interface IInitialState {
-  WatchList: MovieType[];
-  Watched: IMovie[];
-  Movie: IMovie[];
+  Movie: MovieType[];
   User: user;
-  Genre: listGenres[];
+  Genre: Genre[];
   Rating: userRating[];
   getUser: (username: string, password: string) => Promise<boolean>;
-  addMovieWatchList: (movie: MovieType) => void;
-  getMovies: (movie: MovieType) => void;
-  getGenre: (movie: MovieType) => void;
+  addTrendingMovies: (movie: MovieType[]) => void;
+  getGenre: (genre: Genre[]) => Promise<void>;
   deleteStoreRating: (id: user) => void;
-  removeMovieWatchList: (id: number) => void;
-  storeRating: (rating: number, user: user, movie: MovieType) => void;
+
+  storeRating: (rating: number, user: user, movie: MovieType | MovieDetail) => void;
 }
 
 const existingUser = [
@@ -37,33 +22,18 @@ const existingUser = [
   { username: "dry", password: "5", id: "A94r78" },
 ];
 
-export type userRating = {
-  user: user;
-  Movie: MovieType;
-  ratingVal: number;
-};
-
-export type user = {
-  id: string;
-  password: string;
-  username: string;
-};
-
 interface GlobalProviderProps {
   // define props here
   children?: any;
 }
 
-export type listGenres = string;
-
 const initialState: IInitialState = {
-  addMovieWatchList: () => {},
-  getGenre: () => {},
-  getMovies: () => {},
+  getGenre: () => Promise.resolve(),
+  addTrendingMovies: () => {},
   getUser: () => Promise.resolve(false),
-  removeMovieWatchList: () => {},
   storeRating: () => {},
   deleteStoreRating: () => {},
+
   Genre: [],
   Movie: [],
   Rating: [],
@@ -72,8 +42,6 @@ const initialState: IInitialState = {
     password: "",
     username: "",
   },
-  Watched: [],
-  WatchList: [],
 };
 
 // create Context
@@ -81,45 +49,7 @@ export const GlobalContext = createContext<IInitialState>(initialState);
 
 // provider components. build components
 export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProps>) => {
-  const [state, dispatch] = useReducer(MovieReducer, initialState);
-
-  useEffect(() => {
-    // declare the data fetching function
-    const fetchAsyncStorage = async () => {
-      if (state.WatchList && state.Watched) {
-        await AsyncStorage.setItem("watchlist", JSON.stringify(state.WatchList));
-        await AsyncStorage.setItem("watched", JSON.stringify(state.Watched));
-      }
-    };
-    // call the function
-    fetchAsyncStorage()
-      // make sure to catch any error
-      .catch(console.error);
-  }, [state]);
-
-  //actions
-  const getMovies = async (movie) => {
-    const data = getTrendingmovie();
-    console.log("get Movies console log data..", data);
-    dispatch({ type: SUCCESS_LOAD_MOVIE, payload: data });
-  };
-
-  const addMovieWatchList = (movie: MovieType) => {
-    // to do api post
-    if (movie) {
-      const token = createRequestToken();
-
-      // postWatchlist(movie);
-      dispatch({ type: ADD_MOVIE_WATCHLIST, payload: movie });
-    }
-  };
-  const removeMovieWatchList = (id) => {
-    const currentWatchList = state.WatchList.filter((movie: MovieType) => movie.id != id);
-
-    dispatch({ type: REMOVE_MOVIE_WATCH_LIST, payload: currentWatchList });
-    // console.log()
-    console.log("currentWatchList", currentWatchList);
-  };
+  const [state, setState] = useState(initialState);
 
   // Get local user store
   const getUser = async (username: string, password: string): Promise<boolean> => {
@@ -127,75 +57,60 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     let tryLogInUser = await sessionWithLogIn(username, password);
     if (tryLogInUser === true) {
       const currentUser = existingUser.find((item) => item.username === username.toLowerCase() && item.password === password);
-      console.log("current user", currentUser);
       if (currentUser) {
-        dispatch({ type: USER_SUCCESS, payload: currentUser });
-        console.log("currentUser", currentUser);
+        setState({ ...state, User: { ...currentUser } });
         isLoggedIn = true;
       }
     } else {
       isLoggedIn = false;
     }
-    console.log("isLoggedIn", isLoggedIn);
     return isLoggedIn;
   };
 
   // To submit rating
-  const storeRating = (rating: number, user: user, movie: MovieType) => {
+  const storeRating = (rating: number, user: user, movie: MovieType | MovieDetail) => {
     let storeRate = {
       Movie: movie,
       user: { ...user },
       ratingVal: rating,
     };
-    dispatch({ type: STORE_RATING, payload: storeRate });
+    setState({ ...state, Rating: [storeRate, ...state.Rating] });
   };
 
   // To delete submitted rating
   const deleteStoreRating = (currentUser: user) => {
-    const currentRatingStore = state.Rating.filter((user: user) => user.id == currentUser.id);
-    console.log("Delete Store Rating", currentRatingStore);
-    dispatch({ type: REMOVE_STORED_RATING, payload: currentRatingStore });
+    const updatedRating = [...state.Rating];
+    const currentRatingStore = updatedRating.filter((user: userRating) => user.user.id !== currentUser.id);
+    console.log("Deleted current rating by user ", currentRatingStore);
+    setState({ ...state, Rating: currentRatingStore });
   };
 
-  // To fix !!
-  const storeMovie = async () => {
-    const [Movie, setMovie] = useState<MovieType>();
-    useEffect(() => {
-      const fetchMovieData = async () => {
-        await axios.get(ENDPOINTS.GET_TRENDING, { responseType: "json" }).then(function (response) {
-          //console.log("Movie ", response.data.results);
-          setMovie(response.data.results);
-          return response.data.results;
-        });
-      };
-
-      console.log("Store Movie context", storeMovie);
-      // call the function
-      fetchMovieData().catch(console.error);
-    }, [Movie]);
-    dispatch({ type: LOAD_MOVIE, payload: Movie });
+  // To do
+  const addTrendingMovies = async (movies: MovieType[]): Promise<void> => {
+    setState({ ...state, Movie: movies });
+    // call the function
   };
 
-  const getGenre = (genre) => {};
+  const getGenre = async (genre: Genre[]): Promise<void> => {
+    setState({ ...state, Genre: genre });
+  };
 
   return (
     <GlobalContext.Provider
       value={{
-        addMovieWatchList,
-        removeMovieWatchList,
         deleteStoreRating,
         storeRating,
-        getMovies,
+        addTrendingMovies,
         getGenre,
         getUser,
         Movie: state.Movie,
         Rating: state.Rating,
         Genre: state.Genre,
         User: state.User,
-        Watched: state.Watched,
-        WatchList: state.WatchList,
       }}>
       {props.children}
     </GlobalContext.Provider>
   );
 };
+
+// cammel cases
