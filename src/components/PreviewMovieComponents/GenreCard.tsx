@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import { CardContainer } from "../../constants/Styling/ContainerStyling";
 import { genreText } from "../../constants/Styling/TextStyleComponent";
 import { Genre } from "../../screens";
+import { listGenres } from "../../Context/GlobalState";
 
 // get dimension of current screen
 

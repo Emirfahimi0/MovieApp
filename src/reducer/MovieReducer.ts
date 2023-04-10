@@ -1,6 +1,7 @@
 import { USER_SUCCESS } from "../constants/userConstant";
 import { IInitialState } from "../Context/GlobalState";
 import { ADD_MOVIE_WATCHLIST,
+         LOAD_GENRE,
          LOAD_MOVIE,
          REMOVE_MOVIE_WATCH_LIST,
          REMOVE_STORED_RATING,
@@ -12,8 +13,13 @@ export default (state:IInitialState,action) => {
         case LOAD_MOVIE: 
         return {
             ...state,
-            Movie:[action.payload]
+            Movie: [action.payload
         }
+        case LOAD_GENRE:
+            return{
+                ...state,
+                Genre: action.payload
+            }
         case ADD_MOVIE_WATCHLIST:
             return {
                 ...state,
@@ -37,9 +43,8 @@ export default (state:IInitialState,action) => {
             case REMOVE_STORED_RATING: {
                 return {
                     ...state,
-                    Rating: [...action.payload,...state.Rating]
-                    
-                }
+                    Rating: action.payload
+                 }
             }
         default:
             return state;

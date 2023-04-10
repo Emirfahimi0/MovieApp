@@ -5,43 +5,70 @@ import React, { useContext, useState } from "react";
 import Color from "../../constants/Color";
 import Icon from "react-native-vector-icons/Ionicons";
 import { GlobalContext } from "../../Context/GlobalState";
+import { deleteRatingbyId, postRatingbyId } from "../../services/APIservices";
+import { InterfaceRating, MovieDetail, accountState } from "../../services";
+import { MovieType, userRating } from "../../screens";
 
-export const ButtonModalRating = ({ movie }) => {
+export interface IbuttonModalRating {
+  movie: MovieType | MovieDetail;
+  state: accountState;
+}
+export const ButtonModalRating = ({ movie, state }: IbuttonModalRating) => {
+  const { storeRating, User, deleteStoreRating, Rating } = useContext(GlobalContext);
+  let checkRating: userRating | undefined = Rating.find((rate) => rate.user.id === User.id);
+  const disabledRating = checkRating ? true : false;
   const [visible, setVisible] = useState<boolean>(false);
-  const [postRatingDisable, setPostRatingDisable] = useState<boolean>(false);
-  const [rating, setRating] = useState<number>(1);
+  const [postRatingDisable, setPostRatingDisable] = useState<boolean | object>(state.rated);
+  const [ratingVal, setRatingVal] = useState<number>(0);
   const review: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const { storeRating, User, deleteStoreRating } = useContext(GlobalContext);
+  const [active, setActive] = useState<number>(0);
+  if (typeof postRatingDisable === "object") {
+    setPostRatingDisable(true);
+    setRatingVal(state.rated.value);
+  }
+
   const OpenModal = () => {
     console.log("Modal Opened");
     setVisible(true);
   };
-  const HandlePostRating = () => {
+
+  const HandlePostRating = async () => {
     console.log("Submit Rating");
-    console.log(rating);
-    storeRating(rating, User, movie);
+    const resRating: InterfaceRating = await postRatingbyId(movie.id, ratingVal);
+    console.log(resRating);
+    if (resRating.success === true) {
+      Alert.alert("Rating posted succesfully.");
+      storeRating(ratingVal, User, movie);
+      setPostRatingDisable(false);
+      setVisible(visible);
+    } else Alert.alert("unknown error occured");
     setPostRatingDisable(true);
     setVisible(!visible);
-
-    console.log("Visibility", visible);
 
     //To do --> Open modal and submit rating
   };
 
   const HandleSetRating = (value: number) => {
-    setRating(value);
+    setPostRatingDisable(false);
+    setRatingVal(value);
     console.log("rating is equal to -->", value);
 
     //To do
   };
 
-  const HandleDeleteRating = () => {
-    console.log("Delete Rating");
-    setVisible(false);
-    setRating(0);
-    console.log(User);
-    deleteStoreRating(User);
-    setPostRatingDisable(false);
+  const HandleDeleteRating = async () => {
+    console.log("rating", ratingVal);
+    const resRating: InterfaceRating = await deleteRatingbyId(movie.id, ratingVal);
+    console.log(resRating);
+    if (resRating.status_code === 13) {
+      Alert.alert("rating deleted successfully.");
+      setVisible(false);
+      setRatingVal(0);
+      console.log("Delete Rating");
+      console.log(User);
+      setPostRatingDisable(false);
+      deleteStoreRating(User);
+    }
   };
 
   return (
@@ -60,8 +87,8 @@ export const ButtonModalRating = ({ movie }) => {
             <View style={styles.RatingStarIcon}>
               {review.map((item, index) => {
                 return (
-                  <TouchableOpacity disabled={postRatingDisable === true ? true : false} key={index} onPress={() => HandleSetRating(item)}>
-                    {rating < item ? (
+                  <TouchableOpacity disabled={postRatingDisable ? true : false} key={index} onPress={() => HandleSetRating(item)}>
+                    {ratingVal < item ? (
                       <Icon name="heart-outline" size={20} color="black" />
                     ) : (
                       <Icon name="heart-sharp" size={25} color="red" />
@@ -82,7 +109,7 @@ export const ButtonModalRating = ({ movie }) => {
       </Modal>
       <TouchableOpacity onPress={() => OpenModal()}>
         <View style={[CardContainer, { backgroundColor: Color.ACTIVE, width: 150 }]}>
-          <Text style={[genreText, { color: Color.WHITE }]}>{!postRatingDisable ? "Post Rating" : "Review Rating"}</Text>
+          <Text style={[genreText, { color: Color.WHITE }]}>{postRatingDisable ? "Review Rating" : "Post Rating"}</Text>
         </View>
       </TouchableOpacity>
     </View>

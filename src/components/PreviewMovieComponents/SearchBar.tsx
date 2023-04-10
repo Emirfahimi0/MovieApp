@@ -22,6 +22,6 @@ const styleView: ViewStyle = {
   paddingBottom: 10,
   paddingLeft: 10,
   paddingRight: 10,
-  paddingTop: 23,
+  paddingTop: 50,
   width: "100%",
 };

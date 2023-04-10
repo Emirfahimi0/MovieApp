@@ -1,5 +1,5 @@
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import React, { Fragment, useContext, useState } from "react";
+import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import React, { Fragment, useState } from "react";
 import {
   CardContainer,
   ContainerRow,
@@ -11,50 +11,54 @@ import {
 } from "../../constants/Styling/ContainerStyling";
 import { additionalDetailText, genreText, MovieDetailTitle, RatingText } from "../../constants/Styling/TextStyleComponent";
 import { ButtonModalRating } from "./ButtonModalRating";
-import { GlobalContext } from "../../Context/GlobalState";
 import { MovieType } from "../../screens";
 import { ItemSeparator } from "../PreviewMovieComponents/ItemSeparator";
 import Color from "../../constants/Color";
 import Icon from "react-native-vector-icons/Ionicons";
 import { POSTER_BASE_URL } from "../../constants/utilities";
+import { toWatchList } from "../../services/APIservices";
+import { Genre, MovieDetail, accountState, watchListResponse } from "../../services";
 
 interface IHeaderContainerDetails {
-  movie: MovieType;
+  movie: MovieDetail | MovieType;
   onPress: () => void;
+  state: accountState;
 }
 
-export const HeaderContainerDetails = ({ movie, onPress }: IHeaderContainerDetails) => {
+export const HeaderContainerDetails = ({ movie, onPress, state }: IHeaderContainerDetails) => {
   // const { movie } = movie;
+  const [existWatchlist, setExistWatchlist] = useState<boolean>(state.watchlist);
+  // const [genre,setGenre] = useState(movie.)
+  // if (existWatchlist) {
 
-  const { addMovieWatchList, WatchList, removeMovieWatchList } = useContext(GlobalContext);
-  const [CheckButton, setCheckButton] = useState<boolean>(false);
+  // }
+  const handleWatchList = async () => {
+    let checkWatchlist = state.watchlist;
+    console.log(`This item is , ${checkWatchlist} in watchlist`);
+    if (checkWatchlist === true) {
+      Alert.alert("the item already added in the watchlist");
 
-  // return  stored movie   To do condition
-  let StoredMovie = WatchList.find((object) => object.id === movie.id);
-
-  //If found in a watchlist then true else false (use in touchableOpacity component)
-  const WatchListDisabled = StoredMovie ? true : false;
-
-  const handleWatchList = () => {
-    if (!WatchListDisabled) {
-      addMovieWatchList(movie);
-      setCheckButton(WatchListDisabled);
+      // checkWatchlist = await toWatchList(movie, !state.watchlist);
     } else {
-      removeMovieWatchList(movie.id);
+      const data: watchListResponse = await toWatchList(movie, !state.watchlist);
+      setExistWatchlist(data.success);
+      if (data.success === true) {
+        Alert.alert("Item added to the watchlist");
+        console.log("isSuccess", data.status_message);
+        setExistWatchlist(data.success);
+      }
     }
   };
 
   return (
     <Fragment>
-      <View style={{ backgroundColor: Color.BLACK, paddingBottom: 30 }}>
+      <View style={{ backgroundColor: Color.BLACK, paddingBottom: 15 }}>
         <View style={ImagePosterDetail}>
-          <ScrollView>
-            <Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}${movie.poster_path}` }} />
-          </ScrollView>
+          <ScrollView>{<Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}${movie.poster_path}` }} />}</ScrollView>
         </View>
-        <View style={[MovieDetailContainer, { paddingTop: 20 }]}>
+        <View style={[MovieDetailContainer, { paddingTop: 40 }]}>
           <TouchableOpacity onPress={onPress}>
-            <Icon name="arrow-back-circle" iconStyle={{ paddingTop: 20 }} size={35} color={Color.EXTRA_LIGHT_GRAY} />
+            <Icon name="arrow-back-circle" size={35} color={Color.EXTRA_LIGHT_GRAY} />
           </TouchableOpacity>
         </View>
         <ItemSeparator height={setHeight(35)} />
@@ -68,31 +72,38 @@ export const HeaderContainerDetails = ({ movie, onPress }: IHeaderContainerDetai
           </View>
         </View>
         <View style={smallDetail}>
-          <Text style={additionalDetailText}>Genre:{movie.genre_ids}</Text>
+          <Text style={additionalDetailText}>Genre: </Text>
+          {movie.genres.map((value: Genre, index: number) => (
+            <Text key={index} style={additionalDetailText}>
+              {"|"}
+              {value.name} |
+            </Text>
+          ))}
         </View>
         <View style={smallDetail}>
           <Text style={additionalDetailText}>Original Language: {movie.original_language}</Text>
         </View>
-        <TouchableOpacity onPress={() => handleWatchList()}>
-          <View style={smallDetail}>
+        <View style={smallDetail}>
+          <TouchableOpacity disabled={existWatchlist} onPress={() => handleWatchList()}>
             <View
               style={[
-                !WatchListDisabled
+                !existWatchlist
                   ? { ...CardContainer, ...{ width: 150 } }
                   : { ...CardContainer, ...{ backgroundColor: "#2C2C2C", width: 150 } },
               ]}>
               <Icon
-                name={WatchListDisabled ? "bookmark" : "bookmark-outline"}
+                name={existWatchlist ? "bookmark" : "bookmark-outline"}
                 size={18}
-                color={WatchListDisabled ? Color.EXTRA_LIGHT_GRAY : Color.BLACK}
+                color={existWatchlist ? Color.EXTRA_LIGHT_GRAY : Color.BLACK}
               />
-              <Text style={!WatchListDisabled ? genreText : { ...genreText, color: Color.WHITE }}>
-                {WatchListDisabled ? "Added in Watchlist" : "Add to Watchlist"}
+              <Text style={!existWatchlist ? genreText : { ...genreText, color: Color.WHITE }}>
+                {existWatchlist ? "Added in Watchlist" : "Add to Watchlist"}
               </Text>
             </View>
-            <ButtonModalRating movie={movie} />
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+
+          <ButtonModalRating movie={movie} state={state} />
+        </View>
       </View>
     </Fragment>
   );

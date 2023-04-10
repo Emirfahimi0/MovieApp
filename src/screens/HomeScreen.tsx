@@ -3,7 +3,8 @@ import { MovieComponent } from "../components/PreviewMovieComponents/MovieCompon
 import { SearchBarComponent } from "../components/PreviewMovieComponents/SearchBar";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../Context/GlobalState";
-import { Genre, MovieType } from ".";
+import { MovieType } from ".";
+import { ScrollView } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
   // always use set function
@@ -24,7 +25,9 @@ const HomeScreen = ({ navigation }) => {
   return (
     <Fragment>
       <SearchBarComponent searchText={searchText} setSearchText={setSearchText} />
-      <MovieComponent searchInput={searchText} navigation={navigation} Movie={Movie} />
+      <ScrollView>
+        <MovieComponent searchInput={searchText} navigation={navigation} Movie={Movie} />
+      </ScrollView>
     </Fragment>
   );
 };

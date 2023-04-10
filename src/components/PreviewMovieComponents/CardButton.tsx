@@ -1,24 +1,21 @@
 import { FlatList, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GenreCard } from "./GenreCard";
 import { ItemSeparator } from "./ItemSeparator";
 import COLORS from "../../constants/Color";
-import { listGenres } from "../../screens";
 
-export const CardButtons = ({ genres }: listGenres) => {
-  //console.log("Card Button", genres);
+export const CardButtons = ({ Genre }) => {
   const [active, setActive] = useState<number>(0);
   return (
     <View style={{ marginLeft: 8 }}>
       <FlatList
-        data={genres}
+        data={Genre}
         horizontal
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={() => <ItemSeparator width={20} />}
         ListFooterComponent={() => <ItemSeparator width={20} />}
         renderItem={({ item, index }) => {
           const handleActive = () => {
-            //console.log(item.name);
             setActive(index);
           };
           const selectedButton: ViewStyle = active === index ? { backgroundColor: COLORS.ACTIVE } : { backgroundColor: COLORS.WHITE };

@@ -1,21 +1,25 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { ImagePoster, ListPreviewMovie, movieContainer } from "../../constants/Styling/ContainerStyling";
-import { IMovie, MovieType } from "../../screens";
+import { MovieType } from "../../screens";
 import { ItemSeparator } from "./ItemSeparator";
 import { RootNavigationProp } from "types";
 import { subDetail, subHeader, subTitle } from "../../constants/Styling/TextStyleComponent";
 import { Text, View, FlatList, TouchableOpacity, Image, ViewStyle } from "react-native";
-import { POSTER_BASE_URL, TMDB_API_KEY, TMDB_BASE_URL } from "../../constants/utilities";
-import axios from "axios";
+import { POSTER_BASE_URL } from "../../constants/utilities";
 import Icon from "react-native-vector-icons/Ionicons";
 
 interface IMovieCardProps {
   keyword: string;
-  MovieData: MovieType;
+  MovieData: MovieType[];
   navigation: RootNavigationProp;
+  handleMovieDetail: (id: number) => void;
 }
 
-export const MovieCard = ({ MovieData, keyword, navigation }: IMovieCardProps) => {
+export const MovieCard = ({ MovieData, keyword, navigation, handleMovieDetail }: IMovieCardProps) => {
+  const handleShowDetailScreen = (id: number) => {
+    handleMovieDetail(id);
+  };
+
   return (
     <Fragment>
       <FlatList
@@ -26,7 +30,7 @@ export const MovieCard = ({ MovieData, keyword, navigation }: IMovieCardProps) =
         ItemSeparatorComponent={() => <ItemSeparator width={20} />}
         ListFooterComponent={() => <ItemSeparator width={20} />}
         renderItem={({ item, index }) => (
-          <TouchableOpacity key={`${item.title}-${index}`} onPress={() => navigation.navigate("DetailScreen", { item: item })}>
+          <TouchableOpacity key={`${item.title}-${index}`} onPress={() => handleShowDetailScreen(item.id)}>
             {item.title?.toLowerCase().includes(keyword.toLowerCase()) ? (
               <View style={ListPreviewMovie}>
                 <View style={movieContainer}>
