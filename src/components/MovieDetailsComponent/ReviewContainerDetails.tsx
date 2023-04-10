@@ -19,7 +19,8 @@ const ReviewContainerDetails = ({ review, overViewStyle }) => {
 
               const handleShowMore = () => {
                 setActive(index);
-                setShowmore(showMore);
+                setShowmore(!showMore);
+                // test
               };
 
               const showText = showMore ? review.content.split(" ").slice(0, 15).join(" ") : review.content;
