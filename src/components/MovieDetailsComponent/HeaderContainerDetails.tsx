@@ -15,7 +15,7 @@ import { ItemSeparator } from "../PreviewMovieComponents/ItemSeparator";
 import Color from "../../constants/Color";
 import Icon from "react-native-vector-icons/Ionicons";
 import { POSTER_BASE_URL } from "../../constants/utilities";
-import { toWatchList } from "../../services/APIservices";
+import { toWatchList } from "../../services/apiServices";
 import { Genre, MovieDetail, accountState, watchListResponse } from "../../services";
 
 interface IHeaderContainerDetails {
@@ -25,26 +25,24 @@ interface IHeaderContainerDetails {
 }
 
 export const HeaderContainerDetails = ({ movie, onPress, state }: IHeaderContainerDetails) => {
-  // const { movie } = movie;
   const [existWatchlist, setExistWatchlist] = useState<boolean>(state.watchlist);
-  // const [genre,setGenre] = useState(movie.)
-  // if (existWatchlist) {
 
-  // }
   const handleWatchList = async () => {
-    let checkWatchlist = state.watchlist;
-    console.log(`This item is , ${checkWatchlist} in watchlist`);
-    if (checkWatchlist === true) {
-      Alert.alert("the item already added in the watchlist");
-
-      // checkWatchlist = await toWatchList(movie, !state.watchlist);
+    // Get the data first and complementary based on what user click
+    const data: watchListResponse = await toWatchList(movie, !existWatchlist);
+    // if response of the data return success.
+    if (data.success) {
+      setExistWatchlist(!existWatchlist);
+      if (existWatchlist) {
+        Alert.alert("Item remove from watchlist");
+      } else {
+        Alert.alert("Item added to watchlist!");
+      }
     } else {
-      const data: watchListResponse = await toWatchList(movie, !state.watchlist);
-      setExistWatchlist(data.success);
-      if (data.success === true) {
-        Alert.alert("Item added to the watchlist");
-        console.log("isSuccess", data.status_message);
-        setExistWatchlist(data.success);
+      if (existWatchlist) {
+        Alert.alert("unable to add item in the watchlist.");
+      } else {
+        Alert.alert("unable to remove item in the watchlist.");
       }
     }
   };
@@ -83,19 +81,19 @@ export const HeaderContainerDetails = ({ movie, onPress, state }: IHeaderContain
           <Text style={additionalDetailText}>Original Language: {movie.original_language}</Text>
         </View>
         <View style={smallDetail}>
-          <TouchableOpacity disabled={existWatchlist} onPress={() => handleWatchList()}>
+          <TouchableOpacity onPress={() => handleWatchList()}>
             <View
               style={[
-                !existWatchlist
-                  ? { ...CardContainer, ...{ width: 150 } }
-                  : { ...CardContainer, ...{ backgroundColor: "#2C2C2C", width: 150 } },
+                existWatchlist
+                  ? { ...CardContainer, ...{ backgroundColor: "#2C2C2C", width: 150 } }
+                  : { ...CardContainer, ...{ width: 150 } },
               ]}>
               <Icon
                 name={existWatchlist ? "bookmark" : "bookmark-outline"}
                 size={18}
                 color={existWatchlist ? Color.EXTRA_LIGHT_GRAY : Color.BLACK}
               />
-              <Text style={!existWatchlist ? genreText : { ...genreText, color: Color.WHITE }}>
+              <Text style={existWatchlist ? { ...genreText, color: Color.WHITE } : genreText}>
                 {existWatchlist ? "Added in Watchlist" : "Add to Watchlist"}
               </Text>
             </View>
