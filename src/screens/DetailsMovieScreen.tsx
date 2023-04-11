@@ -3,7 +3,7 @@ import { ScrollView, ViewStyle, Dimensions, View } from "react-native";
 import { SubContainerDetail } from "../components/MovieDetailsComponent/SubContainerDetail";
 import React, { useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types";
+import { RootStackParamList } from "types/global";
 import Color from "../constants/Color";
 import ReviewContainerDetails from "../components/MovieDetailsComponent/ReviewContainerDetails";
 

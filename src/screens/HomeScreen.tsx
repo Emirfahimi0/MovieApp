@@ -1,4 +1,4 @@
-import { getGenreMovie, getTrendingmovie } from "../services/APIservices";
+import { getGenreMovie, getTrendingmovie } from "../services/apiServices";
 import { MovieComponent } from "../components/PreviewMovieComponents/MovieComponent";
 import { SearchBarComponent } from "../components/PreviewMovieComponents/SearchBar";
 import React, { Fragment, useContext, useEffect, useState } from "react";
@@ -9,17 +9,20 @@ import { ScrollView } from "react-native";
 const HomeScreen = ({ navigation }) => {
   // always use set function
   const [searchText, setSearchText] = useState<string>("");
-  const { Movie, addTrendingMovies } = useContext(GlobalContext);
+  const { Movie, addTrendingMovies, getGenre } = useContext(GlobalContext);
   const [genre, setGenre] = useState<Genre[]>([]);
 
-  const fetchGenre = async (): Promise<void> => {
-    const responseGenre: Genre[] = await getGenreMovie();
-    setGenre(responseGenre);
-  };
   useEffect(() => {
     const getMovies = async (): Promise<void> => {
       const responseApiMovie: MovieType[] = await getTrendingmovie();
       addTrendingMovies(responseApiMovie);
+    };
+    const fetchGenre = async (): Promise<void> => {
+      const responseGenre: Genre[] = await getGenreMovie();
+      console.log("from context", responseGenre);
+
+      setGenre(responseGenre);
+      getGenre(responseGenre);
     };
     fetchGenre().catch(console.error);
     getMovies().catch(console.error);
