@@ -1,19 +1,22 @@
 import { Genre, MovieType, user, userRating } from "../screens";
 import React, { createContext, useState } from "react";
-import { sessionWithLogIn } from "../services/APIservices";
-import { MovieDetail } from "src/services";
+import { sessionWithLogIn } from "../services/apiServices";
+import { IMovieDetail, IReview, IaccountState } from "../services";
 
 export interface IInitialState {
   Movie: MovieType[];
   User: user;
+  Details: IMovieDetail;
   Genre: Genre[];
+  Review: IReview[];
+  accountState: IaccountState;
   Rating: userRating[];
   getUser: (username: string, password: string) => Promise<boolean>;
   addTrendingMovies: (movie: MovieType[]) => void;
   getGenre: (genre: Genre[]) => Promise<void>;
   deleteStoreRating: (id: user) => void;
-
-  storeRating: (rating: number, user: user, movie: MovieType | MovieDetail) => void;
+  storeIntoState: (detail: IMovieDetail, review: IReview[], accstate: IaccountState) => Promise<void>;
+  storeRating: (rating: number, user: user, movie: MovieType | IMovieDetail) => void;
 }
 
 const existingUser = [
@@ -33,7 +36,10 @@ const initialState: IInitialState = {
   getUser: () => Promise.resolve(false),
   storeRating: () => {},
   deleteStoreRating: () => {},
-
+  storeIntoState: () => Promise.resolve(),
+  Details: {},
+  accountState: {},
+  Review: [],
   Genre: [],
   Movie: [],
   Rating: [],
@@ -52,23 +58,25 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   const [state, setState] = useState(initialState);
 
   // Get local user store
-  const getUser = async (username: string, password: string): Promise<boolean> => {
-    let isLoggedIn: boolean = false;
+  const getUser = async (username: string, password: string): Promise<string> => {
+    let message = "";
     let tryLogInUser = await sessionWithLogIn(username, password);
-    if (tryLogInUser === true) {
+    if (tryLogInUser) {
       const currentUser = existingUser.find((item) => item.username === username.toLowerCase() && item.password === password);
       if (currentUser) {
         setState({ ...state, User: { ...currentUser } });
-        isLoggedIn = true;
+        message = "success!";
+      } else {
+        message = "no user found";
       }
     } else {
-      isLoggedIn = false;
+      message = "error uknown";
     }
-    return isLoggedIn;
+    return message;
   };
 
   // To submit rating
-  const storeRating = (rating: number, user: user, movie: MovieType | MovieDetail) => {
+  const storeRating = (rating: number, user: user, movie: MovieType | IMovieDetail) => {
     let storeRate = {
       Movie: movie,
       user: { ...user },
@@ -94,7 +102,16 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   const getGenre = async (genre: Genre[]): Promise<void> => {
     setState({ ...state, Genre: genre });
   };
-
+  const storeIntoState = async (resDetail: IMovieDetail, resReview: IReview[], resFetchState: IaccountState): Promise<void> => {
+    // will run all at the same time,
+    // ---> method 1st
+    // const newState = { ...state };
+    // newState.Details = { ...resDetail };
+    // newState.Review = { ...resReview };
+    // newState.accountState = { ...resFetchState };
+    // setState(newState);
+    setState({ ...state, accountState: resFetchState, Details: resDetail, Review: resReview });
+  };
   return (
     <GlobalContext.Provider
       value={{
@@ -103,6 +120,10 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
         addTrendingMovies,
         getGenre,
         getUser,
+        storeIntoState,
+        Review: state.Review,
+        accountState: state.accountState,
+        Details: state.Details,
         Movie: state.Movie,
         Rating: state.Rating,
         Genre: state.Genre,
@@ -112,5 +133,3 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     </GlobalContext.Provider>
   );
 };
-
-// cammel cases

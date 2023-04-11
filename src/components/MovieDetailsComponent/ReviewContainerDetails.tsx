@@ -1,6 +1,6 @@
 import { ScrollView, Text, View } from "react-native";
 import React, { Fragment, useState } from "react";
-import { ContainerRow, OverviewContainer } from "../../constants/Styling/ContainerStyling";
+import { OverviewContainer, container } from "../../constants/Styling/ContainerStyling";
 import { OverviewDetailsText, genreText, subHeader } from "../../constants/Styling/TextStyleComponent";
 import Color from "../../constants/Color";
 import { Result } from "../../services";
@@ -30,7 +30,7 @@ const ReviewContainerDetails = ({ review, overViewStyle }) => {
                   <View style={{ ...overViewStyle, backgroundColor: Color.BLUE }}>
                     <Text style={{ ...subHeader, color: Color.PURPLE }}>{review.author}</Text>
                     <Text style={{ ...OverviewDetailsText, color: Color.WHITE }}>{showText}</Text>
-                    <Text style={[genreText, { textAlign: "right", color: Color.WHITE, fontWeight: "800" }]} onPress={handleShowMore}>
+                    <Text style={{ ...genreText, textAlign: "right", color: Color.WHITE, fontWeight: "800" }} onPress={handleShowMore}>
                       {showMore ? "Show more" : "Show less"}
                     </Text>
                   </View>
@@ -40,8 +40,8 @@ const ReviewContainerDetails = ({ review, overViewStyle }) => {
           </ScrollView>
         </Fragment>
       ) : (
-        <View style={{ alignItems: "flex-end" }}>
-          <Text style={{ ...genreText, color: Color.WHITE }}>no review</Text>
+        <View style={{ ...container, marginLeft: 15, backgroundColor: Color.BLACK }}>
+          <Text style={{ ...subHeader, color: Color.WHITE }}>no review...</Text>
         </View>
       )}
     </View>

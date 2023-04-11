@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import { ImagePoster, ListPreviewMovie, movieContainer } from "../../constants/Styling/ContainerStyling";
 import { MovieType } from "../../screens";
 import { ItemSeparator } from "./ItemSeparator";
-import { RootNavigationProp } from "types";
 import { subDetail, subHeader, subTitle } from "../../constants/Styling/TextStyleComponent";
 import { Text, View, FlatList, TouchableOpacity, Image, ViewStyle } from "react-native";
 import { POSTER_BASE_URL } from "../../constants/utilities";
@@ -11,11 +10,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 interface IMovieCardProps {
   keyword: string;
   MovieData: MovieType[];
-  navigation: RootNavigationProp;
   handleMovieDetail: (id: number) => void;
 }
 
-export const MovieCard = ({ MovieData, keyword, navigation, handleMovieDetail }: IMovieCardProps) => {
+export const MovieCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProps) => {
   const handleShowDetailScreen = (id: number) => {
     handleMovieDetail(id);
   };

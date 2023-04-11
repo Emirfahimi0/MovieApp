@@ -42,8 +42,8 @@ const LoginScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: Color.BLUE }}>
       <View style={Logincontainer}>
         <View style={{ alignItems: "center" }}>
-          <Text style={[genreText, { color: Color.WHITE }]}>WELCOME!</Text>
-          <Text style={[genreText, { color: Color.WHITE }]}>BACK!</Text>
+          <Text style={{ ...genreText, color: Color.WHITE }}>WELCOME!</Text>
+          <Text style={{ ...genreText, color: Color.WHITE }}>BACK!</Text>
         </View>
 
         <View style={InputContainer}>
@@ -76,13 +76,13 @@ const LoginScreen = ({ navigation }) => {
           <TouchableOpacity>
             <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
               <Icon name="md-logo-instagram" size={20} color="purple" />
-              <Text style={[genreText, { marginLeft: 5 }]}>Instagram</Text>
+              <Text style={{ ...genreText, marginLeft: 5 }}>Instagram</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
               <Icon name="md-logo-twitter" size={20} color="#1DBAFA" />
-              <Text style={[genreText, { marginLeft: 5 }]}>Twitter</Text>
+              <Text style={{ ...genreText, marginLeft: 5 }}>Twitter</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>

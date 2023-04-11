@@ -16,12 +16,12 @@ import Color from "../../constants/Color";
 import Icon from "react-native-vector-icons/Ionicons";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { toWatchList } from "../../services/apiServices";
-import { Genre, MovieDetail, accountState, watchListResponse } from "../../services";
+import { Genre, IMovieDetail, IaccountState, IwatchListResponse } from "../../services";
 
 interface IHeaderContainerDetails {
-  movie: MovieDetail;
+  movie: IMovieDetail;
   onPress: () => void;
-  state: accountState;
+  state: IaccountState;
 }
 
 export const HeaderContainerDetails = ({ movie, onPress, state }: IHeaderContainerDetails) => {
@@ -29,7 +29,7 @@ export const HeaderContainerDetails = ({ movie, onPress, state }: IHeaderContain
 
   const handleWatchList = async () => {
     // Get the data first and complementary based on what user click
-    const data: watchListResponse = await toWatchList(movie, !existWatchlist);
+    const data: IwatchListResponse = await toWatchList(movie, !existWatchlist);
     // if response of the data return success.
     if (data.success) {
       setExistWatchlist(!existWatchlist);
