@@ -4,17 +4,26 @@ import { InputLogin, genreText, loginText } from "../constants/Styling/TextStyle
 import { SafeAreaView } from "react-native-safe-area-context";
 import Color from "../constants/Color";
 import Icon from "react-native-vector-icons/Ionicons";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../Context/GlobalState";
+import { Genre } from ".";
+import { getGenreMovie } from "../services/apiServices";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const { getUser, getGenre } = useContext(GlobalContext);
-  //const [loading, setLoading] = useState(false);
-  //const [errortext, setErrortext] = useState("");
-  //const dispatch = useDispatch();
 
+  useEffect(() => {
+    const fetchGenre = async (): Promise<void> => {
+      const responseGenre: Genre[] = await getGenreMovie();
+      // set state for in context provider for Genre []
+      getGenre(responseGenre);
+    };
+    fetchGenre().catch(console.error);
+  }, []);
+
+  // arrow function for handling validation and submission of the formdata
   const onSubmitHandler = async () => {
     if (userEmail === "") {
       Alert.alert("User email is empty");
@@ -51,8 +60,8 @@ const LoginScreen = ({ navigation }) => {
           />
         </View>
 
-        <View style={[ButtonContainerRating, { marginRight: 40, padding: 20 }]}>
-          <TouchableOpacity style={[CardContainer, { backgroundColor: Color.HEART }]} onPress={() => onSubmitHandler()}>
+        <View style={{ ...ButtonContainerRating, marginRight: 40, padding: 20 }}>
+          <TouchableOpacity style={{ ...CardContainer, backgroundColor: Color.HEART }} onPress={() => onSubmitHandler()}>
             <Text style={loginText}>Login</Text>
           </TouchableOpacity>
         </View>
@@ -65,21 +74,21 @@ const LoginScreen = ({ navigation }) => {
             alignContent: "space-between",
           }}>
           <TouchableOpacity>
-            <View style={[CardContainer, { borderRadius: 15, width: 100 }]}>
+            <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
               <Icon name="md-logo-instagram" size={20} color="purple" />
               <Text style={[genreText, { marginLeft: 5 }]}>Instagram</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <View style={[CardContainer, { borderRadius: 15, width: 100 }]}>
+            <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
               <Icon name="md-logo-twitter" size={20} color="#1DBAFA" />
               <Text style={[genreText, { marginLeft: 5 }]}>Twitter</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <View style={[CardContainer, { borderRadius: 15, width: 100 }]}>
+            <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
               <Icon name="md-logo-facebook" size={20} color="blue" />
-              <Text style={[genreText, { marginLeft: 5 }]}>Facebook</Text>
+              <Text style={{ ...genreText, marginLeft: 5 }}>Facebook</Text>
             </View>
           </TouchableOpacity>
         </View>
