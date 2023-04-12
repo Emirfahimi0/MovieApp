@@ -1,19 +1,20 @@
-import { HeaderContainerDetails } from "../components/MovieDetailsComponent/HeaderContainerDetails";
-import { ScrollView, ViewStyle, Dimensions, View } from "react-native";
-import { SubContainerDetail } from "../components/MovieDetailsComponent/SubContainerDetail";
-import React, { useEffect } from "react";
+import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
+import { ScrollView, ViewStyle, Dimensions } from "react-native";
+import { SubContainerDetail } from "../components/detail-component/SubContainerDetail";
+import React, { useContext, useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
-import Color from "../constants/Color";
-import ReviewContainerDetails from "../components/MovieDetailsComponent/ReviewContainerDetails";
+import Color from "../constants/color";
+import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
+import { GlobalContext } from "../context/GlobalState";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {
   // other props ...
 }
 
-const DetailsMovieScreen = ({ route, navigation }: IDetailsMovieScreenProps) => {
-  const { item, review, state } = route.params;
-  const overview = item.overview;
+const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
+  const { detailsState, accountState, reviewState } = useContext(GlobalContext);
+  const [checkingState, setCheckingState] = useState(accountState);
   const { height } = Dimensions.get("screen");
 
   const handleGoBack = () => {
@@ -21,18 +22,17 @@ const DetailsMovieScreen = ({ route, navigation }: IDetailsMovieScreenProps) => 
   };
   const overViewTextArea: ViewStyle = {
     backgroundColor: Color.TRANSPARENT,
-    borderRadius: 20,
+    borderRadius: 24,
     padding: 10,
   };
-  useEffect(() => {
-    // fetchMovieDetails().catch(console.error);
-  }, []);
+
+  useEffect(() => {}, [accountState]);
 
   return (
     <ScrollView contentContainerStyle={{ minHeight: height, backgroundColor: Color.BLACK }}>
-      <HeaderContainerDetails movie={item} onPress={handleGoBack} state={state} />
-      <SubContainerDetail overview={overview} overViewStyle={overViewTextArea} />
-      <ReviewContainerDetails review={review} overViewStyle={overViewTextArea} />
+      <HeaderContainerDetails movie={detailsState} onPress={handleGoBack} state={accountState} />
+      <SubContainerDetail overview={detailsState.overview} overViewStyle={overViewTextArea} />
+      <ReviewContainerDetails review={reviewState} overViewStyle={overViewTextArea} />
     </ScrollView>
   );
 };

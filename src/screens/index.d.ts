@@ -1,6 +1,6 @@
-import { MovieDetail } from "src/services";
+import { IMovieDetail } from "../services";
 
-export interface IMovie {
+declare interface IMovie {
     page?:number
     results: MovieType[];
     total_pages:number;
@@ -8,7 +8,7 @@ export interface IMovie {
    
 }
 
-export interface listGenres {
+declare interface listGenres {
     genres: Genre[];
   }
   
@@ -20,7 +20,7 @@ export interface listGenres {
 
 
 
-export type MovieType = {
+declare type MovieType = {
     adult?:             boolean;
     backdrop_path:      string;
     first_air_date ?:   string;
@@ -42,25 +42,25 @@ export type MovieType = {
   original_title ?:     string;
 }
 
-export enum MediaType {
+declare enum MediaType {
   Movie = "movie",
   tv="tv"
 }
 
-export enum OriginalLanguage {
+declare enum OriginalLanguage {
   En = "en",
   Es = "es",
   Ja = "ja",
   Ko = "ko",
 }
 
-export interface userRating  {
-  Movie: MovieType|MovieDetail;
+declare interface userRating  {
+  Movie: MovieType| IMovieDetail;
   ratingVal: number;
   user: user;
 }
 
-export type user = {
+declare type user = {
   id: string;
   password: string;
   username: string;

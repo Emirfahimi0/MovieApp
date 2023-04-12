@@ -1,6 +1,6 @@
 import { MovieType } from "../../screens";
 import { IMovieDetail, IReview, IaccountState } from "src/services";
-import { GetMovieWatchlist, getAccountState, getMovieDetailsAPI, getReviewById } from "../../services/apiServices";
+import { GetMovieWatchlist, getAccountState, getMovieDetailsAPI, getReviewById } from "../../services/api-services";
 
 export const fetchMovieDetails = async (id: number) => {
     const data: IMovieDetail = await getMovieDetailsAPI(id);

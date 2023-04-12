@@ -1,21 +1,21 @@
 import { Genre, MovieType, user, userRating } from "../screens";
 import React, { createContext, useState } from "react";
-import { sessionWithLogIn } from "../services/apiServices";
-import { IMovieDetail, IReview, IaccountState } from "../services";
+import { sessionWithLogIn } from "../services/api-services";
+import { IMovieDetail, IReview, IAccountState } from "../services";
 
 export interface IInitialState {
-  Movie: MovieType[];
-  User: user;
-  Details: IMovieDetail;
-  Genre: Genre[];
-  Review: IReview[];
-  accountState: IaccountState;
-  Rating: userRating[];
-  getUser: (username: string, password: string) => Promise<boolean>;
+  movieState: MovieType[];
+  userState: user;
+  detailsState: IMovieDetail;
+  genreState: Genre[];
+  reviewState: IReview[];
+  accountState: IAccountState;
+  ratingState: userRating[];
+  getUser: (username: string, password: string) => Promise<string>;
   addTrendingMovies: (movie: MovieType[]) => void;
   getGenre: (genre: Genre[]) => Promise<void>;
   deleteStoreRating: (id: user) => void;
-  storeIntoState: (detail: IMovieDetail, review: IReview[], accstate: IaccountState) => Promise<void>;
+  storeIntoState: (detail: IMovieDetail, review: IReview[], accstate: IAccountState) => Promise<void>;
   storeRating: (rating: number, user: user, movie: MovieType | IMovieDetail) => void;
 }
 
@@ -27,23 +27,23 @@ const existingUser = [
 
 interface GlobalProviderProps {
   // define props here
-  children?: any;
+  children?: JSX.Element[];
 }
 
 const initialState: IInitialState = {
   getGenre: () => Promise.resolve(),
   addTrendingMovies: () => {},
-  getUser: () => Promise.resolve(false),
+  getUser: () => Promise.resolve(""),
   storeRating: () => {},
   deleteStoreRating: () => {},
   storeIntoState: () => Promise.resolve(),
-  Details: {},
+  detailsState: {},
   accountState: {},
-  Review: [],
-  Genre: [],
-  Movie: [],
-  Rating: [],
-  User: {
+  reviewState: [],
+  genreState: [],
+  movieState: [],
+  ratingState: [],
+  user: {
     id: "",
     password: "",
     username: "",
@@ -64,7 +64,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     if (tryLogInUser) {
       const currentUser = existingUser.find((item) => item.username === username.toLowerCase() && item.password === password);
       if (currentUser) {
-        setState({ ...state, User: { ...currentUser } });
+        setState({ ...state, userState: { ...currentUser } });
         message = "success!";
       } else {
         message = "no user found";
@@ -82,27 +82,27 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
       user: { ...user },
       ratingVal: rating,
     };
-    setState({ ...state, Rating: [storeRate, ...state.Rating] });
+    setState({ ...state, ratingState: [storeRate, ...state.ratingState] });
   };
 
   // To delete submitted rating
   const deleteStoreRating = (currentUser: user) => {
-    const updatedRating = [...state.Rating];
+    const updatedRating = [...state.ratingState];
     const currentRatingStore = updatedRating.filter((user: userRating) => user.user.id !== currentUser.id);
     console.log("Deleted current rating by user ", currentRatingStore);
-    setState({ ...state, Rating: currentRatingStore });
+    setState({ ...state, ratingState: currentRatingStore });
   };
 
   // To do
   const addTrendingMovies = async (movies: MovieType[]): Promise<void> => {
-    setState({ ...state, Movie: movies });
+    setState({ ...state, movieState: movies });
     // call the function
   };
 
   const getGenre = async (genre: Genre[]): Promise<void> => {
-    setState({ ...state, Genre: genre });
+    setState({ ...state, genreState: genre });
   };
-  const storeIntoState = async (resDetail: IMovieDetail, resReview: IReview[], resFetchState: IaccountState): Promise<void> => {
+  const storeIntoState = async (resDetail: IMovieDetail, resReview: IReview[], resFetchState: IAccountState): Promise<void> => {
     // will run all at the same time,
     // ---> method 1st
     // const newState = { ...state };
@@ -110,7 +110,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     // newState.Review = { ...resReview };
     // newState.accountState = { ...resFetchState };
     // setState(newState);
-    setState({ ...state, accountState: resFetchState, Details: resDetail, Review: resReview });
+    setState({ ...state, accountState: resFetchState, detailsState: resDetail, reviewState: resReview });
   };
   return (
     <GlobalContext.Provider
@@ -121,13 +121,13 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
         getGenre,
         getUser,
         storeIntoState,
-        Review: state.Review,
+        reviewState: state.reviewState,
         accountState: state.accountState,
-        Details: state.Details,
-        Movie: state.Movie,
-        Rating: state.Rating,
-        Genre: state.Genre,
-        User: state.User,
+        detailsState: state.detailsState,
+        movieState: state.movieState,
+        ratingState: state.ratingState,
+        genreState: state.genreState,
+        userState: state.userState,
       }}>
       {props.children}
     </GlobalContext.Provider>

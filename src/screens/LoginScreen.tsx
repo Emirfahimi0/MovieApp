@@ -1,13 +1,13 @@
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { ButtonContainerRating, CardContainer, InputContainer, Logincontainer } from "../constants/Styling/ContainerStyling";
-import { InputLogin, genreText, loginText } from "../constants/Styling/TextStyleComponent";
+import { ButtonContainerRating, CardContainer, InputContainer, Logincontainer } from "../constants/style-component/ContainerStyling";
+import { InputLogin, genreText, loginText } from "../constants/style-component/TextStyleComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Color from "../constants/Color";
+import Color from "../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../Context/GlobalState";
+import { GlobalContext } from "../context/GlobalState";
 import { Genre } from ".";
-import { getGenreMovie } from "../services/apiServices";
+import { getGenreMovie } from "../services/api-services";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
@@ -31,9 +31,11 @@ const LoginScreen = ({ navigation }) => {
     if (userPassword === "") {
       Alert.alert("User password is empty");
     } else {
-      let checkLogin = getUser(userEmail, userPassword);
-      if (await checkLogin) {
+      let checkLogin = await getUser(userEmail, userPassword);
+      if (checkLogin) {
         navigation.navigate("HomeScreen");
+      } else {
+        Alert.alert("Invalid credential or unknown error occurs");
       }
       //To do
     }

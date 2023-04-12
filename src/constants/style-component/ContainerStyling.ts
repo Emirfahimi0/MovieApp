@@ -4,7 +4,7 @@ const w = 145
 export const setHeight = (h:number) => (height/100) *h
 export const setWidth = (w:number) => (width / 100) * w;
 import { Dimensions, ImageStyle, StatusBar, ViewStyle } from "react-native";
-import Color from "../Color";
+import Color from "../color";
 
 //Login
 export const Logincontainer: ViewStyle = {

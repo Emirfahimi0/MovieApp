@@ -1,15 +1,17 @@
-import { getTrendingmovie } from "../services/apiServices";
-import { MovieComponent } from "../components/PreviewMovieComponents/MovieComponent";
-import { SearchBarComponent } from "../components/PreviewMovieComponents/SearchBar";
+import { getTrendingmovie } from "../services/api-services";
+import { MovieComponent } from "../components/movie-component/MovieComponent";
+import { SearchBarComponent } from "../components/movie-component/SearchBar";
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../Context/GlobalState";
+import { GlobalContext } from "../context/GlobalState";
 import { MovieType } from ".";
-import { ScrollView } from "react-native";
+import { Alert, ScrollView } from "react-native";
+import { fetchAccountState, fetchMovieDetails, fetchReviewMovieDetails, fetchWatchlist } from "../components/features/handlingFunction";
+import { IMovieDetail, IReview, IAccountState } from "../services";
 
 const HomeScreen = ({ navigation }) => {
   // always use set function
   const [searchText, setSearchText] = useState<string>("");
-  const { Movie, addTrendingMovies, Genre } = useContext(GlobalContext);
+  const { movieState, addTrendingMovies, genreState, storeIntoState } = useContext(GlobalContext);
 
   useEffect(() => {
     const getMovies = async (): Promise<void> => {
@@ -21,11 +23,41 @@ const HomeScreen = ({ navigation }) => {
     getMovies().catch(console.error);
   }, []);
 
+  const handleMovieDetail = async (id: number) => {
+    const resDetail: IMovieDetail = await fetchMovieDetails(id);
+    const resReview: IReview[] = await fetchReviewMovieDetails(id);
+    const resFetchState: IAccountState = await fetchAccountState(id);
+
+    if (resDetail !== undefined && resReview !== undefined && resFetchState !== undefined) {
+      await storeIntoState(resDetail, resReview, resFetchState);
+
+      //From api service
+      navigation.push("DetailScreen");
+    } else {
+      // alert {you dont have data }
+      Alert.alert("getDetails undefined.");
+    }
+  };
+
+  const handleWatchList = async () => {
+    const resWatchlist = await fetchWatchlist();
+    if (resWatchlist !== undefined) {
+      navigation.navigate("WatchListScreen", { resWatchlist: resWatchlist });
+    }
+  };
+
   return (
     <Fragment>
       <SearchBarComponent searchText={searchText} setSearchText={setSearchText} />
       <ScrollView>
-        <MovieComponent searchInput={searchText} navigation={navigation} Movie={Movie} Genres={Genre} />
+        <MovieComponent
+          handleMovieDetail={handleMovieDetail}
+          handleWatchList={handleWatchList}
+          searchInput={searchText}
+          navigation={navigation}
+          Movie={movieState}
+          Genres={genreState}
+        />
       </ScrollView>
     </Fragment>
   );

@@ -1,6 +1,6 @@
 import { TextStyle } from "react-native/types";
-import Color from "../Color";
-import Font from "../Font";
+import Color from "../color";
+import Font from "../font";
 
 
 // --> Genre Card Text

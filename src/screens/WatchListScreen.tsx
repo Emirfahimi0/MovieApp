@@ -1,10 +1,10 @@
 import { Alert, TouchableWithoutFeedback, View } from "react-native";
 import React, { useState, Fragment } from "react";
-import { MovieCard } from "../components/PreviewMovieComponents/MovieCard";
-import { SearchBarComponent } from "../components/PreviewMovieComponents/SearchBar";
+import { MovieCard } from "../components/movie-component/MovieCard";
+import { SearchBarComponent } from "../components/movie-component/SearchBar";
 import Icon from "react-native-vector-icons/Entypo";
-import { MovieDetail, Review, accountState } from "../services";
-import { fetchAccountState, fetchMovieDetails, fetchReviewMovieDetails } from "../components/appRender/handlingFunction";
+import { IMovieDetail, IReview, IAccountState } from "../services";
+import { fetchAccountState, fetchMovieDetails, fetchReviewMovieDetails } from "../components/features/handlingFunction";
 
 const WatchListScreen = ({ navigation, route }) => {
   //Access watchlist movie with context
@@ -13,11 +13,9 @@ const WatchListScreen = ({ navigation, route }) => {
   // To do
 
   const handleMovieDetail = async (id: number) => {
-    const resDetail: MovieDetail = await fetchMovieDetails(id);
-    const resReview: Review[] = await fetchReviewMovieDetails(id);
-    const resFetchState: accountState = await fetchAccountState(id);
-
-    console.log("response from account state", resFetchState);
+    const resDetail: IMovieDetail = await fetchMovieDetails(id);
+    const resReview: IReview[] = await fetchReviewMovieDetails(id);
+    const resFetchState: IAccountState = await fetchAccountState(id);
 
     if (resDetail !== undefined && resReview !== undefined && resFetchState !== undefined) {
       //From APISERVICE
@@ -36,7 +34,7 @@ const WatchListScreen = ({ navigation, route }) => {
         </TouchableWithoutFeedback>
 
         {/* {WatchList ? ():()} */}
-        <MovieCard handleMovieDetail={handleMovieDetail} MovieData={resWatchlist} keyword={input} navigation={navigation} />
+        <MovieCard handleMovieDetail={handleMovieDetail} MovieData={resWatchlist} keyword={input} />
       </View>
     </Fragment>
   );
