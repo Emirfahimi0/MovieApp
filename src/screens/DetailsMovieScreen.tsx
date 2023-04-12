@@ -2,21 +2,19 @@ import { HeaderContainerDetails } from "../components/detail-component/HeaderCon
 import { ScrollView, ViewStyle, Dimensions } from "react-native";
 import { SubContainerDetail } from "../components/detail-component/SubContainerDetail";
 import React, { useContext, useEffect, useState } from "react";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types/global";
 import Color from "../constants/color";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
 import { GlobalContext } from "../context/GlobalState";
+import { IAccountState } from "../services";
+import { fetchAccountState } from "../components/features/handlingFunction";
+import Loader from "../components/features/Loader";
 
-interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {
-  // other props ...
-}
+// interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
-const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
-  const { detailsState, accountState, reviewState } = useContext(GlobalContext);
-  const [checkingState, setCheckingState] = useState(accountState);
+const DetailsMovieScreen = ({ navigation }) => {
+  const { detailsState, reviewState } = useContext(GlobalContext);
+  const [checkingState, setCheckingState] = useState<IAccountState>();
   const { height } = Dimensions.get("screen");
-
   const handleGoBack = () => {
     navigation.goBack();
   };
@@ -25,12 +23,27 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
     borderRadius: 24,
     padding: 10,
   };
+  const getUpdatedAccState = async (): Promise<void> => {
+    try {
+      const resFetchState: IAccountState = await fetchAccountState(detailsState.id);
+      console.log(resFetchState);
+      setCheckingState(resFetchState);
+    } catch (error) {
+      console.log("error ", error);
+    }
+  };
 
-  useEffect(() => {}, [accountState]);
+  useEffect(() => {
+    getUpdatedAccState();
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={{ minHeight: height, backgroundColor: Color.BLACK }}>
-      <HeaderContainerDetails movie={detailsState} onPress={handleGoBack} state={accountState} />
+      {checkingState?.watchlist !== undefined || checkingState?.rated !== undefined ? (
+        <HeaderContainerDetails movie={detailsState} onPress={handleGoBack} state={checkingState} />
+      ) : (
+        <Loader />
+      )}
       <SubContainerDetail overview={detailsState.overview} overViewStyle={overViewTextArea} />
       <ReviewContainerDetails review={reviewState} overViewStyle={overViewTextArea} />
     </ScrollView>
@@ -38,22 +51,3 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 };
 
 export default DetailsMovieScreen;
-
-// const [checkButton, setCheckButton] = useState<boolean>();
-// const [getMovie, setGetMovie] = useState<MovieType>();
-// let [isSuccess, setIsSuccess] = useState<boolean>();
-
-// // return  stored movie   To do condition
-// //let StoredMovie = WatchList.find((object) => object.id === movie.id);
-
-// //If found in a watchlist then true else false (use in touchableOpacity component)
-
-// isSuccess = checkButton ? true : false;
-// useEffect(() => {
-//   const checkMovieExist = async () => {
-//     //console.log(checkMovie);
-//   };
-
-//   checkMovieExist();
-//   handleWatchList().catch(console.error);
-// }, [handleWatchList()]);

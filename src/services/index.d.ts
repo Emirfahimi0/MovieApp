@@ -110,7 +110,7 @@ export interface IAccountState {
     watchlist:boolean;
 }
 export type RatedValue = {
-    value:number | undefined
+    value:number 
 }
 
 export interface IRating {

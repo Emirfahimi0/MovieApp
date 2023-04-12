@@ -32,7 +32,7 @@ const LoginScreen = ({ navigation }) => {
       Alert.alert("User password is empty");
     } else {
       let checkLogin = await getUser(userEmail, userPassword);
-      if (checkLogin) {
+      if (checkLogin === "success!") {
         navigation.navigate("HomeScreen");
       } else {
         Alert.alert("Invalid credential or unknown error occurs");

@@ -5,8 +5,8 @@ import React, { Fragment, useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { MovieType } from ".";
 import { Alert, ScrollView } from "react-native";
-import { fetchAccountState, fetchMovieDetails, fetchReviewMovieDetails, fetchWatchlist } from "../components/features/handlingFunction";
-import { IMovieDetail, IReview, IAccountState } from "../services";
+import { fetchMovieDetails, fetchReviewMovieDetails, fetchWatchlist } from "../components/features/handlingFunction";
+import { IMovieDetail, IReview } from "../services";
 
 const HomeScreen = ({ navigation }) => {
   // always use set function
@@ -26,10 +26,9 @@ const HomeScreen = ({ navigation }) => {
   const handleMovieDetail = async (id: number) => {
     const resDetail: IMovieDetail = await fetchMovieDetails(id);
     const resReview: IReview[] = await fetchReviewMovieDetails(id);
-    const resFetchState: IAccountState = await fetchAccountState(id);
 
-    if (resDetail !== undefined && resReview !== undefined && resFetchState !== undefined) {
-      await storeIntoState(resDetail, resReview, resFetchState);
+    if (resDetail !== undefined && resReview !== undefined) {
+      await storeIntoState(resDetail, resReview);
 
       //From api service
       navigation.push("DetailScreen");

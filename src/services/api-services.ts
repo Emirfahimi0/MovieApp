@@ -90,7 +90,6 @@ export const createNewSession = async(token:string): Promise<Session> => {
         })
         //to do --> need to compile it as 
         
-        console.log("account state response:",data)
         return data;
 
 
@@ -140,7 +139,6 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
         await AsyncStorage.setItem("session_id", JSON.stringify(session));
         
     }
-    console.log("isAuthenticated??",isAuthenticated)
     return isAuthenticated;
     
  }
@@ -258,12 +256,10 @@ export const postRatingbyId = async (id:number,value:number):Promise<IRating> =>
         data: requestBody       
         
     };
-    console.log(requestBody)
 
    
    await axios.request(options)
     .then(function (response) {
-        console.log("response from session login",response.data.success);
         responseRating =response.data
          
 
