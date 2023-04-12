@@ -42,7 +42,7 @@ const HomeScreen = ({ navigation }) => {
   const handleWatchList = async () => {
     const resWatchlist = await fetchWatchlist();
     if (resWatchlist !== undefined) {
-      navigation.navigate("WatchListScreen", { resWatchlist: resWatchlist });
+      navigation.navigate("WatchlistScreen", { resWatchlist: resWatchlist });
     }
   };
 

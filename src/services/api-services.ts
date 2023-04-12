@@ -1,17 +1,11 @@
 import axios from "axios"
 import  {  ENDPOINTS, TMDB_API_KEY }  from "../constants/utilities";
-import {  Genre, InterfaceRating, MovieDetail, Review, TResponseToken, accountState,
-        session, watchListResponse } from ".";
+import {  Genre, IRating, IMovieDetail, IReview, TResponseToken, IAccountState,
+        Session, IWatchListResponse } from ".";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MovieType } from "../screens";
 
 
-// const TMDB_REQUEST_API = axios.create({
-//     baseURL: TMDB_BASE_URL,
-//     params:{
-//         api_key:TMDB_API_KEY
-//     }
-// })
 
 
 /* METHODS GET/POST/DELETE FROM TMDB API */
@@ -25,23 +19,7 @@ export const  getTrendingmovie = async():Promise<MovieType[]> => {
     return data
 }
 
-// export const getAuth = async () => {
 
-//     let headers = {
-//         "Accept":"*/*",
-//         "Content-Type":"application/json;charset=utf-8",
-//     }
-
-//     let bodyParse ={
-//         "username":"",
-//         "password":"",
-//     }
-//     let Authorization = {"Authorization":`Bearer ${API_KEY}`,
-// }
-//     let URLAuth = {"url":AUTHENTICATION, }
-//     axios.get(AUTHENTICATION, API_KEY, { headers })
-//     .then(response => response.data.id);
-// }
 
 /* Request token function */
 export const createRequestToken = async  (): Promise<TResponseToken> => {
@@ -51,9 +29,9 @@ export const createRequestToken = async  (): Promise<TResponseToken> => {
     
 } 
 /* create new session */
-export const createNewSession = async(token:string): Promise<session> => {
+export const createNewSession = async(token:string): Promise<Session> => {
     //let requestToken = createRequestToken()
-    let current_Session:session  = {
+    let current_Session:Session  = {
         success: false,
         session_id: ""
     }
@@ -85,9 +63,9 @@ export const createNewSession = async(token:string): Promise<session> => {
      
  }
 
- export const getAccountState = async (id:number):Promise<accountState> => {
+ export const getAccountState = async (id:number):Promise<IAccountState> => {
 
-    let current_Session:session = {
+    let current_Session:Session = {
         success: false,
         session_id: ""
     }
@@ -100,7 +78,7 @@ export const createNewSession = async(token:string): Promise<session> => {
     const params = {
         session_id:current_Session.session_id}
       
-    const data  = axios.get(
+    const data  = await axios.get(
         `${ENDPOINTS.GET_ACCOUNT_STATE}${id}/account_states?${TMDB_API_KEY}`,{
             headers: { Accept:'application/json',"Content-Type": "application/json; charset=UTF-8" }
             ,params:params}).then(function(response){
@@ -112,7 +90,7 @@ export const createNewSession = async(token:string): Promise<session> => {
         })
         //to do --> need to compile it as 
         
-
+        console.log("account state response:",data)
         return data;
 
 
@@ -168,16 +146,16 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
  }
 
 // POST method for adding watchlist
-export const toWatchList =async (movie:MovieDetail | MovieType,setWatchlist:boolean):Promise<watchListResponse> => {
+export const toWatchList =async (movie:IMovieDetail | MovieType,setWatchlist:boolean):Promise<IWatchListResponse> => {
     //need body request
-    let response:watchListResponse = {
+    let response:IWatchListResponse = {
         status_code :0,
         status_message:"",
         success: true
 
 
     }
-    let current_Session:session = {
+    let current_Session:Session = {
         success: false,
         session_id: ""
     }
@@ -192,7 +170,6 @@ export const toWatchList =async (movie:MovieDetail | MovieType,setWatchlist:bool
             "media_id":movie.id,
             "watchlist":setWatchlist 
         }
-       console.log("requestBody",requestBody)
         const options = {
             method: 'POST',
             url: ENDPOINTS.ADD_WATCHLIST,
@@ -207,7 +184,6 @@ export const toWatchList =async (movie:MovieDetail | MovieType,setWatchlist:bool
       
        await axios.request(options)
         .then(function (response) {
-            console.log("response",response.data)
             response = response.data
            
         })
@@ -221,7 +197,7 @@ export const toWatchList =async (movie:MovieDetail | MovieType,setWatchlist:bool
 }
 // Get movie watchlist
 export const GetMovieWatchlist = async ():Promise<MovieType[]> => {
-    let current_Session:session = {
+    let current_Session:Session = {
         success: false,
         session_id: ""
     }
@@ -235,7 +211,7 @@ export const GetMovieWatchlist = async ():Promise<MovieType[]> => {
     const params = {
         session_id:current_Session.session_id}
       
-    const data  = axios.get(
+    const data  = await axios.get(
         ENDPOINTS.GET_WATCHLIST,{
             headers: { Accept:'application/json',"Content-Type": "application/json; charset=UTF-8" }
             ,params:params}).then(function(response){
@@ -247,17 +223,16 @@ export const GetMovieWatchlist = async ():Promise<MovieType[]> => {
         })
         //to do --> need to compile it as 
         
-        console.log("movie watch list ",data)
         return data;
 }
 // POST method for rate movie by Id
-export const postRatingbyId = async (id:number,value:number):Promise<InterfaceRating> =>{
-    let responseRating:InterfaceRating ={
+export const postRatingbyId = async (id:number,value:number):Promise<IRating> =>{
+    let responseRating:IRating ={
         success:false,
         status_code:0,
         status_message:"success",
     }
-    let current_Session:session = {
+    let current_Session:Session = {
         success: false,
         session_id: ""
     }
@@ -290,8 +265,7 @@ export const postRatingbyId = async (id:number,value:number):Promise<InterfaceRa
     .then(function (response) {
         console.log("response from session login",response.data.success);
         responseRating =response.data
-        console.log("body request",requestBody)
-        
+         
 
     })
     .catch(function (error) {
@@ -302,13 +276,13 @@ export const postRatingbyId = async (id:number,value:number):Promise<InterfaceRa
 }
 
 // DELETE method for rate movie by Id
-export const deleteRatingbyId = async (id:number,value:number):Promise<InterfaceRating> =>{
-    let responseRating:InterfaceRating ={
+export const deleteRatingbyId = async (id:number,value:number):Promise<IRating> =>{
+    let responseRating:IRating ={
         success:false,
         status_code:1,
         status_message:"success",
     }
-    let current_Session:session = {
+    let current_Session:Session = {
         success: false,
         session_id: ""
     }
@@ -332,12 +306,10 @@ export const deleteRatingbyId = async (id:number,value:number):Promise<Interface
         data: requestBody       
         
     };
-   console.log(requestBody)
    await axios.request(options)
     .then(function (response) {
         console.log("response from session login",response.data.success);
         responseRating =response.data
-        console.log("body request",requestBody)
         
 
     })
@@ -353,7 +325,7 @@ export const deleteRatingbyId = async (id:number,value:number):Promise<Interface
 export const getReviewById = async (id:number) => {
 
     const url = `${ENDPOINTS.GET_REVIEWS_BY_ID}${id}/reviews?${TMDB_API_KEY}`
-    let data:Review[] = await axios.get(url,{responseType:"json"}).then(function(res){
+    let data:IReview[] = await axios.get(url,{responseType:"json"}).then(function(res){
         let responseFromAPI = res.data.results
         return responseFromAPI
     })
@@ -363,7 +335,7 @@ export const getReviewById = async (id:number) => {
 
 
 // Get method that fetch details of the movie
-export const getMovieDetailsAPI = async (id:number):Promise<MovieDetail> => {
+export const getMovieDetailsAPI = async (id:number):Promise<IMovieDetail> => {
     const url = `${ENDPOINTS.GET_DETAILS}${id}?${TMDB_API_KEY}`
     let data = await axios.get(url,{responseType:"json"}).then(function(res){
         console.log("get movie details",res.data)

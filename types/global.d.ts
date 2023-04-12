@@ -1,12 +1,12 @@
 import { MovieType } from "src/screens";
-import { MovieDetail, Review, accountState } from "src/services";
+import { IMovieDetail, IReview, IAccountState } from "src/services";
 
 declare type RootStackParamList = {
-   DetailScreen: {item:MovieDetail,review:Review[],state:accountState}
+   DetailScreen: {item:IMovieDetail,review:IReview[],state:IAccountState}
    HomeScreen:undefined
    LoginScreen:undefined
    SplashScreen:undefined,
-   WatchListScreen:{resWatchlist:MovieType[]}
+   WatchlistScreen:{resWatchlist:MovieType[]}
 
   };
   

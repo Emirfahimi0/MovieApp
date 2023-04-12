@@ -5,7 +5,7 @@ import DetailsMovieScreen from "../../screens/DetailsMovieScreen";
 import HomeScreen from "../../screens/HomeScreen";
 import LoginScreen from "../../screens/LoginScreen";
 import React from "react";
-import WatchListScreen from "../../screens/WatchListScreen";
+import WatchListScreen from "../../screens/WatchlistScreen";
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -16,7 +16,7 @@ export const StackNavigator = () => {
         <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} />
         <RootStack.Screen name="HomeScreen" component={HomeScreen} />
         <RootStack.Screen name="LoginScreen" component={LoginScreen} />
-        <RootStack.Screen name="WatchListScreen" component={WatchListScreen} />
+        <RootStack.Screen name="WatchlistScreen" component={WatchListScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

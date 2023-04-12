@@ -9,15 +9,15 @@ export type TResponseToken = {
     status_code:number,
     success:boolean,
 }
-export interface createSession {
-    new_session: session
+export interface ICreateSession {
+    new_session: Session
 }
 
-export type session = {
+export type Session = {
     session_id:string
     success:boolean,
 }
-export interface listGenres {
+export interface IListGenres {
     genres: Genre[];
   }
   
@@ -26,13 +26,13 @@ export interface listGenres {
     name: string;
   }
 
- export interface watchListResponse  { 
+ export interface IWatchListResponse  { 
 status_code: number,
 status_message: string,
 success: boolean
  }
 
-  export interface MovieDetail {
+  export interface IMovieDetail {
     adult:                 boolean;
     backdrop_path:         string;
     belongs_to_collection: null;
@@ -46,12 +46,12 @@ success: boolean
     overview:              string;
     popularity:            number;
     poster_path:           null;
-    production_companies:  ProductionCompany[];
-    production_countries:  ProductionCountry[];
+    production_companies:  IProductionCompany[];
+    production_countries:  IProductionCountry[];
     release_date:          Date;
     revenue:               number;
     runtime:               number;
-    spoken_languages:      SpokenLanguage[];
+    spoken_languages:      ISpokenLanguage[];
     status:                string;
     tagline:               string;
     title:                 string;
@@ -60,60 +60,60 @@ success: boolean
     vote_count:            number;
 }
 
-  export interface ProductionCompany {
+  export interface IProductionCompany {
     id:             number;
     logo_path:      null | string;
     name:           string;
     origin_country: string;
 }
 
-export interface ProductionCountry {
+export interface IProductionCountry {
     iso_3166_1: string;
     name:       string;
 }
 
-export interface SpokenLanguage {
+export interface ISpokenLanguage {
     iso_639_1: string;
     name:      string;
 }
 
-export interface Review {
+export interface IReview {
     id:            number;
     page:          number;
-    results:       Result[];
+    results:       IResult[];
     total_pages:   number;
     total_results: number;
 }
 
-export interface Result {
+export interface IResult {
+    author_details: IAuthorDetails;
     author:         string;
-    author_details: AuthorDetails;
     content:        string;
     created_at:     Date;
     id:             string;
+    isShown:        boolean;
     updated_at:     Date;
     url:            string;
-    isShown:        boolean;
 }
 
-export interface AuthorDetails {
+export interface IAuthorDetails {
     avatar_path: null | string;
     name:        string;
     rating:      number | null;
     username:    string;
 }
 
-export interface accountState {
-    favourite:boolean,
-    id:number,
-    rated: ratedValue | boolean,
-    watchlist:boolean
+export interface IAccountState {
+    favourite:boolean
+    id:number;
+    rated: RatedValue | boolean;
+    watchlist:boolean;
 }
-export type ratedValue = {
-    value:number
+export type RatedValue = {
+    value:number | undefined
 }
 
-export interface InterfaceRating {
+export interface IRating {
     status_code: number;
     status_message: string;
     success:boolean;

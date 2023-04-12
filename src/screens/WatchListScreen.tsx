@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Entypo";
 import { IMovieDetail, IReview, IAccountState } from "../services";
 import { fetchAccountState, fetchMovieDetails, fetchReviewMovieDetails } from "../components/features/handlingFunction";
 
-const WatchListScreen = ({ navigation, route }) => {
+const WatchlistScreen = ({ navigation, route }) => {
   //Access watchlist movie with context
   const { resWatchlist } = route.params;
   const [input, setInput] = useState<string>("");
@@ -40,4 +40,4 @@ const WatchListScreen = ({ navigation, route }) => {
   );
 };
 
-export default WatchListScreen;
+export default WatchlistScreen;
