@@ -1,7 +1,7 @@
 import { ButtonContainerRating, CardContainer } from "../../constants/style-component/ContainerStyling";
 import { RatingText, genreText, subDetail } from "../../constants/style-component/TextStyleComponent";
 import { Alert, Modal, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { Dispatch, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
 import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
@@ -12,7 +12,7 @@ export interface IButtonModalRating {
   movie: MovieType | IMovieDetail;
   state: IAccountState;
   ratingVal: number;
-  setRating: Dispatch<setRatingVal<number>>;
+  setRating: Dispatch<SetStateAction<number>>;
 }
 export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButtonModalRating) => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -44,6 +44,7 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
   const HandleSetRating = (value: number) => {
     // setPostRatingDisable(false);
     setRating(value);
+    console.log("set Rating", value);
 
     //To do
   };
@@ -73,11 +74,11 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
         <View style={centeredViewRating}>
           <View style={modalViewRating}>
             <Icon name="heart-sharp" size={20} color={Color.GREEN} />
-            <Text style={subDetail}>Pls Submit your Review..</Text>
+            <Text style={subDetail}> Submit your Review..</Text>
             <View style={RatingStarIcon}>
               {review.map((item, index) => {
                 return (
-                  <TouchableOpacity disabled={postRatingDisable !== false} key={index} onPress={() => HandleSetRating(item)}>
+                  <TouchableOpacity disabled={postRatingDisable !== false ? true : false} key={index} onPress={() => HandleSetRating(item)}>
                     {ratingVal < item ? (
                       <Icon name="heart-outline" size={20} color="black" />
                     ) : (
@@ -88,8 +89,8 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
               })}
             </View>
             <TouchableOpacity
-              style={{ ...CardContainer, marginTop: 30, backgroundColor: state.rated !== false ? Color.HEART : Color.ACTIVE }}
-              onPress={postRatingDisable ? HandleDeleteRating : HandlePostRating}>
+              style={{ ...CardContainer, marginTop: 30, backgroundColor: postRatingDisable !== false ? Color.HEART : Color.ACTIVE }}
+              onPress={postRatingDisable !== false ? HandleDeleteRating : HandlePostRating}>
               <Text style={RatingText}>{postRatingDisable !== false ? "Delete Rating" : "Post Rating"}</Text>
             </TouchableOpacity>
           </View>

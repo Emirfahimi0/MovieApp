@@ -42,7 +42,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 
   useEffect(() => {
     getUpdatedAccState();
-  }, []);
+  }, [checkingState?.rated]);
 
   return (
     <ScrollView contentContainerStyle={{ minHeight: height, backgroundColor: Color.BLACK }}>
@@ -51,8 +51,8 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
           movie={detailsState}
           onPress={handleGoBack}
           state={checkingState}
-          ratingVal={ratingVal}
           setRating={setRatingVal}
+          ratingVal={ratingVal}
         />
       ) : (
         <Loader />

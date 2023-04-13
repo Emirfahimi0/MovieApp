@@ -1,5 +1,5 @@
 import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import React, { Fragment, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
 import {
   CardContainer,
   ContainerRow,
@@ -23,7 +23,7 @@ interface IHeaderContainerDetails {
   onPress: () => void;
   state: IAccountState;
   ratingVal: number;
-  setRating: Dispatch<setRatingVal<number>>;
+  setRating: Dispatch<SetStateAction<number>>;
 }
 
 export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRating }: IHeaderContainerDetails) => {
