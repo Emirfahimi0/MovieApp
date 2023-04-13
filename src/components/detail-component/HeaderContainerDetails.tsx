@@ -22,9 +22,11 @@ interface IHeaderContainerDetails {
   movie: IMovieDetail;
   onPress: () => void;
   state: IAccountState;
+  ratingVal: number;
+  setRating: Dispatch<setRatingVal<number>>;
 }
 
-export const HeaderContainerDetails = ({ movie, onPress, state }: IHeaderContainerDetails) => {
+export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRating }: IHeaderContainerDetails) => {
   const [existWatchlist, setExistWatchlist] = useState<boolean>(state.watchlist);
 
   const handleWatchList = async () => {
@@ -99,7 +101,7 @@ export const HeaderContainerDetails = ({ movie, onPress, state }: IHeaderContain
             </View>
           </TouchableOpacity>
 
-          <ButtonModalRating movie={movie} state={state} />
+          <ButtonModalRating movie={movie} state={state} ratingVal={ratingVal} setRating={setRating} />
         </View>
       </View>
     </Fragment>

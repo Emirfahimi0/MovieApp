@@ -100,7 +100,6 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
     
     let requestToken: TResponseToken  = await createRequestToken ()
     let isAuthenticated = false;
-    //console.log("response from session",(await resSession).session_id)
     
     if( requestToken.success===true){
       let   token = requestToken.request_token
@@ -135,7 +134,6 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
         });
         // create session right away
         let session = await createNewSession(token)
-        console.log(session)
         await AsyncStorage.setItem("session_id", JSON.stringify(session));
         
     }
@@ -215,7 +213,6 @@ export const GetMovieWatchlist = async ():Promise<MovieType[]> => {
             ,params:params}).then(function(response){
           let  responseData = response.data.results
        
-          console.log(responseData)
           return responseData
             
         })
@@ -334,7 +331,6 @@ export const getReviewById = async (id:number) => {
 export const getMovieDetailsAPI = async (id:number):Promise<IMovieDetail> => {
     const url = `${ENDPOINTS.GET_DETAILS}${id}?${TMDB_API_KEY}`
     let data = await axios.get(url,{responseType:"json"}).then(function(res){
-        console.log("get movie details",res.data)
         let responseFromAPI = res.data
         return responseFromAPI
     })

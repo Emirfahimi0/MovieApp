@@ -1,7 +1,7 @@
 import { ButtonContainerRating, CardContainer } from "../../constants/style-component/ContainerStyling";
 import { RatingText, genreText, subDetail } from "../../constants/style-component/TextStyleComponent";
 import { Alert, Modal, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { useState } from "react";
+import React, { Dispatch, useState } from "react";
 import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
 import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
@@ -11,11 +11,12 @@ import { MovieType } from "../../screens";
 export interface IButtonModalRating {
   movie: MovieType | IMovieDetail;
   state: IAccountState;
+  ratingVal: number;
+  setRating: Dispatch<setRatingVal<number>>;
 }
-export const ButtonModalRating = ({ movie, state }: IButtonModalRating) => {
+export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButtonModalRating) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [postRatingDisable, setPostRatingDisable] = useState<boolean | object>(state.rated);
-  const [ratingVal, setRatingVal] = useState<number>(0);
   const review: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   //   if (postRatingDisable === undefined) {
@@ -33,6 +34,7 @@ export const ButtonModalRating = ({ movie, state }: IButtonModalRating) => {
       // setPostRatingDisable(false);
       setVisible(visible);
     } else Alert.alert("unknown error occured");
+    console.log(resRating.status_message);
     setPostRatingDisable(true);
     setVisible(!visible);
 
@@ -41,7 +43,7 @@ export const ButtonModalRating = ({ movie, state }: IButtonModalRating) => {
 
   const HandleSetRating = (value: number) => {
     // setPostRatingDisable(false);
-    setRatingVal(value);
+    setRating(value);
 
     //To do
   };
@@ -49,11 +51,10 @@ export const ButtonModalRating = ({ movie, state }: IButtonModalRating) => {
   const HandleDeleteRating = async () => {
     console.log("rating", ratingVal);
     const resRating: IRating = await deleteRatingbyId(movie.id, ratingVal);
-    console.log(resRating);
     if (resRating.status_code === 13) {
       Alert.alert("rating deleted successfully.");
       setVisible(false);
-      setRatingVal(0);
+      setRating(0);
       console.log("Delete Rating");
       setPostRatingDisable(false);
     }
