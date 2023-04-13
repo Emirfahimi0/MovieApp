@@ -73,10 +73,10 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
 
   const filterMovieByGenre = (item: Genre, index: number): void => {
     const currentFilter = state.movieState.filter((element) => {
-      element.genre_ids.includes(item.id);
+      return element.genre_ids.includes(item.id);
     });
-    console.log(currentFilter);
-    // setState({ ...state, movieState: currentFilter });
+    console.log("current filter", currentFilter);
+    setState({ ...state, movieState: currentFilter });
   };
 
   // set trending movies into a state
