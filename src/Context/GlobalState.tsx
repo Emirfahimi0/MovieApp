@@ -1,19 +1,20 @@
-import { Genre, MovieType, user, userRating } from "../screens";
+import { Genre, MovieType, user } from "../screens";
 import React, { createContext, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
 import { IMovieDetail, IReview, IAccountState } from "../services";
 
 export interface IInitialState {
-  movieState: MovieType[];
-  userState: user;
-  detailsState: IMovieDetail;
-  genreState: Genre[];
-  reviewState: IReview[];
   accountState: IAccountState;
-  getUser: (username: string, password: string) => Promise<string>;
   addTrendingMovies: (movie: MovieType[]) => void;
+  detailsState: IMovieDetail;
+  filterMovieByGenre: (item: Genre, index: number) => void;
+  genreState: Genre[];
   getGenre: (genre: Genre[]) => Promise<void>;
+  getUser: (username: string, password: string) => Promise<string>;
+  movieState: MovieType[];
+  reviewState: IReview[];
   storeIntoState: (detail: IMovieDetail, review: IReview[]) => Promise<void>;
+  userState: user;
 }
 
 const existingUser = [
@@ -32,6 +33,7 @@ const initialState: IInitialState = {
   addTrendingMovies: () => {},
   getUser: () => Promise.resolve(""),
   storeIntoState: () => Promise.resolve(),
+  filterMovieByGenre: () => {},
   detailsState: {},
   accountState: {},
   reviewState: [],
@@ -69,7 +71,15 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     return message;
   };
 
-  // To do
+  const filterMovieByGenre = (item: Genre, index: number): void => {
+    const currentFilter = state.movieState.filter((element) => {
+      element.genre_ids.includes(item.id);
+    });
+    console.log(currentFilter);
+    // setState({ ...state, movieState: currentFilter });
+  };
+
+  // set trending movies into a state
   const addTrendingMovies = async (movies: MovieType[]): Promise<void> => {
     setState({ ...state, movieState: movies });
     // call the function
@@ -95,6 +105,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
         getGenre,
         getUser,
         storeIntoState,
+        filterMovieByGenre,
         reviewState: state.reviewState,
         accountState: state.accountState,
         detailsState: state.detailsState,
