@@ -1,5 +1,4 @@
 import React from "react";
-import { Provider } from "react-redux";
 import { StackNavigator } from "./src/components/features//StackNavigator";
 import { GlobalProvider } from "./src/context/GlobalState";
 import { SafeAreaView } from "react-native-safe-area-context";

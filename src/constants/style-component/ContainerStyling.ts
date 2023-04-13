@@ -9,10 +9,10 @@ import Color from "../color";
 //Login
 export const Logincontainer: ViewStyle = {
   backgroundColor: Color.AMBER,
-  borderRadius: 20,
+  borderRadius: 24,
   alignContent: "space-between",
   flexDirection: "column",
-  margin: 20,
+  margin: 16,
   padding: 10,
   paddingTop: 50,
   height: "60%",
@@ -20,10 +20,10 @@ export const Logincontainer: ViewStyle = {
 export const InputContainer: ViewStyle = {
   alignItems: "center",
   backgroundColor: Color.WHITE,
-  borderRadius: 10,
+  borderRadius: 8,
   flexDirection: "row",
-  margin: 10,
-  padding: 10,
+  margin: 8,
+  padding: 8,
 };
 
 // -> use in Genre Card and Watch list
@@ -34,7 +34,7 @@ export const CardContainer: ViewStyle = {
   backgroundColor: "#DFE0E0",
   borderRadius: 5,
   elevation: 3,
-  paddingEnd:7,
+  paddingEnd:9,
   justifyContent: "center",
   marginVertical: 2,
   paddingVertical: 8,
@@ -47,20 +47,20 @@ export const CardContainer: ViewStyle = {
 
 export const movieContainer:ViewStyle= {
     backgroundColor: Color.BLUE,
-    borderBottomLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 24,
+    borderTopRightRadius: 24,
     elevation: 4,
     flexDirection: "row",
     height: 350,
     justifyContent: "space-between",
-    marginVertical: 10,
+    marginVertical: 12,
     width: 250,
   }
 
  export const  SearchBar:ViewStyle= {
     alignItems: "center",
     backgroundColor: Color.EXTRA_LIGHT_GRAY,
-    borderRadius: 10,
+    borderRadius: 12,
     flexDirection: "row",
     padding: 10,
     width: "100%",
@@ -70,9 +70,9 @@ export const movieContainer:ViewStyle= {
 
  export const ListPreviewMovie:ViewStyle = {
     flexDirection: "column",
-    margin: 6,
-    marginLeft: 10,
-    paddingVertical: 10,
+    margin: 8,
+    marginLeft: 12,
+    paddingVertical: 12,
   }
 
   export const ImagePoster :ImageStyle={
@@ -110,14 +110,14 @@ export const posterImage:ImageStyle = {
 export const HeaderDetail:ViewStyle = {
 
   alignItems:"center",
-  elevation:20,
+  elevation:16,
   flexDirection:"row",
   justifyContent:"space-around",
   left:0,
-  paddingHorizontal:20,
+  paddingHorizontal:24,
   position:"absolute",
   right:0,
-  top:30,
+  top:32,
 }
 
 export const MovieDetailContainer:ViewStyle = {
@@ -125,7 +125,7 @@ export const MovieDetailContainer:ViewStyle = {
   alignItems: "center",
   flexDirection: "row",
   justifyContent: "space-between",
-  paddingHorizontal: 20,
+  paddingHorizontal: 24,
 }
 
 export const ContainerRow :ViewStyle ={
@@ -133,15 +133,15 @@ export const ContainerRow :ViewStyle ={
     alignItems: "center",
     alignContent:"center",
     flexDirection: "row",
-    width:50,
+    width:48,
     padding:10
 
     
 }
 
 export const smallDetail : ViewStyle ={
-    paddingHorizontal: 20,
-    paddingTop: 15,
+    paddingHorizontal: 24,
+    paddingTop: 16,
     flexDirection:"row"
 }
 export const OverviewContainer:ViewStyle = {
@@ -155,7 +155,7 @@ export const OverviewContainer:ViewStyle = {
 export const ButtonContainerRating:ViewStyle ={
     alignItems: "center",
     justifyContent: "center",
-    marginLeft:30,
+    marginLeft:32,
     position: "relative",
   
 }

@@ -3,8 +3,8 @@ import React, { useState, Fragment } from "react";
 import { MovieCard } from "../components/movie-component/MovieCard";
 import { SearchBarComponent } from "../components/movie-component/SearchBar";
 import Icon from "react-native-vector-icons/Entypo";
-import { IMovieDetail, IReview, IAccountState } from "../services";
-import { fetchAccountState, fetchMovieDetails, fetchReviewMovieDetails } from "../components/features/handlingFunction";
+import { IMovieDetail, IReview } from "../services";
+import { fetchMovieDetails, fetchReviewMovieDetails } from "../components/features/handlingFunction";
 
 const WatchlistScreen = ({ navigation, route }) => {
   //Access watchlist movie with context
@@ -15,14 +15,13 @@ const WatchlistScreen = ({ navigation, route }) => {
   const handleMovieDetail = async (id: number) => {
     const resDetail: IMovieDetail = await fetchMovieDetails(id);
     const resReview: IReview[] = await fetchReviewMovieDetails(id);
-    const resFetchState: IAccountState = await fetchAccountState(id);
 
-    if (resDetail !== undefined && resReview !== undefined && resFetchState !== undefined) {
+    if (resDetail !== undefined && resReview !== undefined) {
       //From APISERVICE
-      navigation.push("DetailScreen", { item: resDetail, review: resReview, state: resFetchState });
+      navigation.push("DetailScreen", { item: resDetail, review: resReview });
     } else {
       // alert {you dont have data }
-      Alert.alert("getDetails undefined. something wrong somewhere");
+      Alert.alert("fetching data are undefined.Check back the api");
     }
   };
   return (

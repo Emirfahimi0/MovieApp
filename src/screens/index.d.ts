@@ -8,7 +8,7 @@ declare interface IMovie {
    
 }
 
-declare interface listGenres {
+declare interface IListGenres {
     genres: Genre[];
   }
   
@@ -54,7 +54,7 @@ declare enum OriginalLanguage {
   Ko = "ko",
 }
 
-declare interface userRating  {
+declare interface IUserRating  {
   Movie: MovieType| IMovieDetail;
   ratingVal: number;
   user: user;

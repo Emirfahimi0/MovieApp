@@ -253,6 +253,7 @@ export const postRatingbyId = async (id:number,value:number):Promise<IRating> =>
         data: requestBody       
         
     };
+    console.log(requestBody)
 
    
    await axios.request(options)
@@ -265,6 +266,7 @@ export const postRatingbyId = async (id:number,value:number):Promise<IRating> =>
         console.error("error",error);
 
     });
+    console.log('response Rating',responseRating)
     return responseRating
 }
 

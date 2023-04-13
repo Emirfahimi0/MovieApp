@@ -8,12 +8,15 @@ import { GlobalContext } from "../context/GlobalState";
 import { IAccountState } from "../services";
 import { fetchAccountState } from "../components/features/handlingFunction";
 import Loader from "../components/features/Loader";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "types/global";
 
-// interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
+interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
-const DetailsMovieScreen = ({ navigation }) => {
+const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   const { detailsState, reviewState } = useContext(GlobalContext);
   const [checkingState, setCheckingState] = useState<IAccountState>();
+  const [ratingVal, setRatingVal] = useState<number>(0);
   const { height } = Dimensions.get("screen");
   const handleGoBack = () => {
     navigation.goBack();
@@ -26,8 +29,12 @@ const DetailsMovieScreen = ({ navigation }) => {
   const getUpdatedAccState = async (): Promise<void> => {
     try {
       const resFetchState: IAccountState = await fetchAccountState(detailsState.id);
-      console.log(resFetchState);
       setCheckingState(resFetchState);
+      if (typeof checkingState?.rated === "object") {
+        setRatingVal(checkingState.rated.value);
+      } else {
+        setRatingVal(0);
+      }
     } catch (error) {
       console.log("error ", error);
     }
@@ -40,7 +47,13 @@ const DetailsMovieScreen = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={{ minHeight: height, backgroundColor: Color.BLACK }}>
       {checkingState?.watchlist !== undefined || checkingState?.rated !== undefined ? (
-        <HeaderContainerDetails movie={detailsState} onPress={handleGoBack} state={checkingState} />
+        <HeaderContainerDetails
+          movie={detailsState}
+          onPress={handleGoBack}
+          state={checkingState}
+          ratingVal={ratingVal}
+          setRating={setRatingVal}
+        />
       ) : (
         <Loader />
       )}
