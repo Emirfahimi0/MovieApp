@@ -135,7 +135,7 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
         // create session right away
         let session = await createNewSession(token)
         await AsyncStorage.setItem("session_id", JSON.stringify(session));
-        
+        console.log(session)
     }
     return isAuthenticated;
     

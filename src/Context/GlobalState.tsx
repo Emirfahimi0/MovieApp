@@ -5,15 +5,17 @@ import { IMovieDetail, IReview, IAccountState } from "../services";
 
 export interface IInitialState {
   accountState: IAccountState;
-  addTrendingMovies: (movie: MovieType[]) => void;
+  handleTrendingMovies: (movie: MovieType[], item: Genre, index: number) => void;
+  activeGenreId: number;
   detailsState: IMovieDetail;
   filterMovieByGenre: (item: Genre, index: number) => void;
   genreState: Genre[];
-  getGenre: (genre: Genre[]) => Promise<void>;
-  getUser: (username: string, password: string) => Promise<string>;
+  storeGenre: (genre: Genre[]) => Promise<void>;
+  storeUser: (username: string, password: string) => Promise<string>;
   movieState: MovieType[];
+  filteredMovieState: MovieType[];
   reviewState: IReview[];
-  storeIntoState: (detail: IMovieDetail, review: IReview[]) => Promise<void>;
+  storeAllState: (detail: IMovieDetail, review: IReview[]) => Promise<void>;
   userState: user;
 }
 
@@ -29,16 +31,18 @@ interface GlobalProviderProps {
 }
 
 const initialState: IInitialState = {
-  getGenre: () => Promise.resolve(),
-  addTrendingMovies: () => {},
-  getUser: () => Promise.resolve(""),
-  storeIntoState: () => Promise.resolve(),
-  filterMovieByGenre: () => {},
-  detailsState: {},
   accountState: {},
-  reviewState: [],
+  handleTrendingMovies: () => {},
+  activeGenreId: 0,
+  detailsState: {},
+  filterMovieByGenre: () => {},
   genreState: [],
+  storeGenre: () => Promise.resolve(),
+  storeUser: () => Promise.resolve(""),
   movieState: [],
+  filteredMovieState: [],
+  reviewState: [],
+  storeAllState: () => Promise.resolve(),
   user: {
     id: "",
     password: "",
@@ -54,7 +58,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   const [state, setState] = useState(initialState);
 
   // Get local user store
-  const getUser = async (username: string, password: string): Promise<string> => {
+  const storeUser = async (username: string, password: string): Promise<string> => {
     let message = "";
     let tryLogInUser = await sessionWithLogIn(username, password);
     if (tryLogInUser) {
@@ -66,29 +70,42 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
         message = "no user found";
       }
     } else {
-      message = "error uknown";
+      message = "error unknown";
     }
     return message;
   };
 
+  // Method filtering movie by genre
   const filterMovieByGenre = (item: Genre, index: number): void => {
+    // check if the selected item is already in active filter in the state
+    if (item.id === state.activeGenreId) {
+      return;
+    }
     const currentFilter = state.movieState.filter((element) => {
       return element.genre_ids.includes(item.id);
     });
-    console.log("current filter", currentFilter);
-    setState({ ...state, movieState: currentFilter });
+    // console.log("current filter", currentFilter);
+    setState({ ...state, filteredMovieState: currentFilter, activeGenreId: item.id });
+    // console.log(state.activeGenreId);
   };
 
   // set trending movies into a state
-  const addTrendingMovies = async (movies: MovieType[]): Promise<void> => {
-    setState({ ...state, movieState: movies });
+  const handleTrendingMovies = async (movies: MovieType[], item: Genre, index: number): Promise<void> => {
+    // check if the selected item is already in active filter in the state
+    if (item.id === state.activeGenreId) {
+      return;
+    }
+    const currentFilter = movies.filter((element) => {
+      return element.genre_ids.includes(item.id);
+    });
+    setState({ ...state, movieState: movies, filteredMovieState: currentFilter, activeGenreId: item.id });
     // call the function
   };
 
-  const getGenre = async (genre: Genre[]): Promise<void> => {
+  const storeGenre = async (genre: Genre[]): Promise<void> => {
     setState({ ...state, genreState: genre });
   };
-  const storeIntoState = async (resDetail: IMovieDetail, resReview: IReview[]): Promise<void> => {
+  const storeAllState = async (resDetail: IMovieDetail, resReview: IReview[]): Promise<void> => {
     // will run all at the same time,
     // ---> method 1st
     // const newState = { ...state };
@@ -101,16 +118,18 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   return (
     <GlobalContext.Provider
       value={{
-        addTrendingMovies,
-        getGenre,
-        getUser,
-        storeIntoState,
-        filterMovieByGenre,
-        reviewState: state.reviewState,
         accountState: state.accountState,
+        activeGenreId: state.activeGenreId,
+        handleTrendingMovies,
         detailsState: state.detailsState,
-        movieState: state.movieState,
+        filteredMovieState: state.filteredMovieState,
+        filterMovieByGenre,
         genreState: state.genreState,
+        storeGenre,
+        storeUser,
+        movieState: state.movieState,
+        reviewState: state.reviewState,
+        storeAllState,
         userState: state.userState,
       }}>
       {props.children}

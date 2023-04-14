@@ -17,9 +17,6 @@ declare interface IListGenres {
     name: string;
   }
 
-
-
-
 declare type MovieType = {
     adult?:             boolean;
     backdrop_path:      string;

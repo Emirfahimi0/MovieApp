@@ -19,7 +19,7 @@ interface IMovieComponent {
 
 export const MovieComponent = ({ searchInput, Movie, Genres, handleMovieDetail, handleWatchList }: IMovieComponent) => {
   return (
-    <ScrollView contentContainerStyle={container}>
+    <View style={container}>
       <View style={headerContainer}>
         <View style={headerSubtitle}>
           <Text style={subHeader}> Now Playing </Text>
@@ -31,8 +31,16 @@ export const MovieComponent = ({ searchInput, Movie, Genres, handleMovieDetail, 
         </TouchableWithoutFeedback>
       </View>
       <CardButtons Genre={Genres} />
-      <MovieCard handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
-    </ScrollView>
+      <ScrollView horizontal={true}>
+        {Object.keys(Movie).length > 0 ? (
+          <MovieCard handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
+        ) : (
+          <View style={{ justifyContent: "center", alignItems: "center", width: "500%" }}>
+            <Text style={subHeader}> No Movie</Text>
+          </View>
+        )}
+      </ScrollView>
+    </View>
   );
 };
 

@@ -1,15 +1,18 @@
-import { Alert, TouchableWithoutFeedback, View } from "react-native";
-import React, { useState, Fragment } from "react";
+import { Alert, ScrollView, Text, TouchableWithoutFeedback, View } from "react-native";
+import React, { useState, Fragment, useContext } from "react";
 import { MovieCard } from "../components/movie-component/MovieCard";
 import { SearchBarComponent } from "../components/movie-component/SearchBar";
 import Icon from "react-native-vector-icons/Entypo";
 import { IMovieDetail, IReview } from "../services";
 import { fetchMovieDetails, fetchReviewMovieDetails } from "../components/features/handlingFunction";
+import { GlobalContext } from "../context/GlobalState";
 
 const WatchlistScreen = ({ navigation, route }) => {
   //Access watchlist movie with context
   const { resWatchlist } = route.params;
   const [input, setInput] = useState<string>("");
+  const { storeAllState } = useContext(GlobalContext);
+
   // To do
 
   const handleMovieDetail = async (id: number) => {
@@ -17,6 +20,9 @@ const WatchlistScreen = ({ navigation, route }) => {
     const resReview: IReview[] = await fetchReviewMovieDetails(id);
 
     if (resDetail !== undefined && resReview !== undefined) {
+      // replace back the current state
+      await storeAllState(resDetail, resReview);
+
       //From APISERVICE
       navigation.push("DetailScreen", { item: resDetail, review: resReview });
     } else {
@@ -33,7 +39,14 @@ const WatchlistScreen = ({ navigation, route }) => {
         </TouchableWithoutFeedback>
 
         {/* {WatchList ? ():()} */}
-        <MovieCard handleMovieDetail={handleMovieDetail} MovieData={resWatchlist} keyword={input} />
+        {/* <MovieCard handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} /> */}
+        <ScrollView scrollEnabled={true} horizontal={true}>
+          {Object.keys(resWatchlist).length > 0 ? (
+            <MovieCard handleMovieDetail={handleMovieDetail} MovieData={resWatchlist} keyword={input} />
+          ) : (
+            <Text>No Watchlist added yet</Text>
+          )}
+        </ScrollView>
       </View>
     </Fragment>
   );

@@ -3,7 +3,7 @@ const h = 40
 const w = 145
 export const setHeight = (h:number) => (height/100) *h
 export const setWidth = (w:number) => (width / 100) * w;
-import { Dimensions, ImageStyle, StatusBar, ViewStyle } from "react-native";
+import { Dimensions, ImageStyle, ViewStyle } from "react-native";
 import Color from "../color";
 
 //Login
@@ -13,8 +13,8 @@ export const Logincontainer: ViewStyle = {
   alignContent: "space-between",
   flexDirection: "column",
   margin: 16,
-  padding: 10,
-  paddingTop: 50,
+  padding: 8,
+  paddingTop: 42,
   height: "60%",
 };
 export const InputContainer: ViewStyle = {
@@ -125,7 +125,7 @@ export const MovieDetailContainer:ViewStyle = {
   alignItems: "center",
   flexDirection: "row",
   justifyContent: "space-between",
-  paddingHorizontal: 24,
+  paddingHorizontal: 32,
 }
 
 export const ContainerRow :ViewStyle ={
@@ -133,14 +133,14 @@ export const ContainerRow :ViewStyle ={
     alignItems: "center",
     alignContent:"center",
     flexDirection: "row",
-    width:48,
-    padding:10
+    width:64,
+    padding:16
 
     
 }
 
 export const smallDetail : ViewStyle ={
-    paddingHorizontal: 24,
+    paddingHorizontal: 32,
     paddingTop: 16,
     flexDirection:"row"
 }

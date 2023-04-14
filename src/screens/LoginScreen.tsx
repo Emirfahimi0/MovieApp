@@ -12,13 +12,13 @@ import { getGenreMovie } from "../services/api-services";
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const { getUser, getGenre } = useContext(GlobalContext);
+  const { storeUser, storeGenre } = useContext(GlobalContext);
 
   useEffect(() => {
     const fetchGenre = async (): Promise<void> => {
       const responseGenre: Genre[] = await getGenreMovie();
       // set state for in context provider for Genre []
-      getGenre(responseGenre);
+      storeGenre(responseGenre);
     };
     fetchGenre().catch(console.error);
   }, []);
@@ -31,7 +31,7 @@ const LoginScreen = ({ navigation }) => {
     if (userPassword === "") {
       Alert.alert("User password is empty");
     } else {
-      let checkLogin = await getUser(userEmail, userPassword);
+      let checkLogin = await storeUser(userEmail, userPassword);
       if (checkLogin === "success!") {
         navigation.navigate("HomeScreen");
       } else {

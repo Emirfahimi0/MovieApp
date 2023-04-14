@@ -4,23 +4,24 @@ import { SearchBarComponent } from "../components/movie-component/SearchBar";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { MovieType } from ".";
-import { Alert, ScrollView } from "react-native";
+import { Alert } from "react-native";
 import { fetchMovieDetails, fetchReviewMovieDetails, fetchWatchlist } from "../components/features/handlingFunction";
 import { IMovieDetail, IReview } from "../services";
+import Loader from "../components/features/Loader";
 
 const HomeScreen = ({ navigation }) => {
   // always use set function
   const [searchText, setSearchText] = useState<string>("");
-  const { movieState, addTrendingMovies, genreState, storeIntoState } = useContext(GlobalContext);
+  const { handleTrendingMovies, genreState, storeAllState, filteredMovieState, movieState } = useContext(GlobalContext);
 
   useEffect(() => {
-    const getMovies = async (): Promise<void> => {
+    const handlegetMovies = async (): Promise<void> => {
       const responseApiMovie: MovieType[] = await getTrendingmovie();
-      addTrendingMovies(responseApiMovie);
+      const actionId = genreState.filter((item) => item.name === "Action");
+      handleTrendingMovies(responseApiMovie, actionId[0], 0);
     };
 
-    //fetchGenre().catch(console.error);
-    getMovies().catch(console.error);
+    handlegetMovies().catch(console.error);
   }, []);
 
   const handleMovieDetail = async (id: number) => {
@@ -28,10 +29,10 @@ const HomeScreen = ({ navigation }) => {
     const resReview: IReview[] = await fetchReviewMovieDetails(id);
 
     if (resDetail !== undefined && resReview !== undefined) {
-      await storeIntoState(resDetail, resReview);
+      await storeAllState(resDetail, resReview);
 
       //From api service
-      navigation.push("DetailScreen");
+      navigation.push("DetailScreen", { item: resDetail, review: resReview });
     } else {
       // alert {you dont have data }
       Alert.alert("getDetails undefined.");
@@ -39,7 +40,9 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const handleWatchList = async () => {
+    // const { reviewState, detailsState } = useContext(GlobalContext);
     const resWatchlist = await fetchWatchlist();
+    console.log("review State");
     if (resWatchlist !== undefined) {
       navigation.navigate("WatchlistScreen", { resWatchlist: resWatchlist });
     }
@@ -48,16 +51,18 @@ const HomeScreen = ({ navigation }) => {
   return (
     <Fragment>
       <SearchBarComponent searchText={searchText} setSearchText={setSearchText} />
-      <ScrollView>
+      {movieState.length < 0 && movieState !== undefined ? (
+        <Loader />
+      ) : (
         <MovieComponent
           handleMovieDetail={handleMovieDetail}
           handleWatchList={handleWatchList}
           searchInput={searchText}
           navigation={navigation}
-          Movie={movieState}
+          Movie={filteredMovieState}
           Genres={genreState}
         />
-      </ScrollView>
+      )}
     </Fragment>
   );
 };

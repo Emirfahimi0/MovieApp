@@ -4,6 +4,7 @@ import { GenreCard } from "./GenreCard";
 import { ItemSeparator } from "./ItemSeparator";
 import COLORS from "../../constants/color";
 import { GlobalContext } from "../../context/GlobalState";
+import { Genre } from "../../services";
 
 export const CardButtons = ({ Genre }) => {
   const [active, setActive] = useState<number>(0);
@@ -20,7 +21,6 @@ export const CardButtons = ({ Genre }) => {
           const handleActive = () => {
             setActive(index);
             console.log("genre item", item);
-            console.log("genre index", index);
             filterMovieByGenre(item, index);
           };
           const selectedButton: ViewStyle = active === index ? { backgroundColor: COLORS.ACTIVE } : { backgroundColor: COLORS.WHITE };

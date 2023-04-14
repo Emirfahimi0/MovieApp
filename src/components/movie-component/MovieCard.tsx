@@ -22,7 +22,7 @@ export const MovieCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardP
     <Fragment>
       <FlatList
         data={MovieData}
-        horizontal
+        numColumns={2}
         keyExtractor={(item) => `${item.id}`}
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={() => <ItemSeparator width={20} />}

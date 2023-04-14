@@ -22,6 +22,7 @@ export const loginText: TextStyle = {
 
 export const InputLogin: TextStyle = {
   fontSize: 15,
+  color:Color.AMBER,
   width: "100%",
   fontFamily: Font.BOLD,
 };
@@ -29,7 +30,8 @@ export const InputLogin: TextStyle = {
 
 
 export const InputTextStyle: TextStyle = {
-  fontSize: 15,
+  fontSize: 16,
+  color:Color.AMBER,
   width: "100%",
   fontFamily: Font.BOLD,
 };
@@ -57,7 +59,7 @@ export const subDetail : TextStyle = {
 
 export const MovieDetailTitle:TextStyle ={
     fontFamily: Font.BOLD,
-    fontSize:18,
+    fontSize:16,
     color:Color.WHITE
 }
 export const additionalDetailText:TextStyle ={
