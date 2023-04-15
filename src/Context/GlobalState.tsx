@@ -2,6 +2,7 @@ import { Genre, MovieType, user } from "../screens";
 import React, { createContext, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
 import { IMovieDetail, IReview, IAccountState } from "../services";
+import TouchID from "react-native-touch-id";
 
 export interface IInitialState {
   accountState: IAccountState;
@@ -11,7 +12,7 @@ export interface IInitialState {
   filterMovieByGenre: (item: Genre, index: number) => void;
   genreState: Genre[];
   storeGenre: (genre: Genre[]) => Promise<void>;
-  storeUser: (username: string, password: string) => Promise<string>;
+  storeUser: (username: string, password: string, faceId: string) => Promise<string>;
   movieState: MovieType[];
   filteredMovieState: MovieType[];
   reviewState: IReview[];
@@ -63,10 +64,17 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   const [state, setState] = useState(initialState);
 
   // Get local user store
-  const storeUser = async (username: string, password: string): Promise<string> => {
+  const storeUser = async (username: string, password: string, authMethod?: string): Promise<string> => {
     let message = "";
-    let tryLogInUser = await sessionWithLogIn(username, password);
-    if (tryLogInUser) {
+    let tryAuth = false;
+
+    if (authMethod === "faceId") {
+      tryAuth = await authenticateWithFaceId(); // Function to authenticate with Face ID
+    } else {
+      tryAuth = await sessionWithLogIn(username, password);
+    }
+
+    if (tryAuth) {
       const currentUser = existingUser.find((item) => item.username === username.toLowerCase() && item.password === password);
       if (currentUser) {
         setState({ ...state, userState: { ...currentUser } });
@@ -75,10 +83,23 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
         message = "no user found";
       }
     } else {
-      message = "error unknown";
+      message = "authentication failed";
     }
     return message;
   };
+
+  // const authenticateWithFaceId = async (): Promise<boolean> => {
+  //   await sessionWithLogIn("emirfahimi", "adidas");
+  //   return new Promise((resolve, reject) => {
+  //     TouchID.authenticate("Authenticate with Face ID")
+  //       .then(() => {
+  //         resolve(true);
+  //       })
+  //       .catch((error: string) => {
+  //         reject(error);
+  //       });
+  //   });
+  // };
 
   // Method filtering movie by genre
   const filterMovieByGenre = (item: Genre, index: number): void => {

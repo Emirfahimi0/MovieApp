@@ -96,7 +96,7 @@ export const createNewSession = async(token:string): Promise<Session> => {
  }
 
 /* Session with log In  */
-export const sessionWithLogIn = async (username:string,password:string):Promise<Boolean> => {
+export const sessionWithLogIn = async (username:string,password:string):Promise<boolean> => {
     
     let requestToken: TResponseToken  = await createRequestToken ()
     let isAuthenticated = false;

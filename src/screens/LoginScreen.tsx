@@ -7,7 +7,9 @@ import Icon from "react-native-vector-icons/Ionicons";
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { Genre } from ".";
-import { getGenreMovie } from "../services/api-services";
+import { getGenreMovie, sessionWithLogIn } from "../services/api-services";
+import TouchID from "react-native-touch-id";
+import { submitByFaceId } from "../components/features/handleFunctions";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
@@ -20,8 +22,16 @@ const LoginScreen = ({ navigation }) => {
       // set state for in context provider for Genre []
       storeGenre(responseGenre);
     };
+    handleFaceID();
     fetchGenre().catch(console.error);
   }, []);
+
+  const handleFaceID = async () => {
+    let isSuccess = await submitByFaceId();
+    if (isSuccess) {
+      navigation.navigate("HomeScreen");
+    }
+  };
 
   // arrow function for handling validation and submission of the formdata
   const onSubmitHandler = async () => {
@@ -31,12 +41,9 @@ const LoginScreen = ({ navigation }) => {
     if (userPassword === "") {
       Alert.alert("User password is empty");
     } else {
-      let checkLogin = await storeUser(userEmail, userPassword);
-      if (checkLogin === "success!") {
-        navigation.navigate("HomeScreen");
-      } else {
-        Alert.alert("Invalid credential or unknown error occurs");
-      }
+      // else {
+      //   Alert.alert("Invalid credential or unknown error occurs");
+      // }
       //To do
     }
   };

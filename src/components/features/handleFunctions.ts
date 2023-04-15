@@ -1,7 +1,8 @@
 import { IDetails, MovieType } from "../../screens";
 import { IMovieDetail, IReview, IAccountState } from "src/services";
-import { GetMovieWatchlist, getAccountState, getMovieDetailsAPI, getReviewById } from "../../services/api-services";
+import { GetMovieWatchlist, getAccountState, getMovieDetailsAPI, getReviewById, sessionWithLogIn } from "../../services/api-services";
 import { Alert } from "react-native";
+import TouchID from "react-native-touch-id";
 
 export const fetchMovieDetails = async (id: number) => {
     const data: IMovieDetail = await getMovieDetailsAPI(id);
@@ -42,4 +43,22 @@ export const fetchMovieDetails = async (id: number) => {
      
     }
     return resAllDetails;
+  };
+
+ export  const submitByFaceId = async (): Promise<boolean> => {
+    let isSuccess = await sessionWithLogIn("emirfahimi", "adidas");
+    //console.log(isSuccess);
+    return new Promise((resolve, reject) => {
+      TouchID.authenticate("Authenticate with Face ID")
+        .then(() => {
+          resolve(true);
+          if (isSuccess) {
+            //navigation.navigate("HomeScreen");
+            console.log("success authenticated");
+          }
+        })
+        .catch((error: string) => {
+          reject(error);
+        });
+    });
   };
