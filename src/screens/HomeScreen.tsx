@@ -25,7 +25,6 @@ const HomeScreen = ({ navigation }) => {
   const handleWatchList = async () => {
     // const { reviewState, detailsState } = useContext(GlobalContext);
     const resWatchlist = await fetchWatchlist();
-    console.log("review State");
     if (resWatchlist !== undefined) {
       navigation.navigate("WatchlistScreen", { resWatchlist: resWatchlist });
     }

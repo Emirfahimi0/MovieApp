@@ -27,14 +27,13 @@ export const fetchMovieDetails = async (id: number) => {
     const resDetail: IMovieDetail = await fetchMovieDetails(id);
     const resReview: IReview[] = await fetchReviewMovieDetails(id);
     //const navigation:RootNavigationProp = useNavigation()
-    let isSuccess ={
+    let resAllDetails ={
       detail:resDetail,
       review:resReview
     }
 
     if (resDetail !== undefined && resReview !== undefined) {
-      console.log(resReview)
-       isSuccess = {...{detail:resDetail},review:{...resReview}}
+      resAllDetails = {...{detail:resDetail},...{review:resReview}}
       //From api service
      
     } else {
@@ -42,5 +41,5 @@ export const fetchMovieDetails = async (id: number) => {
       Alert.alert("getDetails and getReview undefined. ");
      
     }
-    return isSuccess;
+    return resAllDetails;
   };

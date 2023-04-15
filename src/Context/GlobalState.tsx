@@ -31,7 +31,12 @@ interface GlobalProviderProps {
 }
 
 const initialState: IInitialState = {
-  accountState: {},
+  accountState: {
+    favourite: true,
+    id: 0,
+    rated: 5 | true,
+    watchlist: true,
+  },
   handleTrendingMovies: () => {},
   activeGenreId: 0,
   detailsState: {},
@@ -113,7 +118,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     // newState.Review = { ...resReview };
     // newState.accountState = { ...resFetchState };
     // setState(newState);
-    setState({ ...state, detailsState: resDetail, reviewState: { ...resReview } });
+    setState({ ...state, detailsState: resDetail, reviewState: resReview });
   };
   return (
     <GlobalContext.Provider
