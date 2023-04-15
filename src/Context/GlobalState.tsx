@@ -1,8 +1,8 @@
 import { Genre, MovieType, user } from "../screens";
 import React, { createContext, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
-import { IMovieDetail, IReview, IAccountState } from "../services";
-import TouchID from "react-native-touch-id";
+import { IMovieDetail, IReview, IAccountState, IResult } from "../services";
+import { submitByFaceId } from "../components/features/handleFunctions";
 
 export interface IInitialState {
   accountState: IAccountState;
@@ -15,8 +15,8 @@ export interface IInitialState {
   storeUser: (username: string, password: string, faceId: string) => Promise<string>;
   movieState: MovieType[];
   filteredMovieState: MovieType[];
-  reviewState: IReview[];
-  storeAllState: (detail: IMovieDetail, review: IReview[]) => Promise<void>;
+  reviewState: IResult[];
+  storeAllDetailsState: (detail: IMovieDetail, review: IResult[]) => Promise<void>;
   userState: user;
 }
 
@@ -48,7 +48,7 @@ const initialState: IInitialState = {
   movieState: [],
   filteredMovieState: [],
   reviewState: [],
-  storeAllState: () => Promise.resolve(),
+  storeAllDetailsState: () => Promise.resolve(),
   user: {
     id: "",
     password: "",
@@ -69,7 +69,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     let tryAuth = false;
 
     if (authMethod === "faceId") {
-      tryAuth = await authenticateWithFaceId(); // Function to authenticate with Face ID
+      tryAuth = await submitByFaceId(); // Function to authenticate with Face ID
     } else {
       tryAuth = await sessionWithLogIn(username, password);
     }
@@ -88,19 +88,6 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     return message;
   };
 
-  // const authenticateWithFaceId = async (): Promise<boolean> => {
-  //   await sessionWithLogIn("emirfahimi", "adidas");
-  //   return new Promise((resolve, reject) => {
-  //     TouchID.authenticate("Authenticate with Face ID")
-  //       .then(() => {
-  //         resolve(true);
-  //       })
-  //       .catch((error: string) => {
-  //         reject(error);
-  //       });
-  //   });
-  // };
-
   // Method filtering movie by genre
   const filterMovieByGenre = (item: Genre, index: number): void => {
     // check if the selected item is already in active filter in the state
@@ -110,7 +97,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     const currentFilter = state.movieState.filter((element) => {
       return element.genre_ids.includes(item.id);
     });
-    // console.log("current filter", currentFilter);
+    console.log("current filter", currentFilter);
     setState({ ...state, filteredMovieState: currentFilter, activeGenreId: item.id });
     // console.log(state.activeGenreId);
   };
@@ -131,7 +118,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   const storeGenre = async (genre: Genre[]): Promise<void> => {
     setState({ ...state, genreState: genre });
   };
-  const storeAllState = async (resDetail: IMovieDetail, resReview: IReview[]): Promise<void> => {
+  const storeAllDetailsState = async (resDetailMovie: IMovieDetail, resReviewMovie: IResult[]): Promise<void> => {
     // will run all at the same time,
     // ---> method 1st
     // const newState = { ...state };
@@ -139,7 +126,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     // newState.Review = { ...resReview };
     // newState.accountState = { ...resFetchState };
     // setState(newState);
-    setState({ ...state, detailsState: resDetail, reviewState: resReview });
+    setState({ ...state, detailsState: resDetailMovie, reviewState: resReviewMovie });
   };
   return (
     <GlobalContext.Provider
@@ -155,7 +142,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
         storeUser,
         movieState: state.movieState,
         reviewState: state.reviewState,
-        storeAllState,
+        storeAllDetailsState,
         userState: state.userState,
       }}>
       {props.children}

@@ -1,6 +1,6 @@
-import { IDetails, MovieType } from "../../screens";
-import { IMovieDetail, IReview, IAccountState } from "src/services";
-import { GetMovieWatchlist, getAccountState, getMovieDetailsAPI, getReviewById, sessionWithLogIn } from "../../services/api-services";
+import { Genre, IDetailsMovie, MovieType } from "../../screens";
+import { IMovieDetail, IReview, IAccountState, IResult } from "src/services";
+import { GetMovieWatchlist, getAccountState, getGenreMovie, getMovieDetailsAPI, getReviewById, sessionWithLogIn } from "../../services/api-services";
 import { Alert } from "react-native";
 import TouchID from "react-native-touch-id";
 
@@ -10,7 +10,7 @@ export const fetchMovieDetails = async (id: number) => {
   };
 
   export const fetchReviewMovieDetails = async (id: number) => {
-    const data: IReview[] = await getReviewById(id);
+    const data: IResult[] = await getReviewById(id);
     return data;
   };
   export const fetchAccountState = async (id: number) => {
@@ -21,14 +21,19 @@ export const fetchMovieDetails = async (id: number) => {
     const data: MovieType[] = await GetMovieWatchlist();
     return data;
   };
+  export const fetchGenreItem = async () => {
+    const responseGenre: Genre[] = await getGenreMovie();
 
+    // set state for in context provider for Genre []
+    return responseGenre;
+  };
 
   // Functions use in HomeScreen and WatchlistScreen
- export const  handleMovieDetail = async (id: number ):Promise<IDetails> => {
+ export const  handleMovieDetail = async (id: number ):Promise<IDetailsMovie> => {
     const resDetail: IMovieDetail = await fetchMovieDetails(id);
-    const resReview: IReview[] = await fetchReviewMovieDetails(id);
+    const resReview: IResult[] = await fetchReviewMovieDetails(id);
     //const navigation:RootNavigationProp = useNavigation()
-    let resAllDetails ={
+    let resAllDetails:IDetailsMovie ={
       detail:resDetail,
       review:resReview
     }
@@ -47,12 +52,12 @@ export const fetchMovieDetails = async (id: number) => {
 
  export  const submitByFaceId = async (): Promise<boolean> => {
     let isSuccess = await sessionWithLogIn("emirfahimi", "adidas");
-    //console.log(isSuccess);
+    console.log("isSuccess",isSuccess);
     return new Promise((resolve, reject) => {
       TouchID.authenticate("Authenticate with Face ID")
         .then(() => {
-          resolve(true);
-          if (isSuccess) {
+          if (isSuccess === true) {
+            resolve(true);
             //navigation.navigate("HomeScreen");
             console.log("success authenticated");
           }

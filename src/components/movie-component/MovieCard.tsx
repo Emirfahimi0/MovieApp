@@ -1,6 +1,6 @@
 import { Fragment, useContext } from "react";
 import { ImagePoster, ListPreviewMovie, movieContainer } from "../../constants/style-component/ContainerStyling";
-import { IDetails, MovieType } from "../../screens";
+import { IDetailsMovie, MovieType } from "../../screens";
 import { ItemSeparator } from "./ItemSeparator";
 import { subDetail, subHeader, subTitle } from "../../constants/style-component/TextStyleComponent";
 import { Text, View, FlatList, TouchableOpacity, Image, ViewStyle } from "react-native";
@@ -14,11 +14,11 @@ import Loader from "../features/Loader";
 interface IMovieCardProps {
   keyword: string;
   MovieData: MovieType[];
-  handleMovieDetail: (id: number) => Promise<IDetails>;
+  handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
 
 export const MovieCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProps) => {
-  const { storeAllState } = useContext(GlobalContext);
+  const { storeAllDetailsState } = useContext(GlobalContext);
   const navigation: RootNavigationProp = useNavigation();
   let loading = false;
   const handleShowDetailScreen = async (id: number) => {
@@ -26,7 +26,7 @@ export const MovieCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardP
     console.log("object", getDetailsFromApi.detail);
     if (getDetailsFromApi !== undefined) {
       loading = false;
-      storeAllState(getDetailsFromApi.detail, getDetailsFromApi.review);
+      storeAllDetailsState(getDetailsFromApi.detail, getDetailsFromApi.review);
       // navigate...
       navigation.navigate("DetailScreen", { item: getDetailsFromApi.detail, review: getDetailsFromApi.review });
     } else loading = true;

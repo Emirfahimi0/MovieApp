@@ -57,8 +57,8 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
       ) : (
         <Loader />
       )}
-      <SubContainerDetail overview={detailsState.overview} overViewStyle={overViewTextArea} />
-      <ReviewContainerDetails review={reviewState} overViewStyle={overViewTextArea} />
+      <SubContainerDetail overviewDetails={detailsState.overview} overViewStyle={overViewTextArea} />
+      <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
     </ScrollView>
   );
 };

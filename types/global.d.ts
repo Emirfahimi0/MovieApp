@@ -1,8 +1,8 @@
 import { MovieType } from "src/screens";
-import { IMovieDetail, IReview } from "src/services";
+import { IMovieDetail, IResult } from "src/services";
 
 declare type RootStackParamList = {
-   DetailScreen: {item:IMovieDetail,review:IReview[]},
+   DetailScreen: {item:IMovieDetail,review:IResult[]},
    HomeScreen:undefined
    LoginScreen:undefined
    SplashScreen:undefined,

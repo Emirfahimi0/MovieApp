@@ -5,22 +5,30 @@ import { MovieCard } from "./MovieCard";
 import { subHeader, subTitle } from "../../constants/style-component/TextStyleComponent";
 import { CardContainer } from "../../constants/style-component/ContainerStyling";
 import Color from "../../constants/color";
-import { Genre, IDetails, MovieType } from "../../screens";
+import { Genre, IDetailsMovie, MovieType } from "../../screens";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface IMovieComponent {
   searchInput: string;
   Movie: MovieType[];
   Genres: Genre[];
   handleWatchList: () => {};
-  handleMovieDetail: (id: number) => Promise<IDetails>;
+  handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
 
 export const MovieComponent = ({ searchInput, Movie, Genres, handleMovieDetail, handleWatchList }: IMovieComponent) => {
+  const handleLogOut = async () => {
+    //To do
+    AsyncStorage.clear();
+  };
   return (
     <View style={container}>
       <View style={headerContainer}>
         <View style={headerSubtitle}>
-          <Text style={subHeader}> Now Playing </Text>
+          <Text onPress={handleLogOut} style={subHeader}>
+            {" "}
+            Now Playing{" "}
+          </Text>
         </View>
         <TouchableWithoutFeedback onPress={handleWatchList}>
           <View style={{ ...CardContainer, width: "30%", backgroundColor: Color.HEART }}>

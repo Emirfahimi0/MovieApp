@@ -15,10 +15,10 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     const handleGetMovies = async (): Promise<void> => {
       const responseApiMovie: MovieType[] = await getTrendingmovie();
+
       const actionId = genreState.filter((item) => item.name === "Action");
       handleTrendingMovies(responseApiMovie, actionId[0], 0);
     };
-
     handleGetMovies().catch(console.error);
   }, []);
 

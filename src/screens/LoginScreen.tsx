@@ -6,30 +6,35 @@ import Color from "../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
-import { Genre } from ".";
-import { getGenreMovie, sessionWithLogIn } from "../services/api-services";
-import TouchID from "react-native-touch-id";
-import { submitByFaceId } from "../components/features/handleFunctions";
+import { sessionWithLogIn } from "../services/api-services";
+import { fetchGenreItem, submitByFaceId } from "../components/features/handleFunctions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ navigation }) => {
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const { storeUser, storeGenre } = useContext(GlobalContext);
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [userPassword, setUserPassword] = useState<string>("");
+  const { storeGenre } = useContext(GlobalContext);
 
   useEffect(() => {
-    const fetchGenre = async (): Promise<void> => {
-      const responseGenre: Genre[] = await getGenreMovie();
-      // set state for in context provider for Genre []
-      storeGenre(responseGenre);
-    };
     handleFaceID();
-    fetchGenre().catch(console.error);
   }, []);
 
   const handleFaceID = async () => {
-    let isSuccess = await submitByFaceId();
-    if (isSuccess) {
+    const data = await AsyncStorage.getItem("userLoggedIn");
+    console.log("check data", data);
+    if (data) {
+      console.log("user already logged In", data);
       navigation.navigate("HomeScreen");
+    } else {
+      let isSuccess = await submitByFaceId();
+      if (isSuccess === true) {
+        const resGenre = await fetchGenreItem();
+        storeGenre(resGenre);
+        AsyncStorage.setItem("userLoggedIn", JSON.stringify(isSuccess));
+        navigation.navigate("HomeScreen");
+      } else {
+        console.log("something wrong somewhere");
+      }
     }
   };
 
@@ -41,6 +46,10 @@ const LoginScreen = ({ navigation }) => {
     if (userPassword === "") {
       Alert.alert("User password is empty");
     } else {
+      const isSuccess = await sessionWithLogIn(userEmail, userPassword);
+      if (isSuccess) {
+        navigation.navigate("HomeScreen");
+      }
       // else {
       //   Alert.alert("Invalid credential or unknown error occurs");
       // }

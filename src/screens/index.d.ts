@@ -1,4 +1,4 @@
-import { IMovieDetail, IReview } from "../services";
+import { IMovieDetail, IResult, IReview } from "../services";
 
 declare interface IMovie {
     page?:number
@@ -63,8 +63,8 @@ declare type user = {
   username: string;
 };
 
-declare interface IDetails {
+declare interface IDetailsMovie {
  detail:IMovieDetail ,
- review:IReview[]
+ review:IResult[]
 }
 

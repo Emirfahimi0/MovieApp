@@ -4,7 +4,7 @@ import { OverviewContainer } from "../../constants/style-component/ContainerStyl
 import { genreText, OverviewDetailsText, subHeader } from "../../constants/style-component/TextStyleComponent";
 import Color from "../../constants/color";
 
-export const SubContainerDetail = ({ overview, overViewStyle }) => {
+export const SubContainerDetail = ({ overviewDetails, overViewStyle }) => {
   const [showMore, setShowmore] = useState<Boolean>(true);
   const handleShowMore = () => {
     setShowmore(!showMore);
@@ -15,7 +15,7 @@ export const SubContainerDetail = ({ overview, overViewStyle }) => {
       <ScrollView>
         <View style={overViewStyle}>
           <Text style={{ ...OverviewDetailsText, color: Color.WHITE }}>
-            {showMore ? overview.split(" ").slice(0, 20).join(" ") : overview}
+            {showMore ? overviewDetails.split(" ").slice(0, 20).join(" ") : overviewDetails}
           </Text>
           <Text style={{ ...genreText, textAlign: "right", color: Color.WHITE, fontWeight: "600" }} onPress={handleShowMore}>
             {showMore ? "Show more" : "Show less"}

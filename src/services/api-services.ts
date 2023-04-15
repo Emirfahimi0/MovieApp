@@ -1,7 +1,7 @@
 import axios from "axios"
 import  {  ENDPOINTS, TMDB_API_KEY }  from "../constants/utilities";
 import {  Genre, IRating, IMovieDetail, IReview, TResponseToken, IAccountState,
-        Session, IWatchListResponse } from ".";
+        Session, IWatchListResponse, IResult } from ".";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MovieType } from "../screens";
 
@@ -320,7 +320,7 @@ export const deleteRatingbyId = async (id:number,value:number):Promise<IRating> 
 export const getReviewById = async (id:number) => {
 
     const url = `${ENDPOINTS.GET_REVIEWS_BY_ID}${id}/reviews?${TMDB_API_KEY}`
-    let data:IReview[] = await axios.get(url,{responseType:"json"}).then(function(res){
+    let data:IResult[] = await axios.get(url,{responseType:"json"}).then(function(res){
         let responseFromAPI = res.data.results
         return responseFromAPI
     })
