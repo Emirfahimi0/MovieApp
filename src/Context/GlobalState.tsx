@@ -113,7 +113,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     // newState.Review = { ...resReview };
     // newState.accountState = { ...resFetchState };
     // setState(newState);
-    setState({ ...state, detailsState: resDetail, reviewState: resReview });
+    setState({ ...state, detailsState: resDetail, reviewState: { ...resReview } });
   };
   return (
     <GlobalContext.Provider

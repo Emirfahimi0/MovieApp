@@ -2,7 +2,7 @@ import { MovieType } from "src/screens";
 import { IMovieDetail, IReview, IAccountState } from "src/services";
 
 declare type RootStackParamList = {
-   DetailScreen: undefined,
+   DetailScreen: {item:IMovieDetail,review:IReview[]},
    HomeScreen:undefined
    LoginScreen:undefined
    SplashScreen:undefined,
