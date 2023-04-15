@@ -36,8 +36,10 @@ export const InputTextStyle: TextStyle = {
   fontFamily: Font.BOLD,
 };
   export const InputSearcbBar: TextStyle= {
-    color:Color.BLACK
-  }
+    color:Color.WHITE,
+    fontFamily:Font.SEMI_BOLD,
+    fontSize:16
+    }
 export const subTitle: TextStyle = {
     fontFamily: Font.SEMI_BOLD,
     fontSize: 14,

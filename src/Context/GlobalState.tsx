@@ -126,6 +126,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     // newState.Review = { ...resReview };
     // newState.accountState = { ...resFetchState };
     // setState(newState);
+    resReviewMovie = resReviewMovie.splice(0, 5);
     setState({ ...state, detailsState: resDetailMovie, reviewState: resReviewMovie });
   };
   return (

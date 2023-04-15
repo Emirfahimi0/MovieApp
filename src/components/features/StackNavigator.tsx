@@ -7,10 +7,7 @@ import LoginScreen from "../../screens/LoginScreen";
 import React, { useContext, useEffect, useState } from "react";
 import WatchListScreen from "../../screens/WatchlistScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Loader from "./Loader";
-import { getGenreMovie } from "../../services/api-services";
 import { GlobalContext } from "../../context/GlobalState";
-import { Genre } from "src/services";
 import { fetchGenreItem } from "./handleFunctions";
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -23,7 +20,7 @@ export const StackNavigator = () => {
   const handleLogin = async () => {
     //const authenticationResult = await submitByFaceId();
     const data = await AsyncStorage.getItem("userLoggedIn");
-    if (data) {
+    if (!!data) {
       const resGenre = await fetchGenreItem();
       storeGenre(resGenre);
       if (data.endsWith("e")) {
@@ -48,12 +45,11 @@ export const StackNavigator = () => {
     <NavigationContainer>
       <RootStack.Navigator initialRouteName="LoginScreen" screenOptions={{ headerShown: false }}>
         <>
+          <RootStack.Screen name="LoginScreen" component={LoginScreen} />
           <RootStack.Screen name="HomeScreen" component={HomeScreen} />
           <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} />
           <RootStack.Screen name="WatchlistScreen" component={WatchListScreen} />
         </>
-
-        <RootStack.Screen name="LoginScreen" component={LoginScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

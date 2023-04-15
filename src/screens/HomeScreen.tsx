@@ -6,19 +6,24 @@ import { GlobalContext } from "../context/GlobalState";
 import { MovieType } from ".";
 import { fetchWatchlist, handleMovieDetail } from "../components/features/handleFunctions";
 import Loader from "../components/features/Loader";
+import { Alert } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "types/global";
 
-const HomeScreen = ({ navigation }) => {
+interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
+
+const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   // always use set function
   const [searchText, setSearchText] = useState<string>("");
   const { handleTrendingMovies, genreState, filteredMovieState, movieState } = useContext(GlobalContext);
-
-  useEffect(() => {
-    const handleGetMovies = async (): Promise<void> => {
-      const responseApiMovie: MovieType[] = await getTrendingmovie();
-
+  const handleGetMovies = async (): Promise<void> => {
+    const responseApiMovie: MovieType[] = await getTrendingmovie();
+    if (responseApiMovie) {
       const actionId = genreState.filter((item) => item.name === "Action");
       handleTrendingMovies(responseApiMovie, actionId[0], 0);
-    };
+    } else Alert.alert("Cannot fetch data from api");
+  };
+  useEffect(() => {
     handleGetMovies().catch(console.error);
   }, []);
 

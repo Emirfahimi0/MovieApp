@@ -22,9 +22,10 @@ const LoginScreen = ({ navigation }) => {
   const handleFaceID = async () => {
     const data = await AsyncStorage.getItem("userLoggedIn");
     console.log("check data", data);
-    if (data) {
+    //By doing this, ensuring that the data value is always compared to a boolean value, which avoids the type error.
+    if (!!data) {
       console.log("user already logged In", data);
-      navigation.navigate("HomeScreen");
+      //navigation.navigate("HomeScreen");
     } else {
       let isSuccess = await submitByFaceId();
       if (isSuccess === true) {

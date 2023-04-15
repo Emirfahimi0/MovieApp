@@ -1,12 +1,12 @@
-import { ButtonContainerRating, CardContainer } from "../../constants/style-component/ContainerStyling";
-import { RatingText, genreText, subDetail } from "../../constants/style-component/TextStyleComponent";
 import { Alert, Modal, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { Dispatch, SetStateAction, useState } from "react";
-import Color from "../../constants/color";
-import Icon from "react-native-vector-icons/Ionicons";
+import { ButtonContainerRating, CardContainer } from "../../constants/style-component/ContainerStyling";
 import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
 import { IRating, IMovieDetail, IAccountState } from "../../services";
 import { MovieType } from "../../screens";
+import { RatingText, genreText, subDetail } from "../../constants/style-component/TextStyleComponent";
+import Color from "../../constants/color";
+import Icon from "react-native-vector-icons/Ionicons";
+import React, { Dispatch, SetStateAction, useState } from "react";
 
 export interface IButtonModalRating {
   movie: MovieType | IMovieDetail;

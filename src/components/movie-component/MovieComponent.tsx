@@ -7,6 +7,8 @@ import { CardContainer } from "../../constants/style-component/ContainerStyling"
 import Color from "../../constants/color";
 import { Genre, IDetailsMovie, MovieType } from "../../screens";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RootNavigationProp } from "types/global";
+import { useNavigation } from "@react-navigation/native";
 
 interface IMovieComponent {
   searchInput: string;
@@ -17,9 +19,12 @@ interface IMovieComponent {
 }
 
 export const MovieComponent = ({ searchInput, Movie, Genres, handleMovieDetail, handleWatchList }: IMovieComponent) => {
+  const navigation: RootNavigationProp = useNavigation();
+
   const handleLogOut = async () => {
     //To do
     AsyncStorage.clear();
+    navigation.navigate("LoginScreen");
   };
   return (
     <View style={container}>
@@ -31,7 +36,7 @@ export const MovieComponent = ({ searchInput, Movie, Genres, handleMovieDetail, 
           </Text>
         </View>
         <TouchableWithoutFeedback onPress={handleWatchList}>
-          <View style={{ ...CardContainer, width: "30%", backgroundColor: Color.HEART }}>
+          <View style={{ ...CardContainer, width: "30%", backgroundColor: Color.PURPLE }}>
             <Text style={{ ...subTitle, color: Color.WHITE }}>Watch List</Text>
           </View>
         </TouchableWithoutFeedback>

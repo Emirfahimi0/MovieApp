@@ -11,12 +11,12 @@ import {
 } from "../../constants/style-component/ContainerStyling";
 import { additionalDetailText, genreText, MovieDetailTitle, RatingText } from "../../constants/style-component/TextStyleComponent";
 import { ButtonModalRating } from "./ButtonModalRating";
+import { Genre, IMovieDetail, IAccountState, IWatchListResponse } from "../../services";
 import { ItemSeparator } from "../movie-component/ItemSeparator";
-import Color from "../../constants/color";
-import Icon from "react-native-vector-icons/Ionicons";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { toWatchList } from "../../services/api-services";
-import { Genre, IMovieDetail, IAccountState, IWatchListResponse } from "../../services";
+import Color from "../../constants/color";
+import Icon from "react-native-vector-icons/Ionicons";
 
 interface IHeaderContainerDetails {
   movie: IMovieDetail;

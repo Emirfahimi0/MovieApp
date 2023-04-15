@@ -59,7 +59,7 @@ export const movieContainer:ViewStyle= {
 
  export const  SearchBar:ViewStyle= {
     alignItems: "center",
-    backgroundColor: Color.EXTRA_LIGHT_GRAY,
+    backgroundColor: Color.BLUE,
     borderRadius: 12,
     flexDirection: "row",
     padding: 10,
@@ -155,7 +155,7 @@ export const OverviewContainer:ViewStyle = {
 export const ButtonContainerRating:ViewStyle ={
     alignItems: "center",
     justifyContent: "center",
-    marginLeft:32,
+    marginLeft:52,
     position: "relative",
   
 }

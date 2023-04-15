@@ -1,13 +1,12 @@
-import { ScrollView, Text, View } from "react-native";
-import React, { Fragment, useState } from "react";
+import { IResult } from "../../services";
 import { OverviewContainer, container } from "../../constants/style-component/ContainerStyling";
 import { OverviewDetailsText, genreText, subHeader } from "../../constants/style-component/TextStyleComponent";
+import { ScrollView, Text, View } from "react-native";
 import Color from "../../constants/color";
-import { IResult } from "../../services";
+import React, { Fragment, useState } from "react";
 
 const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
   const [active, setActive] = useState<number>(0);
-
   return (
     <View style={[OverviewContainer, { padding: 20 }]}>
       <Text style={{ ...subHeader, marginLeft: 15, color: Color.ACTIVE, paddingBottom: 15 }}>REVIEWS</Text>
