@@ -5,16 +5,14 @@ import { MovieCard } from "./MovieCard";
 import { subHeader, subTitle } from "../../constants/style-component/TextStyleComponent";
 import { CardContainer } from "../../constants/style-component/ContainerStyling";
 import Color from "../../constants/color";
-import { Genre, MovieType } from "../../screens";
-import { RootNavigationProp } from "types/global";
+import { Genre, IDetails, MovieType } from "../../screens";
 
 interface IMovieComponent {
   searchInput: string;
-  navigation: RootNavigationProp;
   Movie: MovieType[];
   Genres: Genre[];
   handleWatchList: () => {};
-  handleMovieDetail: (id: number) => {};
+  handleMovieDetail: (id: number) => Promise<IDetails>;
 }
 
 export const MovieComponent = ({ searchInput, Movie, Genres, handleMovieDetail, handleWatchList }: IMovieComponent) => {

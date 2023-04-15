@@ -6,7 +6,7 @@ import Color from "../constants/color";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
 import { GlobalContext } from "../context/GlobalState";
 import { IAccountState } from "../services";
-import { fetchAccountState } from "../components/features/handlingFunction";
+import { fetchAccountState } from "../components/features/handleFunctions";
 import Loader from "../components/features/Loader";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
