@@ -1,9 +1,9 @@
 import { Alert, Modal, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import { ButtonContainerRating, CardContainer } from "../../constants/style-component/ContainerStyling";
+import { ButtonContainerRating, CardContainer } from "../../constants/style-component/viewComponent";
 import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
 import { IRating, IMovieDetail, IAccountState } from "../../services";
 import { MovieType } from "../../screens";
-import { RatingText, genreText, subDetail } from "../../constants/style-component/TextStyleComponent";
+import { RatingText, genreText, subDetail } from "../../constants/style-component/textComponent";
 import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { Dispatch, SetStateAction, useState } from "react";

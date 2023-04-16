@@ -8,8 +8,8 @@ import {
   posterImage,
   setHeight,
   smallDetail,
-} from "../../constants/style-component/ContainerStyling";
-import { additionalDetailText, genreText, MovieDetailTitle, RatingText } from "../../constants/style-component/TextStyleComponent";
+} from "../../constants/style-component/viewComponent";
+import { additionalDetailText, genreText, MovieDetailTitle, RatingText } from "../../constants/style-component/textComponent";
 import { ButtonModalRating } from "./ButtonModalRating";
 import { Genre, IMovieDetail, IAccountState, IWatchListResponse } from "../../services";
 import { ItemSeparator } from "../movie-component/ItemSeparator";

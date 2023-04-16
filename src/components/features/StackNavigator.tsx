@@ -9,6 +9,8 @@ import WatchListScreen from "../../screens/WatchlistScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GlobalContext } from "../../context/GlobalState";
 import { fetchGenreItem } from "./handleFunctions";
+import color from "../../constants/color";
+import Font from "../../constants/font";
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -46,11 +48,18 @@ export const StackNavigator = () => {
       <RootStack.Navigator initialRouteName="LoginScreen" screenOptions={{ headerShown: false }}>
         <>
           <RootStack.Screen name="LoginScreen" component={LoginScreen} />
-          <RootStack.Screen name="HomeScreen" component={HomeScreen} />
+          <RootStack.Screen name="HomeScreen" component={HomeScreen} options={headerStyle} />
           <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} />
           <RootStack.Screen name="WatchlistScreen" component={WatchListScreen} />
         </>
       </RootStack.Navigator>
     </NavigationContainer>
   );
+};
+
+const headerStyle = {
+  title: "MoviesApp",
+  headerStyle: { backgroundColor: color.SEMI_BLACK },
+  headerTitleStyle: { color: color.WHITE, fontFamily: Font.BOLD },
+  headerShown: true,
 };

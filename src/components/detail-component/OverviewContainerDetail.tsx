@@ -1,7 +1,7 @@
 import { ScrollView, Text, View } from "react-native";
 import React, { useState } from "react";
-import { OverviewContainer } from "../../constants/style-component/ContainerStyling";
-import { genreText, OverviewDetailsText, subHeader } from "../../constants/style-component/TextStyleComponent";
+import { OverviewContainer } from "../../constants/style-component/viewComponent";
+import { genreText, OverviewDetailsText, subHeader } from "../../constants/style-component/textComponent";
 import Color from "../../constants/color";
 
 export const SubContainerDetail = ({ overviewDetails, overViewStyle }) => {

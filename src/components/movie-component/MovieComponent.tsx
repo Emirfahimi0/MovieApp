@@ -2,8 +2,8 @@ import { ScrollView, Text, TouchableWithoutFeedback, View, ViewStyle } from "rea
 import React from "react";
 import { CardButtons } from "./CardButton";
 import { MovieCard } from "./MovieCard";
-import { subHeader, subTitle } from "../../constants/style-component/TextStyleComponent";
-import { CardContainer } from "../../constants/style-component/ContainerStyling";
+import { subHeader, subTitle } from "../../constants/style-component/textComponent";
+import { CardContainer } from "../../constants/style-component/viewComponent";
 import Color from "../../constants/color";
 import { Genre, IDetailsMovie, MovieType } from "../../screens";
 import AsyncStorage from "@react-native-async-storage/async-storage";

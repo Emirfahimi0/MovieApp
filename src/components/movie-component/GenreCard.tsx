@@ -1,7 +1,7 @@
 import { Text, TextStyle, View, ViewStyle } from "react-native";
 import React, { FunctionComponent } from "react";
-import { CardContainer } from "../../constants/style-component/ContainerStyling";
-import { genreText } from "../../constants/style-component/TextStyleComponent";
+import { CardContainer } from "../../constants/style-component/viewComponent";
+import { genreText } from "../../constants/style-component/textComponent";
 import { Genre } from "../../screens";
 
 // get dimension of current screen

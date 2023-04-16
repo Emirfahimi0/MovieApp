@@ -4,13 +4,12 @@ import { GenreCard } from "./GenreCard";
 import { ItemSeparator } from "./ItemSeparator";
 import COLORS from "../../constants/color";
 import { GlobalContext } from "../../context/GlobalState";
-import { Genre } from "../../services";
 
 export const CardButtons = ({ Genre }) => {
   const [active, setActive] = useState<number>(0);
   const { filterMovieByGenre } = useContext(GlobalContext);
   return (
-    <View style={{ marginLeft: 8 }}>
+    <View style={{ marginLeft: 8, paddingBottom: 8 }}>
       <FlatList
         data={Genre}
         horizontal

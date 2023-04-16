@@ -1,6 +1,6 @@
 import { IResult } from "../../services";
-import { OverviewContainer, container } from "../../constants/style-component/ContainerStyling";
-import { OverviewDetailsText, genreText, subHeader } from "../../constants/style-component/TextStyleComponent";
+import { OverviewContainer, container } from "../../constants/style-component/viewComponent";
+import { OverviewDetailsText, genreText, subHeader } from "../../constants/style-component/textComponent";
 import { ScrollView, Text, View } from "react-native";
 import Color from "../../constants/color";
 import React, { Fragment, useState } from "react";

@@ -1,6 +1,6 @@
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { ButtonContainerRating, CardContainer, InputContainer, Logincontainer } from "../constants/style-component/ContainerStyling";
-import { InputLogin, genreText, loginText } from "../constants/style-component/TextStyleComponent";
+import { ButtonContainerRating, CardContainer, InputContainer, Logincontainer } from "../constants/style-component/viewComponent";
+import { InputLogin, genreText, loginText } from "../constants/style-component/textComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Color from "../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";

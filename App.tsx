@@ -8,7 +8,7 @@ function App() {
   return (
     <GlobalProvider>
       <SafeAreaView>
-        <StatusBar backgroundColor={"black"} />
+        <StatusBar backgroundColor={"white"} barStyle={"light-content"} />
       </SafeAreaView>
       <StackNavigator />
     </GlobalProvider>

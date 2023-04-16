@@ -1,8 +1,8 @@
 import { Fragment, useContext } from "react";
-import { ImagePoster, ListPreviewMovie, movieContainer } from "../../constants/style-component/ContainerStyling";
+import { ImagePoster, ListPreviewMovie, movieContainer } from "../../constants/style-component/viewComponent";
 import { IDetailsMovie, MovieType } from "../../screens";
 import { ItemSeparator } from "./ItemSeparator";
-import { subDetail, subHeader, subTitle } from "../../constants/style-component/TextStyleComponent";
+import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
 import { Text, View, FlatList, TouchableOpacity, Image, ViewStyle } from "react-native";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import Icon from "react-native-vector-icons/Ionicons";
