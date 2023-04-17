@@ -19,7 +19,7 @@ export const Logincontainer: ViewStyle = {
 };
 export const InputContainer: ViewStyle = {
   alignItems: "center",
-  backgroundColor: Color.WHITE,
+  backgroundColor: Color.SECONDARY_COLOR,
   borderRadius: 8,
   flexDirection: "row",
   margin: 8,
@@ -46,7 +46,7 @@ export const CardContainer: ViewStyle = {
   // --> Home/Movie Screen Styling
 
 export const movieContainer:ViewStyle= {
-    backgroundColor: Color.BLUE,
+    backgroundColor: Color.BUTTON,
     borderBottomLeftRadius: 24,
     borderTopRightRadius: 24,
     elevation: 4,
@@ -59,7 +59,7 @@ export const movieContainer:ViewStyle= {
 
  export const  SearchBar:ViewStyle= {
     alignItems: "center",
-    backgroundColor: Color.WHITE,
+    backgroundColor: Color.SECONDARY_COLOR,
     borderRadius: 12,
     flexDirection: "row",
     padding: 10,

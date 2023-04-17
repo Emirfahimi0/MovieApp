@@ -98,7 +98,9 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
       </Modal>
       <TouchableOpacity onPress={openModal}>
         <View style={{ ...CardContainer, backgroundColor: Color.ACTIVE, width: 150 }}>
-          <Text style={{ ...genreText, color: Color.WHITE }}>{postRatingDisable !== false ? "Review Rating" : "Post Rating"}</Text>
+          <Text style={{ ...genreText, color: Color.SECONDARY_COLOR }}>
+            {postRatingDisable !== false ? "Review Rating" : "Post Rating"}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>

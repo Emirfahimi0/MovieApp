@@ -60,6 +60,6 @@ export const StackNavigator = () => {
 const headerStyle = {
   title: "MoviesApp",
   headerStyle: { backgroundColor: color.SEMI_BLACK },
-  headerTitleStyle: { color: color.WHITE, fontFamily: Font.BOLD },
+  headerTitleStyle: { color: color.SECONDARY_COLOR, fontFamily: Font.BOLD },
   headerShown: true,
 };

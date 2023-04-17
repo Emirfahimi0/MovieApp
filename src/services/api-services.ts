@@ -88,8 +88,8 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
        // await AsyncStorage.multiSet("r")
        
        await axios.request(options)
-        .then(  function  (response){
-            //await AsyncStorage.setItem("responseToken",JSON.stringify(response))
+        .then( async   (response)=>{
+            await AsyncStorage.setItem("responseToken",JSON.stringify(response))
             isAuthenticated =response.data.success
 
             
@@ -104,7 +104,6 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
         let session = await createNewSession(token)
         
         await AsyncStorage.setItem("session_id", JSON.stringify(session));
-        console.log(session)
     }
     return isAuthenticated;
     
@@ -160,7 +159,6 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
             headers: { Accept:'application/json',"Content-Type": "application/json; charset=UTF-8" }
             ,params:params}).then(function(response){
           let  responseData = response.data
-          console.log(responseData)
        
 
           return responseData
@@ -197,7 +195,7 @@ export const toWatchList =async (movie:IMovieDetail | MovieType,setWatchlist:boo
     })
     
         let requestBody = {
-            "media_type":"all",
+            "media_type":"movie",
             "media_id":movie.id,
             "watchlist":setWatchlist 
         }

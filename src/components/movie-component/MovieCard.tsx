@@ -1,4 +1,4 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState } from "react";
 import { ImagePoster, ListPreviewMovie, movieContainer } from "../../constants/style-component/viewComponent";
 import { IDetailsMovie, MovieType } from "../../screens";
 import { ItemSeparator } from "./ItemSeparator";
@@ -19,6 +19,7 @@ interface IMovieCardProps {
 
 export const MovieCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProps) => {
   const { storeAllDetailsState } = useContext(GlobalContext);
+  const [changes, setChanges] = useState();
   const navigation: RootNavigationProp = useNavigation();
   let loading = false;
   const handleShowDetailScreen = async (id: number) => {

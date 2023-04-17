@@ -4,18 +4,32 @@ import { CardButtons } from "./CardButton";
 import { MovieCard } from "./MovieCard";
 import { subHeader } from "../../constants/style-component/textComponent";
 import { Genre, IDetailsMovie, MovieType } from "../../screens";
+import color from "../../constants/color";
 
-interface IMovieComponent {
+interface IHomeScreenContainer {
   searchInput: string;
   Movie: MovieType[];
   Genres: Genre[];
   handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
 
-export const MovieComponent = ({ searchInput, Movie, Genres, handleMovieDetail }: IMovieComponent) => {
+export const HomeScreenContainer = ({ searchInput, Movie, Genres, handleMovieDetail }: IHomeScreenContainer) => {
   return (
     <>
-      <View style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          paddingVertical: 20,
+          backgroundColor: color.SECONDARY_COLOR,
+          shadowColor: color.LIGHT_GRAY,
+          alignContent: "center",
+          shadowRadius: 10,
+          elevation: 3,
+          shadowOpacity: 1.0,
+          shadowOffset: { width: 0, height: -3 },
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+        }}>
         <CardButtons Genre={Genres} />
         <ScrollView horizontal={true}>
           {Object.keys(Movie).length > 0 ? (

@@ -26,10 +26,12 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
 
               return (
                 <View style={{ padding: 10 }} key={`${item.author}-${index}`}>
-                  <View style={{ ...overViewStyle, backgroundColor: Color.LIGHT_BLUE }}>
+                  <View style={{ ...overViewStyle, backgroundColor: Color.PRIMARY_COLOR }}>
                     <Text style={{ ...subHeader, color: Color.BLACK }}>{item.author}</Text>
-                    <Text style={{ ...OverviewDetailsText, color: Color.WHITE }}>{showText}</Text>
-                    <Text style={{ ...genreText, textAlign: "right", color: Color.WHITE, fontWeight: "800" }} onPress={handleShowMore}>
+                    <Text style={{ ...OverviewDetailsText, color: Color.SECONDARY_COLOR }}>{showText}</Text>
+                    <Text
+                      style={{ ...genreText, textAlign: "right", color: Color.SECONDARY_COLOR, fontWeight: "800" }}
+                      onPress={handleShowMore}>
                       {showMore ? "Show more" : "Show less"}
                     </Text>
                   </View>
@@ -40,7 +42,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
         </Fragment>
       ) : (
         <View style={{ ...container, marginLeft: 15, backgroundColor: Color.BLACK }}>
-          <Text style={{ ...subHeader, color: Color.WHITE }}>no review...</Text>
+          <Text style={{ ...subHeader, color: Color.SECONDARY_COLOR }}>no review...</Text>
         </View>
       )}
     </View>

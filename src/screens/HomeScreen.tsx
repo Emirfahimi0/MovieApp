@@ -1,16 +1,15 @@
 import { getAccountDetails, getTrendingmovie } from "../services/api-services";
-import { MovieComponent } from "../components/movie-component/MovieComponent";
+import { HomeScreenContainer } from "../components/movie-component/HomeScreenContainer";
 import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { MovieType } from ".";
 import { fetchWatchlist, handleMovieDetail } from "../components/features/handleFunctions";
 import Loader from "../components/features/Loader";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
 import { IResponseAccount } from "src/services";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -24,8 +23,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
     setLoading(false);
     const responseApiMovie: MovieType[] = await getTrendingmovie();
     const responseAccountDetails: IResponseAccount = await getAccountDetails();
-    console.log("response from account details", responseAccountDetails);
-    if (responseApiMovie) {
+    if (responseApiMovie && responseAccountDetails) {
       setAccountDetails(responseAccountDetails);
       // set for trending movies with initial state
       const actionId = genreState.filter((item) => item.name === "Action");
@@ -42,7 +40,8 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
     // const { reviewState, detailsState } = useContext(GlobalContext);
     const resWatchlist = await fetchWatchlist();
     if (resWatchlist !== undefined) {
-      navigation.navigate("WatchlistScreen", { resWatchlist: resWatchlist, accountDetails: accountDetails });
+      const navigationGoBack = true;
+      navigation.navigate("WatchlistScreen", { resWatchlist: resWatchlist, accountDetails: accountDetails, navGoBack: navigationGoBack });
     }
   };
 
@@ -56,7 +55,13 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             handleWatchList={handleWatchList}
             accountDetails={accountDetails}
           />
-          <MovieComponent handleMovieDetail={handleMovieDetail} searchInput={searchText} Movie={filteredMovieState} Genres={genreState} />
+          <View style={{ paddingBottom: 30 }}></View>
+          <HomeScreenContainer
+            handleMovieDetail={handleMovieDetail}
+            searchInput={searchText}
+            Movie={filteredMovieState}
+            Genres={genreState}
+          />
         </>
       ) : (
         <Loader />

@@ -14,10 +14,10 @@ export const SubContainerDetail = ({ overviewDetails, overViewStyle }) => {
       <Text style={{ ...subHeader, marginLeft: 15, color: Color.HEART, paddingBottom: 15 }}>Overview</Text>
       <ScrollView>
         <View style={overViewStyle}>
-          <Text style={{ ...OverviewDetailsText, color: Color.WHITE }}>
+          <Text style={{ ...OverviewDetailsText, color: Color.SECONDARY_COLOR }}>
             {showMore ? overviewDetails.split(" ").slice(0, 20).join(" ") : overviewDetails}
           </Text>
-          <Text style={{ ...genreText, textAlign: "right", color: Color.WHITE, fontWeight: "600" }} onPress={handleShowMore}>
+          <Text style={{ ...genreText, textAlign: "right", color: Color.SECONDARY_COLOR, fontWeight: "600" }} onPress={handleShowMore}>
             {showMore ? "Show more" : "Show less"}
           </Text>
         </View>

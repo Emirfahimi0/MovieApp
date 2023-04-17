@@ -7,7 +7,6 @@ import Font from "../font";
 
 export const genreText: TextStyle = {
     fontSize: 12,
-    fontWeight: "600",
     fontFamily: Font.BOLD,
     color: Color.BLACK,
   }
@@ -21,7 +20,7 @@ export const loginText: TextStyle = {
 };
 
 export const InputLogin: TextStyle = {
-  fontSize: 15,
+  fontSize: 16,
   color:Color.AMBER,
   width: "100%",
   fontFamily: Font.BOLD,
@@ -41,8 +40,8 @@ export const InputTextStyle: TextStyle = {
     fontSize:16
     }
 export const subTitle: TextStyle = {
-    fontFamily: Font.SEMI_BOLD,
-    fontSize: 14,
+    fontFamily: Font.EXTRA_BOLD,
+    fontSize: 12,
     color: Color.GRAY,
   };
 
@@ -62,10 +61,10 @@ export const subDetail : TextStyle = {
 export const MovieDetailTitle:TextStyle ={
     fontFamily: Font.BOLD,
     fontSize:16,
-    color:Color.WHITE
+    color:Color.SECONDARY_COLOR
 }
 export const additionalDetailText:TextStyle ={
-    color: Color.WHITE,
+    color: Color.SECONDARY_COLOR,
     fontFamily: Font.BOLD,
     fontWeight: "600",
     fontSize: 12,
@@ -80,7 +79,7 @@ export const OverviewDetailsText:TextStyle ={
 //-> add Rating Text
 
 export const RatingText :TextStyle ={
-  color:Color.WHITE,
+  color:Color.SECONDARY_COLOR,
   fontFamily:Font.BOLD,
   fontSize:12,
   fontWeight:"600"

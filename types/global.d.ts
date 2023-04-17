@@ -6,7 +6,7 @@ declare type RootStackParamList = {
    HomeScreen:undefined
    LoginScreen:undefined
    SplashScreen:undefined,
-   WatchlistScreen:{resWatchlist:MovieType[],accountDetails:IResponseAccount|undefined}
+   WatchlistScreen:{resWatchlist:MovieType[],accountDetails:IResponseAccount|undefined,navGoBack:true,}
 
   };
   

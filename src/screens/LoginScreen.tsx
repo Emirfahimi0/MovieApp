@@ -9,6 +9,7 @@ import { GlobalContext } from "../context/GlobalState";
 import { sessionWithLogIn } from "../services/api-services";
 import { fetchGenreItem, submitByFaceId } from "../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import color from "../constants/color";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");
@@ -20,7 +21,7 @@ const LoginScreen = ({ navigation }) => {
   }, []);
 
   const handleFaceID = async () => {
-    const data = await AsyncStorage.getItem("userLoggedIn");
+    const data = await AsyncStorage.getAllKeys();
     console.log("check data", data);
     //By doing this, ensuring that the data value is always compared to a boolean value, which avoids the type error.
     // if (!!data) {
@@ -58,21 +59,28 @@ const LoginScreen = ({ navigation }) => {
     }
   };
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: Color.BLUE }}>
+    <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: Color.BUTTON }}>
       <View style={Logincontainer}>
         <View style={{ alignItems: "center" }}>
-          <Text style={{ ...genreText, color: Color.WHITE }}>WELCOME!</Text>
-          <Text style={{ ...genreText, color: Color.WHITE }}>BACK!</Text>
+          <Text style={{ ...genreText, color: Color.SECONDARY_COLOR }}>WELCOME!</Text>
+          <Text style={{ ...genreText, color: Color.SECONDARY_COLOR }}>BACK!</Text>
         </View>
 
         <View style={InputContainer}>
-          <TextInput style={InputLogin} placeholder="Email" value={userEmail} onChangeText={(text) => setUserEmail(text)} />
+          <TextInput
+            style={{ ...InputLogin }}
+            placeholder="Email"
+            placeholderTextColor={color.ACTIVE}
+            value={userEmail}
+            onChangeText={(text) => setUserEmail(text)}
+          />
         </View>
         <View style={InputContainer}>
           <TextInput
             style={InputLogin}
             placeholder="password"
             value={userPassword}
+            placeholderTextColor={color.ACTIVE}
             onChangeText={(text) => setUserPassword(text)}
             textContentType={"password"}
             secureTextEntry={true}

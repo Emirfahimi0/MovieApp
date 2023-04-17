@@ -9,7 +9,7 @@ export const CardButtons = ({ Genre }) => {
   const [active, setActive] = useState<number>(0);
   const { filterMovieByGenre } = useContext(GlobalContext);
   return (
-    <View style={{ marginLeft: 8, paddingVertical: 20 }}>
+    <View style={{ marginLeft: 32, paddingVertical: 24, width: "85%" }}>
       <FlatList
         data={Genre}
         horizontal
@@ -22,8 +22,9 @@ export const CardButtons = ({ Genre }) => {
             console.log("genre item", item);
             filterMovieByGenre(item, index);
           };
-          const selectedButton: ViewStyle = active === index ? { backgroundColor: COLORS.ACTIVE } : { backgroundColor: COLORS.WHITE };
-          const selectedText: TextStyle = active === index ? { color: COLORS.WHITE, fontWeight: "800" } : { color: COLORS.BLACK };
+          const selectedButton: ViewStyle =
+            active === index ? { backgroundColor: COLORS.ACTIVE } : { backgroundColor: COLORS.BASIC_BACKGROUND };
+          const selectedText: TextStyle = active === index ? { color: COLORS.SECONDARY_COLOR, fontWeight: "800" } : { color: COLORS.BLACK };
 
           return (
             <TouchableOpacity onPress={handleActive} key={index}>

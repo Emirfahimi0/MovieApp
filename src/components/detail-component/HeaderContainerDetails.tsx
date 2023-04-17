@@ -95,7 +95,7 @@ export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRa
                 size={18}
                 color={existWatchlist ? Color.EXTRA_LIGHT_GRAY : Color.BLACK}
               />
-              <Text style={existWatchlist ? { ...genreText, color: Color.WHITE } : genreText}>
+              <Text style={existWatchlist ? { ...genreText, color: Color.SECONDARY_COLOR } : genreText}>
                 {existWatchlist ? "Added in Watchlist" : "Add to Watchlist"}
               </Text>
             </View>
