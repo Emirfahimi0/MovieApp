@@ -45,7 +45,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   }, [checkingState?.rated]);
 
   return (
-    <ScrollView contentContainerStyle={{ minHeight: height, backgroundColor: Color.BLACK }}>
+    <ScrollView contentContainerStyle={{ minHeight: height }}>
       {checkingState?.watchlist !== undefined || checkingState?.rated !== undefined ? (
         <>
           <HeaderContainerDetails

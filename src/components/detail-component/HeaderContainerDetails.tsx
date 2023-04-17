@@ -55,7 +55,7 @@ export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRa
         <View style={ImagePosterDetail}>
           <ScrollView>{<Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}${movie.poster_path}` }} />}</ScrollView>
         </View>
-        <View style={[MovieDetailContainer, { paddingTop: setHeight(3) }]}>
+        <View style={[MovieDetailContainer, { paddingTop: setHeight(5) }]}>
           <TouchableOpacity onPress={onPress}>
             <Icon name="arrow-back-circle" size={35} color={Color.EXTRA_LIGHT_GRAY} />
           </TouchableOpacity>

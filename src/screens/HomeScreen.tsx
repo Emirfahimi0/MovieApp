@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             handleWatchList={handleWatchList}
             accountDetails={accountDetails}
           />
-          <View style={{ paddingBottom: 30 }}></View>
+
           <HomeScreenContainer
             handleMovieDetail={handleMovieDetail}
             searchInput={searchText}

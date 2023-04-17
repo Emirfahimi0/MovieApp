@@ -57,6 +57,20 @@ export const movieContainer:ViewStyle= {
     width: 250,
   }
 
+  export const homeCardContainer:ViewStyle={
+    flex: 1,
+    paddingTop: 24,
+    backgroundColor: Color.SECONDARY_COLOR,
+    shadowColor: Color.LIGHT_GRAY,
+    shadowRadius: 16,
+    marginTop: 54,
+    elevation: 3,
+    shadowOpacity: 1.0,
+    shadowOffset: { width: 0, height: -3 },
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+  }
+
  export const  SearchBar:ViewStyle= {
     alignItems: "center",
     backgroundColor: Color.SECONDARY_COLOR,
@@ -72,8 +86,8 @@ export const movieContainer:ViewStyle= {
  export const ListPreviewMovie:ViewStyle = {
     flexDirection: "column",
     margin: 8,
-    marginLeft: 12,
-    paddingVertical: 12,
+    marginLeft: 16,
+    paddingTop: 16,
   }
 
   export const ImagePoster :ImageStyle={
