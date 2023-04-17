@@ -23,20 +23,20 @@ const LoginScreen = ({ navigation }) => {
     const data = await AsyncStorage.getItem("userLoggedIn");
     console.log("check data", data);
     //By doing this, ensuring that the data value is always compared to a boolean value, which avoids the type error.
-    if (!!data) {
-      console.log("user already logged In", data);
-      //navigation.navigate("HomeScreen");
+    // if (!!data) {
+    //   console.log("user already logged In", data);
+    //   //navigation.navigate("HomeScreen");
+    // } else {
+    let isSuccess = await submitByFaceId();
+    if (isSuccess === true) {
+      const resGenre = await fetchGenreItem();
+      storeGenre(resGenre);
+      AsyncStorage.setItem("userLoggedIn", JSON.stringify(isSuccess));
+      navigation.navigate("HomeScreen");
     } else {
-      let isSuccess = await submitByFaceId();
-      if (isSuccess === true) {
-        const resGenre = await fetchGenreItem();
-        storeGenre(resGenre);
-        AsyncStorage.setItem("userLoggedIn", JSON.stringify(isSuccess));
-        navigation.navigate("HomeScreen");
-      } else {
-        console.log("something wrong somewhere");
-      }
+      console.log("something wrong somewhere");
     }
+    // }
   };
 
   // arrow function for handling validation and submission of the formdata

@@ -8,7 +8,7 @@ export const AUTHENTICATION = "https://api.themoviedb.org/3/movie/76341";
 
 
 export const ENDPOINTS = {
-    ACCOUNT: "/account", //GET
+    GET_ACCOUNT: `${TMDB_BASE_URL}/account?${TMDB_API_KEY}`, //GET
     ADD_WATCHLIST: `${TMDB_BASE_URL}/account/${account_id}/watchlist?${TMDB_API_KEY}`, // POST [ADD TO WATCHLIST]
     CREATE_REQUEST_TOKEN: `${TMDB_BASE_URL}/authentication/token/new?${TMDB_API_KEY}`,  // GET --> [https://www.themoviedb.org/authenticate/{REQUEST_TOKEN}]
     CREATE_SESSION_WITH_LOGIN: `${TMDB_BASE_URL}/authentication/token/validate_with_login?${TMDB_API_KEY}`,

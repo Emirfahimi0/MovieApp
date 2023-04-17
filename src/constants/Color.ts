@@ -3,7 +3,8 @@ export default {
     AMBER:"rgb(255, 143, 0)",
     BASIC_BACKGROUND: "#F5F7FA",
     BLACK: "#1B1C1B",
-    BLUE: "#283747",
+    LIGHT_BLUE: "#2D97DA", 
+    BLUE:"#2249D6",
     EXTRA_LIGHT_GRAY: "#E5E5E5",
     GRAY: "rgb(66, 66, 66)",
     GREEN:"#68A568",
@@ -12,6 +13,6 @@ export default {
     PURPLE:"#A612CA",
     SEMI_BLACK:"#272827",
     WHITE: "#FFFFFF",
-    TRANSPARENT:"rgba(52, 52, 52, 0.8)"
+    TRANSPARENT:"rgba(255,255,255,0.3)"
   };
   
