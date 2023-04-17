@@ -1,14 +1,9 @@
-import { ScrollView, Text, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
+import { ScrollView, Text, View, ViewStyle } from "react-native";
 import React from "react";
 import { CardButtons } from "./CardButton";
 import { MovieCard } from "./MovieCard";
-import { subHeader, subTitle } from "../../constants/style-component/textComponent";
-import { CardContainer } from "../../constants/style-component/viewComponent";
-import Color from "../../constants/color";
+import { subHeader } from "../../constants/style-component/textComponent";
 import { Genre, IDetailsMovie, MovieType } from "../../screens";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RootNavigationProp } from "types/global";
-import { useNavigation } from "@react-navigation/native";
 
 interface IMovieComponent {
   searchInput: string;
