@@ -1,4 +1,4 @@
-import { getTrendingmovie } from "../services/api-services";
+import { getAccountDetails, getTrendingmovie } from "../services/api-services";
 import { MovieComponent } from "../components/movie-component/MovieComponent";
 import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import React, { Fragment, useContext, useEffect, useState } from "react";
@@ -9,6 +9,8 @@ import Loader from "../components/features/Loader";
 import { Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
+import { IResponseAccount } from "src/services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -16,11 +18,16 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   // always use set function
   const [searchText, setSearchText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>();
-  const { handleTrendingMovies, genreState, filteredMovieState, movieState } = useContext(GlobalContext);
+  const { handleTrendingMovies, genreState, filteredMovieState } = useContext(GlobalContext);
+  const [accountDetails, setAccountDetails] = useState<IResponseAccount | undefined>();
   const handleGetMovies = async (): Promise<void> => {
     setLoading(false);
     const responseApiMovie: MovieType[] = await getTrendingmovie();
+    const responseAccountDetails: IResponseAccount = await getAccountDetails();
+    console.log("response from account details", responseAccountDetails);
     if (responseApiMovie) {
+      setAccountDetails(responseAccountDetails);
+      // set for trending movies with initial state
       const actionId = genreState.filter((item) => item.name === "Action");
       handleTrendingMovies(responseApiMovie, actionId[0], 0);
       setLoading(true);
@@ -31,18 +38,26 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   }, []);
 
   const handleWatchList = async () => {
+    console.log("lets go to watchlist screen");
     // const { reviewState, detailsState } = useContext(GlobalContext);
     const resWatchlist = await fetchWatchlist();
     if (resWatchlist !== undefined) {
-      navigation.navigate("WatchlistScreen", { resWatchlist: resWatchlist });
+      navigation.navigate("WatchlistScreen", { resWatchlist: resWatchlist, accountDetails: accountDetails });
     }
   };
 
   return (
     <Fragment>
-      <HeaderComponent searchText={searchText} setSearchText={setSearchText} handleWatchList={handleWatchList} />
       {loading ? (
-        <MovieComponent handleMovieDetail={handleMovieDetail} searchInput={searchText} Movie={filteredMovieState} Genres={genreState} />
+        <>
+          <HeaderComponent
+            searchText={searchText}
+            setSearchText={setSearchText}
+            handleWatchList={handleWatchList}
+            accountDetails={accountDetails}
+          />
+          <MovieComponent handleMovieDetail={handleMovieDetail} searchInput={searchText} Movie={filteredMovieState} Genres={genreState} />
+        </>
       ) : (
         <Loader />
       )}

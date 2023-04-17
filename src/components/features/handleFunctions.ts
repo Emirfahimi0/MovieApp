@@ -1,6 +1,6 @@
 import { Genre, IDetailsMovie, MovieType } from "../../screens";
 import { IMovieDetail, IReview, IAccountState, IResult } from "src/services";
-import { GetMovieWatchlist, getAccountState, getGenreMovie, getMovieDetailsAPI, getReviewById, sessionWithLogIn } from "../../services/api-services";
+import {  getAccountState, getGenreMovie, getMovieDetailsAPI, getMovieWatchlist, getReviewById, sessionWithLogIn } from "../../services/api-services";
 import { Alert } from "react-native";
 import TouchID from "react-native-touch-id";
 
@@ -18,7 +18,7 @@ export const fetchMovieDetails = async (id: number) => {
     return data;
   };
   export const fetchWatchlist = async () => {
-    const data: MovieType[] = await GetMovieWatchlist();
+    const data: MovieType[] = await getMovieWatchlist();
     return data;
   };
   export const fetchGenreItem = async () => {

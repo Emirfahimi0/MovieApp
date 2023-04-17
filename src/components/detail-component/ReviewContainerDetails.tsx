@@ -26,8 +26,8 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
 
               return (
                 <View style={{ padding: 10 }} key={`${item.author}-${index}`}>
-                  <View style={{ ...overViewStyle, backgroundColor: Color.BLUE }}>
-                    <Text style={{ ...subHeader, color: Color.PURPLE }}>{item.author}</Text>
+                  <View style={{ ...overViewStyle, backgroundColor: Color.LIGHT_BLUE }}>
+                    <Text style={{ ...subHeader, color: Color.BLACK }}>{item.author}</Text>
                     <Text style={{ ...OverviewDetailsText, color: Color.WHITE }}>{showText}</Text>
                     <Text style={{ ...genreText, textAlign: "right", color: Color.WHITE, fontWeight: "800" }} onPress={handleShowMore}>
                       {showMore ? "Show more" : "Show less"}

@@ -47,18 +47,20 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   return (
     <ScrollView contentContainerStyle={{ minHeight: height, backgroundColor: Color.BLACK }}>
       {checkingState?.watchlist !== undefined || checkingState?.rated !== undefined ? (
-        <HeaderContainerDetails
-          movie={detailsState}
-          onPress={handleGoBack}
-          state={checkingState}
-          setRating={setRatingVal}
-          ratingVal={ratingVal}
-        />
+        <>
+          <HeaderContainerDetails
+            movie={detailsState}
+            onPress={handleGoBack}
+            state={checkingState}
+            setRating={setRatingVal}
+            ratingVal={ratingVal}
+          />
+          <SubContainerDetail overviewDetails={detailsState.overview} overViewStyle={overViewTextArea} />
+          <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
+        </>
       ) : (
         <Loader />
       )}
-      <SubContainerDetail overviewDetails={detailsState.overview} overViewStyle={overViewTextArea} />
-      <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
     </ScrollView>
   );
 };
