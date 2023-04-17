@@ -14,55 +14,44 @@ interface IMovieComponent {
   searchInput: string;
   Movie: MovieType[];
   Genres: Genre[];
-  handleWatchList: () => {};
   handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
 
-export const MovieComponent = ({ searchInput, Movie, Genres, handleMovieDetail, handleWatchList }: IMovieComponent) => {
+export const MovieComponent = ({ searchInput, Movie, Genres, handleMovieDetail }: IMovieComponent) => {
   const navigation: RootNavigationProp = useNavigation();
 
   const handleLogOut = async () => {
     //To do
     AsyncStorage.clear();
-    navigation.navigate("LoginScreen");
+    navigation.popToTop();
   };
   return (
-    <View style={container}>
-      <View style={headerContainer}>
-        <View style={headerSubtitle}>
-          <Text onPress={handleLogOut} style={subHeader}>
-            {" "}
-            Now Playing{" "}
-          </Text>
-        </View>
-        <TouchableWithoutFeedback onPress={handleWatchList}>
-          <View style={{ ...CardContainer, width: "30%", backgroundColor: Color.PURPLE }}>
-            <Text style={{ ...subTitle, color: Color.WHITE }}>Watch List</Text>
-          </View>
-        </TouchableWithoutFeedback>
+    <>
+      <View style={container}>
+        <View style={headerContainer}></View>
+        <CardButtons Genre={Genres} />
+        <ScrollView horizontal={true}>
+          {Object.keys(Movie).length > 0 ? (
+            <MovieCard handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
+          ) : (
+            <View style={{ justifyContent: "center", alignItems: "center", width: "500%" }}>
+              <Text style={subHeader}> No Movie</Text>
+            </View>
+          )}
+        </ScrollView>
       </View>
-      <CardButtons Genre={Genres} />
-      <ScrollView horizontal={true}>
-        {Object.keys(Movie).length > 0 ? (
-          <MovieCard handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
-        ) : (
-          <View style={{ justifyContent: "center", alignItems: "center", width: "500%" }}>
-            <Text style={subHeader}> No Movie</Text>
-          </View>
-        )}
-      </ScrollView>
-    </View>
+    </>
   );
 };
 
 const container: ViewStyle = {
-  flex: 1,
+  flex: 1.5,
 };
 const headerContainer: ViewStyle = {
   flexDirection: "row",
-  justifyContent: "space-between",
+  justifyContent: "flex-end",
   paddingHorizontal: 20,
-  paddingVertical: 10,
+  paddingVertical: 30,
 };
 
 const headerSubtitle: ViewStyle = {
