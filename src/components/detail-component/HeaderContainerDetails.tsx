@@ -27,7 +27,7 @@ interface IHeaderContainerDetails {
 }
 
 export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRating }: IHeaderContainerDetails) => {
-  const [existWatchlist, setExistWatchlist] = useState<boolean>(state.watchlist);
+  const [existWatchlist, setExistWatchlist] = useState<boolean>(state?.watchlist);
 
   const handleWatchList = async () => {
     // Get the data first and complementary based on what user click

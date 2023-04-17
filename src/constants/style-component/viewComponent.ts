@@ -59,11 +59,12 @@ export const movieContainer:ViewStyle= {
 
  export const  SearchBar:ViewStyle= {
     alignItems: "center",
-    backgroundColor: Color.BLUE,
+    backgroundColor: Color.WHITE,
     borderRadius: 12,
     flexDirection: "row",
     padding: 10,
     width: "100%",
+    
   }
 
   

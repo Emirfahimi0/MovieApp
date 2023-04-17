@@ -1,6 +1,6 @@
 import { getTrendingmovie } from "../services/api-services";
 import { MovieComponent } from "../components/movie-component/MovieComponent";
-import { SearchBarComponent } from "../components/movie-component/SearchBar";
+import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { MovieType } from ".";
@@ -15,12 +15,15 @@ interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "H
 const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   // always use set function
   const [searchText, setSearchText] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>();
   const { handleTrendingMovies, genreState, filteredMovieState, movieState } = useContext(GlobalContext);
   const handleGetMovies = async (): Promise<void> => {
+    setLoading(false);
     const responseApiMovie: MovieType[] = await getTrendingmovie();
     if (responseApiMovie) {
       const actionId = genreState.filter((item) => item.name === "Action");
       handleTrendingMovies(responseApiMovie, actionId[0], 0);
+      setLoading(true);
     } else Alert.alert("Cannot fetch data from api");
   };
   useEffect(() => {
@@ -37,17 +40,11 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
 
   return (
     <Fragment>
-      <SearchBarComponent searchText={searchText} setSearchText={setSearchText} />
-      {movieState.length < 0 && movieState === undefined ? (
-        <Loader />
+      <HeaderComponent searchText={searchText} setSearchText={setSearchText} handleWatchList={handleWatchList} />
+      {loading ? (
+        <MovieComponent handleMovieDetail={handleMovieDetail} searchInput={searchText} Movie={filteredMovieState} Genres={genreState} />
       ) : (
-        <MovieComponent
-          handleMovieDetail={handleMovieDetail}
-          handleWatchList={handleWatchList}
-          searchInput={searchText}
-          Movie={filteredMovieState}
-          Genres={genreState}
-        />
+        <Loader />
       )}
     </Fragment>
   );

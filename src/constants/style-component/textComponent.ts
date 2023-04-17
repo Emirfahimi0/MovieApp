@@ -36,7 +36,7 @@ export const InputTextStyle: TextStyle = {
   fontFamily: Font.BOLD,
 };
   export const InputSearcbBar: TextStyle= {
-    color:Color.WHITE,
+    color:Color.BLACK,
     fontFamily:Font.SEMI_BOLD,
     fontSize:16
     }
