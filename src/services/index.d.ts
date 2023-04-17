@@ -10,10 +10,26 @@ export type TResponseToken = {
     success:boolean,
 }
 export interface ICreateSession {
-    new_session: Session
+    new_session: TSession
+}
+export interface IResponseAccount{
+    avatar: Avatar
+    id: number,
+    iso_639_1: string,
+    iso_3166_1: string,
+    name: string,
+    include_adult: boolean,
+    username: string
+  }
+  export interface Avatar {
+    gravatar: Gravatar;
 }
 
-export type Session = {
+export interface Gravatar {
+    hash: string;
+}
+
+export type TSession = {
     session_id:string
     success:boolean,
 }
@@ -106,12 +122,17 @@ export interface IAuthorDetails {
 export interface IAccountState {
     favourite:boolean
     id:number;
-    rated: RatedValue | boolean;
+    rated: boolean | { value: RatedValue };
     watchlist:boolean;
 }
-export type RatedValue = {
-    value:number 
-}
+
+declare enum RatedValue {
+    ONE_STAR = 1,
+    TWO_STARS = 2,
+    THREE_STARS = 3,
+    FOUR_STARS = 4,
+    FIVE_STARS = 5,
+  }
 
 export interface IRating {
     status_code: number;

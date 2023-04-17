@@ -1,7 +1,7 @@
 import axios from "axios"
 import  {  ENDPOINTS, TMDB_API_KEY }  from "../constants/utilities";
-import {  Genre, IRating, IMovieDetail, IReview, TResponseToken, IAccountState,
-        Session, IWatchListResponse, IResult } from ".";
+import {  Genre, IRating, IMovieDetail, TResponseToken, IAccountState,
+        TSession, IWatchListResponse, IResult, IResponseAccount } from ".";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MovieType } from "../screens";
 
@@ -10,7 +10,7 @@ import { MovieType } from "../screens";
 
 /* METHODS GET/POST/DELETE FROM TMDB API */
 
-// get Method for Trending movie
+// Get method for trending movie
 export const  getTrendingmovie = async():Promise<MovieType[]> => {
     let data = await axios.get(ENDPOINTS.GET_TRENDING,{responseType:'json'}).then(function(response){
         let responseData = response.data.results
@@ -21,7 +21,7 @@ export const  getTrendingmovie = async():Promise<MovieType[]> => {
 
 
 
-/* Request token function */
+/* Get request token*/
 export const createRequestToken = async  (): Promise<TResponseToken> => {
    const data:TResponseToken =  (await Promise.resolve(axios.get<TResponseToken>(ENDPOINTS.CREATE_REQUEST_TOKEN,{responseType:"json"}))).data
    console.log("Success creating token -->", data)
@@ -29,9 +29,9 @@ export const createRequestToken = async  (): Promise<TResponseToken> => {
     
 } 
 /* create new session */
-export const createNewSession = async(token:string): Promise<Session> => {
+export const createNewSession = async(token:string): Promise<TSession> => {
     //let requestToken = createRequestToken()
-    let current_Session:Session  = {
+    let current_Session:TSession  = {
         success: false,
         session_id: ""
     }
@@ -52,7 +52,7 @@ export const createNewSession = async(token:string): Promise<Session> => {
     };
    
    await axios.request(options)
-    .then(function (response) {
+    .then( function(response) {
         current_Session = response.data
     })
     .catch(function (error) {
@@ -62,10 +62,57 @@ export const createNewSession = async(token:string): Promise<Session> => {
     return current_Session
      
  }
+ /* Session with log In  */
+export const sessionWithLogIn = async (username:string,password:string):Promise<boolean> => {
+    
+    let requestToken: TResponseToken  = await createRequestToken ()
+    let isAuthenticated = false;
+    
+    if( requestToken.success===true){
+      let   token = requestToken.request_token
+        
+        let requestBody = {
+            "username":username.toLowerCase(),
+            "password":password,
+            "request_token":requestToken.request_token 
+        }
+        const options = {
+            method: 'POST',
+            url: ENDPOINTS.CREATE_SESSION_WITH_LOGIN,
+            headers: {
+                'content-type': 'application/json',
+            },
+            data: requestBody       
+            
+        };
+       // await AsyncStorage.multiSet("r")
+       
+       await axios.request(options)
+        .then(  function  (response){
+            //await AsyncStorage.setItem("responseToken",JSON.stringify(response))
+            isAuthenticated =response.data.success
+
+            
+
+        })
+        .catch(function (error) {
+            console.error("error",error);
+            isAuthenticated = false
+
+        });
+        // create session right away
+        let session = await createNewSession(token)
+        
+        await AsyncStorage.setItem("session_id", JSON.stringify(session));
+        console.log(session)
+    }
+    return isAuthenticated;
+    
+ }
 
  export const getAccountState = async (id:number):Promise<IAccountState> => {
 
-    let current_Session:Session = {
+    let current_Session:TSession = {
         success: false,
         session_id: ""
     }
@@ -95,51 +142,39 @@ export const createNewSession = async(token:string): Promise<Session> => {
 
  }
 
-/* Session with log In  */
-export const sessionWithLogIn = async (username:string,password:string):Promise<boolean> => {
-    
-    let requestToken: TResponseToken  = await createRequestToken ()
-    let isAuthenticated = false;
-    
-    if( requestToken.success===true){
-      let   token = requestToken.request_token
-        
-        let requestBody = {
-            "username":username.toLowerCase(),
-            "password":password,
-            "request_token":requestToken.request_token 
-        }
-        const options = {
-            method: 'POST',
-            url: ENDPOINTS.CREATE_SESSION_WITH_LOGIN,
-            headers: {
-                'content-type': 'application/json',
-            },
-            data: requestBody       
-            
-        };
-       
-       await axios.request(options)
-        .then(function (response) {
 
-            isAuthenticated =response.data.success
-
-            
-
-        })
-        .catch(function (error) {
-            console.error("error",error);
-            isAuthenticated = false
-
-        });
-        // create session right away
-        let session = await createNewSession(token)
-        await AsyncStorage.setItem("session_id", JSON.stringify(session));
-        console.log(session)
+ export const getAccountDetails =async():Promise<IResponseAccount>=> {
+    let current_Session:TSession = {
+        success: false,
+        session_id: ""
     }
-    return isAuthenticated;
-    
+    await AsyncStorage.getItem('session_id').then((value) => {
+
+        const data = JSON.parse(value as string)
+        current_Session = data
+    })
+    const params = {
+        session_id:current_Session.session_id}
+      
+    const data  = await axios.get(ENDPOINTS.GET_ACCOUNT,{
+            headers: { Accept:'application/json',"Content-Type": "application/json; charset=UTF-8" }
+            ,params:params}).then(function(response){
+          let  responseData = response.data
+          console.log(responseData)
+       
+
+          return responseData
+            
+        })
+        //to do --> need to compile it as 
+        
+        return data;
+
  }
+
+ 
+
+
 
 // POST method for adding watchlist
 export const toWatchList =async (movie:IMovieDetail | MovieType,setWatchlist:boolean):Promise<IWatchListResponse> => {
@@ -151,7 +186,7 @@ export const toWatchList =async (movie:IMovieDetail | MovieType,setWatchlist:boo
 
 
     }
-    let current_Session:Session = {
+    let current_Session:TSession = {
         success: false,
         session_id: ""
     }
@@ -162,7 +197,7 @@ export const toWatchList =async (movie:IMovieDetail | MovieType,setWatchlist:boo
     })
     
         let requestBody = {
-            "media_type":"movie",
+            "media_type":"all",
             "media_id":movie.id,
             "watchlist":setWatchlist 
         }
@@ -179,7 +214,7 @@ export const toWatchList =async (movie:IMovieDetail | MovieType,setWatchlist:boo
         };
       
        await axios.request(options)
-        .then(function (response) {
+        .then(function (response){
             response = response.data
            
         })
@@ -192,8 +227,8 @@ export const toWatchList =async (movie:IMovieDetail | MovieType,setWatchlist:boo
    
 }
 // Get movie watchlist
-export const GetMovieWatchlist = async ():Promise<MovieType[]> => {
-    let current_Session:Session = {
+export const getMovieWatchlist = async ():Promise<MovieType[]> => {
+    let current_Session:TSession = {
         success: false,
         session_id: ""
     }
@@ -227,7 +262,7 @@ export const postRatingbyId = async (id:number,value:number):Promise<IRating> =>
         status_code:0,
         status_message:"success",
     }
-    let current_Session:Session = {
+    let current_Session:TSession = {
         success: false,
         session_id: ""
     }
@@ -257,7 +292,7 @@ export const postRatingbyId = async (id:number,value:number):Promise<IRating> =>
 
    
    await axios.request(options)
-    .then(function (response) {
+    .then( function(response) {
         responseRating =response.data
          
 
@@ -277,7 +312,7 @@ export const deleteRatingbyId = async (id:number,value:number):Promise<IRating> 
         status_code:1,
         status_message:"success",
     }
-    let current_Session:Session = {
+    let current_Session:TSession = {
         success: false,
         session_id: ""
     }
@@ -302,7 +337,7 @@ export const deleteRatingbyId = async (id:number,value:number):Promise<IRating> 
         
     };
    await axios.request(options)
-    .then(function (response) {
+    .then( (response)=> {
         console.log("response from session login",response.data.success);
         responseRating =response.data
         
