@@ -63,7 +63,7 @@ export const movieContainer:ViewStyle= {
     borderRadius: 12,
     flexDirection: "row",
     padding: 10,
-    width: "100%",
+    width: "80%",
     
   }
 

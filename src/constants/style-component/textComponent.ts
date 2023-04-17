@@ -6,7 +6,7 @@ import Font from "../font";
 // --> Genre Card Text
 
 export const genreText: TextStyle = {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: "600",
     fontFamily: Font.BOLD,
     color: Color.BLACK,
@@ -17,7 +17,7 @@ export const genreText: TextStyle = {
 export const loginText: TextStyle = {
   ...genreText,
   color: "white",
-  fontSize: 15,
+  fontSize: 16,
 };
 
 export const InputLogin: TextStyle = {
@@ -68,12 +68,12 @@ export const additionalDetailText:TextStyle ={
     color: Color.WHITE,
     fontFamily: Font.BOLD,
     fontWeight: "600",
-    fontSize: 13,
+    fontSize: 12,
 }
 export const OverviewDetailsText:TextStyle ={
   fontFamily:Font.SEMI_BOLD,
   fontWeight:"500",
-  fontSize: 14,
+  fontSize: 16,
   textAlign:"justify",
 }
 
@@ -82,7 +82,7 @@ export const OverviewDetailsText:TextStyle ={
 export const RatingText :TextStyle ={
   color:Color.WHITE,
   fontFamily:Font.BOLD,
-  fontSize:13,
+  fontSize:12,
   fontWeight:"600"
 
 }

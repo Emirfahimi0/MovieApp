@@ -18,23 +18,15 @@ interface IMovieComponent {
 }
 
 export const MovieComponent = ({ searchInput, Movie, Genres, handleMovieDetail }: IMovieComponent) => {
-  const navigation: RootNavigationProp = useNavigation();
-
-  const handleLogOut = async () => {
-    //To do
-    AsyncStorage.clear();
-    navigation.popToTop();
-  };
   return (
     <>
-      <View style={container}>
-        <View style={headerContainer}></View>
+      <View style={{ flex: 1 }}>
         <CardButtons Genre={Genres} />
         <ScrollView horizontal={true}>
           {Object.keys(Movie).length > 0 ? (
             <MovieCard handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
           ) : (
-            <View style={{ justifyContent: "center", alignItems: "center", width: "500%" }}>
+            <View style={{ ...noMovieStyle }}>
               <Text style={subHeader}> No Movie</Text>
             </View>
           )}
@@ -44,17 +36,8 @@ export const MovieComponent = ({ searchInput, Movie, Genres, handleMovieDetail }
   );
 };
 
-const container: ViewStyle = {
-  flex: 1.5,
-};
-const headerContainer: ViewStyle = {
-  flexDirection: "row",
-  justifyContent: "flex-end",
-  paddingHorizontal: 20,
-  paddingVertical: 30,
-};
-
-const headerSubtitle: ViewStyle = {
-  paddingBottom: 10,
-  paddingTop: 10,
+const noMovieStyle: ViewStyle = {
+  justifyContent: "center",
+  alignItems: "center",
+  width: "500%",
 };

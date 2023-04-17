@@ -48,7 +48,7 @@ export const StackNavigator = () => {
       <RootStack.Navigator initialRouteName="LoginScreen" screenOptions={{ headerShown: false }}>
         <>
           <RootStack.Screen name="LoginScreen" component={LoginScreen} />
-          <RootStack.Screen name="HomeScreen" component={HomeScreen} options={headerStyle} />
+          <RootStack.Screen name="HomeScreen" component={HomeScreen} />
           <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} />
           <RootStack.Screen name="WatchlistScreen" component={WatchListScreen} />
         </>

@@ -9,7 +9,7 @@ export const CardButtons = ({ Genre }) => {
   const [active, setActive] = useState<number>(0);
   const { filterMovieByGenre } = useContext(GlobalContext);
   return (
-    <View style={{ marginLeft: 8, paddingBottom: 8 }}>
+    <View style={{ marginLeft: 8, paddingVertical: 20 }}>
       <FlatList
         data={Genre}
         horizontal
