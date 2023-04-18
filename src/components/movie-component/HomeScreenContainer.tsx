@@ -1,14 +1,14 @@
 import { CardButtons } from "./CardButton";
-import { Genre, IDetailsMovie, MovieType } from "../../screens";
-import { homeCardContainer } from "../../constants/style-component/viewComponent";
+import { Genre, IDetailsMovie, TMovieType } from "../../screens";
+import { homeCardContainer, noDataStyle } from "../../constants/style-component/viewComponent";
 import { MovieCard } from "./MovieCard";
-import { ScrollView, Text, View, ViewStyle } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { subHeader } from "../../constants/style-component/textComponent";
 import React, { Fragment } from "react";
 
 interface IHomeScreenContainer {
   searchInput: string;
-  Movie: MovieType[];
+  Movie: TMovieType[];
   Genres: Genre[];
   handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
@@ -25,7 +25,7 @@ export const HomeScreenContainer = ({ searchInput, Movie, Genres, handleMovieDet
           {Object.keys(Movie).length > 0 ? (
             <MovieCard handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
           ) : (
-            <View style={{ ...noMovieStyle }}>
+            <View style={{ ...noDataStyle }}>
               <Text style={subHeader}> No Movie</Text>
             </View>
           )}
@@ -33,10 +33,4 @@ export const HomeScreenContainer = ({ searchInput, Movie, Genres, handleMovieDet
       </View>
     </Fragment>
   );
-};
-
-const noMovieStyle: ViewStyle = {
-  justifyContent: "center",
-  alignItems: "center",
-  width: "500%",
 };

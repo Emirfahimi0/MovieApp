@@ -56,7 +56,8 @@ export const fetchMovieDetails = async (id: number) => {
       stores?.map((result,i,store)=>{
         let key = store[i][0];
         let val = store[i][1];
-        console.log(key, val);
+        console.log(result[1])
+        console.log(key,JSON.parse(val));
       })
     })
     let isSuccess = await sessionWithLogIn("emirfahimi", "adidas");

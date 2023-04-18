@@ -3,11 +3,11 @@ import React, { useContext, useState } from "react";
 import { GenreCard } from "./GenreCard";
 import { ItemSeparator } from "./ItemSeparator";
 import COLORS from "../../constants/color";
-import { GlobalContext } from "../../context/GlobalState";
+import { MovieContext } from "../../context/movieContext/MovieContext";
 
 export const CardButtons = ({ Genre }) => {
   const [active, setActive] = useState<number>(0);
-  const { filterMovieByGenre } = useContext(GlobalContext);
+  const { filterMovieByGenre } = useContext(MovieContext);
   return (
     <View style={{ marginLeft: 32, paddingVertical: 24, width: "85%" }}>
       <FlatList

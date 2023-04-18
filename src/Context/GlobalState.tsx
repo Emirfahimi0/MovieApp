@@ -2,23 +2,17 @@ import { Genre, TMovieType, TUser } from "../screens";
 import React, { createContext, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
 import { IMovieDetail, IAccountState, IResult } from "../services";
-import { fetchWatchlist, submitByFaceId } from "../components/features/handleFunctions";
+import { submitByFaceId } from "../components/features/handleFunctions";
 
 export interface IInitialState {
   accountState: IAccountState;
-  activeGenreId: number;
   detailsState: IMovieDetail;
-  filteredMovieState: TMovieType[];
-  filterMovieByGenre: (item: Genre, index: number) => void;
   genreState: Genre[];
-  handleTrendingMovies: (movie: TMovieType[], item: Genre) => void;
-  movieState: TMovieType[];
+
   reviewState: IResult[];
-  getWatchlistData: () => void;
   storeAllDetailsState: (detail: IMovieDetail, review: IResult[]) => Promise<void>;
   storeGenre: (genre: Genre[]) => Promise<void>;
   storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
-  watchlistState: TMovieType[];
   userState: TUser;
 }
 
@@ -30,7 +24,7 @@ const existingUser = [
 
 interface GlobalProviderProps {
   // define props here
-  children?: JSX.Element[];
+  children?: React.ReactNode;
 }
 
 const initialState: IInitialState = {
@@ -40,25 +34,19 @@ const initialState: IInitialState = {
     rated: 5 | true,
     watchlist: true,
   },
-  handleTrendingMovies: () => Promise<void>,
-  activeGenreId: 0,
   detailsState: {},
-  filterMovieByGenre: () => Promise<void>,
+
   genreState: [],
+  reviewState: [],
+  storeAllDetailsState: () => Promise.resolve(),
   storeGenre: () => Promise.resolve(),
   storeUser: () => Promise.resolve(""),
-  movieState: [],
-  filteredMovieState: [],
-  reviewState: [],
-  watchlistState: [],
-  storeAllDetailsState: () => Promise.resolve(),
   user: {
     id: "",
     password: "",
-    username: "",
     responseToken: "",
+    username: "",
   },
-  getWatchlistData: () => Promise<void>,
 };
 
 // create Context
@@ -94,24 +82,6 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   };
 
   //  filter movie by genre
-  const filterMovieByGenre = (item: Genre, index: number): void => {
-    // check if the selected item is already in active filter in the state
-    if (item.id === state.activeGenreId) {
-      return;
-    }
-    const currentFilter = state.movieState.filter((element) => {
-      return element.genre_ids.includes(item.id);
-    });
-    setState({ ...state, filteredMovieState: currentFilter, activeGenreId: item.id });
-    // console.log(state.activeGenreId);
-  };
-
-  const getWatchlistData = async (): Promise<void> => {
-    const responseWatchlist = await fetchWatchlist();
-    if (responseWatchlist !== undefined) {
-      setState({ ...state, watchlistState: responseWatchlist });
-    }
-  };
 
   // const removeWatchlist = async (resWatchlist: TMovieType[]): Promise<void> => {};
   // const addWatchlist = async (resWatchlist: TMovieType): Promise<void> => {
@@ -120,17 +90,6 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   // };
 
   // set trending movies into a state
-  const handleTrendingMovies = async (movies: TMovieType[], item: Genre): Promise<void> => {
-    // check if the selected item is already in active filter in the state
-    if (item.id === state.activeGenreId) {
-      return;
-    }
-    const currentFilter = movies.filter((element) => {
-      return element.genre_ids.includes(item.id);
-    });
-    setState({ ...state, movieState: movies, filteredMovieState: currentFilter, activeGenreId: item.id });
-    // call the function
-  };
 
   const storeGenre = async (genre: Genre[]): Promise<void> => {
     setState({ ...state, genreState: genre });
@@ -149,18 +108,11 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   return (
     <GlobalContext.Provider
       value={{
-        watchlistState: state.watchlistState,
-        getWatchlistData,
         accountState: state.accountState,
-        activeGenreId: state.activeGenreId,
-        handleTrendingMovies,
         detailsState: state.detailsState,
-        filteredMovieState: state.filteredMovieState,
-        filterMovieByGenre,
         genreState: state.genreState,
         storeGenre,
         storeUser,
-        movieState: state.movieState,
         reviewState: state.reviewState,
         storeAllDetailsState,
         userState: state.userState,

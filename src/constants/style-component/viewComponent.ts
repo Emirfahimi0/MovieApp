@@ -134,7 +134,11 @@ export const HeaderDetail:ViewStyle = {
   right:0,
   top:32,
 }
-
+export const noDataStyle: ViewStyle = {
+  justifyContent: "center",
+  alignItems: "center",
+  width: "500%",
+};
 export const MovieDetailContainer:ViewStyle = {
 
   alignItems: "center",
