@@ -8,6 +8,7 @@ import { ScrollView, Text, View } from "react-native";
 import Loader from "../components/features/Loader";
 import React, { useState, Fragment, useEffect, useContext } from "react";
 import { WatchlistContext } from "../context/WatchlistContext/WatchlistContext";
+import { genreText, subHeader } from "../constants/style-component/textComponent";
 interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {
   navGoBack: boolean;
 }
@@ -48,8 +49,14 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
               {watchlistState.length > 0 ? (
                 <MovieCard handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} />
               ) : (
-                <View style={noDataStyle}>
-                  <Text>No Watchlist added yet</Text>
+                <View
+                  style={{
+                    ...noDataStyle,
+                    paddingLeft: "65%",
+                    justifyContent: "center",
+                    alignItems: "flex-start",
+                  }}>
+                  <Text style={{ ...subHeader }}>No Watchlist added yet</Text>
                 </View>
               )}
             </ScrollView>
