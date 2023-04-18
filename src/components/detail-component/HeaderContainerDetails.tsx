@@ -17,7 +17,7 @@ import { POSTER_BASE_URL } from "../../constants/utilities";
 import { toWatchList } from "../../services/api-services";
 import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
-import { watchlistContext } from "../../context/WatchlistContext/WatchlistContext";
+import { WatchlistContext } from "../../context/WatchlistContext/WatchlistContext";
 
 interface IHeaderContainerDetails {
   movie: IMovieDetail;
@@ -29,7 +29,7 @@ interface IHeaderContainerDetails {
 
 export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRating }: IHeaderContainerDetails) => {
   const [existWatchlist, setExistWatchlist] = useState<boolean>(state?.watchlist);
-  const { getWatchlistData } = useContext(watchlistContext);
+  const { getWatchlistData } = useContext(WatchlistContext);
 
   const handleWatchList = async () => {
     // Get the data first and complementary based on what user click

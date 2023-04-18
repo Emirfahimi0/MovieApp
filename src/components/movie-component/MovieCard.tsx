@@ -1,14 +1,14 @@
-import { ImagePoster, ListPreviewMovie, movieContainer } from "../../constants/style-component/viewComponent";
-import { Fragment, useContext, useState } from "react";
+import { DetailContext } from "../../context/detail-context/DetailContext";
+import { Fragment, useContext } from "react";
 import { IDetailsMovie, TMovieType } from "../../screens";
+import { ImagePoster, ListPreviewMovie, movieContainer } from "../../constants/style-component/viewComponent";
 import { ItemSeparator } from "./ItemSeparator";
+import { POSTER_BASE_URL } from "../../constants/utilities";
+import { RootNavigationProp } from "types/global";
 import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
 import { Text, View, FlatList, TouchableOpacity, Image, ViewStyle } from "react-native";
-import { POSTER_BASE_URL } from "../../constants/utilities";
-import Icon from "react-native-vector-icons/Ionicons";
-import { GlobalContext } from "../../context/GlobalState";
-import { RootNavigationProp } from "types/global";
 import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Ionicons";
 import Loader from "../features/Loader";
 
 interface IMovieCardProps {
@@ -18,8 +18,7 @@ interface IMovieCardProps {
 }
 
 export const MovieCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProps) => {
-  const { storeAllDetailsState } = useContext(GlobalContext);
-  const [changes, setChanges] = useState();
+  const { storeAllDetailsState } = useContext(DetailContext);
   const navigation: RootNavigationProp = useNavigation();
   let loading = false;
   const handleShowDetailScreen = async (id: number) => {

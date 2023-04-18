@@ -30,6 +30,7 @@ export const MovieProvider = (props: React.PropsWithChildren<IMovieContextProvid
   const filterMovieByGenre = (item: Genre, index: number): void => {
     // check if the selected item is already in active filter in the state
     if (item.id === state.activeGenreId) {
+      console.log(index);
       return;
     }
     const currentFilter = state.movieState.filter((element) => {

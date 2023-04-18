@@ -1,16 +1,14 @@
-import { Genre, TMovieType, TUser } from "../screens";
+import { Genre, TUser } from "../screens";
 import React, { createContext, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
-import { IMovieDetail, IAccountState, IResult } from "../services";
+import { IAccountState } from "../services";
 import { submitByFaceId } from "../components/features/handleFunctions";
 
 export interface IInitialState {
   accountState: IAccountState;
-  detailsState: IMovieDetail;
+
   genreState: Genre[];
 
-  reviewState: IResult[];
-  storeAllDetailsState: (detail: IMovieDetail, review: IResult[]) => Promise<void>;
   storeGenre: (genre: Genre[]) => Promise<void>;
   storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
   userState: TUser;
@@ -34,11 +32,9 @@ const initialState: IInitialState = {
     rated: 5 | true,
     watchlist: true,
   },
-  detailsState: {},
 
   genreState: [],
-  reviewState: [],
-  storeAllDetailsState: () => Promise.resolve(),
+
   storeGenre: () => Promise.resolve(),
   storeUser: () => Promise.resolve(""),
   user: {
@@ -83,38 +79,21 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
 
   //  filter movie by genre
 
-  // const removeWatchlist = async (resWatchlist: TMovieType[]): Promise<void> => {};
-  // const addWatchlist = async (resWatchlist: TMovieType): Promise<void> => {
-  //   const currentWatchlist = state.watchlistState.find((element) => element.id !== resWatchlist.id);
-  //   setState({ ...state, watchlistState: currentWatchlist });
-  // };
-
   // set trending movies into a state
 
   const storeGenre = async (genre: Genre[]): Promise<void> => {
     setState({ ...state, genreState: genre });
   };
-  const storeAllDetailsState = async (resDetailMovie: IMovieDetail, resReviewMovie: IResult[]): Promise<void> => {
-    // will run all at the same time,
-    // ---> method 1st
-    // const newState = { ...state };
-    // newState.Details = { ...resDetail };
-    // newState.Review = { ...resReview };
-    // newState.accountState = { ...resFetchState };
-    // setState(newState);
-    resReviewMovie = resReviewMovie.splice(0, 5);
-    setState({ ...state, detailsState: resDetailMovie, reviewState: resReviewMovie });
-  };
+
   return (
     <GlobalContext.Provider
       value={{
         accountState: state.accountState,
-        detailsState: state.detailsState,
+
         genreState: state.genreState,
         storeGenre,
         storeUser,
-        reviewState: state.reviewState,
-        storeAllDetailsState,
+
         userState: state.userState,
       }}>
       {props.children}

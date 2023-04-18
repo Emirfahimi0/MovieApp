@@ -1,5 +1,5 @@
+import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState } from "../components/features/handleFunctions";
-import { GlobalContext } from "../context/GlobalState";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
 import { IAccountState } from "../services";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -14,7 +14,7 @@ import ReviewContainerDetails from "../components/detail-component/ReviewContain
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
 const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
-  const { detailsState, reviewState } = useContext(GlobalContext);
+  const { detailsState, reviewState } = useContext(DetailContext);
   const [checkingState, setCheckingState] = useState<IAccountState>();
   const [ratingVal, setRatingVal] = useState<number>(0);
   const { height } = Dimensions.get("screen");
