@@ -1,6 +1,6 @@
-import { Fragment, useContext, useState } from "react";
 import { ImagePoster, ListPreviewMovie, movieContainer } from "../../constants/style-component/viewComponent";
-import { IDetailsMovie, MovieType } from "../../screens";
+import { Fragment, useContext, useState } from "react";
+import { IDetailsMovie, TMovieType } from "../../screens";
 import { ItemSeparator } from "./ItemSeparator";
 import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
 import { Text, View, FlatList, TouchableOpacity, Image, ViewStyle } from "react-native";
@@ -13,7 +13,7 @@ import Loader from "../features/Loader";
 
 interface IMovieCardProps {
   keyword: string;
-  MovieData: MovieType[];
+  MovieData: TMovieType[];
   handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
 
@@ -41,6 +41,7 @@ export const MovieCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardP
         <FlatList
           data={MovieData}
           numColumns={2}
+          showsVerticalScrollIndicator={false}
           keyExtractor={(item) => `${item.id}`}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <ItemSeparator width={20} />}

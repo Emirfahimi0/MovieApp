@@ -1,23 +1,25 @@
-import { Genre, MovieType, user } from "../screens";
+import { Genre, TMovieType, TUser } from "../screens";
 import React, { createContext, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
-import { IMovieDetail, IReview, IAccountState, IResult } from "../services";
-import { submitByFaceId } from "../components/features/handleFunctions";
+import { IMovieDetail, IAccountState, IResult } from "../services";
+import { fetchWatchlist, submitByFaceId } from "../components/features/handleFunctions";
 
 export interface IInitialState {
   accountState: IAccountState;
-  handleTrendingMovies: (movie: MovieType[], item: Genre, index: number) => void;
   activeGenreId: number;
   detailsState: IMovieDetail;
+  filteredMovieState: TMovieType[];
   filterMovieByGenre: (item: Genre, index: number) => void;
   genreState: Genre[];
-  storeGenre: (genre: Genre[]) => Promise<void>;
-  storeUser: (username: string, password: string, faceId: string) => Promise<string>;
-  movieState: MovieType[];
-  filteredMovieState: MovieType[];
+  handleTrendingMovies: (movie: TMovieType[], item: Genre) => void;
+  movieState: TMovieType[];
   reviewState: IResult[];
+  storeWatchlist: () => void;
   storeAllDetailsState: (detail: IMovieDetail, review: IResult[]) => Promise<void>;
-  userState: user;
+  storeGenre: (genre: Genre[]) => Promise<void>;
+  storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
+  watchlistState: TMovieType[];
+  userState: TUser;
 }
 
 const existingUser = [
@@ -38,22 +40,25 @@ const initialState: IInitialState = {
     rated: 5 | true,
     watchlist: true,
   },
-  handleTrendingMovies: () => {},
+  handleTrendingMovies: () => Promise<void>,
   activeGenreId: 0,
   detailsState: {},
-  filterMovieByGenre: () => {},
+  filterMovieByGenre: () => Promise<void>,
   genreState: [],
   storeGenre: () => Promise.resolve(),
   storeUser: () => Promise.resolve(""),
   movieState: [],
   filteredMovieState: [],
   reviewState: [],
+  watchlistState: [],
   storeAllDetailsState: () => Promise.resolve(),
   user: {
     id: "",
     password: "",
     username: "",
+    responseToken: "",
   },
+  storeWatchlist: () => Promise<void>,
 };
 
 // create Context
@@ -64,7 +69,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   const [state, setState] = useState(initialState);
 
   // Get local user store
-  const storeUser = async (username: string, password: string, authMethod?: string): Promise<string> => {
+  const storeUser = async (username: string, password: string, requestToken?: string, authMethod?: string): Promise<string> => {
     let message = "";
     let tryAuth = false;
 
@@ -88,7 +93,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     return message;
   };
 
-  // Method filtering movie by genre
+  //  filter movie by genre
   const filterMovieByGenre = (item: Genre, index: number): void => {
     // check if the selected item is already in active filter in the state
     if (item.id === state.activeGenreId) {
@@ -97,13 +102,25 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     const currentFilter = state.movieState.filter((element) => {
       return element.genre_ids.includes(item.id);
     });
-    console.log("current filter", currentFilter);
     setState({ ...state, filteredMovieState: currentFilter, activeGenreId: item.id });
     // console.log(state.activeGenreId);
   };
 
+  const storeWatchlist = async (): Promise<void> => {
+    const responseWatchlist = await fetchWatchlist();
+    if (responseWatchlist !== undefined) {
+      setState({ ...state, watchlistState: responseWatchlist });
+    }
+  };
+
+  // const removeWatchlist = async (resWatchlist: TMovieType[]): Promise<void> => {};
+  // const addWatchlist = async (resWatchlist: TMovieType): Promise<void> => {
+  //   const currentWatchlist = state.watchlistState.find((element) => element.id !== resWatchlist.id);
+  //   setState({ ...state, watchlistState: currentWatchlist });
+  // };
+
   // set trending movies into a state
-  const handleTrendingMovies = async (movies: MovieType[], item: Genre, index: number): Promise<void> => {
+  const handleTrendingMovies = async (movies: TMovieType[], item: Genre): Promise<void> => {
     // check if the selected item is already in active filter in the state
     if (item.id === state.activeGenreId) {
       return;
@@ -132,6 +149,8 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   return (
     <GlobalContext.Provider
       value={{
+        watchlistState: state.watchlistState,
+        storeWatchlist,
         accountState: state.accountState,
         activeGenreId: state.activeGenreId,
         handleTrendingMovies,

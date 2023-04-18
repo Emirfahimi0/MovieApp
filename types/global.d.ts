@@ -1,4 +1,4 @@
-import { MovieType } from "src/screens";
+import { TMovieType } from "src/screens";
 import { IMovieDetail, IResponseAccount, IResult } from "src/services";
 
 declare type RootStackParamList = {
@@ -6,7 +6,7 @@ declare type RootStackParamList = {
    HomeScreen:undefined
    LoginScreen:undefined
    SplashScreen:undefined,
-   WatchlistScreen:{resWatchlist:MovieType[],accountDetails:IResponseAccount|undefined,navGoBack:true,}
+   WatchlistScreen:{accountDetails:IResponseAccount|undefined,navGoBack:boolean,}
 
   };
   

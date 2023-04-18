@@ -3,10 +3,10 @@ import { HomeScreenContainer } from "../components/movie-component/HomeScreenCon
 import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
-import { MovieType } from ".";
+import { TMovieType } from ".";
 import { fetchWatchlist, handleMovieDetail } from "../components/features/handleFunctions";
 import Loader from "../components/features/Loader";
-import { Alert, View } from "react-native";
+import { Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
 import { IResponseAccount } from "src/services";
@@ -18,16 +18,17 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   const [searchText, setSearchText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>();
   const { handleTrendingMovies, genreState, filteredMovieState } = useContext(GlobalContext);
-  const [accountDetails, setAccountDetails] = useState<IResponseAccount | undefined>();
+  const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
+
   const handleGetMovies = async (): Promise<void> => {
     setLoading(false);
-    const responseApiMovie: MovieType[] = await getTrendingmovie();
+    const responseApiMovie: TMovieType[] = await getTrendingmovie();
     const responseAccountDetails: IResponseAccount = await getAccountDetails();
     if (responseApiMovie && responseAccountDetails) {
       setAccountDetails(responseAccountDetails);
       // set for trending movies with initial state
       const actionId = genreState.filter((item) => item.name === "Action");
-      handleTrendingMovies(responseApiMovie, actionId[0], 0);
+      handleTrendingMovies(responseApiMovie, actionId[0]);
       setLoading(true);
     } else Alert.alert("Cannot fetch data from api");
   };
@@ -36,13 +37,8 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   }, []);
 
   const handleWatchList = async () => {
-    console.log("lets go to watchlist screen");
-    // const { reviewState, detailsState } = useContext(GlobalContext);
-    const resWatchlist = await fetchWatchlist();
-    if (resWatchlist !== undefined) {
-      const navigationGoBack = true;
-      navigation.navigate("WatchlistScreen", { resWatchlist: resWatchlist, accountDetails: accountDetails, navGoBack: navigationGoBack });
-    }
+    const navigationGoBack = true;
+    navigation.navigate("WatchlistScreen", { accountDetails: accountDetails, navGoBack: navigationGoBack });
   };
 
   return (

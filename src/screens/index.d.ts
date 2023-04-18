@@ -2,7 +2,7 @@ import { IMovieDetail, IResult, IReview } from "../services";
 
 declare interface IMovie {
     page?:number
-    results: MovieType[];
+    results: TMovieType[];
     total_pages:number;
     total_results:number;
    
@@ -17,7 +17,7 @@ declare interface IListGenres {
     name: string;
   }
 
-declare type MovieType = {
+declare type TMovieType = {
     adult?:             boolean;
     backdrop_path:      string;
     first_air_date ?:   string;
@@ -52,15 +52,16 @@ declare enum OriginalLanguage {
 }
 
 declare interface IUserRating  {
-  Movie: MovieType| IMovieDetail;
+  Movie: TMovieType| IMovieDetail;
   ratingVal: number;
-  user: user;
+  user: TUser;
 }
 
-declare type user = {
+declare type TUser = {
   id: string;
   password: string;
   username: string;
+  responseToken?:string;
 };
 
 declare interface IDetailsMovie {
