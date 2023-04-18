@@ -14,7 +14,7 @@ export interface IInitialState {
   handleTrendingMovies: (movie: TMovieType[], item: Genre) => void;
   movieState: TMovieType[];
   reviewState: IResult[];
-  storeWatchlist: () => void;
+  getWatchlistData: () => void;
   storeAllDetailsState: (detail: IMovieDetail, review: IResult[]) => Promise<void>;
   storeGenre: (genre: Genre[]) => Promise<void>;
   storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
@@ -58,7 +58,7 @@ const initialState: IInitialState = {
     username: "",
     responseToken: "",
   },
-  storeWatchlist: () => Promise<void>,
+  getWatchlistData: () => Promise<void>,
 };
 
 // create Context
@@ -106,7 +106,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     // console.log(state.activeGenreId);
   };
 
-  const storeWatchlist = async (): Promise<void> => {
+  const getWatchlistData = async (): Promise<void> => {
     const responseWatchlist = await fetchWatchlist();
     if (responseWatchlist !== undefined) {
       setState({ ...state, watchlistState: responseWatchlist });
@@ -150,7 +150,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     <GlobalContext.Provider
       value={{
         watchlistState: state.watchlistState,
-        storeWatchlist,
+        getWatchlistData,
         accountState: state.accountState,
         activeGenreId: state.activeGenreId,
         handleTrendingMovies,

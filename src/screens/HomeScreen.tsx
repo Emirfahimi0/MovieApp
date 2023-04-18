@@ -4,7 +4,7 @@ import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { TMovieType } from ".";
-import { fetchWatchlist, handleMovieDetail } from "../components/features/handleFunctions";
+import { handleMovieDetail } from "../components/features/handleFunctions";
 import Loader from "../components/features/Loader";
 import { Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";

@@ -1,5 +1,5 @@
 import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useContext, useState } from "react";
 import {
   CardContainer,
   ContainerRow,
@@ -17,6 +17,7 @@ import { POSTER_BASE_URL } from "../../constants/utilities";
 import { toWatchList } from "../../services/api-services";
 import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
+import { GlobalContext } from "../../context/GlobalState";
 
 interface IHeaderContainerDetails {
   movie: IMovieDetail;
@@ -28,12 +29,14 @@ interface IHeaderContainerDetails {
 
 export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRating }: IHeaderContainerDetails) => {
   const [existWatchlist, setExistWatchlist] = useState<boolean>(state?.watchlist);
+  const { getWatchlistData } = useContext(GlobalContext);
 
   const handleWatchList = async () => {
     // Get the data first and complementary based on what user click
     const data: IWatchListResponse = await toWatchList(movie, !existWatchlist);
     // if response of the data return success.
     if (data.success) {
+      getWatchlistData();
       setExistWatchlist(!existWatchlist);
       if (existWatchlist) {
         Alert.alert("Item remove from watchlist");
