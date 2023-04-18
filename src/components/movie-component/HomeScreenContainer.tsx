@@ -1,10 +1,10 @@
-import { ScrollView, Text, View, ViewStyle } from "react-native";
-import React, { Fragment } from "react";
 import { CardButtons } from "./CardButton";
-import { MovieCard } from "./MovieCard";
-import { subHeader } from "../../constants/style-component/textComponent";
 import { Genre, IDetailsMovie, MovieType } from "../../screens";
 import { homeCardContainer } from "../../constants/style-component/viewComponent";
+import { MovieCard } from "./MovieCard";
+import { ScrollView, Text, View, ViewStyle } from "react-native";
+import { subHeader } from "../../constants/style-component/textComponent";
+import React, { Fragment } from "react";
 
 interface IHomeScreenContainer {
   searchInput: string;

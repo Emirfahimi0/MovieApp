@@ -3,7 +3,8 @@ import  {  ENDPOINTS, TMDB_API_KEY }  from "../constants/utilities";
 import {  Genre, IRating, IMovieDetail, TResponseToken, IAccountState,
         TSession, IWatchListResponse, IResult, IResponseAccount } from ".";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { MovieType } from "../screens";
+import { TMovieType } from "../screens";
+import { Alert } from "react-native";
 
 
 
@@ -11,7 +12,7 @@ import { MovieType } from "../screens";
 /* METHODS GET/POST/DELETE FROM TMDB API */
 
 // Get method for trending movie
-export const  getTrendingmovie = async():Promise<MovieType[]> => {
+export const  getTrendingmovie = async():Promise<TMovieType[]> => {
     let data = await axios.get(ENDPOINTS.GET_TRENDING,{responseType:'json'}).then(function(response){
         let responseData = response.data.results
         return responseData
@@ -89,21 +90,27 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
        
        await axios.request(options)
         .then( async   (response)=>{
-            await AsyncStorage.setItem("responseToken",JSON.stringify(response))
-            isAuthenticated =response.data.success
+         await AsyncStorage.multiSet([["responseToken",JSON.stringify(response.data)],
+                                     ["requestBody",JSON.stringify(requestBody)]])
+
+         isAuthenticated =response.data.success
 
             
 
         })
-        .catch(function (error) {
+        .catch( (error)=> {
             console.error("error",error);
             isAuthenticated = false
 
         });
         // create session right away
         let session = await createNewSession(token)
-        
-        await AsyncStorage.setItem("session_id", JSON.stringify(session));
+        if(session.success){
+            AsyncStorage.mergeItem("responseToken",JSON.stringify(session))
+        }
+        else  
+        Alert.alert("failed to create session!!")
+       // await AsyncStorage.setItem("session_id", JSON.stringify(session));
     }
     return isAuthenticated;
     
@@ -175,7 +182,7 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
 
 
 // POST method for adding watchlist
-export const toWatchList =async (movie:IMovieDetail | MovieType,setWatchlist:boolean):Promise<IWatchListResponse> => {
+export const toWatchList =async (movie:IMovieDetail | TMovieType,setWatchlist:boolean):Promise<IWatchListResponse> => {
     //need body request
     let response:IWatchListResponse = {
         status_code :0,
@@ -225,7 +232,7 @@ export const toWatchList =async (movie:IMovieDetail | MovieType,setWatchlist:boo
    
 }
 // Get movie watchlist
-export const getMovieWatchlist = async ():Promise<MovieType[]> => {
+export const getMovieWatchlist = async ():Promise<TMovieType[]> => {
     let current_Session:TSession = {
         success: false,
         session_id: ""

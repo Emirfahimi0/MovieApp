@@ -1,7 +1,8 @@
-import { Genre, IDetailsMovie, MovieType } from "../../screens";
-import { IMovieDetail, IReview, IAccountState, IResult } from "src/services";
 import {  getAccountState, getGenreMovie, getMovieDetailsAPI, getMovieWatchlist, getReviewById, sessionWithLogIn } from "../../services/api-services";
 import { Alert } from "react-native";
+import { Genre, IDetailsMovie, TMovieType } from "../../screens";
+import { IMovieDetail, IAccountState, IResult } from "src/services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import TouchID from "react-native-touch-id";
 
 export const fetchMovieDetails = async (id: number) => {
@@ -18,7 +19,7 @@ export const fetchMovieDetails = async (id: number) => {
     return data;
   };
   export const fetchWatchlist = async () => {
-    const data: MovieType[] = await getMovieWatchlist();
+    const data: TMovieType[] = await getMovieWatchlist();
     return data;
   };
   export const fetchGenreItem = async () => {
@@ -51,6 +52,13 @@ export const fetchMovieDetails = async (id: number) => {
   };
 
  export  const submitByFaceId = async (): Promise<boolean> => {
+    AsyncStorage.multiGet(["responseToken","requestBody"],(err,stores)=>{
+      stores?.map((result,i,store)=>{
+        let key = store[i][0];
+        let val = store[i][1];
+        console.log(key, val);
+      })
+    })
     let isSuccess = await sessionWithLogIn("emirfahimi", "adidas");
     console.log("isSuccess",isSuccess);
     return new Promise((resolve, reject) => {
