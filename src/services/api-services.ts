@@ -2,9 +2,9 @@ import axios from "axios"
 import  {  ENDPOINTS, TMDB_API_KEY }  from "../constants/utilities";
 import {  Genre, IRating, IMovieDetail, TResponseToken, IAccountState,
         TSession, IWatchListResponse, IResult, IResponseAccount, IResponseTokenMerge } from ".";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TMovieType } from "../screens";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
@@ -66,56 +66,71 @@ export const createNewSession = async(token:string): Promise<TSession> => {
  }
  /* Session with log In  */
 export const sessionWithLogIn = async (username:string,password:string):Promise<boolean> => {
-    const requestToken: TResponseToken  = await createRequestToken()
     let isAuthenticated = false;
-
-    if( requestToken.success===true){
-      const token = requestToken.request_token
-        
-        let requestBody = {
-            "username":username.toLowerCase(),
-            "password":password,
-            "request_token":token 
-        }
-        const options = {
-            method: 'POST',
-            url: ENDPOINTS.CREATE_SESSION_WITH_LOGIN,
-            headers: {
-                'content-type': 'application/json',
-            },
-            data: requestBody       
+    try {
+        const response:IResponseTokenMerge =await AsyncStorage.getItem("responseToken")
+        if(response){
             
-        };
-       
-       await axios.request(options)
-        .then( async   (response)=>{
-         await AsyncStorage.multiSet([["responseToken",JSON.stringify(response.data)],
-                                     ["requestBody",JSON.stringify(requestBody)]])
-
-         isAuthenticated =response.data.success
-
-        })
-        .catch( (error)=> {
-            console.error("error",error);
-            isAuthenticated = false
-
-        });
-            
-            // create session right away
-            let session = await createNewSession(token)
-            if(session.success){
-            
-                AsyncStorage.mergeItem("responseToken",JSON.stringify(session))
+            if(JSON.parse(response.session_id)){
+                console.log(response)
+                  isAuthenticated = true  
             }
-            else  
-            console.log("current session already exist!!")
+            else{
+                console.log("session id might be wrong or expired")
+                isAuthenticated = false
+            }
+   
+        }
+        else{
+            const requestToken: TResponseToken  = await createRequestToken()
+            if( requestToken.success===true){
+              const token = requestToken.request_token
+                
+                let requestBody = {
+                    "username":username.toLowerCase(),
+                    "password":password,
+                    "request_token":token 
+                }
+                const options = {
+                    method: 'POST',
+                    url: ENDPOINTS.CREATE_SESSION_WITH_LOGIN,
+                    headers: {
+                        'content-type': 'application/json',
+                    },
+                    data: requestBody       
+                    
+                };
+               
+               await axios.request(options)
+                .then( async   (response)=>{
+                 await AsyncStorage.multiSet([["responseToken",JSON.stringify(response.data)],
+                                             ["requestBody",JSON.stringify(requestBody)]])
         
+                 isAuthenticated =response.data.success
+        
+                })
+                .catch( (error)=> {
+                    console.error("error",error);
+                    isAuthenticated = false
+        
+                });
+                    
+                    // create session right away
+                    let session = await createNewSession(token)
+                    if(session.success){
+                      AsyncStorage.mergeItem("responseToken",JSON.stringify(session))  
+                    }
+                    else  
+                    console.log("current session already exist!!")    
+              }
+              isAuthenticated = true
+        }
+    } catch (error) {
+        console.log("error",error)
+    }
 
-       
-      
-    
-}
-    console.log(isAuthenticated)
+   
+    console.log("isAuthenticated",isAuthenticated)
     return isAuthenticated;
     
  }

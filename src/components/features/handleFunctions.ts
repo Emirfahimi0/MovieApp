@@ -54,7 +54,7 @@ export const fetchMovieDetails = async (id: number) => {
 
  export  const handleIsLogin = async (): Promise<boolean> => {
 
-    let isSuccess = false
+    let isSuccess:boolean = false
     
       const resAsyncToken = await AsyncStorage?.getItem ("responseToken").then((value) => {
         const responseToken:IResponseTokenMerge = JSON.parse(value??"null");
@@ -75,29 +75,29 @@ export const fetchMovieDetails = async (id: number) => {
         isSuccess = false
       }
       else if(resAsyncToken.request_token === resAsyncRequestBody.request_token){
-          console.log("noice")
+          console.log("session ID is exist",resAsyncToken.session_id)
       isSuccess =true 
       }
-
-     
+      console.log("isSuccess??",isSuccess)
     return isSuccess
 }
 
     
 export const handleLoginWithFaceId = async():Promise<boolean> =>{
   const isLogin = await  handleIsLogin()
-  let isSuccess = false
+  let isSuccess:boolean = false
   if(isLogin === true){
     const resAsyncRequestBody = await AsyncStorage?.getItem ("requestBody").then((value) => {
       const responseToken:IRequestBody = JSON.parse(value?? "null");
       return responseToken
     });
-  isSuccess = await sessionWithLogIn(resAsyncRequestBody.username,resAsyncRequestBody.password);
+  isSuccess = true
   }
 
   else {
-    isSuccess = await sessionWithLogIn("emirfahimi","adidas")
-    return new Promise((resolve, reject) => {
+   
+    return new Promise(async (resolve, reject) => {
+      isSuccess = await sessionWithLogIn("emirfahimi","adidas")
       TouchID.authenticate("Authenticate with Face ID")
         .then(() => {         
           if (isSuccess === true) {

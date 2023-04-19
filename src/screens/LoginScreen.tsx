@@ -98,7 +98,7 @@ const LoginScreen = ({ navigation }) => {
             flex: 1,
             alignContent: "space-between",
           }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => AsyncStorage.clear()}>
             <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
               <Icon name="md-logo-instagram" size={20} color="purple" />
               <Text style={{ ...genreText, marginLeft: 5 }}>Instagram</Text>

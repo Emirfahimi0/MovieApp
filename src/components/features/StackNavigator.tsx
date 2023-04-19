@@ -8,12 +8,13 @@ import React, { useContext, useEffect, useState } from "react";
 import WatchListScreen from "../../screens/WatchlistScreen";
 import { GlobalContext } from "../../context/GlobalState";
 import { handleLoginWithFaceId } from "./handleFunctions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export const StackNavigator = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const { storeGenre } = useContext(GlobalContext);
   const handleIsUserLoggedIn = async () => {
     storeGenre();
