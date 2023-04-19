@@ -17,7 +17,7 @@ import { POSTER_BASE_URL } from "../../constants/utilities";
 import { toWatchList } from "../../services/api-services";
 import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
-import { WatchlistContext } from "../../context/WatchlistContext/WatchlistContext";
+import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
 
 interface IHeaderContainerDetails {
   movie: IMovieDetail;

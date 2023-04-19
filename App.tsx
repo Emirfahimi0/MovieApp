@@ -1,28 +1,22 @@
 import React from "react";
 import { StackNavigator } from "./src/components/features//StackNavigator";
 import { GlobalProvider } from "./src/context/GlobalState";
-import { WatchlistProvider } from "./src/context/WatchlistContext/WatchlistContext";
-import { MovieProvider } from "./src/context/movieContext/MovieContext";
+import { WatchlistProvider } from "./src/context/watchlist-context/WatchlistContext";
+import { MovieProvider } from "./src/context/movie-context/MovieContext";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "react-native";
-import { DetailProvider } from "./src/context/detail-context/DetailContext";
+import { AppContextProviders } from "./src/context/utilities/AppContextProvider";
 
 function App() {
   return (
     <React.Fragment>
-      <GlobalProvider>
-        <MovieProvider>
-          <DetailProvider>
-            <WatchlistProvider>
-              <SafeAreaView>
-                <StatusBar barStyle={"light-content"} translucent={true} />
-              </SafeAreaView>
-              <StackNavigator />
-            </WatchlistProvider>
-          </DetailProvider>
-        </MovieProvider>
-      </GlobalProvider>
+      <AppContextProviders>
+        <SafeAreaView>
+          <StatusBar barStyle={"light-content"} translucent={true} />
+        </SafeAreaView>
+        <StackNavigator />
+      </AppContextProviders>
     </React.Fragment>
   );
 }
