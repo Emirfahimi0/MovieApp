@@ -1,7 +1,7 @@
 import axios from "axios"
 import  {  ENDPOINTS, TMDB_API_KEY }  from "../constants/utilities";
 import {  Genre, IRating, IMovieDetail, TResponseToken, IAccountState,
-        TSession, IWatchListResponse, IResult, IResponseAccount } from ".";
+        TSession, IWatchListResponse, IResult, IResponseAccount, IResponseTokenMerge } from ".";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TMovieType } from "../screens";
 import { Alert } from "react-native";
@@ -104,7 +104,8 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
             // create session right away
             let session = await createNewSession(token)
             if(session.success){
-                AsyncStorage.setItem("session",JSON.stringify(session))
+            
+                AsyncStorage.mergeItem("responseToken",JSON.stringify(session))
             }
             else  
             console.log("current session already exist!!")
@@ -121,12 +122,14 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
 
  export const getAccountState = async (id:number):Promise<IAccountState> => {
 
-    let current_Session:TSession = {
+    let current_Session:IResponseTokenMerge = {
         success: false,
+        request_token:"",
+        expires_at:"",
         session_id: ""
     }
    
-     await AsyncStorage.getItem('session').then((value) => {
+     await AsyncStorage.getItem('responseToken').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data
@@ -153,11 +156,13 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
 
 
  export const getAccountDetails =async():Promise<IResponseAccount>=> {
-    let current_Session:TSession = {
+    let current_Session:IResponseTokenMerge = {
         success: false,
+        request_token:"",
+        expires_at:"",
         session_id: ""
     }
-    await AsyncStorage.getItem('session').then((value) => {
+    await AsyncStorage.getItem('responseToken').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data
@@ -195,11 +200,13 @@ export const toWatchList =async (movie:IMovieDetail | TMovieType,setWatchlist:bo
 
 
     }
-    let current_Session:TSession = {
+    let current_Session:IResponseTokenMerge = {
         success: false,
+        request_token:"",
+        expires_at:"",
         session_id: ""
     }
-     await AsyncStorage.getItem('session').then((value) => {
+     await AsyncStorage.getItem('responseToken').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data
@@ -237,13 +244,15 @@ export const toWatchList =async (movie:IMovieDetail | TMovieType,setWatchlist:bo
 }
 // Get movie watchlist
 export const getMovieWatchlist = async ():Promise<TMovieType[]> => {
-    let current_Session:TSession = {
+    let current_Session:IResponseTokenMerge = {
         success: false,
+        request_token:"",
+        expires_at:"",
         session_id: ""
     }
    
 
-     await AsyncStorage.getItem('session').then((value) => {
+     await AsyncStorage.getItem('responseToken').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data
@@ -271,13 +280,15 @@ export const postRatingbyId = async (id:number,value:number):Promise<IRating> =>
         status_code:0,
         status_message:"success",
     }
-    let current_Session:TSession = {
+    let current_Session:IResponseTokenMerge = {
         success: false,
+        request_token:"",
+        expires_at:"",
         session_id: ""
     }
    
 
-     await AsyncStorage.getItem('session').then((value) => {
+     await AsyncStorage.getItem('responseToken').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data
@@ -321,11 +332,13 @@ export const deleteRatingbyId = async (id:number,value:number):Promise<IRating> 
         status_code:1,
         status_message:"success",
     }
-    let current_Session:TSession = {
+    let current_Session:IResponseTokenMerge = {
         success: false,
+        request_token:"",
+        expires_at:"",
         session_id: ""
     }
-     await AsyncStorage.getItem('session').then((value) => {
+     await AsyncStorage.getItem('responseToken').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data
