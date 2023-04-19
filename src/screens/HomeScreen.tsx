@@ -9,7 +9,7 @@ import { Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
 import { IResponseAccount } from "src/services";
-import { MovieContext } from "../context/movieContext/MovieContext";
+import { MovieContext } from "../context/movie-context/MovieContext";
 import { GlobalContext } from "../context/GlobalState";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}

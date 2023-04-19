@@ -7,8 +7,8 @@ import { RootStackParamList } from "types/global";
 import { ScrollView, Text, View } from "react-native";
 import Loader from "../components/features/Loader";
 import React, { useState, Fragment, useEffect, useContext } from "react";
-import { WatchlistContext } from "../context/WatchlistContext/WatchlistContext";
-import { genreText, subHeader } from "../constants/style-component/textComponent";
+import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
+import { subHeader } from "../constants/style-component/textComponent";
 interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {
   navGoBack: boolean;
 }
@@ -36,14 +36,14 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
     }
   };
   useEffect(() => {
-    handleGetWatchlist().catch();
+    handleGetWatchlist().catch(console.error);
   }, []);
 
   return (
     <Fragment>
       <View style={{ flex: 1 }}>
         <HeaderComponent searchText={input} setSearchText={setInput} accountDetails={accountDetails} handleGoBack={handleGoBack} />
-        {watchlistState ? (
+        {!loading ? (
           <View style={{ ...homeCardContainer }}>
             <ScrollView scrollEnabled={true} horizontal={true} style={{ paddingTop: 30 }}>
               {watchlistState.length > 0 ? (

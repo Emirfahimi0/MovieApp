@@ -9,7 +9,7 @@ interface IInitialState {
 
 interface IDetailProviderProps {
   // define props here
-  children?: JSX.Element;
+  children: JSX.Element;
 }
 
 const initialState: IInitialState = {

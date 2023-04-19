@@ -6,9 +6,7 @@ import { submitByFaceId } from "../components/features/handleFunctions";
 
 export interface IInitialState {
   accountState: IAccountState;
-
   genreState: Genre[];
-
   storeGenre: (genre: Genre[]) => Promise<void>;
   storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
   userState: TUser;
@@ -22,7 +20,7 @@ const existingUser = [
 
 interface GlobalProviderProps {
   // define props here
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const initialState: IInitialState = {
@@ -32,12 +30,10 @@ const initialState: IInitialState = {
     rated: 5 | true,
     watchlist: true,
   },
-
   genreState: [],
-
   storeGenre: () => Promise.resolve(),
   storeUser: () => Promise.resolve(""),
-  user: {
+  userState: {
     id: "",
     password: "",
     responseToken: "",
@@ -77,10 +73,6 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     return message;
   };
 
-  //  filter movie by genre
-
-  // set trending movies into a state
-
   const storeGenre = async (genre: Genre[]): Promise<void> => {
     setState({ ...state, genreState: genre });
   };
@@ -89,11 +81,9 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     <GlobalContext.Provider
       value={{
         accountState: state.accountState,
-
         genreState: state.genreState,
         storeGenre,
         storeUser,
-
         userState: state.userState,
       }}>
       {props.children}
