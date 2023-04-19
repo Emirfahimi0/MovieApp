@@ -7,28 +7,40 @@ import LoginScreen from "../../screens/LoginScreen";
 import React, { useContext, useEffect, useState } from "react";
 import WatchListScreen from "../../screens/WatchlistScreen";
 import { GlobalContext } from "../../context/GlobalState";
+import { handleLoginWithFaceId } from "./handleFunctions";
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export const StackNavigator = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const { storeGenre } = useContext(GlobalContext);
-
+  const handleIsUserLoggedIn = async () => {
+    storeGenre();
+    const data = await handleLoginWithFaceId();
+    if (data === true) {
+      setIsLoggedIn(true);
+      console.log("loggedIn");
+    } else setIsLoggedIn(false);
+  };
   useEffect(() => {
-    //handleIsUserLoggedIn();
+    handleIsUserLoggedIn();
     setTimeout(() => setLoading(false), 1000);
   }, []);
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="LoginScreen" screenOptions={{ headerShown: false }}>
-        <>
-          <RootStack.Group>
-            <RootStack.Screen name="LoginScreen" component={LoginScreen} />
-            <RootStack.Screen name="HomeScreen" component={HomeScreen} />
-            <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} />
-            <RootStack.Screen name="WatchlistScreen" component={WatchListScreen as React.ComponentType<any>} />
-          </RootStack.Group>
-        </>
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        {isLoggedIn ? (
+          <>
+            <RootStack.Group>
+              <RootStack.Screen name="HomeScreen" component={HomeScreen} />
+              <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} />
+              <RootStack.Screen name="WatchlistScreen" component={WatchListScreen as React.ComponentType<any>} />
+            </RootStack.Group>
+          </>
+        ) : (
+          <RootStack.Screen name="LoginScreen" component={LoginScreen} />
+        )}
       </RootStack.Navigator>
     </NavigationContainer>
   );

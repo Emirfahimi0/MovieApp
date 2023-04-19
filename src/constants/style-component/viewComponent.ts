@@ -51,10 +51,10 @@ export const movieContainer:ViewStyle= {
     borderTopRightRadius: 24,
     elevation: 4,
     flexDirection: "row",
-    height: 350,
+    height: 200,
     justifyContent: "space-between",
     marginVertical: 12,
-    width: 250,
+    width: 150,
   }
 
   export const homeCardContainer:ViewStyle={
@@ -85,9 +85,9 @@ export const movieContainer:ViewStyle= {
 
  export const ListPreviewMovie:ViewStyle = {
     flexDirection: "column",
-    margin: 8,
-    marginLeft: 16,
-    paddingTop: 16,
+    margin: 4,
+    paddingHorizontal:24,
+    paddingTop: 8,
   }
 
   export const ImagePoster :ImageStyle={
@@ -95,7 +95,7 @@ export const movieContainer:ViewStyle= {
     borderBottomLeftRadius: movieContainer.borderBottomLeftRadius,
     borderTopRightRadius: movieContainer.borderTopRightRadius,
     height: movieContainer.height,
-    width:movieContainer.width,
+    width:150,
   }
 
   // --> Detail Movie Screen Styling
@@ -137,6 +137,7 @@ export const HeaderDetail:ViewStyle = {
 export const noDataStyle: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
+  paddingHorizontal:12,
   width: "500%",
 };
 export const MovieDetailContainer:ViewStyle = {

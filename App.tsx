@@ -1,12 +1,8 @@
 import React from "react";
 import { StackNavigator } from "./src/components/features//StackNavigator";
-import { GlobalProvider } from "./src/context/GlobalState";
-import { WatchlistProvider } from "./src/context/watchlist-context/WatchlistContext";
-import { MovieProvider } from "./src/context/movie-context/MovieContext";
-
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "react-native";
-import { AppContextProviders } from "./src/context/utilities/AppContextProvider";
+import { AppContextProviders } from "./src/context/utils/AppContextProvider";
 
 function App() {
   return (

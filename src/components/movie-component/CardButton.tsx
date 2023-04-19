@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { GenreCard } from "./GenreCard";
 import { ItemSeparator } from "./ItemSeparator";
 import COLORS from "../../constants/color";
-import { MovieContext } from "../../context/movieContext/MovieContext";
+import { MovieContext } from "../../context/movie-context/MovieContext";
 
 export const CardButtons = ({ Genre }) => {
   const [active, setActive] = useState<number>(0);

@@ -1,12 +1,10 @@
 import { CardContainer, SearchBar, setHeight, setWidth } from "../../constants/style-component/viewComponent";
-import { Dimensions } from "react-native";
 import { Image, Pressable, Text, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import { InputSearcbBar, genreText, subTitle } from "../../constants/style-component/textComponent";
 import { IResponseAccount } from "src/services";
 import { RootNavigationProp } from "types/global";
 import { subHeader } from "../../constants/style-component/textComponent";
 import { useNavigation } from "@react-navigation/native";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import color from "../../constants/color";
 import Color from "../../constants/color";
@@ -30,17 +28,6 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
 }: IHeaderComponent) => {
   const urlAvatar = `https://secure.gravatar.com/avatar/${accountDetails?.avatar.gravatar.hash}.jpg?s=64`;
 
-  const { height } = Dimensions.get("window");
-  const screenHeight = height;
-
-  const hpToPixels = (hpValue: string) => {
-    const parsedHpValue = parseFloat(hpValue.replace("%", "")) / 100;
-    const pixelValue = screenHeight * parsedHpValue;
-    return setHeight(pixelValue);
-  };
-
-  // Example usage
-  const heightInPixels = hpToPixels("8%");
   const navigation: RootNavigationProp = useNavigation();
   const handleLogOut = async () => {
     //To do
@@ -51,7 +38,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
     <>
       <Fragment>
         <LinearGradient
-          start={{ x: 0.0, y: 0.4 }}
+          start={{ x: 0.38, y: 0.5 }}
           end={{ x: 0.5, y: 1.0 }}
           locations={[0, 1]}
           colors={[Color.PRIMARY_COLOR, Color.BUTTON]}
@@ -91,7 +78,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
             <View style={{ ...rowView }}>
               {/* To put data */}
               <View style={{ flexDirection: "column" }}>
-                <Text style={{ ...subHeader, color: Color.HEART }}>ACTIVE</Text>
+                <Text style={{ ...subHeader, color: Color.ACTIVE }}>ACTIVE</Text>
                 <Text style={{ ...subTitle, color: Color.EXTRA_LIGHT_GRAY }}>Updated 2 mins ago</Text>
               </View>
               {handleGoBack ? null : (

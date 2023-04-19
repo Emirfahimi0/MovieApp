@@ -12,6 +12,18 @@ export type TResponseToken = {
 export interface ICreateSession {
     new_session: TSession
 }
+
+export interface IResponseTokenMerge {
+    success: boolean
+    expires_at: string
+    session_id: string
+    request_token: string
+  }
+  export interface IRequestBody {
+    username:string,
+    password:string,
+    request_token:string 
+  }
 export interface IResponseAccount{
     avatar: Avatar
     id: number,

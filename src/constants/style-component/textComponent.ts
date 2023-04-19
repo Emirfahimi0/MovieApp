@@ -48,12 +48,12 @@ export const subTitle: TextStyle = {
 export const subHeader :TextStyle = {
     color:Color.GRAY,
     fontFamily: Font.REGULAR,
-    fontSize: 16,
+    fontSize: 12,
 }
 
 export const subDetail : TextStyle = {
     fontFamily: Font.BOLD,
-    fontSize: 14,
+    fontSize: 12,
     color:Color.BLACK
 
 }

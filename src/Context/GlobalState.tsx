@@ -2,12 +2,12 @@ import { Genre, TUser } from "../screens";
 import React, { createContext, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
 import { IAccountState } from "../services";
-import { submitByFaceId } from "../components/features/handleFunctions";
+import { fetchGenreItem, handleIsLogin } from "../components/features/handleFunctions";
 
 export interface IInitialState {
   accountState: IAccountState;
   genreState: Genre[];
-  storeGenre: (genre: Genre[]) => Promise<void>;
+  storeGenre: () => Promise<void>;
   storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
   userState: TUser;
 }
@@ -54,7 +54,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     let tryAuth = false;
 
     if (authMethod === "faceId") {
-      tryAuth = await submitByFaceId(); // Function to authenticate with Face ID
+      tryAuth = await handleIsLogin(); // Function to authenticate with Face ID
     } else {
       tryAuth = await sessionWithLogIn(username, password);
     }
@@ -73,8 +73,9 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     return message;
   };
 
-  const storeGenre = async (genre: Genre[]): Promise<void> => {
-    setState({ ...state, genreState: genre });
+  const storeGenre = async (): Promise<void> => {
+    const resGenre = await fetchGenreItem();
+    setState({ ...state, genreState: resGenre });
   };
 
   return (

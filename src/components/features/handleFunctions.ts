@@ -1,7 +1,7 @@
 import {  getAccountState, getGenreMovie, getMovieDetailsAPI, getMovieWatchlist, getReviewById, sessionWithLogIn } from "../../services/api-services";
 import { Alert } from "react-native";
 import { Genre, IDetailsMovie, TMovieType } from "../../screens";
-import { IMovieDetail, IAccountState, IResult } from "src/services";
+import { IMovieDetail, IAccountState, IResult, IResponseTokenMerge, IRequestBody } from "../../services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TouchID from "react-native-touch-id";
 
@@ -51,59 +51,66 @@ export const fetchMovieDetails = async (id: number) => {
     return resAllDetails;
   };
 
-  export interface IResponseTokenMerge {
-    success: boolean
-    expires_at: string
-    session_id: string
-    request_token: string
-  }
-  export interface IRequestBody {
-    username:string,
-    password:string,
-    request_token:string 
-  }
- export  const handleLogin = async (): Promise<boolean> => {
+
+ export  const handleIsLogin = async (): Promise<boolean> => {
 
     let isSuccess = false
     
-      const resAsyncToken = await AsyncStorage.getItem ("responseToken").then((value) => {
+      const resAsyncToken = await AsyncStorage?.getItem ("responseToken").then((value) => {
         const responseToken:IResponseTokenMerge = JSON.parse(value??"null");
         console.log(responseToken);
         return responseToken
       });
-    const resAsyncRequestBody = await AsyncStorage.getItem ("requestBody").then((value) => {
+    const resAsyncRequestBody = await AsyncStorage?.getItem ("requestBody").then((value) => {
         const responseToken:IRequestBody = JSON.parse(value?? "null");
-        console.log(responseToken);
         return responseToken
       });
-      if(resAsyncToken.request_token === resAsyncRequestBody.request_token){
-          console.log("noice")
-
-          if(resAsyncToken.success){
-              isSuccess =await handleLoginWithFaceId(resAsyncToken,resAsyncRequestBody)
-              
-          }
-          else 
-
-          isSuccess =false
+      if(resAsyncToken === null){
+        console.log("response async token is null")
+         isSuccess = false
       }
+
+      if(resAsyncRequestBody === null){
+        console.log("response request body is null")
+        isSuccess = false
+      }
+      else if(resAsyncToken.request_token === resAsyncRequestBody.request_token){
+          console.log("noice")
+      isSuccess =true 
+      }
+
+     
     return isSuccess
 }
 
     
-export const handleLoginWithFaceId = async(resAsyncToken:IResponseTokenMerge,resAsyncRequestBody:IRequestBody):Promise<boolean> =>{
-  let isSuccess = await sessionWithLogIn(resAsyncRequestBody.username, resAsyncRequestBody.password);
-  return new Promise((resolve, reject) => {
-    TouchID.authenticate("Authenticate with Face ID")
-      .then(() => {
-        if (isSuccess === true) {
-          resolve(true);
-          //navigation.navigate("HomeScreen");
-          console.log("success authenticated");
-        }
-      })
-      .catch((error: string) => {
-        reject(error);
-      });
-  });
+export const handleLoginWithFaceId = async():Promise<boolean> =>{
+  const isLogin = await  handleIsLogin()
+  let isSuccess = false
+  if(isLogin === true){
+    const resAsyncRequestBody = await AsyncStorage?.getItem ("requestBody").then((value) => {
+      const responseToken:IRequestBody = JSON.parse(value?? "null");
+      return responseToken
+    });
+  isSuccess = await sessionWithLogIn(resAsyncRequestBody.username,resAsyncRequestBody.password);
+  }
+
+  else {
+    isSuccess = await sessionWithLogIn("emirfahimi","adidas")
+    return new Promise((resolve, reject) => {
+      TouchID.authenticate("Authenticate with Face ID")
+        .then(() => {         
+          if (isSuccess === true) {
+            resolve(true);
+            //navigation.navigate("HomeScreen");
+            console.log("success authenticated");
+          }
+        })
+        .catch((error: string) => {
+          reject(error);
+        });
+    });
+  }
+  return isSuccess
+
 };

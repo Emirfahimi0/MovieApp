@@ -62,7 +62,7 @@ export const MovieCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardP
                       <Text style={subTitle}> {item.release_date}</Text>
                     </View>
                     <View style={Rating}>
-                      <Icon iconStyle={{ marginRight: 10 }} name="heart-sharp" size={16} color="red" />
+                      <Icon iconStyle={{ marginRight: 10 }} name="heart-sharp" size={12} color="red" />
                       <Text style={subDetail}>{item.vote_average.toFixed(1)}</Text>
                     </View>
                   </View>
@@ -79,7 +79,7 @@ export const MovieCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardP
 const MovieCardTitle: ViewStyle = {
   marginTop: 5,
   paddingVertical: 2,
-  width: 200,
+  width: 150,
 };
 const subContainer: ViewStyle = {
   alignItems: "flex-start",

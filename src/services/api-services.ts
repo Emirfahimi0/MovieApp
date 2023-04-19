@@ -66,10 +66,9 @@ export const createNewSession = async(token:string): Promise<TSession> => {
  }
  /* Session with log In  */
 export const sessionWithLogIn = async (username:string,password:string):Promise<boolean> => {
-    
-    const requestToken: TResponseToken  = await createRequestToken ()
+    const requestToken: TResponseToken  = await createRequestToken()
     let isAuthenticated = false;
-    
+
     if( requestToken.success===true){
       const token = requestToken.request_token
         
@@ -95,23 +94,27 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
 
          isAuthenticated =response.data.success
 
-            
-
         })
         .catch( (error)=> {
             console.error("error",error);
             isAuthenticated = false
 
         });
-        // create session right away
-        let session = await createNewSession(token)
-        if(session.success){
-            AsyncStorage.mergeItem("responseToken",JSON.stringify(session))
-        }
-        else  
-        Alert.alert("failed to create session!!")
+            
+            // create session right away
+            let session = await createNewSession(token)
+            if(session.success){
+                AsyncStorage.setItem("session",JSON.stringify(session))
+            }
+            else  
+            console.log("current session already exist!!")
+        
+
+       
       
-    }
+    
+}
+    console.log(isAuthenticated)
     return isAuthenticated;
     
  }
@@ -123,7 +126,7 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
         session_id: ""
     }
    
-     await AsyncStorage.getItem('session_id').then((value) => {
+     await AsyncStorage.getItem('session').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data
@@ -154,10 +157,12 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
         success: false,
         session_id: ""
     }
-    await AsyncStorage.getItem('session_id').then((value) => {
+    await AsyncStorage.getItem('session').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data
+        console.log("current session from account details",current_Session)
+
     })
     const params = {
         session_id:current_Session.session_id}
@@ -171,7 +176,6 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
           return responseData
             
         })
-        //to do --> need to compile it as 
         
         return data;
 
@@ -195,7 +199,7 @@ export const toWatchList =async (movie:IMovieDetail | TMovieType,setWatchlist:bo
         success: false,
         session_id: ""
     }
-     await AsyncStorage.getItem('session_id').then((value) => {
+     await AsyncStorage.getItem('session').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data
@@ -239,7 +243,7 @@ export const getMovieWatchlist = async ():Promise<TMovieType[]> => {
     }
    
 
-     await AsyncStorage.getItem('session_id').then((value) => {
+     await AsyncStorage.getItem('session').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data
@@ -273,7 +277,7 @@ export const postRatingbyId = async (id:number,value:number):Promise<IRating> =>
     }
    
 
-     await AsyncStorage.getItem('session_id').then((value) => {
+     await AsyncStorage.getItem('session').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data
@@ -321,7 +325,7 @@ export const deleteRatingbyId = async (id:number,value:number):Promise<IRating> 
         success: false,
         session_id: ""
     }
-     await AsyncStorage.getItem('session_id').then((value) => {
+     await AsyncStorage.getItem('session').then((value) => {
 
         const data = JSON.parse(value as string)
         current_Session = data

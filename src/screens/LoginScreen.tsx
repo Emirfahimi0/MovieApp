@@ -7,7 +7,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { sessionWithLogIn } from "../services/api-services";
-import { fetchGenreItem, handleLogin } from "../components/features/handleFunctions";
+import { fetchGenreItem, handleIsLogin, handleLoginWithFaceId } from "../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import color from "../constants/color";
 
@@ -26,18 +26,16 @@ const LoginScreen = ({ navigation }) => {
     //By doing this, ensuring that the data value is always compared to a boolean value, which avoids the type error.
     // if (!!data) {
     //   console.log("user already logged In", data);
-    // navigation.navigate("HomeScreen");
+    //   // navigation.navigate("HomeScreen");
     // } else {
-    let isSuccess = await handleLogin();
+    let isSuccess = await handleLoginWithFaceId();
     if (isSuccess === true) {
-      const resGenre = await fetchGenreItem();
-      storeGenre(resGenre);
       AsyncStorage.setItem("userLoggedIn", JSON.stringify(isSuccess));
       navigation.navigate("HomeScreen");
     } else {
       console.log("something wrong somewhere");
     }
-    // }
+    //}
   };
 
   // arrow function for handling validation and submission of the formdata
