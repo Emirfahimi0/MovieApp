@@ -51,28 +51,59 @@ export const fetchMovieDetails = async (id: number) => {
     return resAllDetails;
   };
 
- export  const submitByFaceId = async (): Promise<boolean> => {
-    AsyncStorage.multiGet(["responseToken","requestBody"],(err,stores)=>{
-      stores?.map((result,i,store)=>{
-        let key = store[i][0];
-        let val = store[i][1];
-        console.log(result[1])
-        console.log(key,JSON.parse(val));
-      })
-    })
-    let isSuccess = await sessionWithLogIn("emirfahimi", "adidas");
-    console.log("isSuccess",isSuccess);
-    return new Promise((resolve, reject) => {
-      TouchID.authenticate("Authenticate with Face ID")
-        .then(() => {
-          if (isSuccess === true) {
-            resolve(true);
-            //navigation.navigate("HomeScreen");
-            console.log("success authenticated");
+  export interface IResponseTokenMerge {
+    success: boolean
+    expires_at: string
+    session_id: string
+    request_token: string
+  }
+  export interface IRequestBody {
+    username:string,
+    password:string,
+    request_token:string 
+  }
+ export  const handleLogin = async (): Promise<boolean> => {
+
+    let isSuccess = false
+    
+      const resAsyncToken = await AsyncStorage.getItem ("responseToken").then((value) => {
+        const responseToken:IResponseTokenMerge = JSON.parse(value??"null");
+        console.log(responseToken);
+        return responseToken
+      });
+    const resAsyncRequestBody = await AsyncStorage.getItem ("requestBody").then((value) => {
+        const responseToken:IRequestBody = JSON.parse(value?? "null");
+        console.log(responseToken);
+        return responseToken
+      });
+      if(resAsyncToken.request_token === resAsyncRequestBody.request_token){
+          console.log("noice")
+
+          if(resAsyncToken.success){
+              isSuccess =await handleLoginWithFaceId(resAsyncToken,resAsyncRequestBody)
+              
           }
-        })
-        .catch((error: string) => {
-          reject(error);
-        });
-    });
-  };
+          else 
+
+          isSuccess =false
+      }
+    return isSuccess
+}
+
+    
+export const handleLoginWithFaceId = async(resAsyncToken:IResponseTokenMerge,resAsyncRequestBody:IRequestBody):Promise<boolean> =>{
+  let isSuccess = await sessionWithLogIn(resAsyncRequestBody.username, resAsyncRequestBody.password);
+  return new Promise((resolve, reject) => {
+    TouchID.authenticate("Authenticate with Face ID")
+      .then(() => {
+        if (isSuccess === true) {
+          resolve(true);
+          //navigation.navigate("HomeScreen");
+          console.log("success authenticated");
+        }
+      })
+      .catch((error: string) => {
+        reject(error);
+      });
+  });
+};

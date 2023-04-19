@@ -25,8 +25,9 @@ export const  getTrendingmovie = async():Promise<TMovieType[]> => {
 /* Get request token*/
 export const createRequestToken = async  (): Promise<TResponseToken> => {
    const data:TResponseToken =  (await Promise.resolve(axios.get<TResponseToken>(ENDPOINTS.CREATE_REQUEST_TOKEN,{responseType:"json"}))).data
-   console.log("Success creating token -->", data)
-   return data;
+        return data;
+    
+    
     
 } 
 /* create new session */
@@ -66,16 +67,16 @@ export const createNewSession = async(token:string): Promise<TSession> => {
  /* Session with log In  */
 export const sessionWithLogIn = async (username:string,password:string):Promise<boolean> => {
     
-    let requestToken: TResponseToken  = await createRequestToken ()
+    const requestToken: TResponseToken  = await createRequestToken ()
     let isAuthenticated = false;
     
     if( requestToken.success===true){
-      let   token = requestToken.request_token
+      const token = requestToken.request_token
         
         let requestBody = {
             "username":username.toLowerCase(),
             "password":password,
-            "request_token":requestToken.request_token 
+            "request_token":token 
         }
         const options = {
             method: 'POST',
@@ -86,7 +87,6 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
             data: requestBody       
             
         };
-       // await AsyncStorage.multiSet("r")
        
        await axios.request(options)
         .then( async   (response)=>{
@@ -110,7 +110,7 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
         }
         else  
         Alert.alert("failed to create session!!")
-       // await AsyncStorage.setItem("session_id", JSON.stringify(session));
+      
     }
     return isAuthenticated;
     

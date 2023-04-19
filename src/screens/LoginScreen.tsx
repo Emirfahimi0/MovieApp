@@ -7,7 +7,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { sessionWithLogIn } from "../services/api-services";
-import { fetchGenreItem, submitByFaceId } from "../components/features/handleFunctions";
+import { fetchGenreItem, handleLogin } from "../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import color from "../constants/color";
 
@@ -28,7 +28,7 @@ const LoginScreen = ({ navigation }) => {
     //   console.log("user already logged In", data);
     // navigation.navigate("HomeScreen");
     // } else {
-    let isSuccess = await submitByFaceId();
+    let isSuccess = await handleLogin();
     if (isSuccess === true) {
       const resGenre = await fetchGenreItem();
       storeGenre(resGenre);
