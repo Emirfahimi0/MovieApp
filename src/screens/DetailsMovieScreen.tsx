@@ -10,10 +10,9 @@ import Color from "../constants/color";
 import Loader from "../components/features/Loader";
 import React, { useContext, useEffect, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
-import { homeCardContainer, setHeight, setWidth } from "../constants/style-component/viewComponent";
+import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
 import { ListCardButtons } from "../components/movie-component/CardButton";
 import { GlobalContext } from "../context/GlobalState";
-import YoutubeIframe from "react-native-youtube-iframe";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
@@ -51,7 +50,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
       {checkingState?.watchlist !== undefined ? (
         <>
           <HeaderContainerDetails
-            movie={MovieDetailsState}
+            selectedMovie={MovieDetailsState}
             onPress={handleGoBack}
             state={checkingState}
             setRating={setRatingVal}
