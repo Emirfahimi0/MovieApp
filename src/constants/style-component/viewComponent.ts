@@ -66,7 +66,7 @@ export const movieContainer:ViewStyle= {
     marginTop: 54,
     elevation: 3,
     shadowOpacity: 1.0,
-    shadowOffset: { width: 0, height: -3 },
+    shadowOffset: { width: 0, height: -4 },
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
   }
@@ -108,18 +108,18 @@ export const movieContainer:ViewStyle= {
 export const  ImagePosterDetail:ViewStyle = {
 
   alignItems:"center",
+  justifyContent:"center",
   elevation: 8,
   height:setHeight(h),
-  left: setWidth((100-145)/2),
-  position:"absolute",
   top:0,
   width:setWidth(w),
 }
 export const posterImage:ImageStyle = {
 
-  height:Dimensions.get('window').height ,
-  resizeMode:"cover",
-  width: setWidth(w),
+  height:setHeight(50),
+  padding:"50%",
+  resizeMode:"contain",
+  width: setWidth(20),
 }
 
 export const HeaderDetail:ViewStyle = {
@@ -166,9 +166,12 @@ export const smallDetail : ViewStyle ={
 }
 export const OverviewContainer:ViewStyle = {
 
-  alignItems: "flex-start",
-  backgroundColor:Color.BLACK,
+  marginTop:30,
+  backgroundColor:Color.ACTIVE,
   flexDirection: "column",
+  flex:1.4,
+  borderTopRightRadius:homeCardContainer.borderTopRightRadius,
+  borderTopLeftRadius:homeCardContainer.borderTopLeftRadius,
   justifyContent: "space-between",
 }
 

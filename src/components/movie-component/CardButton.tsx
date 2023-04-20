@@ -4,8 +4,9 @@ import { GenreCard } from "./GenreCard";
 import { ItemSeparator } from "./ItemSeparator";
 import COLORS from "../../constants/color";
 import { MovieContext } from "../../context/movie-context/MovieContext";
+import { Genre } from "../../services";
 
-export const CardButtons = ({ Genre }) => {
+export const CardButtons = ({ Genre }: Genre[]) => {
   const [active, setActive] = useState<number>(0);
   const { filterMovieByGenre } = useContext(MovieContext);
   return (

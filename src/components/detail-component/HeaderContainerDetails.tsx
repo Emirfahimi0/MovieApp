@@ -5,6 +5,7 @@ import {
   ContainerRow,
   ImagePosterDetail,
   MovieDetailContainer,
+  homeCardContainer,
   posterImage,
   setHeight,
   smallDetail,
@@ -54,14 +55,23 @@ export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRa
 
   return (
     <Fragment>
-      <View style={{ backgroundColor: Color.BLACK }}>
+      <View
+        style={{
+          borderTopRightRadius: 0,
+          borderBottomRightRadius: 40,
+          borderBottomLeftRadius: 40,
+          backgroundColor: Color.BLACK,
+          paddingBottom: 30,
+          paddingTop: 0,
+        }}>
         <View style={ImagePosterDetail}>
           <ScrollView>{<Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}${movie.poster_path}` }} />}</ScrollView>
         </View>
-        <View style={[MovieDetailContainer, { paddingTop: setHeight(5) }]}>
+        <View style={[MovieDetailContainer, { position: "absolute", padding: "50%" }]}>
           <TouchableOpacity onPress={onPress}>
             <Icon name="arrow-back-circle" size={35} color={Color.EXTRA_LIGHT_GRAY} />
           </TouchableOpacity>
+          <Icon name="play-circle-outline" size={50} />
         </View>
         <ItemSeparator height={setHeight(35)} />
         <View style={MovieDetailContainer}>

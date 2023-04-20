@@ -1,6 +1,6 @@
 import { createRequestToken } from "../../services/api-services";
 export const TMDB_BASE_URL = "https://api.themoviedb.org/3";
-export const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342";
+export const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
 export const TMDB_API_KEY = "api_key=c8dd41ae609200a4c9aef25e9654494a";
 export const API_KEY = "c8dd41ae609200a4c9aef25e9654494a";
 export const account_id = "18555891";

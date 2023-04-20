@@ -4,12 +4,13 @@ import { HeaderContainerDetails } from "../components/detail-component/HeaderCon
 import { IAccountState } from "../services";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
-import { ScrollView, ViewStyle, Dimensions } from "react-native";
+import { ScrollView, ViewStyle, Dimensions, View } from "react-native";
 import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
 import Color from "../constants/color";
 import Loader from "../components/features/Loader";
 import React, { useContext, useEffect, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
+import { OverviewContainer, homeCardContainer } from "../constants/style-component/viewComponent";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
@@ -22,7 +23,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
     navigation.goBack();
   };
   const overViewTextArea: ViewStyle = {
-    backgroundColor: Color.TRANSPARENT,
+    backgroundColor: Color.AMBER,
     borderRadius: 24,
     padding: 10,
   };
@@ -55,8 +56,10 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
             setRating={setRatingVal}
             ratingVal={ratingVal}
           />
-          <SubContainerDetail overviewDetails={detailsState.overview} overViewStyle={overViewTextArea} />
-          <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
+          <View style={homeCardContainer}>
+            <SubContainerDetail overviewDetails={detailsState.overview} overViewStyle={overViewTextArea} />
+            <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
+          </View>
         </>
       ) : (
         <Loader />

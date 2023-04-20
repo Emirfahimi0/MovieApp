@@ -10,8 +10,8 @@ export const SubContainerDetail = ({ overviewDetails, overViewStyle }) => {
     setShowmore(!showMore);
   };
   return (
-    <View style={{ ...OverviewContainer, padding: 20 }}>
-      <Text style={{ ...subHeader, marginLeft: 15, color: Color.HEART, paddingBottom: 15 }}>Overview</Text>
+    <View style={{ padding: 20 }}>
+      <Text style={{ ...subHeader, fontSize: 16, marginLeft: 15, color: Color.HEART, paddingVertical: 16 }}>Overview</Text>
       <ScrollView>
         <View style={overViewStyle}>
           <Text style={{ ...OverviewDetailsText, color: Color.SECONDARY_COLOR }}>
