@@ -10,7 +10,7 @@ interface ICardButtons {
   Genre: Genre[];
 }
 
-export const CardButtons = ({ Genre }: ICardButtons) => {
+export const ListCardButtons = ({ Genre }: ICardButtons) => {
   const [active, setActive] = useState<number>(0);
   const { filterMovieByGenre } = useContext(MovieContext);
   return (

@@ -4,37 +4,32 @@ import { HeaderContainerDetails } from "../components/detail-component/HeaderCon
 import { IAccountState } from "../services";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
-import { ScrollView, ViewStyle, Dimensions, View } from "react-native";
+import { ScrollView, ViewStyle, View } from "react-native";
 import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
 import Color from "../constants/color";
 import Loader from "../components/features/Loader";
 import React, { useContext, useEffect, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
-import { homeCardContainer } from "../constants/style-component/viewComponent";
-import { CardButtons } from "../components/movie-component/CardButton";
+import { homeCardContainer, setHeight, setWidth } from "../constants/style-component/viewComponent";
+import { ListCardButtons } from "../components/movie-component/CardButton";
 import { GlobalContext } from "../context/GlobalState";
+import YoutubeIframe from "react-native-youtube-iframe";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
 const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
-  const { detailsState, reviewState } = useContext(DetailContext);
+  const { MovieDetailsState, reviewState } = useContext(DetailContext);
   const { genreState } = useContext(GlobalContext);
-
   const [checkingState, setCheckingState] = useState<IAccountState>();
   const [ratingVal, setRatingVal] = useState<number>(0);
-  const { height } = Dimensions.get("screen");
 
   const handleGoBack = () => {
     navigation.goBack();
   };
-  const overViewTextArea: ViewStyle = {
-    backgroundColor: Color.AMBER,
-    borderRadius: 24,
-    padding: 10,
-  };
+
   const getUpdatedAccState = async (): Promise<void> => {
     try {
-      const resFetchState: IAccountState = await fetchAccountState(detailsState.id);
+      const resFetchState: IAccountState = await fetchAccountState(MovieDetailsState.id);
       setCheckingState(resFetchState);
       if (typeof checkingState?.rated === "object") {
         setRatingVal(checkingState.rated.value);
@@ -48,22 +43,23 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 
   useEffect(() => {
     getUpdatedAccState();
-  }, [checkingState?.rated]);
+    //handleRenderTrailer();
+  }, []);
 
   return (
-    <ScrollView contentContainerStyle={{ minHeight: height }}>
-      {checkingState?.watchlist !== undefined || checkingState?.rated !== undefined ? (
+    <ScrollView contentContainerStyle={{ minHeight: setHeight(20) }}>
+      {checkingState?.watchlist !== undefined ? (
         <>
           <HeaderContainerDetails
-            movie={detailsState}
+            movie={MovieDetailsState}
             onPress={handleGoBack}
             state={checkingState}
             setRating={setRatingVal}
             ratingVal={ratingVal}
           />
-          <CardButtons Genre={genreState} />
+          <ListCardButtons Genre={genreState} />
           <View style={homeCardContainer}>
-            <SubContainerDetail overviewDetails={detailsState.overview} overViewStyle={overViewTextArea} />
+            <SubContainerDetail overviewDetails={MovieDetailsState.overview} overViewStyle={overViewTextArea} />
             <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
           </View>
         </>
@@ -75,3 +71,8 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 };
 
 export default DetailsMovieScreen;
+const overViewTextArea: ViewStyle = {
+  backgroundColor: Color.AMBER,
+  borderRadius: 24,
+  padding: 10,
+};

@@ -1,7 +1,7 @@
 import { handleMovieDetail } from "../components/features/handleFunctions";
 import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import { homeCardContainer, noDataStyle } from "../constants/style-component/viewComponent";
-import { MovieCard } from "../components/movie-component/MovieCard";
+import { ListMovieCards } from "../components/movie-component/ListMovieCards";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
 import { ScrollView, Text, View } from "react-native";
@@ -45,21 +45,22 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
         <HeaderComponent searchText={input} setSearchText={setInput} accountDetails={accountDetails} handleGoBack={handleGoBack} />
         {!loading ? (
           <View style={{ ...homeCardContainer }}>
-            <ScrollView scrollEnabled={true} horizontal={true} style={{ paddingTop: 30 }}>
-              {watchlistState.length > 0 ? (
-                <MovieCard handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} />
-              ) : (
-                <View
-                  style={{
-                    ...noDataStyle,
-                    paddingLeft: "65%",
-                    justifyContent: "center",
-                    alignItems: "flex-start",
-                  }}>
-                  <Text style={{ ...subHeader }}>No Watchlist added yet</Text>
-                </View>
-              )}
-            </ScrollView>
+            {watchlistState.length > 0 ? (
+              <ScrollView scrollEnabled={true} horizontal={true} style={{ paddingTop: 30 }}>
+                <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} />
+              </ScrollView>
+            ) : !loading ? (
+              <Loader />
+            ) : (
+              <View
+                style={{
+                  ...noDataStyle,
+                  justifyContent: "center",
+                  alignItems: "flex-start",
+                }}>
+                <Text style={{ ...subHeader }}>No Watchlist added yet</Text>
+              </View>
+            )}
           </View>
         ) : (
           <Loader />

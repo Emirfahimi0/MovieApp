@@ -1,10 +1,10 @@
 import { IResult } from "../../services";
-import { OverviewContainer, container, setHeight, setWidth } from "../../constants/style-component/viewComponent";
+import { container, setWidth } from "../../constants/style-component/viewComponent";
 import { OverviewDetailsText, genreText, subHeader } from "../../constants/style-component/textComponent";
 import { FlatList, ScrollView, Text, View } from "react-native";
 import Color from "../../constants/color";
 import React, { Fragment, useState } from "react";
-import { CardButtons } from "../movie-component/CardButton";
+import { ListCardButtons } from "../movie-component/CardButton";
 import { ItemSeparator } from "../movie-component/ItemSeparator";
 
 const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {

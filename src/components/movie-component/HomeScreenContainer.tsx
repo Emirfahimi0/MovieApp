@@ -1,29 +1,29 @@
-import { CardButtons } from "./CardButton";
+import { ListCardButtons } from "./CardButton";
 import { Genre, IDetailsMovie, TMovieType } from "../../screens";
 import { homeCardContainer, noDataStyle } from "../../constants/style-component/viewComponent";
-import { MovieCard } from "./MovieCard";
+import { ListMovieCards } from "./ListMovieCards";
 import { ScrollView, Text, View } from "react-native";
 import { subHeader } from "../../constants/style-component/textComponent";
 import React, { Fragment } from "react";
 
-interface IHomeScreenContainer {
+interface IScreenCardContainer {
   searchInput: string;
   Movie: TMovieType[];
   Genres: Genre[];
   handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
 
-export const HomeScreenContainer = ({ searchInput, Movie, Genres, handleMovieDetail }: IHomeScreenContainer) => {
+export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDetail }: IScreenCardContainer) => {
   return (
     <Fragment>
       <View
         style={{
           ...homeCardContainer,
         }}>
-        <CardButtons Genre={Genres} />
+        <ListCardButtons Genre={Genres} />
         <ScrollView horizontal={true}>
           {Object.keys(Movie).length > 0 ? (
-            <MovieCard handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
+            <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
           ) : (
             <View style={{ ...noDataStyle }}>
               <Text style={subHeader}> No Movie</Text>

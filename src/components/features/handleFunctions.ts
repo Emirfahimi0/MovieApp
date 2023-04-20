@@ -1,4 +1,4 @@
-import {  getAccountState, getGenreMovie, getMovieDetailsAPI, getMovieWatchlist, getReviewById, sessionWithLogIn } from "../../services/api-services";
+import {  getAccountState, getGenreMovie, getMovieDetails, getMovieWatchlist, getReviewById, sessionWithLogIn } from "../../services/api-services";
 import { Alert } from "react-native";
 import { Genre, IDetailsMovie, TMovieType } from "../../screens";
 import { IMovieDetail, IAccountState, IResult, IResponseTokenMerge, IRequestBody } from "../../services";
@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import TouchID from "react-native-touch-id";
 
 export const fetchMovieDetails = async (id: number) => {
-    const data: IMovieDetail = await getMovieDetailsAPI(id);
+    const data: IMovieDetail = await getMovieDetails(id);
     return data;
   };
 

@@ -1,5 +1,5 @@
 import { getAccountDetails, getTrendingmovie } from "../services/api-services";
-import { HomeScreenContainer } from "../components/movie-component/HomeScreenContainer";
+import { ScreenCardContainer } from "../components/movie-component/HomeScreenContainer";
 import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { TMovieType } from ".";
@@ -11,6 +11,7 @@ import { RootStackParamList } from "types/global";
 import { IResponseAccount } from "src/services";
 import { MovieContext } from "../context/movie-context/MovieContext";
 import { GlobalContext } from "../context/GlobalState";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -28,10 +29,10 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
     const responseAccountDetails: IResponseAccount = await getAccountDetails();
     if (responseApiMovie && responseAccountDetails) {
       setAccountDetails(responseAccountDetails);
+      setLoading(false);
       // set for trending movies with initial state
       const actionId = genreState.filter((item) => item.name === "Action");
       handleTrendingMovies(responseApiMovie, actionId[0]);
-      setLoading(false);
     } else Alert.alert("Cannot fetch data from api");
   };
   useEffect(() => {
@@ -57,7 +58,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             handleWatchList={handleWatchList}
             accountDetails={accountDetails}
           />
-          <HomeScreenContainer
+          <ScreenCardContainer
             handleMovieDetail={handleMovieDetail}
             searchInput={searchText}
             Movie={filteredMovieState}

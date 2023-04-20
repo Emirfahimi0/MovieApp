@@ -17,7 +17,7 @@ interface IMovieCardProps {
   handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
 
-export const MovieCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProps) => {
+export const ListMovieCards = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProps) => {
   const { storeAllDetailsState } = useContext(DetailContext);
   const navigation: RootNavigationProp = useNavigation();
   let loading = false;

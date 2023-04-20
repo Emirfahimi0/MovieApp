@@ -7,6 +7,7 @@ import {
   MovieDetailContainer,
   posterImage,
   setHeight,
+  setWidth,
   smallDetail,
 } from "../../constants/style-component/viewComponent";
 import { additionalDetailText, genreText, MovieDetailTitle, RatingText } from "../../constants/style-component/textComponent";
@@ -19,6 +20,7 @@ import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
 import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
 import color from "../../constants/color";
+import YoutubeIframe from "react-native-youtube-iframe";
 
 interface IHeaderContainerDetails {
   movie: IMovieDetail;
@@ -31,7 +33,8 @@ interface IHeaderContainerDetails {
 export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRating }: IHeaderContainerDetails) => {
   const [existWatchlist, setExistWatchlist] = useState<boolean>(state?.watchlist);
   const { getWatchlistData } = useContext(WatchlistContext);
-
+  const [playTrailer, setPlayTrailer] = useState<boolean>(false);
+  const [playing, setPlaying] = useState<boolean>(false);
   const handleWatchList = async () => {
     // Get the data first and complementary based on what user click
     const data: IWatchListResponse = await toWatchList(movie, !existWatchlist);
@@ -53,6 +56,11 @@ export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRa
     }
   };
 
+  const handleRenderTrailer = () => {
+    const trailer = movie.videos.results.find((vid) => vid.name === "Official Trailer");
+    console.log(trailer);
+    return <YoutubeIframe height={500} width={setWidth(3)} play={playTrailer} videoId={trailer?.key} />;
+  };
   return (
     <Fragment>
       <View style={{ position: "absolute", padding: "10%", zIndex: 1, top: 20, left: 30 }}>
@@ -66,18 +74,9 @@ export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRa
         </View>
         <View
           //Play button
-          style={{
-            flexDirection: "row",
-            position: "absolute",
-            alignSelf: "center",
-            width: 200,
-            borderRadius: 20,
-            borderColor: color.ACTIVE,
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1,
-          }}>
-          <TouchableOpacity onPress={() => console.log("play trailer")}>
+          {...(movie.videos && playTrailer ? handleRenderTrailer : null)}
+          style={{ ...playButton }}>
+          <TouchableOpacity onPress={handleRenderTrailer}>
             <Icon name="play-circle-outline" style={{ marginLeft: 5 }} size={100} color={color.PRIMARY_COLOR} />
           </TouchableOpacity>
         </View>
@@ -145,4 +144,16 @@ export const headerContainerStyle: ViewStyle = {
     height: 0,
     width: -3,
   },
+};
+
+const playButton: ViewStyle = {
+  flexDirection: "row",
+  position: "absolute",
+  alignSelf: "center",
+  width: 200,
+  borderRadius: 20,
+  borderColor: color.ACTIVE,
+  justifyContent: "center",
+  alignItems: "center",
+  zIndex: 1,
 };

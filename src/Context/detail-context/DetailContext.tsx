@@ -3,7 +3,7 @@ import { IMovieDetail, IResult } from "../../services";
 
 interface IInitialState {
   reviewState: IResult[];
-  detailsState: IMovieDetail;
+  MovieDetailsState: IMovieDetail;
   storeAllDetailsState: (detail: IMovieDetail, review: IResult[]) => Promise<void>;
 }
 
@@ -15,7 +15,7 @@ interface IDetailProviderProps {
 const initialState: IInitialState = {
   reviewState: [],
   storeAllDetailsState: () => Promise.resolve(),
-  detailsState: {},
+  MovieDetailsState: {},
 };
 
 export const DetailContext = createContext<IInitialState>(initialState);
@@ -32,13 +32,13 @@ export const DetailProvider = (props: React.PropsWithChildren<IDetailProviderPro
     // newState.accountState = { ...resFetchState };
     // setState(newState);
     resReviewMovie = resReviewMovie.splice(0, 5);
-    setState({ ...state, detailsState: resDetailMovie, reviewState: resReviewMovie });
+    setState({ ...state, MovieDetailsState: resDetailMovie, reviewState: resReviewMovie });
   };
 
   return (
     <DetailContext.Provider
       value={{
-        detailsState: state.detailsState,
+        MovieDetailsState: state.MovieDetailsState,
         reviewState: state.reviewState,
         storeAllDetailsState,
       }}>
