@@ -91,6 +91,9 @@ export const handleLoginWithFaceId = async():Promise<boolean> =>{
       const responseToken:IRequestBody = JSON.parse(value?? "null");
       return responseToken
     });
+    if(resAsyncRequestBody.request_token){
+      console.log("request token",resAsyncRequestBody.request_token)
+    }
   isSuccess = true
   }
 

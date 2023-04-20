@@ -411,7 +411,6 @@ export const getMovieDetails = async (id:number):Promise<IMovieDetail> => {
     const url = `${ENDPOINTS.GET_DETAILS}${id}?${TMDB_API_KEY}`
     let data = await axios.get(url,{params:letParams,responseType:"json"}).then(function(res){
         let responseFromAPI = res.data
-        console.log("response fron api",url)
         return responseFromAPI
     })
     return data

@@ -10,9 +10,9 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
 
   return (
     <View>
+      <Text style={{ ...subHeader, fontSize: 16, marginLeft: 32, color: Color.ACTIVE, paddingVertical: 16 }}>Reviews</Text>
       {reviewDetails.length > 0 ? (
         <Fragment>
-          <Text style={{ ...subHeader, fontSize: 16, marginLeft: 32, color: Color.ACTIVE, paddingVertical: 16 }}>Reviews</Text>
           {reviewDetails.map((item: IResult, index) => {
             let [showMore, setShowmore] = useState<Boolean>(true);
 
@@ -38,8 +38,8 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
           })}
         </Fragment>
       ) : (
-        <View style={{ ...container, marginLeft: 15, backgroundColor: Color.BLACK }}>
-          <Text style={{ ...subHeader, color: Color.SECONDARY_COLOR }}>no review...</Text>
+        <View style={{ ...container, marginHorizontal: 50 }}>
+          <Text style={{ ...genreText, color: Color.SEMI_BLACK }}>no review...</Text>
         </View>
       )}
     </View>

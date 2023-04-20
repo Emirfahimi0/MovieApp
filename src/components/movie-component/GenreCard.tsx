@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import { CardContainer } from "../../constants/style-component/viewComponent";
 import { genreText } from "../../constants/style-component/textComponent";
 import { Genre } from "../../screens";
+import { IWatchProviders } from "src/services";
 
 // get dimension of current screen
 

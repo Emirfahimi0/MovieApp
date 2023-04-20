@@ -18,9 +18,9 @@ import { POSTER_BASE_URL } from "../../constants/utilities";
 import { toWatchList } from "../../services/api-services";
 import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
-import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
 import color from "../../constants/color";
 import YoutubeIframe from "react-native-youtube-iframe";
+import { GlobalContext } from "../../context/GlobalState";
 
 interface IHeaderContainerDetails {
   selectedMovie: IMovieDetail;
@@ -32,7 +32,7 @@ interface IHeaderContainerDetails {
 
 export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVal, setRating }: IHeaderContainerDetails) => {
   const [existWatchlist, setExistWatchlist] = useState<boolean>(state?.watchlist);
-  const { getWatchlistData } = useContext(WatchlistContext);
+  const { getWatchlistData } = useContext(GlobalContext);
   const [playTrailer, setPlayTrailer] = useState<boolean>(false);
   const [playing, setPlaying] = useState<boolean>(false);
   const handleWatchList = async () => {
@@ -151,7 +151,8 @@ const playButton: ViewStyle = {
   alignSelf: "center",
   width: 200,
   borderRadius: 20,
-  borderColor: color.ACTIVE,
+  backgroundColor: color.TRANSPARENT,
+  borderColor: color.SECONDARY_COLOR,
   justifyContent: "center",
   alignItems: "center",
   zIndex: 1,

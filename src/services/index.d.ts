@@ -87,8 +87,8 @@ success: boolean
     video:                 boolean;
     vote_average:          number;
     vote_count:            number;
-    videos:                Videos;
-    "watch/providers": WatchProviders;
+    videos:                IVideos;
+    "watch/providers": IWatchProviders;
 
 }
 
@@ -110,11 +110,11 @@ export interface ISpokenLanguage {
 }
 
 
-export interface Videos {
-  results: Result[]
+export interface IVideos {
+  results: IVideoResults[]
 }
 
-export interface Result {
+export interface IVideoResults {
   iso_639_1: string
   iso_3166_1: string
   name: string
@@ -127,11 +127,11 @@ export interface Result {
   id: string
 }
 
-export interface WatchProviders {
-  results: Results
+export interface IWatchProviders {
+  results: IWatchProviderResults
 }
 
-export interface Results {
+export interface IWatchProviderResults {
   AT: At
   AU: Au
   BE: Be

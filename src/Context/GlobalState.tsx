@@ -1,13 +1,15 @@
-import { Genre, TUser } from "../screens";
+import { Genre, TMovieType, TUser } from "../screens";
 import React, { createContext, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
 import { IAccountState } from "../services";
-import { fetchGenreItem, handleIsLogin } from "../components/features/handleFunctions";
+import { fetchGenreItem, fetchWatchlist, handleIsLogin } from "../components/features/handleFunctions";
 
 export interface IInitialState {
   accountState: IAccountState;
   genreState: Genre[];
   storeGenre: () => Promise<void>;
+  getWatchlistData: () => void;
+  watchlistState: TMovieType[];
   storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
   userState: TUser;
 }
@@ -33,6 +35,8 @@ const initialState: IInitialState = {
   genreState: [],
   storeGenre: () => Promise.resolve(),
   storeUser: () => Promise.resolve(""),
+  watchlistState: [],
+  getWatchlistData: () => Promise<void>,
   userState: {
     id: "",
     password: "",
@@ -77,10 +81,18 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     const resGenre = await fetchGenreItem();
     setState({ ...state, genreState: resGenre });
   };
+  const getWatchlistData = async (): Promise<void> => {
+    const responseWatchlist = await fetchWatchlist();
+    if (responseWatchlist !== undefined) {
+      setState({ ...state, watchlistState: responseWatchlist });
+    }
+  };
 
   return (
     <GlobalContext.Provider
       value={{
+        watchlistState: state.watchlistState,
+        getWatchlistData,
         accountState: state.accountState,
         genreState: state.genreState,
         storeGenre,

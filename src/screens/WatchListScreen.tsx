@@ -7,8 +7,8 @@ import { RootStackParamList } from "types/global";
 import { ScrollView, Text, View } from "react-native";
 import Loader from "../components/features/Loader";
 import React, { useState, Fragment, useEffect, useContext } from "react";
-import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
 import { subHeader } from "../constants/style-component/textComponent";
+import { GlobalContext } from "../context/GlobalState";
 interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {
   navGoBack: boolean;
 }
@@ -17,7 +17,7 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
   //Access watchlist movie with context
   const { accountDetails } = route.params;
   const [input, setInput] = useState<string>("");
-  const { getWatchlistData, watchlistState } = useContext(WatchlistContext);
+  const { getWatchlistData, watchlistState } = useContext(GlobalContext);
   const [loading, setLoading] = useState<boolean>();
   const handleGoBack = () => {
     if (navGoBack) {

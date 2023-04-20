@@ -20,7 +20,7 @@ export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDet
         style={{
           ...homeCardContainer,
         }}>
-        <ListCardButtons Genre={Genres} />
+        <ListCardButtons data={Genres} />
         <ScrollView horizontal={true}>
           {Object.keys(Movie).length > 0 ? (
             <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />

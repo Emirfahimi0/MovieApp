@@ -7,16 +7,16 @@ import { MovieContext } from "../../context/movie-context/MovieContext";
 import { Genre } from "../../services";
 
 interface ICardButtons {
-  Genre: Genre[];
+  data: Genre[];
 }
 
-export const ListCardButtons = ({ Genre }: ICardButtons) => {
+export const ListCardButtons = ({ data }: ICardButtons) => {
   const [active, setActive] = useState<number>(0);
   const { filterMovieByGenre } = useContext(MovieContext);
   return (
     <View style={{ marginLeft: 32, paddingVertical: 24, width: "85%" }}>
       <FlatList
-        data={Genre}
+        data={data}
         horizontal
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={() => <ItemSeparator width={20} />}
@@ -24,7 +24,6 @@ export const ListCardButtons = ({ Genre }: ICardButtons) => {
         renderItem={({ item, index }) => {
           const handleActive = () => {
             setActive(index);
-            console.log("genre item", item);
             filterMovieByGenre(item, index);
           };
           const selectedButton: ViewStyle =

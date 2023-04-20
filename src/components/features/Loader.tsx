@@ -1,24 +1,21 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, View, ViewStyle } from "react-native";
+import color from "../../constants/color";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Loader = () => {
   return (
-    <View style={[styles.activityContainer, styles.horizontal]}>
-      <ActivityIndicator size="large" color="#43E382" />
+    <View style={{ ...activityContainer, padding: "50%" }}>
+      <ActivityIndicator size="large" color={color.ACTIVE} />
     </View>
   );
 };
 
 export default Loader;
 
-const styles = StyleSheet.create({
-  activityContainer: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  horizontal: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
-  },
-});
+const activityContainer: ViewStyle = {
+  flex: 1,
+  justifyContent: "center",
+  flexDirection: "row",
+  padding: 10,
+};
