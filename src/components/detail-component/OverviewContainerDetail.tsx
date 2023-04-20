@@ -1,6 +1,5 @@
 import { ScrollView, Text, View } from "react-native";
 import React, { useState } from "react";
-import { OverviewContainer } from "../../constants/style-component/viewComponent";
 import { genreText, OverviewDetailsText, subHeader } from "../../constants/style-component/textComponent";
 import Color from "../../constants/color";
 
@@ -11,7 +10,7 @@ export const SubContainerDetail = ({ overviewDetails, overViewStyle }) => {
   };
   return (
     <View style={{ padding: 20 }}>
-      <Text style={{ ...subHeader, fontSize: 16, marginLeft: 15, color: Color.HEART, paddingVertical: 16 }}>Overview</Text>
+      <Text style={{ ...subHeader, fontSize: 16, marginLeft: 12, color: Color.HEART, paddingVertical: 16 }}>Overview</Text>
       <ScrollView>
         <View style={overViewStyle}>
           <Text style={{ ...OverviewDetailsText, color: Color.SECONDARY_COLOR }}>

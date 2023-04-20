@@ -9,7 +9,7 @@ function App() {
     <React.Fragment>
       <AppContextProviders>
         <SafeAreaView>
-          <StatusBar barStyle={"light-content"} translucent={true} />
+          <StatusBar barStyle={"dark-content"} translucent={false} />
         </SafeAreaView>
         <StackNavigator />
       </AppContextProviders>

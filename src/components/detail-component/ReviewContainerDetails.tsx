@@ -13,9 +13,9 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
 
   return (
     <View style={showMore ? { width: 500 } : { width: setWidth(100) }}>
-      <Text style={{ ...subHeader, fontSize: 16, marginLeft: 15, color: Color.ACTIVE, paddingVertical: 15 }}>REVIEWS</Text>
       {reviewDetails.length > 0 ? (
         <Fragment>
+          <Text style={{ ...subHeader, fontSize: 16, marginLeft: 32, color: Color.ACTIVE, paddingVertical: 15 }}>Reviews</Text>
           <FlatList
             data={reviewDetails}
             horizontal={true}
@@ -32,9 +32,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
               const showText = showMore ? item.content.split(" ").slice(0, 15).join(" ") : item.content;
 
               return (
-                <View
-                  style={{ padding: 50, backgroundColor: "red", width: showMore ? setWidth(120) : setWidth(150) }}
-                  key={`${item.author}-${index}`}>
+                <View style={{ padding: 50, width: showMore ? setWidth(120) : setWidth(150) }} key={`${item.author}-${index}`}>
                   <ScrollView contentContainerStyle={{ ...overViewStyle, backgroundColor: Color.PRIMARY_COLOR }}>
                     <Text style={{ ...subHeader, color: Color.BLACK }}>{item.author}</Text>
                     <Text style={{ ...OverviewDetailsText, color: Color.SECONDARY_COLOR }}>{showText}</Text>

@@ -1,11 +1,10 @@
-import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import React, { Dispatch, Fragment, SetStateAction, useContext, useState } from "react";
 import {
   CardContainer,
   ContainerRow,
   ImagePosterDetail,
   MovieDetailContainer,
-  homeCardContainer,
   posterImage,
   setHeight,
   smallDetail,
@@ -19,6 +18,7 @@ import { toWatchList } from "../../services/api-services";
 import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
 import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
+import color from "../../constants/color";
 
 interface IHeaderContainerDetails {
   movie: IMovieDetail;
@@ -57,23 +57,42 @@ export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRa
     <Fragment>
       <View
         style={{
-          borderTopRightRadius: 0,
           borderBottomRightRadius: 40,
           borderBottomLeftRadius: 40,
-          backgroundColor: Color.BLACK,
-          paddingBottom: 30,
-          paddingTop: 0,
+          backgroundColor: color.SECONDARY_COLOR,
+          paddingBottom: 20,
+          paddingHorizontal: 10,
+          paddingTop: 80,
+          shadowOpacity: 1.0,
+          shadowOffset: {
+            height: 0,
+            width: -3,
+          },
         }}>
         <View style={ImagePosterDetail}>
-          <ScrollView>{<Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}${movie.poster_path}` }} />}</ScrollView>
+          <Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}original/${movie.poster_path}` }} />
         </View>
-        <View style={[MovieDetailContainer, { position: "absolute", padding: "50%" }]}>
-          <TouchableOpacity onPress={onPress}>
-            <Icon name="arrow-back-circle" size={35} color={Color.EXTRA_LIGHT_GRAY} />
+        <View
+          //Play button
+          style={{
+            position: "absolute",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "72%",
+            width: "100%",
+            paddingHorizontal: "42%",
+            zIndex: 1,
+          }}>
+          <TouchableOpacity onPress={() => console.log("play trailer")}>
+            <Icon name="play-circle-outline" size={100} color={color.PRIMARY_COLOR} />
           </TouchableOpacity>
-          <Icon name="play-circle-outline" size={50} />
         </View>
-        <ItemSeparator height={setHeight(35)} />
+        <View style={{ ...MovieDetailContainer, position: "absolute", padding: "20%", zIndex: 1, top: 10 }}>
+          <TouchableOpacity onPress={onPress}>
+            <Icon name="arrow-back-circle" size={35} color={Color.SEMI_BLACK} />
+          </TouchableOpacity>
+        </View>
+        <ItemSeparator height={setHeight(2)} />
         <View style={MovieDetailContainer}>
           <Text style={MovieDetailTitle} numberOfLines={2}>
             {movie.title}
@@ -95,7 +114,7 @@ export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRa
         <View style={smallDetail}>
           <Text style={additionalDetailText}>Original Language: {movie.original_language}</Text>
         </View>
-        <View style={smallDetail}>
+        <View style={{ ...smallDetail }}>
           <TouchableOpacity onPress={() => handleWatchList()}>
             <View
               style={[

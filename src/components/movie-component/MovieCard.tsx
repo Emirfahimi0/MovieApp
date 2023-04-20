@@ -50,7 +50,7 @@ export const MovieCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardP
               {item.title?.toLowerCase().includes(keyword.toLowerCase()) ? (
                 <View style={ListPreviewMovie}>
                   <View style={movieContainer}>
-                    <Image source={{ uri: `${POSTER_BASE_URL}${item.poster_path}` }} style={ImagePoster}></Image>
+                    <Image source={{ uri: `${POSTER_BASE_URL}original/${item.backdrop_path}` }} style={ImagePoster}></Image>
                   </View>
                   <View style={MovieCardTitle}>
                     <Text style={subHeader} numberOfLines={3}>

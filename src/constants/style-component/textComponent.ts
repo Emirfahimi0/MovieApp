@@ -61,10 +61,10 @@ export const subDetail : TextStyle = {
 export const MovieDetailTitle:TextStyle ={
     fontFamily: Font.BOLD,
     fontSize:16,
-    color:Color.SECONDARY_COLOR
+    color:Color.SEMI_BLACK
 }
 export const additionalDetailText:TextStyle ={
-    color: Color.SECONDARY_COLOR,
+    color: Color.SEMI_BLACK,
     fontFamily: Font.BOLD,
     fontWeight: "600",
     fontSize: 12,
@@ -79,7 +79,7 @@ export const OverviewDetailsText:TextStyle ={
 //-> add Rating Text
 
 export const RatingText :TextStyle ={
-  color:Color.SECONDARY_COLOR,
+  color:Color.SEMI_BLACK,
   fontFamily:Font.BOLD,
   fontSize:12,
   fontWeight:"600"

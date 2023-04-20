@@ -5,6 +5,7 @@ export const setHeight = (h:number) => (height/100) *h
 export const setWidth = (w:number) => (width / 100) * w;
 import { Dimensions, ImageStyle, ViewStyle } from "react-native";
 import Color from "../color";
+import color from "../color";
 
 //Login
 export const Logincontainer: ViewStyle = {
@@ -59,7 +60,7 @@ export const movieContainer:ViewStyle= {
 
   export const homeCardContainer:ViewStyle={
     flex: 1,
-    paddingTop: 24,
+    paddingTop: 8,
     backgroundColor: Color.SECONDARY_COLOR,
     shadowColor: Color.LIGHT_GRAY,
     shadowRadius: 16,
@@ -108,19 +109,21 @@ export const movieContainer:ViewStyle= {
 export const  ImagePosterDetail:ViewStyle = {
 
   alignItems:"center",
+  backgroundColor:Color.SEMI_BLACK,
+  padding:0,
+  borderRadius:60,
   justifyContent:"center",
-  elevation: 8,
-  height:setHeight(h),
+  elevation: 3,
   top:0,
-  width:setWidth(w),
+  width:setWidth(w-250),
 }
 export const posterImage:ImageStyle = {
 
-  height:setHeight(50),
+  height:ImagePosterDetail.height,
   padding:"50%",
-  resizeMode:"contain",
-  width: setWidth(20),
-}
+  borderRadius:60,
+  resizeMode:"cover",
+width:ImagePosterDetail.height}
 
 export const HeaderDetail:ViewStyle = {
 
@@ -140,12 +143,18 @@ export const noDataStyle: ViewStyle = {
   paddingHorizontal:12,
   width: "500%",
 };
+
+export const smallDetail : ViewStyle ={
+  paddingHorizontal: 24,
+  paddingTop: 16,
+  flexDirection:"row"
+}
 export const MovieDetailContainer:ViewStyle = {
 
   alignItems: "center",
   flexDirection: "row",
   justifyContent: "space-between",
-  paddingHorizontal: 32,
+  paddingHorizontal: smallDetail.paddingHorizontal,
 }
 
 export const ContainerRow :ViewStyle ={
@@ -159,11 +168,6 @@ export const ContainerRow :ViewStyle ={
     
 }
 
-export const smallDetail : ViewStyle ={
-    paddingHorizontal: 32,
-    paddingTop: 16,
-    flexDirection:"row"
-}
 export const OverviewContainer:ViewStyle = {
 
   marginTop:30,

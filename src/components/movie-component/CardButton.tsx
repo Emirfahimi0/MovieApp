@@ -6,7 +6,11 @@ import COLORS from "../../constants/color";
 import { MovieContext } from "../../context/movie-context/MovieContext";
 import { Genre } from "../../services";
 
-export const CardButtons = ({ Genre }: Genre[]) => {
+interface ICardButtons {
+  Genre: Genre[];
+}
+
+export const CardButtons = ({ Genre }: ICardButtons) => {
   const [active, setActive] = useState<number>(0);
   const { filterMovieByGenre } = useContext(MovieContext);
   return (
