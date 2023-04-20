@@ -68,7 +68,7 @@ export const createNewSession = async(token:string): Promise<TSession> => {
 export const sessionWithLogIn = async (username:string,password:string):Promise<boolean> => {
     let isAuthenticated = false;
     try {
-        const response:IResponseTokenMerge =await AsyncStorage.getItem("responseToken")
+        const response:IResponseTokenMerge =await AsyncStorage?.getItem("responseToken")
         if(response){
             
             if(JSON.parse(response.session_id)){
@@ -390,9 +390,11 @@ export const deleteRatingbyId = async (id:number,value:number):Promise<IRating> 
 //Get method to retrieve movie review by its ID
 
 export const getReviewById = async (id:number) => {
+  
 
     const url = `${ENDPOINTS.GET_REVIEWS_BY_ID}${id}/reviews?${TMDB_API_KEY}`
     let data:IResult[] = await axios.get(url,{responseType:"json"}).then(function(res){
+
         let responseFromAPI = res.data.results
         return responseFromAPI
     })
@@ -403,9 +405,14 @@ export const getReviewById = async (id:number) => {
 
 // Get method that fetch details of the movie
 export const getMovieDetailsAPI = async (id:number):Promise<IMovieDetail> => {
+    const letParams = {
+        append_to_response:"watch/providers,videos"
+    }
     const url = `${ENDPOINTS.GET_DETAILS}${id}?${TMDB_API_KEY}`
-    let data = await axios.get(url,{responseType:"json"}).then(function(res){
+    let data = await axios.get(url,{params:letParams,responseType:"json"}).then(function(res){
         let responseFromAPI = res.data
+        console.log(axios.getUri)
+        console.log("response fron api",responseFromAPI)
         return responseFromAPI
     })
     return data

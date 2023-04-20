@@ -1,4 +1,4 @@
-import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { Dispatch, Fragment, SetStateAction, useContext, useState } from "react";
 import {
   CardContainer,
@@ -55,43 +55,33 @@ export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRa
 
   return (
     <Fragment>
-      <View
-        style={{
-          borderBottomRightRadius: 40,
-          borderBottomLeftRadius: 40,
-          backgroundColor: color.SECONDARY_COLOR,
-          paddingBottom: 20,
-          paddingHorizontal: 10,
-          paddingTop: 80,
-          shadowOpacity: 1.0,
-          shadowOffset: {
-            height: 0,
-            width: -3,
-          },
-        }}>
+      <View style={{ position: "absolute", padding: "10%", zIndex: 1, top: 20, left: 30 }}>
+        <TouchableOpacity onPress={onPress}>
+          <Icon name="arrow-back-circle" size={35} color={Color.SEMI_BLACK} />
+        </TouchableOpacity>
+      </View>
+      <View style={headerContainerStyle}>
         <View style={ImagePosterDetail}>
           <Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}original/${movie.poster_path}` }} />
         </View>
         <View
           //Play button
           style={{
+            flexDirection: "row",
             position: "absolute",
+            alignSelf: "center",
+            width: 200,
+            borderRadius: 20,
+            borderColor: color.ACTIVE,
             justifyContent: "center",
             alignItems: "center",
-            height: "72%",
-            width: "100%",
-            paddingHorizontal: "42%",
             zIndex: 1,
           }}>
           <TouchableOpacity onPress={() => console.log("play trailer")}>
-            <Icon name="play-circle-outline" size={100} color={color.PRIMARY_COLOR} />
+            <Icon name="play-circle-outline" style={{ marginLeft: 5 }} size={100} color={color.PRIMARY_COLOR} />
           </TouchableOpacity>
         </View>
-        <View style={{ ...MovieDetailContainer, position: "absolute", padding: "20%", zIndex: 1, top: 10 }}>
-          <TouchableOpacity onPress={onPress}>
-            <Icon name="arrow-back-circle" size={35} color={Color.SEMI_BLACK} />
-          </TouchableOpacity>
-        </View>
+
         <ItemSeparator height={setHeight(2)} />
         <View style={MovieDetailContainer}>
           <Text style={MovieDetailTitle} numberOfLines={2}>
@@ -138,4 +128,21 @@ export const HeaderContainerDetails = ({ movie, onPress, state, ratingVal, setRa
       </View>
     </Fragment>
   );
+};
+
+export const headerContainerStyle: ViewStyle = {
+  alignItems: "center",
+  alignContent: "center",
+  justifyContent: "center",
+  borderBottomRightRadius: 40,
+  borderBottomLeftRadius: 40,
+  backgroundColor: color.SECONDARY_COLOR,
+  paddingBottom: 20,
+  paddingHorizontal: 10,
+  paddingTop: 80,
+  shadowOpacity: 1.0,
+  shadowOffset: {
+    height: 0,
+    width: -3,
+  },
 };

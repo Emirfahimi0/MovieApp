@@ -10,15 +10,20 @@ import Color from "../constants/color";
 import Loader from "../components/features/Loader";
 import React, { useContext, useEffect, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
-import { OverviewContainer, homeCardContainer } from "../constants/style-component/viewComponent";
+import { homeCardContainer } from "../constants/style-component/viewComponent";
+import { CardButtons } from "../components/movie-component/CardButton";
+import { GlobalContext } from "../context/GlobalState";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
 const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   const { detailsState, reviewState } = useContext(DetailContext);
+  const { genreState } = useContext(GlobalContext);
+
   const [checkingState, setCheckingState] = useState<IAccountState>();
   const [ratingVal, setRatingVal] = useState<number>(0);
   const { height } = Dimensions.get("screen");
+
   const handleGoBack = () => {
     navigation.goBack();
   };
@@ -56,6 +61,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
             setRating={setRatingVal}
             ratingVal={ratingVal}
           />
+          <CardButtons Genre={genreState} />
           <View style={homeCardContainer}>
             <SubContainerDetail overviewDetails={detailsState.overview} overViewStyle={overViewTextArea} />
             <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
