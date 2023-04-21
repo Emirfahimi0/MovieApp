@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   };
   useEffect(() => {
     handleGetMovies().catch(console.error);
-  }, [filteredMovieState]);
+  }, [genreState]);
 
   const handleWatchList = async () => {
     const navigationGoBack = true;
