@@ -27,12 +27,12 @@ export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDet
           {Object.keys(Movie).length > 0 ? (
             <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
           ) : loading ? (
-            <View style={{ ...noDataStyle, width: setWidth(100) }}>
-              <Text style={subHeader}> No Movie</Text>
-            </View>
-          ) : (
             <View style={{ ...noDataStyle }}>
               <Loader />
+            </View>
+          ) : (
+            <View style={{ ...noDataStyle, width: setWidth(100) }}>
+              <Text style={subHeader}> No Movie</Text>
             </View>
           )}
         </ScrollView>

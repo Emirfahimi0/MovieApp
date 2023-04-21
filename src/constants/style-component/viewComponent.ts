@@ -140,7 +140,6 @@ export const HeaderDetail:ViewStyle = {
 export const noDataStyle: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
-  paddingHorizontal:200,
   width: setWidth(4),
 };
 
