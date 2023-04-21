@@ -7,8 +7,7 @@ import { fetchGenreItem, fetchWatchlist, handleIsLogin } from "../components/fea
 export interface IInitialState {
   accountState: IAccountState;
   genreState: Genre[];
-  storeData: () => Promise<void>;
-  watchlistState: TMovieType[];
+  storeGenre: () => Promise<void>;
   storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
   userState: TUser;
 }
@@ -32,7 +31,7 @@ const initialState: IInitialState = {
     watchlist: true,
   },
   genreState: [],
-  storeData: () => Promise.resolve(),
+  storeGenre: () => Promise.resolve(),
   storeUser: () => Promise.resolve(""),
   watchlistState: [],
   userState: {
@@ -75,19 +74,20 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     return message;
   };
 
-  const storeData = async (): Promise<void> => {
+  const storeGenre = async (): Promise<void> => {
     const resGenre = await fetchGenreItem();
     const responseWatchlist = await fetchWatchlist();
-    setState({ ...state, genreState: resGenre, watchlistState: responseWatchlist });
+    if (resGenre !== undefined && responseWatchlist !== undefined) {
+      setState({ ...state, genreState: resGenre });
+    }
   };
 
   return (
     <GlobalContext.Provider
       value={{
-        watchlistState: state.watchlistState,
         accountState: state.accountState,
         genreState: state.genreState,
-        storeData,
+        storeGenre,
         storeUser,
         userState: state.userState,
       }}>

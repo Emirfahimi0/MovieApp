@@ -1,19 +1,21 @@
 import { ListCardButtons } from "./CardButton";
 import { Genre, IDetailsMovie, TMovieType } from "../../screens";
-import { homeCardContainer, noDataStyle } from "../../constants/style-component/viewComponent";
+import { homeCardContainer, noDataStyle, setWidth } from "../../constants/style-component/viewComponent";
 import { ListMovieCards } from "./ListMovieCards";
 import { ScrollView, Text, View } from "react-native";
 import { subHeader } from "../../constants/style-component/textComponent";
 import React, { Fragment } from "react";
+import Loader from "../features/Loader";
 
 interface IScreenCardContainer {
   searchInput: string;
   Movie: TMovieType[];
   Genres: Genre[];
+  loading: boolean;
   handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
 
-export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDetail }: IScreenCardContainer) => {
+export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDetail, loading }: IScreenCardContainer) => {
   return (
     <Fragment>
       <View
@@ -24,9 +26,13 @@ export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDet
         <ScrollView horizontal={true}>
           {Object.keys(Movie).length > 0 ? (
             <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
+          ) : loading ? (
+            <View style={{ ...noDataStyle, width: setWidth(100) }}>
+              <Text style={subHeader}> No Movie</Text>
+            </View>
           ) : (
             <View style={{ ...noDataStyle }}>
-              <Text style={subHeader}> No Movie</Text>
+              <Loader />
             </View>
           )}
         </ScrollView>

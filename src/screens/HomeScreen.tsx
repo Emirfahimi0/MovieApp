@@ -18,16 +18,16 @@ interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "H
 const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   // always use set function
   const [searchText, setSearchText] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>();
+  const [loading, setLoading] = useState<boolean>(false);
   const { handleTrendingMovies, filteredMovieState } = useContext(MovieContext);
   const { genreState } = useContext(GlobalContext);
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
-
+  // AsyncStorage.clear();
   const handleGetMovies = async (): Promise<void> => {
     setLoading(true);
     const responseApiMovie: TMovieType[] = await getTrendingmovie();
     const responseAccountDetails: IResponseAccount = await getAccountDetails();
-    if (responseApiMovie && responseAccountDetails) {
+    if (responseApiMovie !== undefined && responseAccountDetails !== undefined) {
       setAccountDetails(responseAccountDetails);
       setLoading(false);
       // set for trending movies with initial state
@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   };
   useEffect(() => {
     handleGetMovies().catch(console.error);
-  }, []);
+  }, [filteredMovieState]);
 
   const handleWatchList = async () => {
     const navigationGoBack = true;
@@ -59,6 +59,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             accountDetails={accountDetails}
           />
           <ScreenCardContainer
+            loading={loading}
             handleMovieDetail={handleMovieDetail}
             searchInput={searchText}
             Movie={filteredMovieState}

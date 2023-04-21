@@ -8,7 +8,7 @@ import { ScrollView, Text, View } from "react-native";
 import Loader from "../components/features/Loader";
 import React, { useState, Fragment, useEffect, useContext } from "react";
 import { subHeader } from "../constants/style-component/textComponent";
-import { GlobalContext } from "../context/GlobalState";
+import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
 interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {
   navGoBack: boolean;
 }
@@ -17,7 +17,7 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
   //Access watchlist movie with context
   const { accountDetails } = route.params;
   const [input, setInput] = useState<string>("");
-  const { storeData, watchlistState } = useContext(GlobalContext);
+  const { getWatchlistData, watchlistState } = useContext(WatchlistContext);
   const [loading, setLoading] = useState<boolean>();
   const handleGoBack = () => {
     if (navGoBack) {
@@ -30,14 +30,14 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
 
   const handleGetWatchlist = async () => {
     setLoading(true);
-    storeData();
+    getWatchlistData();
     if (watchlistState !== undefined) {
       setLoading(false);
     }
   };
   useEffect(() => {
     handleGetWatchlist().catch(console.error);
-  }, []);
+  }, [watchlistState]);
 
   return (
     <Fragment>

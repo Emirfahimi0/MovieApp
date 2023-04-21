@@ -140,8 +140,8 @@ export const HeaderDetail:ViewStyle = {
 export const noDataStyle: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
-  paddingHorizontal:12,
-  width: "500%",
+  paddingHorizontal:200,
+  width: setWidth(4),
 };
 
 export const smallDetail : ViewStyle ={

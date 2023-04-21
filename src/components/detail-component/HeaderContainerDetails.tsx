@@ -20,7 +20,7 @@ import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
 import color from "../../constants/color";
 import YoutubeIframe from "react-native-youtube-iframe";
-import { GlobalContext } from "../../context/GlobalState";
+import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
 
 interface IHeaderContainerDetails {
   selectedMovie: IMovieDetail;
@@ -32,15 +32,14 @@ interface IHeaderContainerDetails {
 
 export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVal, setRating }: IHeaderContainerDetails) => {
   const [existWatchlist, setExistWatchlist] = useState<boolean>(state?.watchlist);
-  const { storeData } = useContext(GlobalContext);
+  const { watchlistState, getWatchlistData } = useContext(WatchlistContext);
   const [playTrailer, setPlayTrailer] = useState<boolean>(false);
-  const [playing, setPlaying] = useState<boolean>(false);
   const handleWatchList = async () => {
     // Get the data first and complementary based on what user click
     const data: IWatchListResponse = await toWatchList(selectedMovie, !existWatchlist);
     // if response of the data return success.
     if (data.success) {
-      storeData();
+      getWatchlistData();
       setExistWatchlist(!existWatchlist);
       if (existWatchlist) {
         Alert.alert("Item remove from watchlist");

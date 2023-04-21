@@ -13,13 +13,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export const StackNavigator = () => {
+  // AsyncStorage.clear();
   const [loading, setLoading] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
-  const { storeData } = useContext(GlobalContext);
+  const { storeGenre } = useContext(GlobalContext);
   const handleIsUserLoggedIn = async () => {
-    storeData();
     const data = await handleLoginWithFaceId();
     if (data === true) {
+      storeGenre();
       setIsLoggedIn(true);
       console.log("loggedIn");
     } else setIsLoggedIn(false);

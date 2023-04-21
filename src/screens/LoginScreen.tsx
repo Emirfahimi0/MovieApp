@@ -7,14 +7,14 @@ import Icon from "react-native-vector-icons/Ionicons";
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { sessionWithLogIn } from "../services/api-services";
-import { fetchGenreItem, handleIsLogin, handleLoginWithFaceId } from "../components/features/handleFunctions";
+import { handleLoginWithFaceId } from "../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import color from "../constants/color";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
-  const { storeData } = useContext(GlobalContext);
+  const { storeGenre } = useContext(GlobalContext);
 
   useEffect(() => {
     handleFaceID();
@@ -30,6 +30,7 @@ const LoginScreen = ({ navigation }) => {
     // } else {
     let isSuccess = await handleLoginWithFaceId();
     if (isSuccess === true) {
+      storeGenre();
       AsyncStorage.setItem("userLoggedIn", JSON.stringify(isSuccess));
       navigation.navigate("HomeScreen");
     } else {

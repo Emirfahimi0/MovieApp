@@ -3,7 +3,6 @@ import  {  ENDPOINTS, TMDB_API_KEY }  from "../constants/utilities";
 import {  Genre, IRating, IMovieDetail, TResponseToken, IAccountState,
         TSession, IWatchListResponse, IResult, IResponseAccount, IResponseTokenMerge } from ".";
 import { TMovieType } from "../screens";
-import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
@@ -13,7 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Get method for trending movie
 export const  getTrendingmovie = async():Promise<TMovieType[]> => {
-    let data = await axios.get(ENDPOINTS.GET_TRENDING,{responseType:'json'}).then(function(response){
+    const data = await axios.get(ENDPOINTS.GET_TRENDING,{responseType:'json'}).then(function(response){
         let responseData = response.data.results
         return responseData
     })

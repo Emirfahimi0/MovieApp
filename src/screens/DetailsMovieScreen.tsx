@@ -4,7 +4,7 @@ import { HeaderContainerDetails } from "../components/detail-component/HeaderCon
 import { IAccountState } from "../services";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
-import { ScrollView, ViewStyle, View, FlatList, TextStyle, TouchableOpacity, Text } from "react-native";
+import { ScrollView, ViewStyle, View, FlatList, TextStyle, TouchableOpacity, Text, Image } from "react-native";
 import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
 import Color from "../constants/color";
 import Loader from "../components/features/Loader";
@@ -83,6 +83,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
                   return (
                     <TouchableOpacity onPress={handleActive} key={index}>
                       <View style={{ ...CardContainer }}>
+                        {/* <Image source=/> */}
                         <Text style={genreText}>{item.provider_name}</Text>
                       </View>
                       {/* <GenreCard genre={item} isSelected={selectedButton} selectedText={selectedText} /> */}
