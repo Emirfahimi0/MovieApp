@@ -14,7 +14,7 @@ import color from "../constants/color";
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
-  const { storeGenre } = useContext(GlobalContext);
+  const { storeData } = useContext(GlobalContext);
 
   useEffect(() => {
     handleFaceID();

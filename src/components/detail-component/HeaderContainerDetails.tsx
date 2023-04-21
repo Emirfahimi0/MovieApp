@@ -32,7 +32,7 @@ interface IHeaderContainerDetails {
 
 export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVal, setRating }: IHeaderContainerDetails) => {
   const [existWatchlist, setExistWatchlist] = useState<boolean>(state?.watchlist);
-  const { getWatchlistData } = useContext(GlobalContext);
+  const { storeData } = useContext(GlobalContext);
   const [playTrailer, setPlayTrailer] = useState<boolean>(false);
   const [playing, setPlaying] = useState<boolean>(false);
   const handleWatchList = async () => {
@@ -40,7 +40,7 @@ export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVa
     const data: IWatchListResponse = await toWatchList(selectedMovie, !existWatchlist);
     // if response of the data return success.
     if (data.success) {
-      getWatchlistData();
+      storeData();
       setExistWatchlist(!existWatchlist);
       if (existWatchlist) {
         Alert.alert("Item remove from watchlist");

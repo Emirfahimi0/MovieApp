@@ -7,8 +7,7 @@ import { fetchGenreItem, fetchWatchlist, handleIsLogin } from "../components/fea
 export interface IInitialState {
   accountState: IAccountState;
   genreState: Genre[];
-  storeGenre: () => Promise<void>;
-  getWatchlistData: () => void;
+  storeData: () => Promise<void>;
   watchlistState: TMovieType[];
   storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
   userState: TUser;
@@ -33,10 +32,9 @@ const initialState: IInitialState = {
     watchlist: true,
   },
   genreState: [],
-  storeGenre: () => Promise.resolve(),
+  storeData: () => Promise.resolve(),
   storeUser: () => Promise.resolve(""),
   watchlistState: [],
-  getWatchlistData: () => Promise<void>,
   userState: {
     id: "",
     password: "",
@@ -77,25 +75,19 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     return message;
   };
 
-  const storeGenre = async (): Promise<void> => {
+  const storeData = async (): Promise<void> => {
     const resGenre = await fetchGenreItem();
-    setState({ ...state, genreState: resGenre });
-  };
-  const getWatchlistData = async (): Promise<void> => {
     const responseWatchlist = await fetchWatchlist();
-    if (responseWatchlist !== undefined) {
-      setState({ ...state, watchlistState: responseWatchlist });
-    }
+    setState({ ...state, genreState: resGenre, watchlistState: responseWatchlist });
   };
 
   return (
     <GlobalContext.Provider
       value={{
         watchlistState: state.watchlistState,
-        getWatchlistData,
         accountState: state.accountState,
         genreState: state.genreState,
-        storeGenre,
+        storeData,
         storeUser,
         userState: state.userState,
       }}>

@@ -5,7 +5,7 @@ import DetailsMovieScreen from "../../screens/DetailsMovieScreen";
 import HomeScreen from "../../screens/HomeScreen";
 import LoginScreen from "../../screens/LoginScreen";
 import React, { useContext, useEffect, useState } from "react";
-import WatchListScreen from "../../screens/WatchlistScreen";
+import WatchListScreen from "../../screens/WatchListScreen";
 import { GlobalContext } from "../../context/GlobalState";
 import { handleLoginWithFaceId } from "./handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,9 +15,9 @@ export const RootStack = createNativeStackNavigator<RootStackParamList>();
 export const StackNavigator = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
-  const { storeGenre } = useContext(GlobalContext);
+  const { storeData } = useContext(GlobalContext);
   const handleIsUserLoggedIn = async () => {
-    storeGenre();
+    storeData();
     const data = await handleLoginWithFaceId();
     if (data === true) {
       setIsLoggedIn(true);

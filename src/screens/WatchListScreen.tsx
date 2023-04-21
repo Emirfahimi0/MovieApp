@@ -17,7 +17,7 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
   //Access watchlist movie with context
   const { accountDetails } = route.params;
   const [input, setInput] = useState<string>("");
-  const { getWatchlistData, watchlistState } = useContext(GlobalContext);
+  const { storeData, watchlistState } = useContext(GlobalContext);
   const [loading, setLoading] = useState<boolean>();
   const handleGoBack = () => {
     if (navGoBack) {
@@ -30,7 +30,7 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
 
   const handleGetWatchlist = async () => {
     setLoading(true);
-    getWatchlistData();
+    storeData();
     if (watchlistState !== undefined) {
       setLoading(false);
     }
