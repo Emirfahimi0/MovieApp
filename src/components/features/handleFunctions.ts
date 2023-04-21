@@ -106,7 +106,7 @@ export const handleLoginWithFaceId = async():Promise<boolean> =>{
           if (isSuccess === true) {
             resolve(true);
             //navigation.navigate("HomeScreen");
-            console.log("success authenticated");
+            isSuccess = true
           }
         })
         .catch((error: string) => {
@@ -114,6 +114,7 @@ export const handleLoginWithFaceId = async():Promise<boolean> =>{
         });
     });
   }
+  console.log("is the authentication success?",isSuccess)
   return isSuccess
 
 };

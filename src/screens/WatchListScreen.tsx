@@ -21,10 +21,11 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
   const [loading, setLoading] = useState<boolean>();
   const handleGoBack = () => {
     if (navGoBack) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "HomeScreen" }],
-      });
+      navigation.goBack();
+      // navigation.reset({
+      //   index: 0,
+      //   routes: [{ name: "HomeScreen" }],
+      // });
     }
   };
 

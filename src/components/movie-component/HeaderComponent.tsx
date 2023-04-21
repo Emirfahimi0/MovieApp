@@ -31,8 +31,8 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
   const navigation: RootNavigationProp = useNavigation();
   const handleLogOut = async () => {
     //To do
-    AsyncStorage.clear();
     navigation.popToTop();
+    AsyncStorage.clear();
   };
   return (
     <>

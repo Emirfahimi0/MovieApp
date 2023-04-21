@@ -1,5 +1,5 @@
-import { Genre, TMovieType, TUser } from "../screens";
-import React, { createContext, useState } from "react";
+import { Genre, TUser } from "../screens";
+import React, { createContext, useEffect, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
 import { IAccountState } from "../services";
 import { fetchGenreItem, fetchWatchlist, handleIsLogin } from "../components/features/handleFunctions";
@@ -33,7 +33,6 @@ const initialState: IInitialState = {
   genreState: [],
   storeGenre: () => Promise.resolve(),
   storeUser: () => Promise.resolve(""),
-  watchlistState: [],
   userState: {
     id: "",
     password: "",
@@ -81,6 +80,9 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
       setState({ ...state, genreState: resGenre });
     }
   };
+  // useEffect(() => {
+  //   storeGenre();
+  // }, []);
 
   return (
     <GlobalContext.Provider

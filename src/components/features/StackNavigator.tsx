@@ -9,18 +9,23 @@ import WatchListScreen from "../../screens/WatchListScreen";
 import { GlobalContext } from "../../context/GlobalState";
 import { handleLoginWithFaceId } from "./handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IResponseTokenMerge } from "src/services";
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export const StackNavigator = () => {
-  // AsyncStorage.clear();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+  const data: IResponseTokenMerge = AsyncStorage?.getItem("responseToken");
+  let isAuthorize: boolean = false;
+  if (!!data) {
+    isAuthorize = data.success;
+  }
+  const [loading, setLoading] = useState<boolean>(isAuthorize);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   const { storeGenre } = useContext(GlobalContext);
   const handleIsUserLoggedIn = async () => {
     const data = await handleLoginWithFaceId();
+    storeGenre();
     if (data === true) {
-      storeGenre();
       setIsLoggedIn(true);
       console.log("loggedIn");
     } else setIsLoggedIn(false);
@@ -31,7 +36,7 @@ export const StackNavigator = () => {
   }, []);
   return (
     <NavigationContainer>
-      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+      <RootStack.Navigator initialRouteName="HomeScreen" screenOptions={{ headerShown: false }}>
         {isLoggedIn ? (
           <>
             <RootStack.Group>

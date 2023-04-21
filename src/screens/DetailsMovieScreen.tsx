@@ -2,34 +2,33 @@ import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
 import { IAccountState } from "../services";
+import { POSTER_BASE_URL } from "../constants/utilities";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
-import { ScrollView, ViewStyle, View, FlatList, TextStyle, TouchableOpacity, Text, Image } from "react-native";
+import { ScrollView, ViewStyle, View } from "react-native";
 import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
 import Color from "../constants/color";
 import Loader from "../components/features/Loader";
 import React, { useContext, useEffect, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
-import { CardContainer, homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
+import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
 import { GlobalContext } from "../context/GlobalState";
-import { ItemSeparator } from "../components/movie-component/ItemSeparator";
-import color from "../constants/color";
-import { genreText } from "../constants/style-component/textComponent";
+import ProviderCardList from "../components/detail-component/ProviderCardList";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
 const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   const { MovieDetailsState, reviewState } = useContext(DetailContext);
   const { genreState } = useContext(GlobalContext);
-  const [active, setActive] = useState<number>();
+
   const [checkingState, setCheckingState] = useState<IAccountState>();
   const [ratingVal, setRatingVal] = useState<number>(0);
 
   const handleGoBack = () => {
     navigation.goBack();
   };
-
-  console.log(MovieDetailsState["watch/providers"].results.AT.buy);
+  // console.log(`${POSTER_BASE_URL}w300/${item.logo_path}`)
+  console.log(`${POSTER_BASE_URL}w300/${MovieDetailsState["watch/providers"].results.AT.buy[0].logo_path}`);
   const getUpdatedAccState = async (): Promise<void> => {
     try {
       const resFetchState: IAccountState = await fetchAccountState(MovieDetailsState.id);
@@ -47,7 +46,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   useEffect(() => {
     getUpdatedAccState();
     //handleRenderTrailer();
-  }, []);
+  }, [MovieDetailsState]);
 
   return (
     <View style={{ flexGrow: 2 }}>
@@ -62,36 +61,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
               ratingVal={ratingVal}
             />
             {/* <ListCardButtons data={genreState} /> */}
-            <View style={{ marginLeft: 32, paddingVertical: 24, width: "85%" }}>
-              <FlatList
-                data={MovieDetailsState["watch/providers"].results.AT.buy}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <ItemSeparator width={20} />}
-                ListFooterComponent={() => <ItemSeparator width={20} />}
-                renderItem={({ item, index }) => {
-                  const handleActive = () => {
-                    setActive(index);
-
-                    //filterMovieByGenre(item, index);
-                  };
-                  const selectedButton: ViewStyle =
-                    active === index ? { backgroundColor: Color.ACTIVE } : { backgroundColor: color.BASIC_BACKGROUND };
-                  const selectedText: TextStyle =
-                    active === index ? { color: Color.SECONDARY_COLOR, fontWeight: "800" } : { color: color.BLACK };
-
-                  return (
-                    <TouchableOpacity onPress={handleActive} key={index}>
-                      <View style={{ ...CardContainer }}>
-                        {/* <Image source=/> */}
-                        <Text style={genreText}>{item.provider_name}</Text>
-                      </View>
-                      {/* <GenreCard genre={item} isSelected={selectedButton} selectedText={selectedText} /> */}
-                    </TouchableOpacity>
-                  );
-                }}
-              />
-            </View>
+            {/* <ProviderCardList movieState={MovieDetailsState} /> */}
             <View style={homeCardContainer}>
               <SubContainerDetail overviewDetails={MovieDetailsState.overview} overViewStyle={overViewTextArea} />
               <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
@@ -106,6 +76,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 };
 
 export default DetailsMovieScreen;
+
 const overViewTextArea: ViewStyle = {
   backgroundColor: Color.AMBER,
   borderRadius: 24,
