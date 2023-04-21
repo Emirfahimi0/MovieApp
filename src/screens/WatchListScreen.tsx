@@ -43,28 +43,25 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
     <Fragment>
       <View style={{ flex: 1 }}>
         <HeaderComponent searchText={input} setSearchText={setInput} accountDetails={accountDetails} handleGoBack={handleGoBack} />
-        {!loading ? (
-          <View style={{ ...homeCardContainer }}>
-            {watchlistState.length > 0 ? (
-              <ScrollView scrollEnabled={true} horizontal={true} style={{ paddingTop: 30 }}>
-                <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} />
-              </ScrollView>
-            ) : !loading ? (
-              <Loader />
-            ) : (
-              <View
-                style={{
-                  ...noDataStyle,
-                  justifyContent: "center",
-                  alignItems: "flex-start",
-                }}>
-                <Text style={{ ...subHeader }}>No Watchlist added yet</Text>
-              </View>
-            )}
-          </View>
-        ) : (
-          <Loader />
-        )}
+
+        <View style={{ ...homeCardContainer }}>
+          {watchlistState.length > 0 ? (
+            <ScrollView scrollEnabled={true} horizontal={true} style={{ paddingTop: 30 }}>
+              <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} />
+            </ScrollView>
+          ) : !loading ? (
+            <Loader />
+          ) : (
+            <View
+              style={{
+                ...noDataStyle,
+                justifyContent: "center",
+                alignItems: "flex-start",
+              }}>
+              <Text style={{ ...subHeader }}>No Watchlist added yet</Text>
+            </View>
+          )}
+        </View>
       </View>
     </Fragment>
   );
