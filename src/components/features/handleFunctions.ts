@@ -14,7 +14,7 @@ export const fetchMovieDetails = async (id: number) => {
     const data: IResultReview[] = await getReviewById(id);
     return data;
   };
-  export const fetchAccountState = async (id: number) => {
+  export const fetchAccountState = async (id: number|undefined) => {
     const data: IAccountState = await getAccountState(id);
     return data;
   };

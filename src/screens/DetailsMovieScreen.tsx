@@ -28,10 +28,10 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
     navigation.goBack();
   };
   // console.log(`${POSTER_BASE_URL}w300/${item.logo_path}`)
-  console.log(`${POSTER_BASE_URL}w300/${MovieDetailsState["watch/providers"].results.AT.buy[0].logo_path}`);
+  //console.log(`${POSTER_BASE_URL}w300/${MovieDetailsState["watch/providers"].results.AT.buy[0].logo_path}`);
   const getUpdatedAccState = async (): Promise<void> => {
     try {
-      const resFetchState: IAccountState = await fetchAccountState(MovieDetailsState.id);
+      const resFetchState: IAccountState = await fetchAccountState(MovieDetailsState?.id);
       setCheckingState(resFetchState);
       if (typeof checkingState?.rated === "object") {
         setRatingVal(checkingState.rated.value);
@@ -63,7 +63,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
             {/* <ListCardButtons data={genreState} /> */}
             {/* <ProviderCardList movieState={MovieDetailsState} /> */}
             <View style={homeCardContainer}>
-              <SubContainerDetail overviewDetails={MovieDetailsState.overview} overViewStyle={overViewTextArea} />
+              <SubContainerDetail overviewDetails={MovieDetailsState?.overview} overViewStyle={overViewTextArea} />
               <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
             </View>
           </>

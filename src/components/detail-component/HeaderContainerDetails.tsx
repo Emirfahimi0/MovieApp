@@ -15,7 +15,7 @@ import { ButtonModalRating } from "./ButtonModalRating";
 import { Genre, IMovieDetail, IAccountState, IWatchListResponse } from "../../services";
 import { ItemSeparator } from "../movie-component/ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
-import { toWatchList } from "../../services/api-services";
+import { setWatchList } from "../../services/api-services";
 import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
 import color from "../../constants/color";
@@ -23,7 +23,7 @@ import YoutubeIframe from "react-native-youtube-iframe";
 import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
 
 interface IHeaderContainerDetails {
-  selectedMovie: IMovieDetail;
+  selectedMovie: IMovieDetail | undefined;
   onPress: () => void;
   state: IAccountState;
   ratingVal: number;
@@ -36,7 +36,7 @@ export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVa
   const [playTrailer, setPlayTrailer] = useState<boolean>(false);
   const handleWatchList = async () => {
     // Get the data first and complementary based on what user click
-    const data: IWatchListResponse = await toWatchList(selectedMovie, !existWatchlist);
+    const data: IWatchListResponse = await setWatchList(selectedMovie, !existWatchlist);
     // if response of the data return success.
     if (data.success) {
       getWatchlistData();
@@ -56,7 +56,7 @@ export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVa
   };
 
   const handleRenderTrailer = () => {
-    const trailer = selectedMovie.videos.results.find((vid) => vid.name === "Official Trailer");
+    const trailer = selectedMovie?.videos.results.find((vid) => vid.name === "Official Trailer");
     <YoutubeIframe height={500} width={setWidth(500)} play={playTrailer} videoId={trailer?.key} />;
   };
   return (
@@ -68,11 +68,11 @@ export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVa
       </View>
       <View style={headerContainerStyle}>
         <View style={ImagePosterDetail}>
-          <Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}original/${selectedMovie.poster_path}` }} />
+          <Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}original/${selectedMovie?.poster_path}` }} />
         </View>
         <View
           //Play button
-          {...(selectedMovie.videos && playTrailer ? handleRenderTrailer : null)}
+          {...(selectedMovie?.videos && playTrailer ? handleRenderTrailer : null)}
           style={{ ...playButton }}>
           <TouchableOpacity onPress={() => setPlayTrailer(true)}>
             <Icon name="play-circle-outline" style={{ marginLeft: 5 }} size={100} color={color.AMBER} />
@@ -82,16 +82,16 @@ export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVa
         <ItemSeparator height={setHeight(2)} />
         <View style={MovieDetailContainer}>
           <Text style={MovieDetailTitle} numberOfLines={2}>
-            {selectedMovie.title}
+            {selectedMovie?.title}
           </Text>
           <View style={ContainerRow}>
             <Icon iconStyle={{ marginLeft: 8 }} name="heart-sharp" size={18} color="red" />
-            <Text style={RatingText}>{selectedMovie.vote_average.toFixed(1)}</Text>
+            <Text style={RatingText}>{selectedMovie?.vote_average.toFixed(1)}</Text>
           </View>
         </View>
         <View style={smallDetail}>
           <Text style={additionalDetailText}>Genre: </Text>
-          {selectedMovie.genres.map((value: Genre, index: number) => (
+          {selectedMovie?.genres.map((value: Genre, index: number) => (
             <Text key={index} style={additionalDetailText}>
               {" | "}
               {value.name}
@@ -99,7 +99,7 @@ export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVa
           ))}
         </View>
         <View style={smallDetail}>
-          <Text style={additionalDetailText}>Original Language: {selectedMovie.original_language}</Text>
+          <Text style={additionalDetailText}>Original Language: {selectedMovie?.original_language}</Text>
         </View>
         <View style={{ ...smallDetail }}>
           <TouchableOpacity onPress={() => handleWatchList()}>

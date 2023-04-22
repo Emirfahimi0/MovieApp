@@ -136,7 +136,7 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
     
  }
 
- export const getAccountState = async (id:number):Promise<IAccountState> => {
+ export const getAccountState = async (id:number|undefined):Promise<IAccountState> => {
 
     let current_Session:IResponseTokenMerge = {
         success: false,
@@ -207,7 +207,7 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
 
 
 // POST method for adding watchlist
-export const toWatchList =async (movie:IMovieDetail | TMovieType,setWatchlist:boolean):Promise<IWatchListResponse> => {
+export const setWatchList =async (movie:IMovieDetail | TMovieType |undefined,setWatchlist:boolean):Promise<IWatchListResponse> => {
     //need body request
     let response:IWatchListResponse = {
         status_code :0,
@@ -230,7 +230,7 @@ export const toWatchList =async (movie:IMovieDetail | TMovieType,setWatchlist:bo
     
         let requestBody = {
             "media_type":"movie",
-            "media_id":movie.id,
+            "media_id":movie?.id,
             "watchlist":setWatchlist 
         }
         const options = {
@@ -290,7 +290,7 @@ export const getMovieWatchlist = async ():Promise<TMovieType[]> => {
         return data;
 }
 // POST method for rate movie by Id
-export const postRatingbyId = async (id:number,value:number):Promise<IRating> =>{
+export const postRatingbyId = async (id:number|undefined,value:number):Promise<IRating> =>{
     let responseRating:IRating ={
         success:false,
         status_code:0,
@@ -342,7 +342,7 @@ export const postRatingbyId = async (id:number,value:number):Promise<IRating> =>
 }
 
 // DELETE method for rate movie by Id
-export const deleteRatingbyId = async (id:number,value:number):Promise<IRating> =>{
+export const deleteRatingbyId = async (id:number|undefined,value:number):Promise<IRating> =>{
     let responseRating:IRating ={
         success:false,
         status_code:1,

@@ -9,7 +9,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
 export interface IButtonModalRating {
-  movie: TMovieType | IMovieDetail;
+  movie: TMovieType | IMovieDetail | undefined;
   state: IAccountState;
   ratingVal: number;
   setRating: Dispatch<SetStateAction<number>>;
@@ -28,7 +28,7 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
   };
 
   const HandlePostRating = async () => {
-    const resRating: IRating = await postRatingbyId(movie.id, ratingVal);
+    const resRating: IRating = await postRatingbyId(movie?.id, ratingVal);
     if (resRating.success === true) {
       Alert.alert("Rating posted succesfully.");
       // setPostRatingDisable(false);
@@ -51,7 +51,7 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
 
   const HandleDeleteRating = async () => {
     console.log("rating", ratingVal);
-    const resRating: IRating = await deleteRatingbyId(movie.id, ratingVal);
+    const resRating: IRating = await deleteRatingbyId(movie?.id, ratingVal);
     if (resRating.status_code === 13) {
       Alert.alert("rating deleted successfully.");
       setVisible(false);
