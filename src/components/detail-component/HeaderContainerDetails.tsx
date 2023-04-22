@@ -60,9 +60,9 @@ export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVa
   };
   return (
     <Fragment>
-      <View style={{ position: "absolute", padding: "10%", zIndex: 1, top: 20, left: 30 }}>
+      <View style={{ position: "absolute", paddingHorizontal: "43%", zIndex: 1, top: 40, left: 30 }}>
         <TouchableOpacity onPress={onPress}>
-          <Icon name="arrow-back-circle" size={35} color={color.SEMI_BLACK} />
+          <Icon name="home" size={30} color={color.SEMI_BLACK} />
         </TouchableOpacity>
       </View>
       <View style={headerContainerStyle}>

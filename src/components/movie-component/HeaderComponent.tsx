@@ -7,7 +7,7 @@ import { subHeader } from "../../constants/style-component/textComponent";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import color from "../../constants/Color";
-import Icon from "react-native-vector-icons/AntDesign";
+import Icon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
 import React, { Dispatch, Fragment, SetStateAction } from "react";
 
@@ -48,7 +48,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
             }}>
             {handleGoBack ? (
               <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-                <Icon name="back" size={32} color={"white"} />
+                <Icon name="md-chevron-back" size={32} color={"white"} />
               </TouchableWithoutFeedback>
             ) : null}
 
@@ -68,7 +68,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
 
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Pressable onPress={handleLogOut}>
-                  <Icon name="logout" size={32} color="#fff" />
+                  <Icon name="exit-outline" size={32} color="#fff" />
                 </Pressable>
                 <Image source={{ uri: urlAvatar }} resizeMode="cover" style={{ width: 40, height: 40, borderRadius: 20, marginLeft: 15 }} />
               </View>
@@ -91,7 +91,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
           </View>
           <View style={{ ...styleView }}>
             <View style={SearchBar}>
-              <Icon iconStyle={{ marginRight: 10 }} name="search1" size={22} color={color.AMBER} />
+              <Icon iconStyle={{ marginRight: 10 }} name="ios-search" size={22} color={color.AMBER} />
               <View style={{ width: "100%" }}>
                 <TextInput
                   value={searchText}
