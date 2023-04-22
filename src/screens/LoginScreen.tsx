@@ -2,14 +2,13 @@ import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { ButtonContainerRating, CardContainer, InputContainer, Logincontainer } from "../constants/style-component/viewComponent";
 import { InputLogin, genreText, loginText } from "../constants/style-component/textComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Color from "../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { sessionWithLogIn } from "../services/api-services";
 import { handleLoginWithFaceId } from "../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import color from "../constants/color";
+import color from "../constants/Color";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");
@@ -58,11 +57,11 @@ const LoginScreen = ({ navigation }) => {
     }
   };
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: Color.BUTTON }}>
+    <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: color.BUTTON }}>
       <View style={Logincontainer}>
         <View style={{ alignItems: "center" }}>
-          <Text style={{ ...genreText, color: Color.SECONDARY_COLOR }}>WELCOME!</Text>
-          <Text style={{ ...genreText, color: Color.SECONDARY_COLOR }}>BACK!</Text>
+          <Text style={{ ...genreText, color: color.SECONDARY_COLOR }}>WELCOME!</Text>
+          <Text style={{ ...genreText, color: color.SECONDARY_COLOR }}>BACK!</Text>
         </View>
 
         <View style={InputContainer}>
@@ -87,7 +86,7 @@ const LoginScreen = ({ navigation }) => {
         </View>
 
         <View style={{ ...ButtonContainerRating, marginRight: 40, padding: 20 }}>
-          <TouchableOpacity style={{ ...CardContainer, backgroundColor: Color.HEART }} onPress={() => onSubmitHandler()}>
+          <TouchableOpacity style={{ ...CardContainer, backgroundColor: color.HEART }} onPress={() => onSubmitHandler()}>
             <Text style={loginText}>Login</Text>
           </TouchableOpacity>
         </View>

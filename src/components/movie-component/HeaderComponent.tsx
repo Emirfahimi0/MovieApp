@@ -6,9 +6,8 @@ import { RootNavigationProp } from "types/global";
 import { subHeader } from "../../constants/style-component/textComponent";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import color from "../../constants/color";
-import Color from "../../constants/color";
-import Icon from "react-native-vector-icons/Entypo";
+import color from "../../constants/Color";
+import Icon from "react-native-vector-icons/AntDesign";
 import LinearGradient from "react-native-linear-gradient";
 import React, { Dispatch, Fragment, SetStateAction } from "react";
 
@@ -41,7 +40,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
           start={{ x: 0.38, y: 0.5 }}
           end={{ x: 0.5, y: 1.0 }}
           locations={[0, 1]}
-          colors={[Color.PRIMARY_COLOR, Color.BUTTON]}
+          colors={[color.PRIMARY_COLOR, color.BUTTON]}
           style={{ flexDirection: "column", borderBottomLeftRadius: 50, borderBottomRightRadius: 50 }}>
           <View
             style={{
@@ -61,15 +60,15 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
                 paddingBottom: 30,
               }}>
               <View style={{ flexDirection: "column" }}>
-                <Text style={{ ...subTitle, color: Color.EXTRA_LIGHT_GRAY }}>Welcome Back</Text>
-                <Text style={{ ...genreText, fontSize: 24, fontWeight: "900", color: Color.SECONDARY_COLOR }}>
+                <Text style={{ ...subTitle, color: color.EXTRA_LIGHT_GRAY }}>Welcome Back</Text>
+                <Text style={{ ...genreText, fontSize: 24, fontWeight: "900", color: color.SECONDARY_COLOR }}>
                   {accountDetails?.name.toUpperCase()}
                 </Text>
               </View>
 
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Pressable onPress={handleLogOut}>
-                  <Icon name="log-out" size={32} color="#fff" />
+                  <Icon name="logout" size={32} color="#fff" />
                 </Pressable>
                 <Image source={{ uri: urlAvatar }} resizeMode="cover" style={{ width: 40, height: 40, borderRadius: 20, marginLeft: 15 }} />
               </View>
@@ -78,13 +77,13 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
             <View style={{ ...rowView }}>
               {/* To put data */}
               <View style={{ flexDirection: "column" }}>
-                <Text style={{ ...subHeader, color: Color.ACTIVE }}>ACTIVE</Text>
-                <Text style={{ ...subTitle, color: Color.EXTRA_LIGHT_GRAY }}>Updated 2 mins ago</Text>
+                <Text style={{ ...subHeader, color: color.ACTIVE }}>ACTIVE</Text>
+                <Text style={{ ...subTitle, color: color.EXTRA_LIGHT_GRAY }}>Updated 2 mins ago</Text>
               </View>
               {handleGoBack ? null : (
                 <TouchableWithoutFeedback onPress={handleWatchList}>
-                  <View style={{ ...CardContainer, width: "30%", backgroundColor: Color.PRIMARY_COLOR }}>
-                    <Text style={{ ...subTitle, color: Color.SECONDARY_COLOR }}>Watch List</Text>
+                  <View style={{ ...CardContainer, width: "30%", backgroundColor: color.PRIMARY_COLOR }}>
+                    <Text style={{ ...subTitle, color: color.SECONDARY_COLOR }}>Watch List</Text>
                   </View>
                 </TouchableWithoutFeedback>
               )}
@@ -92,7 +91,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
           </View>
           <View style={{ ...styleView }}>
             <View style={SearchBar}>
-              <Icon iconStyle={{ marginRight: 10 }} name="magnifying-glass" size={22} color={Color.AMBER} />
+              <Icon iconStyle={{ marginRight: 10 }} name="magnifying-glass" size={22} color={color.AMBER} />
               <View style={{ width: "100%" }}>
                 <TextInput
                   value={searchText}

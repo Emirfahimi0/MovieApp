@@ -1,19 +1,19 @@
 import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
-import { IAccountState } from "../services";
+import { IAccountState, IMovieDetail } from "../services";
 import { POSTER_BASE_URL } from "../constants/utilities";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
 import { ScrollView, ViewStyle, View } from "react-native";
 import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
-import Color from "../constants/color";
 import Loader from "../components/features/Loader";
 import React, { useContext, useEffect, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
 import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
 import { GlobalContext } from "../context/GlobalState";
 import ProviderCardList from "../components/detail-component/ProviderCardList";
+import color from "../constants/Color";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
@@ -23,7 +23,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 
   const [checkingState, setCheckingState] = useState<IAccountState>();
   const [ratingVal, setRatingVal] = useState<number>(0);
-
+  const selectedMovie: IMovieDetail | undefined = MovieDetailsState;
   const handleGoBack = () => {
     navigation.goBack();
   };
@@ -60,8 +60,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
               setRating={setRatingVal}
               ratingVal={ratingVal}
             />
-            {/* <ListCardButtons data={genreState} /> */}
-            {/* <ProviderCardList movieState={MovieDetailsState} /> */}
+            {/* <ProviderCardList selectedProviderMovie={selectedMovie?.["watch/providers"]} /> */}
             <View style={homeCardContainer}>
               <SubContainerDetail overviewDetails={MovieDetailsState?.overview} overViewStyle={overViewTextArea} />
               <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
@@ -78,7 +77,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 export default DetailsMovieScreen;
 
 const overViewTextArea: ViewStyle = {
-  backgroundColor: Color.AMBER,
+  backgroundColor: color.AMBER,
   borderRadius: 24,
   padding: 10,
 };

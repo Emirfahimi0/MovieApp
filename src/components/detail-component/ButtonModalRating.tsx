@@ -4,7 +4,7 @@ import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
 import { IRating, IMovieDetail, IAccountState } from "../../services";
 import { TMovieType } from "../../screens";
 import { RatingText, genreText, subDetail } from "../../constants/style-component/textComponent";
-import Color from "../../constants/color";
+import color from "../../constants/Color";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
@@ -73,7 +73,7 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
         }}>
         <View style={centeredViewRating}>
           <View style={modalViewRating}>
-            <Icon name="heart-sharp" size={20} color={Color.GREEN} />
+            <Icon name="heart-sharp" size={20} color={color.GREEN} />
             <Text style={subDetail}> Submit your Review..</Text>
             <View style={RatingStarIcon}>
               {review.map((item, index) => {
@@ -89,9 +89,9 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
               })}
             </View>
             <TouchableOpacity
-              style={{ ...CardContainer, marginTop: 30, backgroundColor: postRatingDisable !== false ? Color.HEART : Color.ACTIVE }}
+              style={{ ...CardContainer, marginTop: 30, backgroundColor: postRatingDisable !== false ? color.HEART : color.ACTIVE }}
               onPress={postRatingDisable !== false ? HandleDeleteRating : HandlePostRating}>
-              <Text style={{ ...RatingText, color: Color.SECONDARY_COLOR }}>
+              <Text style={{ ...RatingText, color: color.SECONDARY_COLOR }}>
                 {postRatingDisable !== false ? "Delete Rating" : "Post Rating"}
               </Text>
             </TouchableOpacity>
@@ -99,8 +99,8 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
         </View>
       </Modal>
       <TouchableOpacity onPress={openModal}>
-        <View style={{ ...CardContainer, backgroundColor: Color.ACTIVE, width: 150 }}>
-          <Text style={{ ...genreText, color: Color.SECONDARY_COLOR }}>
+        <View style={{ ...CardContainer, backgroundColor: color.ACTIVE, width: 150 }}>
+          <Text style={{ ...genreText, color: color.SECONDARY_COLOR }}>
             {postRatingDisable !== false ? "Review Rating" : "Post Rating"}
           </Text>
         </View>

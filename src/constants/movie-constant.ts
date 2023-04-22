@@ -5,3 +5,8 @@ export const SUCCESS_LOAD_MOVIE = "SUCCESS_LOAD_MOVIE"
 export const STORE_RATING ="STORE_RATING"
 export const REMOVE_STORED_RATING ="REMOVE_STORED_RATING"
 export const LOAD_GENRE = "LOAD_GENRE"
+
+const dataProvider = [
+    {code:'AT ', name: "Austrlia"},
+    
+]

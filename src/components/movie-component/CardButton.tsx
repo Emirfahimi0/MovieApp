@@ -2,10 +2,9 @@ import { FlatList, TextStyle, TouchableOpacity, View, ViewStyle } from "react-na
 import React, { useContext, useState } from "react";
 import { GenreCard } from "./GenreCard";
 import { ItemSeparator } from "./ItemSeparator";
-import COLORS from "../../constants/color";
 import { MovieContext } from "../../context/movie-context/MovieContext";
 import { Genre } from "../../services";
-import color from "../../constants/color";
+import color from "../../constants/Color";
 import { setHeight } from "../../constants/style-component/viewComponent";
 
 interface ICardButtons {
@@ -35,8 +34,8 @@ export const ListCardButtons = ({ data }: ICardButtons) => {
             filterMovieByGenre(item, index);
           };
           const selectedButton: ViewStyle =
-            active === index ? { backgroundColor: COLORS.ACTIVE } : { backgroundColor: COLORS.BASIC_BACKGROUND };
-          const selectedText: TextStyle = active === index ? { color: COLORS.SECONDARY_COLOR, fontWeight: "800" } : { color: COLORS.BLACK };
+            active === index ? { backgroundColor: color.ACTIVE } : { backgroundColor: color.BASIC_BACKGROUND };
+          const selectedText: TextStyle = active === index ? { color: color.SECONDARY_COLOR, fontWeight: "800" } : { color: color.BLACK };
 
           return (
             <TouchableOpacity onPress={handleActive} key={index}>

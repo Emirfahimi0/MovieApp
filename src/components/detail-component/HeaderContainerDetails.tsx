@@ -16,9 +16,8 @@ import { Genre, IMovieDetail, IAccountState, IWatchListResponse } from "../../se
 import { ItemSeparator } from "../movie-component/ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { setWatchList } from "../../services/api-services";
-import Color from "../../constants/color";
 import Icon from "react-native-vector-icons/Ionicons";
-import color from "../../constants/color";
+import color from "../../constants/Color";
 import YoutubeIframe from "react-native-youtube-iframe";
 import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
 
@@ -63,7 +62,7 @@ export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVa
     <Fragment>
       <View style={{ position: "absolute", padding: "10%", zIndex: 1, top: 20, left: 30 }}>
         <TouchableOpacity onPress={onPress}>
-          <Icon name="arrow-back-circle" size={35} color={Color.SEMI_BLACK} />
+          <Icon name="arrow-back-circle" size={35} color={color.SEMI_BLACK} />
         </TouchableOpacity>
       </View>
       <View style={headerContainerStyle}>
@@ -112,9 +111,9 @@ export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVa
               <Icon
                 name={existWatchlist ? "bookmark" : "bookmark-outline"}
                 size={18}
-                color={existWatchlist ? Color.EXTRA_LIGHT_GRAY : Color.BLACK}
+                color={existWatchlist ? color.EXTRA_LIGHT_GRAY : color.BLACK}
               />
-              <Text style={existWatchlist ? { ...genreText, color: Color.SECONDARY_COLOR } : genreText}>
+              <Text style={existWatchlist ? { ...genreText, color: color.SECONDARY_COLOR } : genreText}>
                 {existWatchlist ? "Added in Watchlist" : "Add to Watchlist"}
               </Text>
             </View>
@@ -148,9 +147,9 @@ const playButton: ViewStyle = {
   flexDirection: "row",
   position: "absolute",
   alignSelf: "center",
-  width: 200,
-  borderRadius: 20,
-  backgroundColor: color.TRANSPARENT,
+  bottom: "60%",
+  borderRadius: 50,
+  backgroundColor: color.BLACK,
   borderColor: color.SECONDARY_COLOR,
   justifyContent: "center",
   alignItems: "center",

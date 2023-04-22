@@ -4,12 +4,11 @@ const w = 145
 export const setHeight = (h:number) => (height/100) *h
 export const setWidth = (w:number) => (width / 100) * w;
 import { Dimensions, ImageStyle, ViewStyle } from "react-native";
-import Color from "../color";
-import color from "../color";
+import color from "../Color";
 
 //Login
 export const Logincontainer: ViewStyle = {
-  backgroundColor: Color.AMBER,
+  backgroundColor: color.AMBER,
   borderRadius: 24,
   alignContent: "space-between",
   flexDirection: "column",
@@ -20,7 +19,7 @@ export const Logincontainer: ViewStyle = {
 };
 export const InputContainer: ViewStyle = {
   alignItems: "center",
-  backgroundColor: Color.SECONDARY_COLOR,
+  backgroundColor: color.SECONDARY_COLOR,
   borderRadius: 8,
   flexDirection: "row",
   margin: 8,
@@ -47,7 +46,7 @@ export const CardContainer: ViewStyle = {
   // --> Home/Movie Screen Styling
 
 export const movieContainer:ViewStyle= {
-    backgroundColor: Color.BUTTON,
+    backgroundColor: color.BUTTON,
     borderBottomLeftRadius: 24,
     borderTopRightRadius: 24,
     elevation: 4,
@@ -61,8 +60,8 @@ export const movieContainer:ViewStyle= {
   export const homeCardContainer:ViewStyle={
     flex: 1,
     paddingTop: 8,
-    backgroundColor: Color.SECONDARY_COLOR,
-    shadowColor: Color.LIGHT_GRAY,
+    backgroundColor: color.SECONDARY_COLOR,
+    shadowColor: color.LIGHT_GRAY,
     shadowRadius: 16,
     marginTop: 54,
     elevation: 3,
@@ -74,7 +73,7 @@ export const movieContainer:ViewStyle= {
 
  export const  SearchBar:ViewStyle= {
     alignItems: "center",
-    backgroundColor: Color.SECONDARY_COLOR,
+    backgroundColor: color.SECONDARY_COLOR,
     borderRadius: 12,
     flexDirection: "row",
     padding: 10,
@@ -103,13 +102,13 @@ export const movieContainer:ViewStyle= {
 
   export const container :ViewStyle = {
 
-    backgroundColor:Color.BASIC_BACKGROUND,
+    backgroundColor:color.BASIC_BACKGROUND,
     flex:1,
   }
 export const  ImagePosterDetail:ViewStyle = {
 
   alignItems:"center",
-  backgroundColor:Color.SEMI_BLACK,
+  backgroundColor:color.SEMI_BLACK,
   padding:0,
   borderRadius:60,
   justifyContent:"center",
@@ -170,7 +169,7 @@ export const ContainerRow :ViewStyle ={
 export const OverviewContainer:ViewStyle = {
 
   marginTop:30,
-  backgroundColor:Color.ACTIVE,
+  backgroundColor:color.ACTIVE,
   flexDirection: "column",
   flex:1.4,
   borderTopRightRadius:homeCardContainer.borderTopRightRadius,

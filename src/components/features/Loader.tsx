@@ -1,7 +1,6 @@
 import React from "react";
 import { ActivityIndicator, View, ViewStyle } from "react-native";
-import color from "../../constants/color";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import color from "../../constants/Color";
 
 const Loader = () => {
   return (

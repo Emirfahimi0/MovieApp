@@ -2,7 +2,7 @@ import { IResultReview } from "../../services";
 import { container, setWidth } from "../../constants/style-component/viewComponent";
 import { OverviewDetailsText, genreText, subHeader } from "../../constants/style-component/textComponent";
 import { ScrollView, Text, View } from "react-native";
-import Color from "../../constants/color";
+import color from "../../constants/Color";
 import React, { Fragment, useState } from "react";
 
 const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
@@ -10,7 +10,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
 
   return (
     <View>
-      <Text style={{ ...subHeader, fontSize: 16, marginLeft: 32, color: Color.ACTIVE, paddingVertical: 16 }}>Reviews</Text>
+      <Text style={{ ...subHeader, fontSize: 16, marginLeft: 32, color: color.ACTIVE, paddingVertical: 16 }}>Reviews</Text>
       {reviewDetails.length > 0 ? (
         <Fragment>
           {reviewDetails.map((item: IResultReview, index) => {
@@ -24,11 +24,11 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
             const showText = showMore ? item.content.split(" ").slice(0, 15).join(" ") : item.content;
             return (
               <View style={{ padding: 10, width: setWidth(100) }} key={`${item.author}-${index}`}>
-                <ScrollView contentContainerStyle={{ ...overViewStyle, backgroundColor: Color.PRIMARY_COLOR }}>
-                  <Text style={{ ...subHeader, color: Color.BLACK }}>{item.author}</Text>
-                  <Text style={{ ...OverviewDetailsText, color: Color.SECONDARY_COLOR }}>{showText}</Text>
+                <ScrollView contentContainerStyle={{ ...overViewStyle, backgroundColor: color.PRIMARY_COLOR }}>
+                  <Text style={{ ...subHeader, color: color.BLACK }}>{item.author}</Text>
+                  <Text style={{ ...OverviewDetailsText, color: color.SECONDARY_COLOR }}>{showText}</Text>
                   <Text
-                    style={{ ...genreText, textAlign: "right", color: Color.SECONDARY_COLOR, fontWeight: "800" }}
+                    style={{ ...genreText, textAlign: "right", color: color.SECONDARY_COLOR, fontWeight: "800" }}
                     onPress={handleShowMore}>
                     {showMore ? "Show more" : "Show less"}
                   </Text>
@@ -39,7 +39,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
         </Fragment>
       ) : (
         <View style={{ ...container, marginHorizontal: 50 }}>
-          <Text style={{ ...genreText, color: Color.SEMI_BLACK }}>no review...</Text>
+          <Text style={{ ...genreText, color: color.SEMI_BLACK }}>no review...</Text>
         </View>
       )}
     </View>

@@ -2,16 +2,17 @@ import { FlatList, Image, ImageStyle, Text, TextStyle, TouchableOpacity, View, V
 import React, { useState } from "react";
 import { ItemSeparator } from "../movie-component/ItemSeparator";
 import { setHeight, setWidth } from "../../constants/style-component/viewComponent";
-import Color from "../../constants/color";
+import Color from "../../constants/Color";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { genreText } from "../../constants/style-component/textComponent";
+import { IMovieDetail } from "../../services";
 
-const ProviderCardList = ({ movieState }) => {
+const ProviderCardList = ({ selectedProviderMovie }) => {
   const [active, setActive] = useState<number>();
   return (
     <View style={{ marginLeft: 32, paddingVertical: 24, width: "85%" }}>
       <FlatList
-        data={movieState["watch/providers"].results.AT.buy}
+        data={selectedProviderMovie["watch/providers"].results.AT.buy}
         horizontal
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={() => <ItemSeparator width={20} />}
@@ -32,7 +33,6 @@ const ProviderCardList = ({ movieState }) => {
                 <Text style={{ ...genreText, paddingBottom: 12 }}>{item.provider_name}</Text>
                 <Image source={{ uri: `${POSTER_BASE_URL}original/${item.logo_path}` }} style={providerLogo}></Image>
               </View>
-              {/* <GenreCard genre={item} isSelected={selectedButton} selectedText={selectedText} /> */}
             </TouchableOpacity>
           );
         }}
