@@ -12,7 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Get method for trending movie
 export const  getTrendingmovie = async():Promise<TMovieType[]> => {
-    const data = await axios.get(ENDPOINTS.GET_TRENDING,{responseType:'json'}).then(function(response){
+    const data = await axios.get(ENDPOINTS.GET_TRENDING,{responseType:'json'}).then((response)=>{
         let responseData = response.data.results
         return responseData
     })
@@ -58,10 +58,10 @@ export const createNewSession = async(token:string): Promise<TSession> => {
     };
    
    await axios.request(options)
-    .then( function(response) {
+    .then( (response)=> {
         current_Session = response.data
     })
-    .catch(function (error) {
+    .catch( (error) =>{
         console.error("error",error);
     });
 
@@ -161,7 +161,7 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
     const data  = await axios.get(
         `${ENDPOINTS.GET_ACCOUNT_STATE}${id}/account_states?${TMDB_API_KEY}`,{
             headers: { Accept:'application/json',"Content-Type": "application/json; charset=UTF-8" }
-            ,params:params}).then(function(response){
+            ,params:params}).then((response)=>{
           let  responseData = response.data
        
 
@@ -195,11 +195,8 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
       
     const data  = await axios.get(ENDPOINTS.GET_ACCOUNT,{
             headers: { Accept:'application/json',"Content-Type": "application/json; charset=UTF-8" }
-            ,params:params}).then(function(response){
-          let  responseData = response.data
-       
-
-          return responseData
+            ,params:params}).then((response)=>{
+          return response.data
             
         })
         
@@ -251,11 +248,11 @@ export const setWatchList =async (movie:IMovieDetail | TMovieType |undefined,set
         };
       
        await axios.request(options)
-        .then(function (response){
+        .then( (response)=>{
             response = response.data
            
         })
-        .catch(function (error) {
+        .catch( (error)=> {
             console.error("error",error);
     
         });
@@ -284,10 +281,8 @@ export const getMovieWatchlist = async ():Promise<TMovieType[]> => {
     const data  = await axios.get(
         ENDPOINTS.GET_WATCHLIST,{
             headers: { Accept:'application/json',"Content-Type": "application/json; charset=UTF-8" }
-            ,params:params}).then(function(response){
-          let  responseData = response.data.results
-       
-          return responseData
+            ,params:params}).then((response)=>{
+          return response.data.results
             
         })
         //to do --> need to compile it as 
@@ -333,12 +328,12 @@ export const postRatingbyId = async (id:number|undefined,value:number):Promise<I
 
    
    await axios.request(options)
-    .then( function(response) {
+    .then( (response) =>{
         responseRating =response.data
          
 
     })
-    .catch(function (error) {
+    .catch( (error) =>{
         console.error("error",error);
 
     });
@@ -386,7 +381,7 @@ export const deleteRatingbyId = async (id:number|undefined,value:number):Promise
         
 
     })
-    .catch(function (error) {
+    .catch( (error)=> {
         console.error("error",error);
 
     });
@@ -399,10 +394,8 @@ export const getReviewById = async (id:number) => {
   
 
     const url = `${ENDPOINTS.GET_REVIEWS_BY_ID}${id}/reviews?${TMDB_API_KEY}`
-    let data:IResultReview[] = await axios.get(url,{responseType:"json"}).then(function(res){
-
-        let responseFromAPI = res.data.results
-        return responseFromAPI
+    let data:IResultReview[] = await axios.get(url,{responseType:"json"}).then((res)=>{
+        return res.data.results
     })
     return data
 
@@ -415,9 +408,8 @@ export const getMovieDetails = async (id:number):Promise<IMovieDetail> => {
         append_to_response:"watch/providers,videos"
     }
     const url = `${ENDPOINTS.GET_DETAILS}${id}?${TMDB_API_KEY}`
-    let data = await axios.get(url,{params:letParams,responseType:"json"}).then(function(res){
-        let responseFromAPI = res.data
-        return responseFromAPI
+    let data = await axios.get(url,{params:letParams,responseType:"json"}).then((res)=>{
+        return res.data
     })
     return data
 
@@ -428,9 +420,8 @@ export const getGenreMovie = async ():Promise<Genre[]> => {
     let resGenre = await axios.get(ENDPOINTS.GET_GENRES, {
             responseType: "json",
           })
-          .then(function(response) {
-            let data = response.data.genres;
-            return data;
+          .then((response)=> {
+            return response.data.genre;
           });
  
     return resGenre;
