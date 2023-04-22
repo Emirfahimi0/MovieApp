@@ -1,7 +1,7 @@
 import {  getAccountState, getGenreMovie, getMovieDetails, getMovieWatchlist, getReviewById, sessionWithLogIn } from "../../services/api-services";
 import { Alert } from "react-native";
 import { Genre, IDetailsMovie, TMovieType } from "../../screens";
-import { IMovieDetail, IAccountState, IResult, IResponseTokenMerge, IRequestBody } from "../../services";
+import { IMovieDetail, IAccountState, IResultReview, IResponseTokenMerge, IRequestBody } from "../../services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TouchID from "react-native-touch-id";
 
@@ -11,7 +11,7 @@ export const fetchMovieDetails = async (id: number) => {
   };
 
   export const fetchReviewMovieDetails = async (id: number) => {
-    const data: IResult[] = await getReviewById(id);
+    const data: IResultReview[] = await getReviewById(id);
     return data;
   };
   export const fetchAccountState = async (id: number) => {
@@ -32,7 +32,7 @@ export const fetchMovieDetails = async (id: number) => {
   // Functions use in HomeScreen and WatchlistScreen
  export const  handleMovieDetail = async (id: number ):Promise<IDetailsMovie> => {
     const resDetail: IMovieDetail = await fetchMovieDetails(id);
-    const resReview: IResult[] = await fetchReviewMovieDetails(id);
+    const resReview: IResultReview[] = await fetchReviewMovieDetails(id);
     //const navigation:RootNavigationProp = useNavigation()
     let resAllDetails:IDetailsMovie ={
       detail:resDetail,

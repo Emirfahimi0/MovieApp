@@ -1,7 +1,7 @@
 import axios from "axios"
 import  {  ENDPOINTS, TMDB_API_KEY }  from "../constants/utilities";
 import {  Genre, IRating, IMovieDetail, TResponseToken, IAccountState,
-        TSession, IWatchListResponse, IResult, IResponseAccount, IResponseTokenMerge } from ".";
+        TSession, IWatchListResponse, IResultReview, IResponseAccount, IResponseTokenMerge } from ".";
 import { TMovieType } from "../screens";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -67,11 +67,13 @@ export const createNewSession = async(token:string): Promise<TSession> => {
 export const sessionWithLogIn = async (username:string,password:string):Promise<boolean> => {
     let isAuthenticated = false;
     try {
-        const response:IResponseTokenMerge =await AsyncStorage?.getItem("responseToken")
+        const response =await AsyncStorage?.getItem("responseToken")
+     
         if(response){
             
-            if(JSON.parse(response.session_id)){
-                console.log(response)
+            const responseToken:IResponseTokenMerge = JSON.parse(response)
+            if(responseToken.session_id){
+                console.log(responseToken)
                   isAuthenticated = true  
             }
             else{
@@ -392,7 +394,7 @@ export const getReviewById = async (id:number) => {
   
 
     const url = `${ENDPOINTS.GET_REVIEWS_BY_ID}${id}/reviews?${TMDB_API_KEY}`
-    let data:IResult[] = await axios.get(url,{responseType:"json"}).then(function(res){
+    let data:IResultReview[] = await axios.get(url,{responseType:"json"}).then(function(res){
 
         let responseFromAPI = res.data.results
         return responseFromAPI

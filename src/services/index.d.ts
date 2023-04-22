@@ -448,12 +448,12 @@ export interface Buy24 {
 export interface IReview {
   id:            number;
   page:          number;
-  results:       IResult[];
+  results:       IResultReview[];
   total_pages:   number;
   total_results: number;
 }
 
-export interface IResult {
+export interface IResultReview {
   author_details: IAuthorDetails;
   author:         string;
   content:        string;

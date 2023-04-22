@@ -1,4 +1,4 @@
-import { IMovieDetail, IResult, IReview } from "../services";
+import { IMovieDetail, IResultReview, IReview } from "../services";
 
 declare interface IMovie {
     page?:number
@@ -66,6 +66,6 @@ declare type TUser = {
 
 declare interface IDetailsMovie {
  detail:IMovieDetail ,
- review:IResult[]
+ review:IResultReview[]
 }
 

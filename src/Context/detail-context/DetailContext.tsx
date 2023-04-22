@@ -1,10 +1,10 @@
 import { createContext, useState } from "react";
-import { IMovieDetail, IResult } from "../../services";
+import { IMovieDetail, IResultReview } from "../../services";
 
 interface IInitialState {
-  reviewState: IResult[];
-  MovieDetailsState: IMovieDetail;
-  storeAllDetailsState: (detail: IMovieDetail, review: IResult[]) => Promise<void>;
+  reviewState: IResultReview[];
+  MovieDetailsState: IMovieDetail | undefined;
+  storeAllDetailsState: (detail: IMovieDetail, review: IResultReview[]) => Promise<void>;
 }
 
 interface IDetailProviderProps {
@@ -15,7 +15,7 @@ interface IDetailProviderProps {
 const initialState: IInitialState = {
   reviewState: [],
   storeAllDetailsState: () => Promise.resolve(),
-  MovieDetailsState: {},
+  MovieDetailsState: undefined,
 };
 
 export const DetailContext = createContext<IInitialState>(initialState);
@@ -23,7 +23,7 @@ export const DetailContext = createContext<IInitialState>(initialState);
 export const DetailProvider = (props: React.PropsWithChildren<IDetailProviderProps>) => {
   const [state, setState] = useState(initialState);
 
-  const storeAllDetailsState = async (resDetailMovie: IMovieDetail, resReviewMovie: IResult[]): Promise<void> => {
+  const storeAllDetailsState = async (resDetailMovie: IMovieDetail, resReviewMovie: IResultReview[]): Promise<void> => {
     // will run all at the same time,
     // ---> method 1st
     // const newState = { ...state };

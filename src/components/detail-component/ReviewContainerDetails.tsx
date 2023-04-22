@@ -1,4 +1,4 @@
-import { IResult } from "../../services";
+import { IResultReview } from "../../services";
 import { container, setWidth } from "../../constants/style-component/viewComponent";
 import { OverviewDetailsText, genreText, subHeader } from "../../constants/style-component/textComponent";
 import { ScrollView, Text, View } from "react-native";
@@ -13,7 +13,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
       <Text style={{ ...subHeader, fontSize: 16, marginLeft: 32, color: Color.ACTIVE, paddingVertical: 16 }}>Reviews</Text>
       {reviewDetails.length > 0 ? (
         <Fragment>
-          {reviewDetails.map((item: IResult, index) => {
+          {reviewDetails.map((item: IResultReview, index) => {
             let [showMore, setShowmore] = useState<Boolean>(true);
 
             const handleShowMore = () => {
