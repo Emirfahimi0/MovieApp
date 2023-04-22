@@ -75,8 +75,11 @@ export const fetchMovieDetails = async (id: number) => {
         isSuccess = false
       }
       else if(resAsyncToken.request_token === resAsyncRequestBody.request_token){
+        if(resAsyncToken.session_id){
           console.log("session ID is exist",resAsyncToken.session_id)
-      isSuccess =true 
+          isSuccess =true
+        }
+           
       }
       console.log("isSuccess??",isSuccess)
     return isSuccess

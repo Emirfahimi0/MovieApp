@@ -48,7 +48,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
             }}>
             {handleGoBack ? (
               <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-                <Icon name="chevron-left" size={32} color={"white"} />
+                <Icon name="back" size={32} color={"white"} />
               </TouchableWithoutFeedback>
             ) : null}
 
@@ -91,7 +91,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
           </View>
           <View style={{ ...styleView }}>
             <View style={SearchBar}>
-              <Icon iconStyle={{ marginRight: 10 }} name="magnifying-glass" size={22} color={color.AMBER} />
+              <Icon iconStyle={{ marginRight: 10 }} name="search1" size={22} color={color.AMBER} />
               <View style={{ width: "100%" }}>
                 <TextInput
                   value={searchText}

@@ -1,5 +1,5 @@
 import { Genre, TUser } from "../screens";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
 import { IAccountState } from "../services";
 import { fetchGenreItem, fetchWatchlist, handleIsLogin } from "../components/features/handleFunctions";
@@ -27,7 +27,7 @@ const initialState: IInitialState = {
   accountState: {
     favourite: true,
     id: 0,
-    rated: 5 | true,
+    rated: true,
     watchlist: true,
   },
   genreState: [],

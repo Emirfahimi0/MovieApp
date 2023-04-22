@@ -19,7 +19,12 @@ export const  getTrendingmovie = async():Promise<TMovieType[]> => {
     return data
 }
 
-
+export const getMovieType = async (movieType:string):Promise<TMovieType[]>=>{
+const data = await axios.get(`${ENDPOINTS.GET_MOVIETYPE}/${movieType}`,{responseType:'json'}).then((response)=>{
+    return response.data.results;
+})
+return data
+}
 
 /* Get request token*/
 export const createRequestToken = async  (): Promise<TResponseToken> => {

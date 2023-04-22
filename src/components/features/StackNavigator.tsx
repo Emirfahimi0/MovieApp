@@ -8,8 +8,6 @@ import React, { useContext, useEffect, useState } from "react";
 import WatchListScreen from "../../screens/WatchListScreen";
 import { GlobalContext } from "../../context/GlobalState";
 import { handleLoginWithFaceId } from "./handleFunctions";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { IResponseTokenMerge } from "src/services";
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -19,8 +17,9 @@ export const StackNavigator = () => {
   const { storeGenre } = useContext(GlobalContext);
   const handleIsUserLoggedIn = async () => {
     const data = await handleLoginWithFaceId();
-    storeGenre();
+
     if (data === true) {
+      storeGenre();
       setIsLoggedIn(true);
       console.log("loggedIn");
     } else setIsLoggedIn(false);
