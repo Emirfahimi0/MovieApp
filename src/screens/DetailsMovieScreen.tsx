@@ -60,7 +60,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   }, [watchlistState]);
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }} nestedScrollEnabled={true}>
       {accountState !== undefined ? (
         <>
           <HeaderContainerDetails
@@ -74,7 +74,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
             ratingVal={ratingVal}
           />
           {/* <ProviderCardList selectedProviderMovie={selectedMovie?.["watch/providers"]} /> */}
-          <ScrollView contentContainerStyle={{}}>
+          <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }}>
             <View style={homeCardContainer}>
               <SubContainerDetail overviewDetails={MovieDetailsState?.overview} overViewStyle={overViewTextArea} />
               <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
@@ -84,7 +84,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
       ) : (
         <Loader />
       )}
-    </View>
+    </ScrollView>
   );
 };
 
