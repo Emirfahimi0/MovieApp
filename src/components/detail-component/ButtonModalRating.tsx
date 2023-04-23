@@ -1,7 +1,7 @@
 import { Alert, Modal, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import { ButtonContainerRating, CardContainer } from "../../constants/style-component/viewComponent";
 import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
-import { IRating, IMovieDetail, IAccountState, RatedValue } from "../../services";
+import { IRating, IMovieDetail } from "../../services";
 import { TMovieType } from "../../screens";
 import { RatingText, genreText, subDetail } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
@@ -10,10 +10,9 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 
 export interface IButtonModalRating {
   selectedMovie: TMovieType | IMovieDetail | undefined;
-  state: IAccountState | undefined;
   ratingVal: number;
-  setPostRatingDisable: Dispatch<SetStateAction<boolean | undefined>>;
-  postRatingDisable: boolean | undefined;
+  setPostRatingDisable: Dispatch<SetStateAction<boolean | { value: number } | undefined>>;
+  postRatingDisable: boolean | { value: number } | undefined;
   getUpdatedAccState: () => void;
   setRating: Dispatch<SetStateAction<number>>;
 }
@@ -37,6 +36,7 @@ export const ButtonModalRating = ({
     if (resRating.success === true) {
       Alert.alert("Rating posted succesfully.");
       // setPostRatingDisable(false);
+      //getUpdatedAccState();
       setVisible(visible);
     } else {
       Alert.alert("unknown error occured");
@@ -44,7 +44,7 @@ export const ButtonModalRating = ({
     console.log(resRating.status_message);
     setPostRatingDisable(true);
     setVisible(!visible);
-    //getUpdatedAccState();
+
     //To do --> Open modal and submit rating
   };
 
@@ -67,7 +67,7 @@ export const ButtonModalRating = ({
       //getUpdatedAccState();
     }
   };
-  let disable = postRatingDisable ? true : false;
+  let disable = postRatingDisable === false ? true : false;
 
   return (
     <View style={ButtonContainerRating}>
@@ -87,7 +87,7 @@ export const ButtonModalRating = ({
             <View style={RatingStarIcon}>
               {review.map((item, index) => {
                 return (
-                  <TouchableOpacity disabled={disable === false ? false : true} key={index} onPress={() => HandleSetRating(item)}>
+                  <TouchableOpacity disabled={disable ? false : true} key={index} onPress={() => HandleSetRating(item)}>
                     {ratingVal < item ? (
                       <Icon name="heart-outline" size={20} color="black" />
                     ) : (
@@ -98,16 +98,16 @@ export const ButtonModalRating = ({
               })}
             </View>
             <TouchableOpacity
-              style={{ ...CardContainer, marginTop: 30, backgroundColor: disable === false ? color.ACTIVE : color.PRIMARY_COLOR }}
-              onPress={disable === false ? HandlePostRating : HandleDeleteRating}>
-              <Text style={{ ...RatingText, color: color.SECONDARY_COLOR }}>{disable === false ? "Post Rating" : "Delete Rating"}</Text>
+              style={{ ...CardContainer, marginTop: 30, backgroundColor: disable ? color.ACTIVE : color.PRIMARY_COLOR }}
+              onPress={disable ? HandlePostRating : HandleDeleteRating}>
+              <Text style={{ ...RatingText, color: color.SECONDARY_COLOR }}>{disable ? "Post Rating" : "Delete Rating"}</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
       <TouchableOpacity onPress={openModal}>
         <View style={{ ...CardContainer, backgroundColor: color.ACTIVE, width: 150 }}>
-          <Text style={{ ...genreText, color: color.SECONDARY_COLOR }}>{disable === false ? "Post Rating" : "Review Rating"}</Text>
+          <Text style={{ ...genreText, color: color.SECONDARY_COLOR }}>{disable ? "Post Rating" : "Review Rating"}</Text>
         </View>
       </TouchableOpacity>
     </View>

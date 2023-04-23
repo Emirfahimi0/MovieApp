@@ -24,10 +24,10 @@ import { WatchlistContext } from "../../context/watchlist-context/WatchlistConte
 interface IHeaderContainerDetails {
   getUpdatedAccState: () => void;
   onPress: () => void;
-  postRating: boolean | undefined;
+  postRatingDisable: boolean | { value: number } | undefined;
   ratingVal: number;
   selectedMovie: IMovieDetail | undefined;
-  setPostRatingDisable: Dispatch<SetStateAction<boolean | undefined>>;
+  setPostRatingDisable: Dispatch<SetStateAction<boolean | { value: number } | undefined>>;
   setRating: Dispatch<SetStateAction<number>>;
   state: IAccountState;
 }
@@ -35,7 +35,7 @@ interface IHeaderContainerDetails {
 export const HeaderContainerDetails = ({
   getUpdatedAccState,
   onPress,
-  postRating,
+  postRatingDisable,
   ratingVal,
   selectedMovie,
   setPostRatingDisable,
@@ -113,6 +113,12 @@ export const HeaderContainerDetails = ({
         <View style={smallDetail}>
           <Text style={additionalDetailText}>Original Language: {selectedMovie?.original_language}</Text>
         </View>
+        <View style={smallDetail}>
+          <Text style={additionalDetailText}>Release Date: {selectedMovie?.release_date.toString()}</Text>
+        </View>
+        <View style={smallDetail}>
+          <Text style={additionalDetailText}>Status: {selectedMovie?.status.toString()}</Text>
+        </View>
         <View style={{ ...smallDetail }}>
           <TouchableOpacity onPress={() => handleWatchList()}>
             <View
@@ -134,11 +140,10 @@ export const HeaderContainerDetails = ({
 
           <ButtonModalRating
             selectedMovie={selectedMovie}
-            state={state}
             getUpdatedAccState={getUpdatedAccState}
             ratingVal={ratingVal}
             setRating={setRating}
-            postRatingDisable={postRating}
+            postRatingDisable={postRatingDisable}
             setPostRatingDisable={setPostRatingDisable}
           />
         </View>

@@ -65,8 +65,8 @@ export const MovieDetailTitle:TextStyle ={
 }
 export const additionalDetailText:TextStyle ={
     color: color.SEMI_BLACK,
-    fontFamily: Font.BOLD,
-    fontWeight: "600",
+    fontFamily: Font.LIGHT,
+    fontWeight: "700",
     fontSize: 12,
 }
 export const OverviewDetailsText:TextStyle ={

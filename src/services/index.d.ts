@@ -473,17 +473,11 @@ export interface IAuthorDetails {
 export interface IAccountState {
     favourite:boolean
     id:number;
-    rated: boolean | { value: RatedValue };
+    rated: boolean | { value: number };
     watchlist:boolean;
 }
 
-declare enum RatedValue {
-    ONE_STAR = 1,
-    TWO_STARS = 2,
-    THREE_STARS = 3,
-    FOUR_STARS = 4,
-    FIVE_STARS = 5,
-  }
+
 
 export interface IRating {
     status_code: number;
