@@ -1,7 +1,7 @@
 import { Alert, Modal, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import { ButtonContainerRating, CardContainer } from "../../constants/style-component/viewComponent";
 import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
-import { IRating, IMovieDetail, IAccountState } from "../../services";
+import { IRating, IMovieDetail, IAccountState, RatedValue } from "../../services";
 import { TMovieType } from "../../screens";
 import { RatingText, genreText, subDetail } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
@@ -9,35 +9,42 @@ import Icon from "react-native-vector-icons/Ionicons";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
 export interface IButtonModalRating {
-  movie: TMovieType | IMovieDetail | undefined;
-  state: IAccountState;
+  selectedMovie: TMovieType | IMovieDetail | undefined;
+  state: IAccountState | undefined;
   ratingVal: number;
+  setPostRatingDisable: Dispatch<SetStateAction<boolean | undefined>>;
+  postRatingDisable: boolean | undefined;
+  getUpdatedAccState: () => void;
   setRating: Dispatch<SetStateAction<number>>;
 }
-export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButtonModalRating) => {
+export const ButtonModalRating = ({
+  selectedMovie,
+  ratingVal,
+  setRating,
+  getUpdatedAccState,
+  postRatingDisable,
+  setPostRatingDisable,
+}: IButtonModalRating) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const [postRatingDisable, setPostRatingDisable] = useState<boolean | object>(state.rated);
   const review: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-  //   if (postRatingDisable === undefined) {
-  //     setPostRatingDisable(false);
-  //   }
 
   const openModal = () => {
     setVisible(true);
   };
 
   const HandlePostRating = async () => {
-    const resRating: IRating = await postRatingbyId(movie?.id, ratingVal);
+    const resRating: IRating = await postRatingbyId(selectedMovie?.id, ratingVal);
     if (resRating.success === true) {
       Alert.alert("Rating posted succesfully.");
       // setPostRatingDisable(false);
       setVisible(visible);
-    } else Alert.alert("unknown error occured");
+    } else {
+      Alert.alert("unknown error occured");
+    }
     console.log(resRating.status_message);
     setPostRatingDisable(true);
     setVisible(!visible);
-
+    //getUpdatedAccState();
     //To do --> Open modal and submit rating
   };
 
@@ -50,16 +57,17 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
   };
 
   const HandleDeleteRating = async () => {
-    console.log("rating", ratingVal);
-    const resRating: IRating = await deleteRatingbyId(movie?.id, ratingVal);
+    console.log("current rating", ratingVal);
+    const resRating: IRating = await deleteRatingbyId(selectedMovie?.id, ratingVal);
     if (resRating.status_code === 13) {
       Alert.alert("rating deleted successfully.");
       setVisible(false);
       setRating(0);
-      console.log("Delete Rating");
       setPostRatingDisable(false);
+      //getUpdatedAccState();
     }
   };
+  let disable = postRatingDisable ? true : false;
 
   return (
     <View style={ButtonContainerRating}>
@@ -68,6 +76,7 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
         transparent={true}
         visible={visible}
         onRequestClose={() => {
+          postRatingDisable;
           Alert.alert("Modal has been closed.");
           setVisible(!visible);
         }}>
@@ -78,7 +87,7 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
             <View style={RatingStarIcon}>
               {review.map((item, index) => {
                 return (
-                  <TouchableOpacity disabled={postRatingDisable !== false ? true : false} key={index} onPress={() => HandleSetRating(item)}>
+                  <TouchableOpacity disabled={disable === false ? false : true} key={index} onPress={() => HandleSetRating(item)}>
                     {ratingVal < item ? (
                       <Icon name="heart-outline" size={20} color="black" />
                     ) : (
@@ -89,20 +98,16 @@ export const ButtonModalRating = ({ movie, state, ratingVal, setRating }: IButto
               })}
             </View>
             <TouchableOpacity
-              style={{ ...CardContainer, marginTop: 30, backgroundColor: postRatingDisable !== false ? color.HEART : color.ACTIVE }}
-              onPress={postRatingDisable !== false ? HandleDeleteRating : HandlePostRating}>
-              <Text style={{ ...RatingText, color: color.SECONDARY_COLOR }}>
-                {postRatingDisable !== false ? "Delete Rating" : "Post Rating"}
-              </Text>
+              style={{ ...CardContainer, marginTop: 30, backgroundColor: disable === false ? color.ACTIVE : color.PRIMARY_COLOR }}
+              onPress={disable === false ? HandlePostRating : HandleDeleteRating}>
+              <Text style={{ ...RatingText, color: color.SECONDARY_COLOR }}>{disable === false ? "Post Rating" : "Delete Rating"}</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
       <TouchableOpacity onPress={openModal}>
         <View style={{ ...CardContainer, backgroundColor: color.ACTIVE, width: 150 }}>
-          <Text style={{ ...genreText, color: color.SECONDARY_COLOR }}>
-            {postRatingDisable !== false ? "Review Rating" : "Post Rating"}
-          </Text>
+          <Text style={{ ...genreText, color: color.SECONDARY_COLOR }}>{disable === false ? "Post Rating" : "Review Rating"}</Text>
         </View>
       </TouchableOpacity>
     </View>

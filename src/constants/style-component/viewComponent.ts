@@ -61,13 +61,15 @@ export const movieContainer:ViewStyle= {
     backgroundColor: color.SECONDARY_COLOR,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
+    elevation: 3,
+    flex: 1,
     marginTop: 54,
     paddingTop: 8,
     shadowColor: color.LIGHT_GRAY,
     shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 1.0,
     shadowRadius: 16,
-    zIndex:1,
+    zIndex:2,
   }
 
  export const  SearchBar:ViewStyle= {

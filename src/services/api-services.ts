@@ -4,7 +4,6 @@ import {  Genre, IRating, IMovieDetail, TResponseToken, IAccountState,
         TSession, IWatchListResponse, IResultReview, IResponseAccount, IResponseTokenMerge } from ".";
 import { TMovieType } from "../screens";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Switch } from "react-native";
 
 
 
@@ -195,7 +194,7 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
 
 
 // POST method for adding watchlist
-export const setWatchList =async (movie:IMovieDetail | TMovieType |undefined,setWatchlist:boolean):Promise<IWatchListResponse> => {
+export const setWatchlist =async (movie:IMovieDetail | TMovieType |undefined,value:boolean):Promise<IWatchListResponse> => {
     //need body request
     let response:IWatchListResponse = {
         status_code :0,
@@ -219,7 +218,7 @@ export const setWatchList =async (movie:IMovieDetail | TMovieType |undefined,set
         let requestBody = {
             "media_type":"movie",
             "media_id":movie?.id,
-            "watchlist":setWatchlist 
+            "watchlist":value 
         }
         const options = {
             method: 'POST',
@@ -266,13 +265,12 @@ export const getMovieWatchlist = async ():Promise<TMovieType[]> => {
       
     const data  = await axios.get(
         ENDPOINTS.GET_WATCHLIST,{
-            headers: { Accept:'application/json',"Content-Type": "application/json; charset=UTF-8" }
+            headers: { Accept:'application/json',
+            "Content-Type": "application/json; charset=UTF-8" }
             ,params:params}).then((response)=>{
           return response.data.results
             
-        })
-        //to do --> need to compile it as 
-        
+        })        
         return data;
 }
 // POST method for rate movie by Id
@@ -290,10 +288,10 @@ export const postRatingbyId = async (id:number|undefined,rateValue:number):Promi
     }
    
 
-     await AsyncStorage.getItem('responseToken').then((value) => {
+     current_Session =  await AsyncStorage.getItem('responseToken').then((value) => {
 
         const data = JSON.parse(value as string)
-        current_Session = data
+        return data
     })
     const params = {
         session_id:current_Session.session_id}
@@ -310,14 +308,11 @@ export const postRatingbyId = async (id:number|undefined,rateValue:number):Promi
         data: requestBody       
         
     };
-    console.log(requestBody)
-
    
    await axios.request(options)
     .then( (response) =>{
         responseRating =response.data
          
-
     })
     .catch( (error) =>{
         console.error("error",error);

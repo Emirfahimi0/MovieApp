@@ -15,32 +15,45 @@ import { ButtonModalRating } from "./ButtonModalRating";
 import { Genre, IMovieDetail, IAccountState, IWatchListResponse } from "../../services";
 import { ItemSeparator } from "../movie-component/ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
-import { setWatchList } from "../../services/api-services";
+import { setWatchlist } from "../../services/api-services";
 import Icon from "react-native-vector-icons/Ionicons";
 import color from "../../constants/Color";
 import YoutubeIframe from "react-native-youtube-iframe";
 import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
 
 interface IHeaderContainerDetails {
-  selectedMovie: IMovieDetail | undefined;
+  getUpdatedAccState: () => void;
   onPress: () => void;
-  state: IAccountState;
+  postRating: boolean | undefined;
   ratingVal: number;
+  selectedMovie: IMovieDetail | undefined;
+  setPostRatingDisable: Dispatch<SetStateAction<boolean | undefined>>;
   setRating: Dispatch<SetStateAction<number>>;
+  state: IAccountState;
 }
 
-export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVal, setRating }: IHeaderContainerDetails) => {
+export const HeaderContainerDetails = ({
+  getUpdatedAccState,
+  onPress,
+  postRating,
+  ratingVal,
+  selectedMovie,
+  setPostRatingDisable,
+  setRating,
+  state,
+}: IHeaderContainerDetails) => {
   const [existWatchlist, setExistWatchlist] = useState<boolean>(state?.watchlist);
-  const { watchlistState, getWatchlistData } = useContext(WatchlistContext);
   const [playTrailer, setPlayTrailer] = useState<boolean>(false);
+  const { getWatchlistData } = useContext(WatchlistContext);
+
   const handleWatchList = async () => {
     // Get the data first and complementary based on what user click
-    const data: IWatchListResponse = await setWatchList(selectedMovie, !existWatchlist);
+    const data: IWatchListResponse = await setWatchlist(selectedMovie, !existWatchlist);
     // if response of the data return success.
     if (data.success) {
-      getWatchlistData();
       setExistWatchlist(!existWatchlist);
       if (existWatchlist) {
+        getWatchlistData();
         Alert.alert("Item remove from watchlist");
       } else {
         Alert.alert("Item added to watchlist!");
@@ -119,7 +132,15 @@ export const HeaderContainerDetails = ({ selectedMovie, onPress, state, ratingVa
             </View>
           </TouchableOpacity>
 
-          <ButtonModalRating movie={selectedMovie} state={state} ratingVal={ratingVal} setRating={setRating} />
+          <ButtonModalRating
+            selectedMovie={selectedMovie}
+            state={state}
+            getUpdatedAccState={getUpdatedAccState}
+            ratingVal={ratingVal}
+            setRating={setRating}
+            postRatingDisable={postRating}
+            setPostRatingDisable={setPostRatingDisable}
+          />
         </View>
       </View>
     </Fragment>

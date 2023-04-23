@@ -1,8 +1,8 @@
 import { Genre, TUser } from "../screens";
 import React, { createContext, useState } from "react";
-import { getGenreMovie, sessionWithLogIn } from "../services/api-services";
+import { sessionWithLogIn } from "../services/api-services";
 import { IAccountState } from "../services";
-import { fetchGenreItem, handleIsLogin } from "../components/features/handleFunctions";
+import { handleIsLogin } from "../components/features/handleFunctions";
 
 export interface IInitialState {
   accountState: IAccountState;
@@ -76,7 +76,6 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   const storeGenre = async (responseGenre: Genre[]): Promise<void> => {
     // set state for in context provider for Genre [];
     if (responseGenre !== undefined) {
-      console.log(responseGenre);
       setState({ ...state, genreState: responseGenre });
     }
   };

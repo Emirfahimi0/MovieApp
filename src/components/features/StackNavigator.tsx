@@ -23,7 +23,6 @@ export const StackNavigator = () => {
       storeGenre(responseGenre);
       setIsLoggedIn(true);
       console.log("loggedIn");
-      console.log("genre", responseGenre);
     }
     if (response === false) {
     } else setIsLoggedIn(false);

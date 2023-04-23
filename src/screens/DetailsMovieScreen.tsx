@@ -1,7 +1,7 @@
 import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
-import { IAccountState, IMovieDetail } from "../services";
+import { IAccountState, IMovieDetail, RatedValue } from "../services";
 import { POSTER_BASE_URL } from "../constants/utilities";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
@@ -11,19 +11,19 @@ import Loader from "../components/features/Loader";
 import React, { useContext, useEffect, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
 import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
-import { GlobalContext } from "../context/GlobalState";
 import ProviderCardList from "../components/detail-component/ProviderCardList";
 import color from "../constants/Color";
+import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
 const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   const { MovieDetailsState, reviewState } = useContext(DetailContext);
-  const { genreState } = useContext(GlobalContext);
-
-  const [checkingState, setCheckingState] = useState<IAccountState>();
-  const [ratingVal, setRatingVal] = useState<number>(0);
   const selectedMovie: IMovieDetail | undefined = MovieDetailsState;
+  const [accountState, setAccountState] = useState<IAccountState>();
+  const [ratingVal, setRatingVal] = useState<number>(0);
+  const [postRatingDisable, setPostRatingDisable] = useState<boolean | undefined>();
+  const { watchlistState } = useContext(WatchlistContext);
   const handleGoBack = () => {
     navigation.goBack();
   };
@@ -32,11 +32,17 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   const getUpdatedAccState = async (): Promise<void> => {
     try {
       const resFetchState: IAccountState = await fetchAccountState(MovieDetailsState?.id);
-      setCheckingState(resFetchState);
-      if (typeof checkingState?.rated === "object") {
-        setRatingVal(checkingState.rated.value);
-      } else {
-        setRatingVal(0);
+      if (resFetchState !== undefined) {
+        setAccountState(resFetchState);
+        console.log(resFetchState);
+        console.log("account", accountState);
+        if (typeof accountState?.rated === "object") {
+          setRatingVal(accountState?.rated.value);
+          setPostRatingDisable(true);
+        } else if (accountState?.rated === false) {
+          setPostRatingDisable(accountState?.rated);
+          setRatingVal(0);
+        }
       }
     } catch (error) {
       console.log("error ", error);
@@ -46,17 +52,20 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   useEffect(() => {
     getUpdatedAccState();
     //handleRenderTrailer();
-  }, [MovieDetailsState]);
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>
-      {checkingState?.watchlist !== undefined ? (
+      {accountState !== undefined ? (
         <>
           <HeaderContainerDetails
-            selectedMovie={MovieDetailsState}
+            selectedMovie={selectedMovie}
+            getUpdatedAccState={getUpdatedAccState}
             onPress={handleGoBack}
-            state={checkingState}
+            postRating={postRatingDisable}
+            state={accountState}
             setRating={setRatingVal}
+            setPostRatingDisable={setPostRatingDisable}
             ratingVal={ratingVal}
           />
           <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }}>

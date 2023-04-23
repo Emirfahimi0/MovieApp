@@ -31,6 +31,7 @@ export const ListMovieCards = ({ MovieData, keyword, handleMovieDetail }: IMovie
       navigation.navigate("DetailScreen", { item: getDetailsFromApi.detail, review: getDetailsFromApi.review });
     } else loading = true;
   };
+  const posterUrl = `${POSTER_BASE_URL}original/`;
 
   return (
     <Fragment>
@@ -50,7 +51,7 @@ export const ListMovieCards = ({ MovieData, keyword, handleMovieDetail }: IMovie
               {item.title?.toLowerCase().includes(keyword.toLowerCase()) ? (
                 <View style={ListPreviewMovie}>
                   <View style={movieContainer}>
-                    <Image source={{ uri: `${POSTER_BASE_URL}original/${item.backdrop_path}` }} style={ImagePoster}></Image>
+                    <Image source={{ uri: `${posterUrl}${POSTER_BASE_URL}original/${item.backdrop_path}` }} style={ImagePoster}></Image>
                   </View>
                   <View style={MovieCardTitle}>
                     <Text style={subHeader} numberOfLines={3}>
