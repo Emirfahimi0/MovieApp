@@ -69,13 +69,16 @@ export const HeaderContainerDetails = ({
 
   const handleRenderTrailer = () => {
     const trailer = selectedMovie?.videos.results.find((vid) => vid.name === "Official Trailer");
-    <YoutubeIframe height={500} width={setWidth(500)} play={playTrailer} videoId={trailer?.key} />;
+    //console.log("trailer", trailer);
+    <View style={{ backgroundColor: "yellow", zIndex: -1, position: "absolute" }}>
+      <YoutubeIframe height={500} width={setWidth(500)} play={playTrailer} videoId={trailer?.key} />;
+    </View>;
   };
   return (
     <Fragment>
       <View style={{ position: "absolute", paddingHorizontal: "43%", zIndex: 1, top: 40, left: 30 }}>
         <TouchableOpacity onPress={onPress}>
-          <Icon name="home" size={30} color={color.SEMI_BLACK} />
+          <Icon name="return-up-back-outline" size={30} color={color.HEART} />
         </TouchableOpacity>
       </View>
       <View style={headerContainerStyle}>
@@ -84,9 +87,9 @@ export const HeaderContainerDetails = ({
         </View>
         <View
           //Play button
-          {...(selectedMovie?.videos && playTrailer ? handleRenderTrailer : null)}
+          {...(selectedMovie?.videos ? handleRenderTrailer : null)}
           style={{ ...playButton }}>
-          <TouchableOpacity onPress={() => setPlayTrailer(true)}>
+          <TouchableOpacity onPress={() => setPlayTrailer(playTrailer)}>
             <Icon name="play-circle-outline" style={{ marginLeft: 5 }} size={100} color={color.AMBER} />
           </TouchableOpacity>
         </View>
@@ -97,7 +100,7 @@ export const HeaderContainerDetails = ({
             {selectedMovie?.title}
           </Text>
           <View style={ContainerRow}>
-            <Icon iconStyle={{ marginLeft: 8 }} name="heart-sharp" size={18} color="red" />
+            <Icon name="heart-sharp" size={15} color="red" />
             <Text style={RatingText}>{selectedMovie?.vote_average.toFixed(1)}</Text>
           </View>
         </View>

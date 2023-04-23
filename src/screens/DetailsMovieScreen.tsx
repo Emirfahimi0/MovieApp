@@ -36,7 +36,6 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 
     try {
       if (resFetchState !== undefined) {
-        console.log("res", resFetchState);
         setAccountState(resFetchState);
         if (typeof accountState?.rated === "object") {
           setRatingVal(accountState?.rated.value);
@@ -74,8 +73,8 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
             setPostRatingDisable={setPostRatingDisable}
             ratingVal={ratingVal}
           />
-          <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }}>
-            {/* <ProviderCardList selectedProviderMovie={selectedMovie?.["watch/providers"]} /> */}
+          {/* <ProviderCardList selectedProviderMovie={selectedMovie?.["watch/providers"]} /> */}
+          <ScrollView contentContainerStyle={{}}>
             <View style={homeCardContainer}>
               <SubContainerDetail overviewDetails={MovieDetailsState?.overview} overViewStyle={overViewTextArea} />
               <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />

@@ -76,16 +76,20 @@ export const ListMovieCards = ({ MovieData, keyword, handleMovieDetail }: IMovie
     </Fragment>
   );
 };
-
-const MovieCardTitle: ViewStyle = {
-  marginTop: 5,
-  paddingVertical: 2,
-  width: 150,
-};
 const subContainer: ViewStyle = {
   alignItems: "flex-start",
   flexDirection: "row",
   justifyContent: "space-between",
+};
+
+const MovieCardTitle: ViewStyle = {
+  marginTop: 5,
+  alignItems: "flex-start",
+  flexDirection: "row",
+  justifyContent: "flex-start",
+  paddingVertical: 2,
+  paddingLeft: 3,
+  width: 150,
 };
 const Rating: ViewStyle = {
   alignItems: "center",

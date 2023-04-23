@@ -62,14 +62,13 @@ export const movieContainer:ViewStyle= {
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     elevation: 3,
-    flex: 1,
+    flex:1,
     marginTop: 54,
     paddingTop: 8,
     shadowColor: color.LIGHT_GRAY,
     shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 1.0,
     shadowRadius: 16,
-    zIndex:2,
   }
 
  export const  SearchBar:ViewStyle= {
@@ -110,20 +109,18 @@ export const  ImagePosterDetail:ViewStyle = {
 
   alignItems:"center",
   backgroundColor:color.SEMI_BLACK,
-  padding:0,
   borderRadius:60,
   justifyContent:"center",
   elevation: 3,
-  top:0,
   width:setWidth(w-250),
 }
 export const posterImage:ImageStyle = {
 
   height:ImagePosterDetail.height,
   padding:"50%",
-  borderRadius:60,
+  borderRadius:ImagePosterDetail.borderRadius,
   resizeMode:"cover",
-width:ImagePosterDetail.height}
+width:ImagePosterDetail.width}
 
 export const HeaderDetail:ViewStyle = {
 
@@ -158,11 +155,11 @@ export const MovieDetailContainer:ViewStyle = {
 
 export const ContainerRow :ViewStyle ={
   
-    alignItems: "center",
-    alignContent:"center",
+    justifyContent:"center",
     flexDirection: "row",
-    width:64,
-    padding:16
+    alignContent:"space-between",
+    width:"15%",
+    paddingLeft:20
 
     
 }

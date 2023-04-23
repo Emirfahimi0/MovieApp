@@ -60,7 +60,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
                 paddingBottom: 30,
               }}>
               <View style={{ flexDirection: "column" }}>
-                <Text style={{ ...subTitle, color: color.EXTRA_LIGHT_GRAY }}>Welcome Back</Text>
+                <Text style={{ ...subTitle, color: color.SECONDARY_COLOR }}>{handleGoBack ? "" : "Welcome Back"}</Text>
                 <Text style={{ ...genreText, fontSize: 24, fontWeight: "900", color: color.SECONDARY_COLOR }}>
                   {accountDetails?.name.toUpperCase()}
                 </Text>

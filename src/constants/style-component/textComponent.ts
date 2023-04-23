@@ -81,7 +81,8 @@ export const OverviewDetailsText:TextStyle ={
 export const RatingText :TextStyle ={
   color:color.SEMI_BLACK,
   fontFamily:Font.BOLD,
+  textAlign:"auto",
   fontSize:12,
-  fontWeight:"600"
+  fontWeight:"800"
 
 }
