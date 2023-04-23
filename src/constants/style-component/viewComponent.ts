@@ -58,17 +58,16 @@ export const movieContainer:ViewStyle= {
   }
 
   export const homeCardContainer:ViewStyle={
-    flex: 1,
-    paddingTop: 8,
     backgroundColor: color.SECONDARY_COLOR,
-    shadowColor: color.LIGHT_GRAY,
-    shadowRadius: 16,
-    marginTop: 54,
-    elevation: 3,
-    shadowOpacity: 1.0,
-    shadowOffset: { width: 0, height: -4 },
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
+    marginTop: 54,
+    paddingTop: 8,
+    shadowColor: color.LIGHT_GRAY,
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 1.0,
+    shadowRadius: 16,
+    zIndex:1,
   }
 
  export const  SearchBar:ViewStyle= {

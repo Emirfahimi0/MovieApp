@@ -24,7 +24,6 @@ export const fetchMovieDetails = async (id: number) => {
   };
   export const fetchGenreItem = async () => {
     const responseGenre: Genre[] = await getGenreMovie();
-
     // set state for in context provider for Genre []
     return responseGenre;
   };
@@ -51,73 +50,65 @@ export const fetchMovieDetails = async (id: number) => {
     return resAllDetails;
   };
 
-
+//true if session id exist ,false if no session
  export  const handleIsLogin = async (): Promise<boolean> => {
 
-    let isSuccess:boolean = false
+    let isValidate:boolean = false
     
       const resAsyncToken = await AsyncStorage?.getItem ("responseToken").then((value) => {
         const responseToken:IResponseTokenMerge = JSON.parse(value??"null");
-        console.log(responseToken);
         return responseToken
       });
     const resAsyncRequestBody = await AsyncStorage?.getItem ("requestBody").then((value) => {
         const responseToken:IRequestBody = JSON.parse(value?? "null");
         return responseToken
       });
-      if(resAsyncToken === null){
-        console.log("response async token is null")
-         isSuccess = false
-      }
 
-      if(resAsyncRequestBody === null){
-        console.log("response request body is null")
-        isSuccess = false
-      }
-      else if(resAsyncToken.request_token === resAsyncRequestBody.request_token){
-        if(resAsyncToken.session_id){
-          console.log("session ID is exist",resAsyncToken.session_id)
-          isSuccess =true
+      if(resAsyncToken !==null && resAsyncRequestBody!==null){
+         if(resAsyncToken.request_token ===resAsyncRequestBody.request_token){
+          if(resAsyncToken.session_id){
+            isValidate = true
+            console.log("authenticated session received...")
+          }
         }
-           
+        else{
+          console.log("not authenticated token received...")
+        }
       }
-      console.log("isSuccess??",isSuccess)
-    return isSuccess
+      else{
+
+        isValidate = false
+      }
+      return isValidate  
 }
 
-    
+   // if true returns face id  
 export const handleLoginWithFaceId = async():Promise<boolean> =>{
   const isLogin = await  handleIsLogin()
-  let isSuccess:boolean = false
-  if(isLogin === true){
-    const resAsyncRequestBody = await AsyncStorage?.getItem ("requestBody").then((value) => {
-      const responseToken:IRequestBody = JSON.parse(value?? "null");
-      return responseToken
-    });
-    if(resAsyncRequestBody.request_token){
-      console.log("request token",resAsyncRequestBody.request_token)
-    }
-  isSuccess = true
-  }
-
-  else {
+  console.log("isValidate",isLogin)
+  let isSuccess:boolean = true
    
-    return new Promise(async (resolve, reject) => {
-      isSuccess = await sessionWithLogIn("emirfahimi","adidas")
+  if(isLogin === false){
+   const response =  await sessionWithLogIn("emirfahimi","adidas") 
+   if(response === true){
+    
       TouchID.authenticate("Authenticate with Face ID")
-        .then(() => {         
-          if (isSuccess === true) {
-            resolve(true);
-            //navigation.navigate("HomeScreen");
-            isSuccess = true
-          }
+        .then(success => {      
+          //resolve(true);
+          isSuccess = success
         })
         .catch((error: string) => {
-          reject(error);
+          console.log("error",error)
+          
         });
-    });
+
+   }  
+   else isSuccess = false
+    
   }
-  console.log("is the authentication success?",isSuccess)
+  else 
+  isSuccess = false
+ 
   return isSuccess
 
 };

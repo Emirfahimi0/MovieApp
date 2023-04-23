@@ -3,12 +3,12 @@ import { ScreenCardContainer } from "../components/movie-component/HomeScreenCon
 import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { TMovieType } from ".";
-import { handleMovieDetail } from "../components/features/handleFunctions";
+import { fetchGenreItem, handleMovieDetail } from "../components/features/handleFunctions";
 import Loader from "../components/features/Loader";
 import { Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
-import { IResponseAccount } from "src/services";
+import { Genre, IResponseAccount } from "src/services";
 import { MovieContext } from "../context/movie-context/MovieContext";
 import { GlobalContext } from "../context/GlobalState";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -20,9 +20,11 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   const [searchText, setSearchText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const { handleTrendingMovies, filteredMovieState } = useContext(MovieContext);
-  const { genreState } = useContext(GlobalContext);
+  const { genreState, storeGenre } = useContext(GlobalContext);
+  const { accountState } = useContext(GlobalContext);
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
   // AsyncStorage.clear();
+
   const handleGetMovies = async (): Promise<void> => {
     setLoading(true);
     const responseApiMovie: TMovieType[] = await getTrendingmovie();
@@ -37,7 +39,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   };
   useEffect(() => {
     handleGetMovies().catch(console.error);
-  }, [genreState]);
+  }, [accountState, genreState]);
 
   const handleWatchList = async () => {
     const navigationGoBack = true;

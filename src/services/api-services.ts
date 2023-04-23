@@ -4,6 +4,7 @@ import {  Genre, IRating, IMovieDetail, TResponseToken, IAccountState,
         TSession, IWatchListResponse, IResultReview, IResponseAccount, IResponseTokenMerge } from ".";
 import { TMovieType } from "../screens";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Switch } from "react-native";
 
 
 
@@ -37,6 +38,7 @@ export const createRequestToken = async  (): Promise<TResponseToken> => {
 /* create new session */
 export const createNewSession = async(token:string): Promise<TSession> => {
     //let requestToken = createRequestToken()
+    console.log("token for session",token)
     let current_Session:TSession  = {
         success: false,
         session_id: ""
@@ -70,28 +72,13 @@ export const createNewSession = async(token:string): Promise<TSession> => {
  }
  /* Session with log In  */
 export const sessionWithLogIn = async (username:string,password:string):Promise<boolean> => {
-    let isAuthenticated = false;
-    try {
-        const response =await AsyncStorage?.getItem("responseToken")
-     
-        if(response){
-            
-            const responseToken:IResponseTokenMerge = JSON.parse(response)
-            if(responseToken.session_id){
-                console.log(responseToken)
-                  isAuthenticated = true  
-            }
-            else{
-                console.log("session id might be wrong or expired")
-                isAuthenticated = false
-            }
-   
-        }
-        else{
+             let isAuthenticated = false;
+        
+      
             const requestToken: TResponseToken  = await createRequestToken()
             if( requestToken.success===true){
               const token = requestToken.request_token
-                
+                console.log("token",token)
                 let requestBody = {
                     "username":username.toLowerCase(),
                     "password":password,
@@ -107,7 +94,7 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
                     
                 };
                
-               await axios.request(options)
+            await axios.request(options)
                 .then( async   (response)=>{
                  await AsyncStorage.multiSet([["responseToken",JSON.stringify(response.data)],
                                              ["requestBody",JSON.stringify(requestBody)]])
@@ -121,19 +108,18 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
         
                 });
                     
-                    // create session right away
-                    let session = await createNewSession(token)
-                    if(session.success){
-                      AsyncStorage.mergeItem("responseToken",JSON.stringify(session))  
-                    }
-                    else  
-                    console.log("current session already exist!!")    
-              }
-              isAuthenticated = true
+            // create session right away
+            let session = await createNewSession(token)
+            if(session.success){
+                console.log(session)
+                AsyncStorage.mergeItem("responseToken",JSON.stringify(session))  
+                isAuthenticated  = true
+            }
+            else  {
+                console.log("cannot create session!!")    
+            }
+            isAuthenticated = true
         }
-    } catch (error) {
-        console.log("error",error)
-    }
 
    
     console.log("isAuthenticated",isAuthenticated)
@@ -290,7 +276,7 @@ export const getMovieWatchlist = async ():Promise<TMovieType[]> => {
         return data;
 }
 // POST method for rate movie by Id
-export const postRatingbyId = async (id:number|undefined,value:number):Promise<IRating> =>{
+export const postRatingbyId = async (id:number|undefined,rateValue:number):Promise<IRating> =>{
     let responseRating:IRating ={
         success:false,
         status_code:0,
@@ -312,7 +298,7 @@ export const postRatingbyId = async (id:number|undefined,value:number):Promise<I
     const params = {
         session_id:current_Session.session_id}
     let requestBody = {
-      value:value
+      value:rateValue
     }
     const options = {
         method: 'POST',
@@ -342,7 +328,7 @@ export const postRatingbyId = async (id:number|undefined,value:number):Promise<I
 }
 
 // DELETE method for rate movie by Id
-export const deleteRatingbyId = async (id:number|undefined,value:number):Promise<IRating> =>{
+export const deleteRatingbyId = async (id:number|undefined,rateValue:number):Promise<IRating> =>{
     let responseRating:IRating ={
         success:false,
         status_code:1,
@@ -354,15 +340,15 @@ export const deleteRatingbyId = async (id:number|undefined,value:number):Promise
         expires_at:"",
         session_id: ""
     }
-     await AsyncStorage.getItem('responseToken').then((value) => {
+    current_Session= await AsyncStorage?.getItem('responseToken').then((value) => {
 
         const data = JSON.parse(value as string)
-        current_Session = data
+         return data
     })
     const params = {
         session_id:current_Session.session_id}
     let requestBody = {
-      value:value
+      value:rateValue
     }
     const options = {
         method: 'DELETE',
@@ -417,12 +403,11 @@ export const getMovieDetails = async (id:number):Promise<IMovieDetail> => {
 
 // GET method to fetch genre of all movies
 export const getGenreMovie = async ():Promise<Genre[]> => {
-    let resGenre = await axios.get(ENDPOINTS.GET_GENRES, {
+    const resGenre = await axios.get(ENDPOINTS.GET_GENRES, {
             responseType: "json",
           })
-          .then((response)=> {
-            return response.data.genre;
+          .then(function(response) {
+            return response.data.genres;
           });
- 
     return resGenre;
 }

@@ -6,9 +6,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { sessionWithLogIn } from "../services/api-services";
-import { handleLoginWithFaceId } from "../components/features/handleFunctions";
+import { fetchGenreItem, handleLoginWithFaceId } from "../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import color from "../constants/Color";
+import { Genre } from ".";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");
@@ -27,13 +28,18 @@ const LoginScreen = ({ navigation }) => {
     //   console.log("user already logged In", data);
     //   // navigation.navigate("HomeScreen");
     // } else {
-    let isSuccess = await handleLoginWithFaceId();
-    if (isSuccess === true) {
-      storeGenre();
-      AsyncStorage.setItem("userLoggedIn", JSON.stringify(isSuccess));
-      navigation.navigate("HomeScreen");
+
+    const responseLoginFaceId: boolean = await handleLoginWithFaceId();
+    console.log("is response face id?", responseLoginFaceId);
+    if (responseLoginFaceId === true) {
+      const responseGenre: Genre[] = await fetchGenreItem();
+      if (responseGenre !== undefined) {
+        storeGenre(responseGenre);
+        AsyncStorage.setItem("userLoggedIn", JSON.stringify(true));
+        navigation.navigate("HomeScreen");
+      }
     } else {
-      console.log("something wrong somewhere");
+      console.log("something wrong with authentication");
     }
     //}
   };

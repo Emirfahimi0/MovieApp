@@ -49,27 +49,27 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   }, [MovieDetailsState]);
 
   return (
-    <View style={{ flexGrow: 2 }}>
-      <ScrollView contentContainerStyle={{ minHeight: setHeight(20) }}>
-        {checkingState?.watchlist !== undefined ? (
-          <>
-            <HeaderContainerDetails
-              selectedMovie={MovieDetailsState}
-              onPress={handleGoBack}
-              state={checkingState}
-              setRating={setRatingVal}
-              ratingVal={ratingVal}
-            />
+    <View style={{ flex: 1 }}>
+      {checkingState?.watchlist !== undefined ? (
+        <>
+          <HeaderContainerDetails
+            selectedMovie={MovieDetailsState}
+            onPress={handleGoBack}
+            state={checkingState}
+            setRating={setRatingVal}
+            ratingVal={ratingVal}
+          />
+          <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }}>
             {/* <ProviderCardList selectedProviderMovie={selectedMovie?.["watch/providers"]} /> */}
             <View style={homeCardContainer}>
               <SubContainerDetail overviewDetails={MovieDetailsState?.overview} overViewStyle={overViewTextArea} />
               <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
             </View>
-          </>
-        ) : (
-          <Loader />
-        )}
-      </ScrollView>
+          </ScrollView>
+        </>
+      ) : (
+        <Loader />
+      )}
     </View>
   );
 };

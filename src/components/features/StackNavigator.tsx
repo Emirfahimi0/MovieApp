@@ -7,21 +7,25 @@ import LoginScreen from "../../screens/LoginScreen";
 import React, { useContext, useEffect, useState } from "react";
 import WatchListScreen from "../../screens/WatchListScreen";
 import { GlobalContext } from "../../context/GlobalState";
-import { handleLoginWithFaceId } from "./handleFunctions";
+import { fetchGenreItem, handleLoginWithFaceId } from "./handleFunctions";
+import { Genre } from "src/services";
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export const StackNavigator = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const { storeGenre } = useContext(GlobalContext);
   const handleIsUserLoggedIn = async () => {
-    const data = await handleLoginWithFaceId();
-
-    if (data === true) {
-      storeGenre();
+    const response = await handleLoginWithFaceId();
+    const responseGenre: Genre[] = await fetchGenreItem();
+    if (responseGenre !== undefined) {
+      storeGenre(responseGenre);
       setIsLoggedIn(true);
       console.log("loggedIn");
+      console.log("genre", responseGenre);
+    }
+    if (response === false) {
     } else setIsLoggedIn(false);
   };
   useEffect(() => {
@@ -30,7 +34,7 @@ export const StackNavigator = () => {
   }, []);
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="HomeScreen" screenOptions={{ headerShown: false }}>
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
         {isLoggedIn ? (
           <>
             <RootStack.Group>

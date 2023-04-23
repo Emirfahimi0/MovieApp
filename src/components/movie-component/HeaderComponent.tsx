@@ -37,10 +37,10 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
     <>
       <Fragment>
         <LinearGradient
-          start={{ x: 0.38, y: 0.5 }}
+          start={{ x: 0.2, y: 0.2 }}
           end={{ x: 0.5, y: 1.0 }}
           locations={[0, 1]}
-          colors={[color.PRIMARY_COLOR, color.BUTTON]}
+          colors={handleGoBack ? [color.BUTTON, color.GREEN] : [color.PRIMARY_COLOR, color.BUTTON]}
           style={{ flexDirection: "column", borderBottomLeftRadius: 50, borderBottomRightRadius: 50 }}>
           <View
             style={{
