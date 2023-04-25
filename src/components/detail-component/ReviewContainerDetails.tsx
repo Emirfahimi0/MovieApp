@@ -38,8 +38,8 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
           })}
         </Fragment>
       ) : (
-        <View style={{ ...container, marginHorizontal: 50 }}>
-          <Text style={{ ...genreText, color: color.SEMI_BLACK }}>no review...</Text>
+        <View style={{ ...container, marginHorizontal: 20, backgroundColor: color.TRANSPARENT }}>
+          <Text style={{ ...genreText, marginLeft: 16, paddingVertical: 16, fontSize: 16 }}>no review...</Text>
         </View>
       )}
     </View>

@@ -2,8 +2,8 @@ import { getAccountDetails, getTrendingmovie } from "../services/api-services";
 import { ScreenCardContainer } from "../components/movie-component/HomeScreenContainer";
 import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { TMovieType } from ".";
-import { handleMovieDetail } from "../components/features/handleFunctions";
+import { Genre, TMovieType } from ".";
+import { fetchGenreItem, handleMovieDetail } from "../components/features/handleFunctions";
 import Loader from "../components/features/Loader";
 import { Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -19,10 +19,18 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   const [searchText, setSearchText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const { handleTrendingMovies, filteredMovieState } = useContext(MovieContext);
-  const { genreState } = useContext(GlobalContext);
-  const { accountState } = useContext(GlobalContext);
+  const [genreState, setGenreState] = useState<Genre[]>([]);
+  //const { genreState } = useContext(GlobalContext);
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
   // AsyncStorage.clear();
+
+  const handleRenderedGenre = async (): Promise<void> => {
+    const responseGenre: Genre[] = await fetchGenreItem();
+    // set state for in context provider for Genre [];
+    if (responseGenre !== undefined) {
+      setGenreState(responseGenre);
+    }
+  };
 
   const handleGetMovies = async (): Promise<void> => {
     setLoading(true);
@@ -37,8 +45,16 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
     } else Alert.alert("Cannot fetch data from api");
   };
   useEffect(() => {
-    handleGetMovies().catch(console.error);
-  }, [accountState, genreState]);
+    if (genreState.length === 0) {
+      handleRenderedGenre();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (genreState.length > 0) {
+      handleGetMovies().catch(console.error);
+    }
+  }, [genreState]);
 
   const handleWatchList = async () => {
     const navigationGoBack = true;

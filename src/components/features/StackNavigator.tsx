@@ -4,28 +4,17 @@ import { RootStackParamList } from "../../../types/global";
 import DetailsMovieScreen from "../../screens/DetailsMovieScreen";
 import HomeScreen from "../../screens/HomeScreen";
 import LoginScreen from "../../screens/LoginScreen";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import WatchListScreen from "../../screens/WatchListScreen";
-import { GlobalContext } from "../../context/GlobalState";
-import { fetchGenreItem, handleLoginWithFaceId } from "./handleFunctions";
-import { Genre } from "src/services";
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export const StackNavigator = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
-  const { storeGenre } = useContext(GlobalContext);
   const handleIsUserLoggedIn = async () => {
-    const response = await handleLoginWithFaceId();
-    const responseGenre: Genre[] = await fetchGenreItem();
-    if (responseGenre !== undefined) {
-      storeGenre(responseGenre);
-      setIsLoggedIn(true);
-      console.log("loggedIn");
-    }
-    if (response === false) {
-    } else setIsLoggedIn(false);
+    setIsLoggedIn(true);
+    console.log("loggedIn");
   };
   useEffect(() => {
     handleIsUserLoggedIn();

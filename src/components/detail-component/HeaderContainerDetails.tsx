@@ -1,5 +1,5 @@
 import { Alert, Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { Dispatch, Fragment, SetStateAction, useContext, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useCallback, useContext, useState } from "react";
 import {
   CardContainer,
   ContainerRow,
@@ -9,6 +9,7 @@ import {
   setHeight,
   setWidth,
   smallDetail,
+  youtubePlayerView,
 } from "../../constants/style-component/viewComponent";
 import { additionalDetailText, genreText, MovieDetailTitle, RatingText } from "../../constants/style-component/textComponent";
 import { ButtonModalRating } from "./ButtonModalRating";
@@ -18,8 +19,8 @@ import { POSTER_BASE_URL } from "../../constants/utilities";
 import { setWatchlist } from "../../services/api-services";
 import Icon from "react-native-vector-icons/Ionicons";
 import color from "../../constants/Color";
-import YoutubeIframe from "react-native-youtube-iframe";
 import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
+import YoutubeIframe from "react-native-youtube-iframe";
 
 interface IHeaderContainerDetails {
   getUpdatedAccState: () => void;
@@ -67,30 +68,64 @@ export const HeaderContainerDetails = ({
     }
   };
 
-  const handleRenderTrailer = () => {
-    const trailer = selectedMovie?.videos.results.find((vid) => vid.name === "Official Trailer");
-    //console.log("trailer", trailer);
-    <View style={{ backgroundColor: "yellow", zIndex: -1, position: "absolute" }}>
-      <YoutubeIframe height={500} width={setWidth(500)} play={playTrailer} videoId={trailer?.key} />;
-    </View>;
-  };
+  const trailer = selectedMovie?.videos.results.find((vid) => vid.name === "Official Trailer");
+
+  const onStateChange = useCallback((state: string) => {
+    if (state === "ended") {
+      setPlayTrailer(false);
+      Alert.alert("video has finished playing!");
+    }
+  }, []);
+
+  const togglePlaying = useCallback(() => {
+    setPlayTrailer((prev) => !prev);
+  }, []);
   return (
     <Fragment>
-      <View style={{ position: "absolute", paddingHorizontal: "43%", zIndex: 1, top: 40, left: 30 }}>
+      <View style={{ position: "absolute", paddingHorizontal: "4%", zIndex: 1, top: 40, left: 30 }}>
         <TouchableOpacity onPress={onPress}>
           <Icon name="return-up-back-outline" size={30} color={color.HEART} />
         </TouchableOpacity>
       </View>
       <View style={headerContainerStyle}>
-        <View style={ImagePosterDetail}>
-          <Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}original/${selectedMovie?.poster_path}` }} />
-        </View>
+        <Fragment>
+          {selectedMovie?.videos && playTrailer ? (
+            <View style={{ justifyContent: "center", flexDirection: "column", alignContent: "space-between" }}>
+              <YoutubeIframe
+                webViewStyle={{ ...youtubePlayerView }}
+                height={200}
+                width={300}
+                play={playTrailer}
+                videoId={trailer?.key}
+                onChangeState={onStateChange}
+              />
+            </View>
+          ) : (
+            <View style={ImagePosterDetail}>
+              <Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}original/${selectedMovie?.poster_path}` }} />
+            </View>
+          )}
+        </Fragment>
         <View
           //Play button
-          {...(selectedMovie?.videos ? handleRenderTrailer : null)}
-          style={{ ...playButton }}>
-          <TouchableOpacity onPress={() => setPlayTrailer(playTrailer)}>
-            <Icon name="play-circle-outline" style={{ marginLeft: 5 }} size={100} color={color.AMBER} />
+          style={
+            !playTrailer
+              ? playButton
+              : {
+                  ...playButton,
+                  top: 40,
+                  right: 10,
+                  height: 40,
+                  width: 40,
+                  backgroundColor: color.TRANSPARENT,
+                }
+          }>
+          <TouchableOpacity onPress={togglePlaying}>
+            {playTrailer ? (
+              <Icon name="close-outline" style={{ marginLeft: 2 }} size={35} color={color.BLACK} />
+            ) : (
+              <Icon name="play-circle-outline" style={{ marginLeft: 5 }} size={100} color={color.AMBER} />
+            )}
           </TouchableOpacity>
         </View>
 
@@ -125,11 +160,11 @@ export const HeaderContainerDetails = ({
         <View style={{ ...smallDetail }}>
           <TouchableOpacity onPress={() => handleWatchList()}>
             <View
-              style={[
-                existWatchlist
+              style={{
+                ...(existWatchlist
                   ? { ...CardContainer, ...{ backgroundColor: "#2C2C2C", width: 150 } }
-                  : { ...CardContainer, ...{ width: 150 } },
-              ]}>
+                  : { ...CardContainer, ...{ width: 150 } }),
+              }}>
               <Icon
                 name={existWatchlist ? "bookmark" : "bookmark-outline"}
                 size={18}
@@ -162,9 +197,8 @@ export const headerContainerStyle: ViewStyle = {
   borderBottomRightRadius: 40,
   borderBottomLeftRadius: 40,
   backgroundColor: color.SECONDARY_COLOR,
-  paddingBottom: 20,
   paddingHorizontal: 10,
-  paddingTop: 80,
+  paddingVertical: 80,
   shadowOpacity: 1.0,
   shadowOffset: {
     height: 0,
@@ -172,15 +206,17 @@ export const headerContainerStyle: ViewStyle = {
   },
 };
 
+const youtubeContainer: ViewStyle = {};
+
 const playButton: ViewStyle = {
   flexDirection: "row",
   position: "absolute",
   alignSelf: "center",
-  bottom: "60%",
+  bottom: "80%",
   borderRadius: 50,
   backgroundColor: color.BLACK,
   borderColor: color.SECONDARY_COLOR,
   justifyContent: "center",
   alignItems: "center",
-  zIndex: 1,
+  zIndex: 0,
 };

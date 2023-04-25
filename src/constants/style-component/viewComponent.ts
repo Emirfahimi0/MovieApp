@@ -104,6 +104,7 @@ export const movieContainer:ViewStyle= {
 
     backgroundColor:color.BASIC_BACKGROUND,
     flex:1,
+    paddingBottom:30
   }
 export const  ImagePosterDetail:ViewStyle = {
 
@@ -111,15 +112,23 @@ export const  ImagePosterDetail:ViewStyle = {
   backgroundColor:color.SEMI_BLACK,
   borderRadius:60,
   justifyContent:"center",
-  elevation: 3,
-  width:setWidth(w-250),
+  elevation: 5,
+  width:setWidth(w-50),
 }
+
+// youtube webview style
+export const youtubePlayerView: ViewStyle = {
+  width:300,
+  flexDirection:"row",
+  alignContent:"center",
+  justifyContent:"center",
+};
 export const posterImage:ImageStyle = {
 
   height:ImagePosterDetail.height,
   padding:"50%",
   borderRadius:ImagePosterDetail.borderRadius,
-  resizeMode:"cover",
+  resizeMode:"stretch",
 width:ImagePosterDetail.width}
 
 export const HeaderDetail:ViewStyle = {

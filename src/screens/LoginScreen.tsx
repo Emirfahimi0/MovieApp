@@ -3,8 +3,7 @@ import { ButtonContainerRating, CardContainer, InputContainer, Logincontainer } 
 import { InputLogin, genreText, loginText } from "../constants/style-component/textComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
-import React, { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../context/GlobalState";
+import React, { useEffect, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
 import { fetchGenreItem, handleLoginWithFaceId } from "../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -14,7 +13,6 @@ import { Genre } from ".";
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
-  const { storeGenre } = useContext(GlobalContext);
 
   useEffect(() => {
     handleFaceID();
@@ -26,7 +24,7 @@ const LoginScreen = ({ navigation }) => {
     //By doing this, ensuring that the data value is always compared to a boolean value, which avoids the type error.
     // if (!!data) {
     //   console.log("user already logged In", data);
-    //   // navigation.navigate("HomeScreen");
+    // navigation.navigate("HomeScreen");
     // } else {
 
     const responseLoginFaceId: boolean = await handleLoginWithFaceId();
@@ -34,7 +32,6 @@ const LoginScreen = ({ navigation }) => {
     if (responseLoginFaceId === true) {
       const responseGenre: Genre[] = await fetchGenreItem();
       if (responseGenre !== undefined) {
-        storeGenre(responseGenre);
         AsyncStorage.setItem("userLoggedIn", JSON.stringify(true));
         navigation.navigate("HomeScreen");
       }

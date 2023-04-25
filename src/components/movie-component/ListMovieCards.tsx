@@ -23,7 +23,7 @@ export const ListMovieCards = ({ MovieData, keyword, handleMovieDetail }: IMovie
   let loading = false;
   const handleShowDetailScreen = async (id: number) => {
     const getDetailsFromApi = await handleMovieDetail(id);
-    console.log("object", getDetailsFromApi.detail);
+    console.log("details of selected movie", getDetailsFromApi.detail);
     if (getDetailsFromApi !== undefined) {
       loading = false;
       storeAllDetailsState(getDetailsFromApi.detail, getDetailsFromApi.review);

@@ -21,7 +21,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   const { MovieDetailsState, reviewState } = useContext(DetailContext);
   const selectedMovie: IMovieDetail | undefined = MovieDetailsState;
   const [accountState, setAccountState] = useState<IAccountState>();
-  const [ratingVal, setRatingVal] = useState<number>(0);
+  const [ratingVal, setRatingVal] = useState<number>(5);
   const [postRatingDisable, setPostRatingDisable] = useState<boolean | { value: number } | undefined>();
   const { watchlistState } = useContext(WatchlistContext);
 
@@ -60,7 +60,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   }, [watchlistState]);
 
   return (
-    <ScrollView style={{ flex: 1 }} nestedScrollEnabled={true}>
+    <ScrollView style={{ flex: 1 }} nestedScrollEnabled={true} bounces={false}>
       {accountState !== undefined ? (
         <>
           <HeaderContainerDetails

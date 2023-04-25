@@ -72,7 +72,7 @@ export const ButtonModalRating = ({
   return (
     <View style={ButtonContainerRating}>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={visible}
         onRequestClose={() => {
@@ -81,28 +81,30 @@ export const ButtonModalRating = ({
           setVisible(!visible);
         }}>
         <View style={centeredViewRating}>
-          <View style={modalViewRating}>
-            <Icon name="heart-sharp" size={20} color={color.GREEN} />
-            <Text style={subDetail}> Submit your Review..</Text>
-            <View style={RatingStarIcon}>
-              {review.map((item, index) => {
-                return (
-                  <TouchableOpacity disabled={disable ? false : true} key={index} onPress={() => HandleSetRating(item)}>
-                    {ratingVal < item ? (
-                      <Icon name="heart-outline" size={20} color="black" />
-                    ) : (
-                      <Icon name="heart-sharp" size={25} color="red" />
-                    )}
-                  </TouchableOpacity>
-                );
-              })}
+          <TouchableOpacity onPressOut={() => setVisible(false)} style={{ ...centeredViewRating }}>
+            <View style={modalViewRating}>
+              <Icon name="heart-sharp" size={20} color={color.GREEN} />
+              <Text style={subDetail}> Submit your Review..</Text>
+              <View style={RatingStarIcon}>
+                {review.map((item, index) => {
+                  return (
+                    <TouchableOpacity disabled={disable ? false : true} key={index} onPress={() => HandleSetRating(item)}>
+                      {ratingVal < item ? (
+                        <Icon name="heart-outline" size={20} color="black" />
+                      ) : (
+                        <Icon name="heart-sharp" size={25} color="red" />
+                      )}
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+              <TouchableOpacity
+                style={{ ...CardContainer, marginTop: 30, backgroundColor: disable ? color.ACTIVE : color.PRIMARY_COLOR }}
+                onPress={disable ? HandlePostRating : HandleDeleteRating}>
+                <Text style={{ ...RatingText, color: color.SECONDARY_COLOR }}>{disable ? "Post Rating" : "Delete Rating"}</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={{ ...CardContainer, marginTop: 30, backgroundColor: disable ? color.ACTIVE : color.PRIMARY_COLOR }}
-              onPress={disable ? HandlePostRating : HandleDeleteRating}>
-              <Text style={{ ...RatingText, color: color.SECONDARY_COLOR }}>{disable ? "Post Rating" : "Delete Rating"}</Text>
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         </View>
       </Modal>
       <TouchableOpacity onPress={openModal}>
@@ -116,9 +118,9 @@ export const ButtonModalRating = ({
 
 const centeredViewRating: ViewStyle = {
   flex: 1,
+  width: "100%",
   justifyContent: "center",
   alignItems: "center",
-  marginTop: 22,
 };
 const modalViewRating: ViewStyle = {
   margin: 20,

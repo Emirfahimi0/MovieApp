@@ -1,4 +1,4 @@
-import { Genre, TUser } from "../screens";
+import { TUser } from "../screens";
 import React, { createContext, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
 import { IAccountState } from "../services";
@@ -6,8 +6,6 @@ import { handleIsLogin } from "../components/features/handleFunctions";
 
 export interface IInitialState {
   accountState: IAccountState;
-  genreState: Genre[];
-  storeGenre: (genre: Genre[]) => Promise<void>;
   storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
   userState: TUser;
 }
@@ -30,8 +28,6 @@ const initialState: IInitialState = {
     rated: true,
     watchlist: true,
   },
-  genreState: [],
-  storeGenre: () => Promise.resolve(),
   storeUser: () => Promise.resolve(""),
   userState: {
     id: "",
@@ -73,22 +69,10 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
     return message;
   };
 
-  const storeGenre = async (responseGenre: Genre[]): Promise<void> => {
-    // set state for in context provider for Genre [];
-    if (responseGenre !== undefined) {
-      setState({ ...state, genreState: responseGenre });
-    }
-  };
-  // useEffect(() => {
-  //   storeGenre();
-  // }, []);
-
   return (
     <GlobalContext.Provider
       value={{
         accountState: state.accountState,
-        genreState: state.genreState,
-        storeGenre,
         storeUser,
         userState: state.userState,
       }}>
