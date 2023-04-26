@@ -1,4 +1,4 @@
-import { Alert, Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Alert, Image, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { Dispatch, Fragment, SetStateAction, useCallback, useContext, useState } from "react";
 import {
   CardContainer,
@@ -21,6 +21,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import color from "../../constants/Color";
 import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
 import YoutubeIframe from "react-native-youtube-iframe";
+import { ViewCard } from "../movie-component/ViewCard";
+import { ListCardButtons } from "../movie-component/CardButton";
 
 interface IHeaderContainerDetails {
   getUpdatedAccState: () => void;
@@ -46,6 +48,14 @@ export const HeaderContainerDetails = ({
   const [existWatchlist, setExistWatchlist] = useState<boolean>(state?.watchlist);
   const [playTrailer, setPlayTrailer] = useState<boolean>(false);
   const { getWatchlistData } = useContext(WatchlistContext);
+  const selectedText: TextStyle = {
+    fontSize: 8,
+    color: color.SECONDARY_COLOR,
+  };
+  const isSelected: ViewStyle = {
+    backgroundColor: color.AMBER,
+    width: 80,
+  };
 
   const handleWatchList = async () => {
     // Get the data first and complementary based on what user click
@@ -140,10 +150,10 @@ export const HeaderContainerDetails = ({
           </View>
         </View>
         <View style={smallDetail}>
-          <Text style={additionalDetailText}>Genre: </Text>
+          <Text style={{ ...additionalDetailText }}>Genre: </Text>
           {selectedMovie?.genres.map((value: Genre, index: number) => (
             <Text key={index} style={additionalDetailText}>
-              {" | "}
+              {" - "}
               {value.name}
             </Text>
           ))}
@@ -205,8 +215,6 @@ export const headerContainerStyle: ViewStyle = {
     width: -3,
   },
 };
-
-const youtubeContainer: ViewStyle = {};
 
 const playButton: ViewStyle = {
   flexDirection: "row",

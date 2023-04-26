@@ -34,7 +34,7 @@ export const CardContainer: ViewStyle = {
   backgroundColor: "#DFE0E0",
   borderRadius: 5,
   elevation: 3,
-  paddingEnd:9,
+  paddingEnd:8,
   justifyContent: "center",
   marginVertical: 2,
   paddingVertical: 8,
@@ -118,8 +118,9 @@ export const  ImagePosterDetail:ViewStyle = {
 
 // youtube webview style
 export const youtubePlayerView: ViewStyle = {
-  width:300,
-  flexDirection:"row",
+  width:"100%",
+  height:"100%",
+  padding:10,
   alignContent:"center",
   justifyContent:"center",
 };
@@ -152,7 +153,7 @@ export const noDataStyle: ViewStyle = {
 export const smallDetail : ViewStyle ={
   paddingHorizontal: 24,
   paddingTop: 16,
-  flexDirection:"row"
+  flexDirection:"row",
 }
 export const MovieDetailContainer:ViewStyle = {
 

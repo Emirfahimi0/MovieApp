@@ -3,17 +3,16 @@ import React, { FunctionComponent } from "react";
 import { CardContainer } from "../../constants/style-component/viewComponent";
 import { genreText } from "../../constants/style-component/textComponent";
 import { Genre } from "../../screens";
-import { IWatchProviders } from "src/services";
 
 // get dimension of current screen
 
 interface IGenreCardProps {
   genre: Genre;
-  isSelected: ViewStyle;
-  selectedText: TextStyle;
+  isSelected?: ViewStyle;
+  selectedText?: TextStyle;
 }
 
-export const GenreCard: FunctionComponent<IGenreCardProps> = ({ genre, isSelected, selectedText }: IGenreCardProps) => {
+export const ViewCard: FunctionComponent<IGenreCardProps> = ({ genre, isSelected, selectedText }: IGenreCardProps) => {
   return (
     <View style={{ ...CardContainer, ...isSelected }}>
       <Text style={{ ...genreText, ...selectedText }}>{genre.name}</Text>

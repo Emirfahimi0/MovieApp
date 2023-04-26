@@ -1,6 +1,6 @@
 import { FlatList, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { useContext, useState } from "react";
-import { GenreCard } from "./GenreCard";
+import { ViewCard } from "./ViewCard";
 import { ItemSeparator } from "./ItemSeparator";
 import { MovieContext } from "../../context/movie-context/MovieContext";
 import { Genre } from "../../services";
@@ -39,7 +39,7 @@ export const ListCardButtons = ({ data }: ICardButtons) => {
 
           return (
             <TouchableOpacity onPress={handleActive} key={index}>
-              <GenreCard genre={item} isSelected={selectedButton} selectedText={selectedText} />
+              <ViewCard genre={item} isSelected={selectedButton} selectedText={selectedText} />
             </TouchableOpacity>
           );
         }}

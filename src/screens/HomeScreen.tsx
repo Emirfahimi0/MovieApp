@@ -8,9 +8,9 @@ import Loader from "../components/features/Loader";
 import { Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
-import { IResponseAccount } from "src/services";
+import { IResponseAccount } from "../services";
 import { MovieContext } from "../context/movie-context/MovieContext";
-import { GlobalContext } from "../context/GlobalState";
+import DropDownList from "../components/movie-component/DropDownList";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -20,9 +20,13 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { handleTrendingMovies, filteredMovieState } = useContext(MovieContext);
   const [genreState, setGenreState] = useState<Genre[]>([]);
-  //const { genreState } = useContext(GlobalContext);
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
-  // AsyncStorage.clear();
+
+  const data: Array<{ label: string; value: string }> = [
+    { label: "Trending", value: "Trending" },
+    { label: "Get Latest", value: "Get latest" },
+    { label: "Get Popular", value: "Get Popular" },
+  ];
 
   const handleRenderedGenre = async (): Promise<void> => {
     const responseGenre: Genre[] = await fetchGenreItem();
@@ -75,6 +79,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             handleWatchList={handleWatchList}
             accountDetails={accountDetails}
           />
+          <DropDownList label={"select item"} data={data} />
           <ScreenCardContainer
             loading={loading}
             handleMovieDetail={handleMovieDetail}
