@@ -1,6 +1,6 @@
 import { CardContainer, SearchBar, setHeight, setWidth } from "../../constants/style-component/viewComponent";
 import { Image, Pressable, Text, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
-import { InputSearcbBar, genreText, subTitle } from "../../constants/style-component/textComponent";
+import { InputSearcbBar, normalText, subTitle } from "../../constants/style-component/textComponent";
 import { IResponseAccount } from "src/services";
 import { RootNavigationProp } from "types/global";
 import { subHeader } from "../../constants/style-component/textComponent";
@@ -61,7 +61,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
               }}>
               <View style={{ flexDirection: "column" }}>
                 <Text style={{ ...subTitle, color: color.SECONDARY_COLOR }}>{handleGoBack ? "" : "Welcome Back"}</Text>
-                <Text style={{ ...genreText, fontSize: 24, fontWeight: "900", color: color.SECONDARY_COLOR }}>
+                <Text style={{ ...normalText, fontSize: 24, fontWeight: "900", color: color.SECONDARY_COLOR }}>
                   {accountDetails?.name.toUpperCase()}
                 </Text>
               </View>

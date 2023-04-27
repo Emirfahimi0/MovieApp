@@ -3,9 +3,9 @@ import color from "../Color";
 import Font from "../Font";
 
 
-// --> Genre Card Text
+// --> normal Text
 
-export const genreText: TextStyle = {
+export const normalText: TextStyle = {
     fontSize: 12,
     fontFamily: Font.BOLD,
     color: color.BLACK,
@@ -14,7 +14,7 @@ export const genreText: TextStyle = {
   //Login text style
 
 export const loginText: TextStyle = {
-  ...genreText,
+  ...normalText,
   color: "white",
   fontSize: 16,
 };
@@ -56,6 +56,13 @@ export const subDetail : TextStyle = {
     fontSize: 12,
     color:color.BLACK
 
+}
+
+export const primaryTitle: TextStyle = {
+  fontFamily:Font.REGULAR,
+  fontSize:16,
+  alignItems:"center",
+  color:color.BLACK
 }
 
 export const MovieDetailTitle:TextStyle ={

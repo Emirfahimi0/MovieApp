@@ -64,7 +64,7 @@ export const ListMovieCards = ({ MovieData, keyword, handleMovieDetail }: IMovie
                     </View>
                     <View style={Rating}>
                       <Icon iconStyle={{ marginRight: 10 }} name="heart-sharp" size={12} color="red" />
-                      <Text style={subDetail}>{item.vote_average.toFixed(1)}</Text>
+                      <Text style={subDetail}> {item.vote_average.toFixed(1)}</Text>
                     </View>
                   </View>
                 </View>

@@ -9,6 +9,7 @@ import Loader from "../components/features/Loader";
 import React, { useState, Fragment, useEffect, useContext } from "react";
 import { subHeader } from "../constants/style-component/textComponent";
 import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
+import WatchListCard from "../components/movie-component/WatchListCard";
 interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {
   navGoBack: boolean;
 }
@@ -47,9 +48,10 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
 
         <View style={{ ...homeCardContainer }}>
           {watchlistState.length > 0 ? (
-            <ScrollView scrollEnabled={true} horizontal={true} style={{ paddingTop: 30 }}>
-              <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} />
-            </ScrollView>
+            <Fragment>
+              <WatchListCard handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} />
+              {/* <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} /> */}
+            </Fragment>
           ) : !loading ? (
             <Loader />
           ) : (

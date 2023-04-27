@@ -1,6 +1,6 @@
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { ButtonContainerRating, CardContainer, InputContainer, Logincontainer } from "../constants/style-component/viewComponent";
-import { InputLogin, genreText, loginText } from "../constants/style-component/textComponent";
+import { InputLogin, normalText, loginText } from "../constants/style-component/textComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { useEffect, useState } from "react";
@@ -63,8 +63,8 @@ const LoginScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: color.BUTTON }}>
       <View style={Logincontainer}>
         <View style={{ alignItems: "center" }}>
-          <Text style={{ ...genreText, color: color.SECONDARY_COLOR }}>WELCOME!</Text>
-          <Text style={{ ...genreText, color: color.SECONDARY_COLOR }}>BACK!</Text>
+          <Text style={{ ...normalText, color: color.SECONDARY_COLOR }}>WELCOME!</Text>
+          <Text style={{ ...normalText, color: color.SECONDARY_COLOR }}>BACK!</Text>
         </View>
 
         <View style={InputContainer}>
@@ -104,19 +104,19 @@ const LoginScreen = ({ navigation }) => {
           <TouchableOpacity onPress={() => AsyncStorage.clear()}>
             <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
               <Icon name="md-logo-instagram" size={20} color="purple" />
-              <Text style={{ ...genreText, marginLeft: 5 }}>Instagram</Text>
+              <Text style={{ ...normalText, marginLeft: 5 }}>Instagram</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
               <Icon name="md-logo-twitter" size={20} color="#1DBAFA" />
-              <Text style={{ ...genreText, marginLeft: 5 }}>Twitter</Text>
+              <Text style={{ ...normalText, marginLeft: 5 }}>Twitter</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
               <Icon name="md-logo-facebook" size={20} color="blue" />
-              <Text style={{ ...genreText, marginLeft: 5 }}>Facebook</Text>
+              <Text style={{ ...normalText, marginLeft: 5 }}>Facebook</Text>
             </View>
           </TouchableOpacity>
         </View>

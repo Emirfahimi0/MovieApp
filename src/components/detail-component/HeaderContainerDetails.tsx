@@ -11,7 +11,7 @@ import {
   smallDetail,
   youtubePlayerView,
 } from "../../constants/style-component/viewComponent";
-import { additionalDetailText, genreText, MovieDetailTitle, RatingText } from "../../constants/style-component/textComponent";
+import { additionalDetailText, normalText, MovieDetailTitle, RatingText } from "../../constants/style-component/textComponent";
 import { ButtonModalRating } from "./ButtonModalRating";
 import { Genre, IMovieDetail, IAccountState, IWatchListResponse } from "../../services";
 import { ItemSeparator } from "../movie-component/ItemSeparator";
@@ -134,7 +134,7 @@ export const HeaderContainerDetails = ({
             {playTrailer ? (
               <Icon name="close-outline" style={{ marginLeft: 2 }} size={35} color={color.BLACK} />
             ) : (
-              <Icon name="play-circle-outline" style={{ marginLeft: 5 }} size={100} color={color.AMBER} />
+              <Icon name="play-outline" style={{ marginLeft: 5 }} size={50} color={color.AMBER} />
             )}
           </TouchableOpacity>
         </View>
@@ -180,7 +180,7 @@ export const HeaderContainerDetails = ({
                 size={18}
                 color={existWatchlist ? color.EXTRA_LIGHT_GRAY : color.BLACK}
               />
-              <Text style={existWatchlist ? { ...genreText, color: color.SECONDARY_COLOR } : genreText}>
+              <Text style={existWatchlist ? { ...normalText, color: color.SECONDARY_COLOR } : normalText}>
                 {existWatchlist ? "Added in Watchlist" : "Add to Watchlist"}
               </Text>
             </View>
@@ -222,9 +222,9 @@ const playButton: ViewStyle = {
   alignSelf: "center",
   bottom: "80%",
   borderRadius: 50,
-  backgroundColor: color.BLACK,
+  backgroundColor: color.TRANSPARENT,
   borderColor: color.SECONDARY_COLOR,
   justifyContent: "center",
   alignItems: "center",
-  zIndex: 0,
+  zIndex: 1,
 };

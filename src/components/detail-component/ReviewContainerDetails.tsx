@@ -1,6 +1,6 @@
 import { IResultReview } from "../../services";
 import { container, setWidth } from "../../constants/style-component/viewComponent";
-import { OverviewDetailsText, genreText, subHeader } from "../../constants/style-component/textComponent";
+import { OverviewDetailsText, normalText, subHeader } from "../../constants/style-component/textComponent";
 import { ScrollView, Text, View } from "react-native";
 import color from "../../constants/Color";
 import React, { Fragment, useState } from "react";
@@ -28,7 +28,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
                   <Text style={{ ...subHeader, color: color.BLACK }}>{item.author}</Text>
                   <Text style={{ ...OverviewDetailsText, color: color.SECONDARY_COLOR }}>{showText}</Text>
                   <Text
-                    style={{ ...genreText, textAlign: "right", color: color.SECONDARY_COLOR, fontWeight: "800" }}
+                    style={{ ...normalText, textAlign: "right", color: color.SECONDARY_COLOR, fontWeight: "800" }}
                     onPress={handleShowMore}>
                     {showMore ? "Show more" : "Show less"}
                   </Text>
@@ -39,7 +39,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
         </Fragment>
       ) : (
         <View style={{ ...container, marginHorizontal: 20, backgroundColor: color.TRANSPARENT }}>
-          <Text style={{ ...genreText, marginLeft: 16, paddingVertical: 16, fontSize: 16 }}>no review...</Text>
+          <Text style={{ ...normalText, marginLeft: 16, paddingVertical: 16, fontSize: 16 }}>no review...</Text>
         </View>
       )}
     </View>

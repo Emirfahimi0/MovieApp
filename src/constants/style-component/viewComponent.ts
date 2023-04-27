@@ -85,6 +85,7 @@ export const movieContainer:ViewStyle= {
 
  export const ListPreviewMovie:ViewStyle = {
     flexDirection: "column",
+    justifyContent:"center",
     margin: 4,
     paddingHorizontal:24,
     paddingTop: 8,
@@ -112,8 +113,9 @@ export const  ImagePosterDetail:ViewStyle = {
   backgroundColor:color.SEMI_BLACK,
   borderRadius:60,
   justifyContent:"center",
-  elevation: 5,
-  width:setWidth(w-50),
+  elevation: 8,
+  height:setHeight(50),
+  width:setWidth(80),
 }
 
 // youtube webview style

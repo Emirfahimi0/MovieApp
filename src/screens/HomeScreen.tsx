@@ -10,7 +10,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
 import { IResponseAccount } from "../services";
 import { MovieContext } from "../context/movie-context/MovieContext";
-import DropDownList from "../components/movie-component/DropDownList";
+import CustomDropDown from "../components/movie-component/CustomDropDown";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -79,7 +79,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             handleWatchList={handleWatchList}
             accountDetails={accountDetails}
           />
-          <DropDownList label={"select item"} data={data} />
+          <CustomDropDown movieType={data} />
           <ScreenCardContainer
             loading={loading}
             handleMovieDetail={handleMovieDetail}

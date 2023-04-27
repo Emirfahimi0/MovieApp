@@ -4,7 +4,7 @@ import { ItemSeparator } from "../movie-component/ItemSeparator";
 import { setHeight, setWidth } from "../../constants/style-component/viewComponent";
 import Color from "../../constants/Color";
 import { POSTER_BASE_URL } from "../../constants/utilities";
-import { genreText } from "../../constants/style-component/textComponent";
+import { normalText } from "../../constants/style-component/textComponent";
 import { IMovieDetail } from "../../services";
 
 const ProviderCardList = ({ selectedProviderMovie }) => {
@@ -30,7 +30,7 @@ const ProviderCardList = ({ selectedProviderMovie }) => {
           return (
             <TouchableOpacity onPress={handleActive} key={index}>
               <View style={providerView}>
-                <Text style={{ ...genreText, paddingBottom: 12 }}>{item.provider_name}</Text>
+                <Text style={{ ...normalText, paddingBottom: 12 }}>{item.provider_name}</Text>
                 <Image source={{ uri: `${POSTER_BASE_URL}original/${item.logo_path}` }} style={providerLogo}></Image>
               </View>
             </TouchableOpacity>

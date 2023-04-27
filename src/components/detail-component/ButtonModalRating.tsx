@@ -3,7 +3,7 @@ import { ButtonContainerRating, CardContainer } from "../../constants/style-comp
 import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
 import { IRating, IMovieDetail } from "../../services";
 import { TMovieType } from "../../screens";
-import { RatingText, genreText, subDetail } from "../../constants/style-component/textComponent";
+import { RatingText, normalText, subDetail } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { Dispatch, SetStateAction, useState } from "react";
@@ -109,7 +109,7 @@ export const ButtonModalRating = ({
       </Modal>
       <TouchableOpacity onPress={openModal}>
         <View style={{ ...CardContainer, backgroundColor: color.ACTIVE, width: 150 }}>
-          <Text style={{ ...genreText, color: color.SECONDARY_COLOR }}>{disable ? "Post Rating" : "Review Rating"}</Text>
+          <Text style={{ ...normalText, color: color.SECONDARY_COLOR }}>{disable ? "Post Rating" : "Review Rating"}</Text>
         </View>
       </TouchableOpacity>
     </View>

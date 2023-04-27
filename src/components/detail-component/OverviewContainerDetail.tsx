@@ -1,6 +1,6 @@
 import { ScrollView, Text, View } from "react-native";
 import React, { useState } from "react";
-import { genreText, OverviewDetailsText, subHeader } from "../../constants/style-component/textComponent";
+import { normalText, OverviewDetailsText, subHeader } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
 
 export const SubContainerDetail = ({ overviewDetails, overViewStyle }) => {
@@ -16,7 +16,7 @@ export const SubContainerDetail = ({ overviewDetails, overViewStyle }) => {
           <Text style={{ ...OverviewDetailsText, color: color.SECONDARY_COLOR }}>
             {showMore ? overviewDetails.split(" ").slice(0, 20).join(" ") : overviewDetails}
           </Text>
-          <Text style={{ ...genreText, textAlign: "right", color: color.SECONDARY_COLOR, fontWeight: "600" }} onPress={handleShowMore}>
+          <Text style={{ ...normalText, textAlign: "right", color: color.SECONDARY_COLOR, fontWeight: "600" }} onPress={handleShowMore}>
             {showMore ? "Show more" : "Show less"}
           </Text>
         </View>
