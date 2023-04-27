@@ -7,7 +7,6 @@ import {
   MovieDetailContainer,
   posterImage,
   setHeight,
-  setWidth,
   smallDetail,
   youtubePlayerView,
 } from "../../constants/style-component/viewComponent";
@@ -21,8 +20,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import color from "../../constants/Color";
 import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
 import YoutubeIframe from "react-native-youtube-iframe";
-import { ViewCard } from "../movie-component/ViewCard";
-import { ListCardButtons } from "../movie-component/CardButton";
+import Font from "../../constants/Font";
 
 interface IHeaderContainerDetails {
   getUpdatedAccState: () => void;
@@ -48,14 +46,6 @@ export const HeaderContainerDetails = ({
   const [existWatchlist, setExistWatchlist] = useState<boolean>(state?.watchlist);
   const [playTrailer, setPlayTrailer] = useState<boolean>(false);
   const { getWatchlistData } = useContext(WatchlistContext);
-  const selectedText: TextStyle = {
-    fontSize: 8,
-    color: color.SECONDARY_COLOR,
-  };
-  const isSelected: ViewStyle = {
-    backgroundColor: color.AMBER,
-    width: 80,
-  };
 
   const handleWatchList = async () => {
     // Get the data first and complementary based on what user click
@@ -149,13 +139,23 @@ export const HeaderContainerDetails = ({
             <Text style={RatingText}>{selectedMovie?.vote_average.toFixed(1)}</Text>
           </View>
         </View>
-        <View style={smallDetail}>
-          <Text style={{ ...additionalDetailText }}>Genre: </Text>
+        <View style={{ ...smallDetail, flexWrap: "wrap" }}>
+          {/* <Text style={{ ...additionalDetailText }}>Genre: </Text> */}
           {selectedMovie?.genres.map((value: Genre, index: number) => (
-            <Text key={index} style={additionalDetailText}>
-              {" - "}
-              {value.name}
-            </Text>
+            <View
+              key={index}
+              style={{
+                width: 70,
+                backgroundColor: color.GREEN,
+                paddingVertical: 6,
+                borderRadius: 10,
+                margin: 4,
+                alignItems: "center",
+              }}>
+              <Text key={index} style={{ fontFamily: Font.BOLD, fontWeight: "900", fontSize: 8, color: color.SECONDARY_COLOR }}>
+                {value.name}
+              </Text>
+            </View>
           ))}
         </View>
         <View style={smallDetail}>

@@ -1,5 +1,5 @@
 import { FlatList, ImageBackground, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { useContext } from "react";
+import React, { Fragment, useContext } from "react";
 import { IDetailsMovie, TMovieType } from "../../screens";
 import { ItemSeparator } from "./ItemSeparator";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -32,7 +32,7 @@ const WatchListCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProp
   };
   const posterUrl = `${POSTER_BASE_URL}original/`;
   return (
-    <View>
+    <View style={{ padding: 10 }}>
       <FlatList
         data={MovieData}
         showsVerticalScrollIndicator={false}
@@ -43,33 +43,22 @@ const WatchListCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProp
         renderItem={({ item, index }) => (
           <TouchableOpacity key={`${item.title}-${index}`} onPress={() => handleShowDetailScreen(item.id)}>
             {item.title?.toLowerCase().includes(keyword.toLowerCase()) ? (
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginStart: 20,
-                  top: 20,
-                  backgroundColor: color.PURPLE,
-                  width: "90%",
-                  borderRadius: 50,
-                  justifyContent: "center",
-                }}>
+              <Fragment>
                 {/* <LinearGradient start={{ x: 0.2, y: 0.2 }} end={{ x: 0.5, y: 1.0 }} locations={[0, 1]} colors={["#FFFFFF", "#00FFFFFF"]}> */}
                 <ImageBackground
                   source={{ uri: `${posterUrl}${POSTER_BASE_URL}original/${item.backdrop_path}` }}
-                  style={{ height: 200, width: "100%" }}
-                  imageStyle={{ borderRadius: 50 }}
-                  resizeMode="cover">
+                  style={{ height: 200, width: "100%", justifyContent: "center" }}
+                  imageStyle={{ borderRadius: 50 }}>
                   <View
                     style={{
                       flexDirection: "column",
                       marginTop: "auto",
-                      width: "50%",
-                      marginLeft: 20,
-                      marginRight: 20,
+                      width: "100%",
+                      borderBottomLeftRadius: 50,
+                      borderBottomRightRadius: 50,
                       backgroundColor: "rgba(0,0,0,0.5)",
                       alignSelf: "center",
                       alignContent: "center",
-                      paddingHorizontal: 8,
                     }}>
                     <View style={{ ...MovieCardTitle }}>
                       <Text style={{ ...subHeader, color: color.SECONDARY_COLOR }}>{item.title}</Text>
@@ -86,7 +75,7 @@ const WatchListCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProp
                   </View>
                 </ImageBackground>
                 {/* </LinearGradient> */}
-              </View>
+              </Fragment>
             ) : null}
           </TouchableOpacity>
         )}
