@@ -110,7 +110,6 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
 };
 
 const styleView: ViewStyle = {
-  justifyContent: "center",
   alignItems: "center",
   alignContent: "center",
   position: "relative",
@@ -125,7 +124,7 @@ const rowView: ViewStyle = {
   alignItems: "center",
 };
 
-const headerCard: ViewStyle = {
+export const headerCard: ViewStyle = {
   flexDirection: "column",
   marginTop: setHeight(640 / 100),
   marginBottom: setWidth(640 / 100),

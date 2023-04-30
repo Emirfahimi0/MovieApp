@@ -18,14 +18,14 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   // always use set function
   const [searchText, setSearchText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const { handleTrendingMovies, filteredMovieState } = useContext(MovieContext);
+  const { handleTrendingMovies, filteredMovieState, movieState } = useContext(MovieContext);
   const [genreState, setGenreState] = useState<Genre[]>([]);
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
 
   const data: Array<{ label: string; value: string }> = [
     { label: "Trending", value: "Trending" },
-    { label: "Get Latest", value: "Get latest" },
-    { label: "Get Popular", value: "Get Popular" },
+    { label: "Get Latest", value: "latest" },
+    { label: "Get Popular", value: "popular" },
   ];
 
   const handleRenderedGenre = async (): Promise<void> => {

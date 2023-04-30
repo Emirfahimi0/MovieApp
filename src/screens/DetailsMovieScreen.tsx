@@ -11,7 +11,6 @@ import Loader from "../components/features/Loader";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
 import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
-import ProviderCardList from "../components/detail-component/ProviderCardList";
 import color from "../constants/Color";
 import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
 

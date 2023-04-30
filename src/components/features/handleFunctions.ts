@@ -27,6 +27,10 @@ export const fetchMovieDetails = async (id: number) => {
     // set state for in context provider for Genre []
     return responseGenre;
   };
+  export const fetchMovieType =async (params:string) => {
+    
+    
+  }
 
   // Functions use in HomeScreen and WatchlistScreen
  export const  handleMovieDetail = async (id: number ):Promise<IDetailsMovie> => {

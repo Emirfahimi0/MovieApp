@@ -1,15 +1,17 @@
 import { handleMovieDetail } from "../components/features/handleFunctions";
-import { HeaderComponent } from "../components/movie-component/HeaderComponent";
+import Icon from "react-native-vector-icons/Ionicons";
 import { homeCardContainer, noDataStyle } from "../constants/style-component/viewComponent";
-import { ListMovieCards } from "../components/movie-component/ListMovieCards";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
-import { ScrollView, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, Text, TouchableWithoutFeedback, View } from "react-native";
 import Loader from "../components/features/Loader";
 import React, { useState, Fragment, useEffect, useContext } from "react";
 import { subHeader } from "../constants/style-component/textComponent";
 import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
 import WatchListCard from "../components/movie-component/WatchListCard";
+import color from "../constants/Color";
+import { headerContainerStyle } from "../components/detail-component/HeaderContainerDetails";
+import Font from "../constants/Font";
 interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {
   navGoBack: boolean;
 }
@@ -43,28 +45,36 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
 
   return (
     <Fragment>
-      <View style={{ flex: 1 }}>
-        <HeaderComponent searchText={input} setSearchText={setInput} accountDetails={accountDetails} handleGoBack={handleGoBack} />
-
-        <View style={{ ...homeCardContainer }}>
-          {watchlistState.length > 0 ? (
-            <Fragment>
-              <WatchListCard handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} />
-              {/* <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} /> */}
-            </Fragment>
-          ) : !loading ? (
-            <Loader />
-          ) : (
-            <View
-              style={{
-                ...noDataStyle,
-                justifyContent: "center",
-                alignItems: "flex-start",
-              }}>
-              <Text style={{ ...subHeader }}>No Watchlist added yet</Text>
-            </View>
-          )}
-        </View>
+      <View
+        style={{
+          ...headerContainerStyle,
+          backgroundColor: color.SEMI_BLACK,
+          height: "auto",
+          justifyContent: "space-between",
+          flexDirection: "row",
+        }}>
+        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+          <Icon name="md-chevron-back" size={32} color={"white"} />
+        </TouchableWithoutFeedback>
+        <Text style={{ fontFamily: Font.BOLD, fontSize: 24, color: color.SECONDARY_COLOR }}>WATCHLIST</Text>
+      </View>
+      <View style={{ ...homeCardContainer, borderRadius: 50 }}>
+        {watchlistState.length > 0 ? (
+          <Fragment>
+            <WatchListCard handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} />
+          </Fragment>
+        ) : !loading ? (
+          <Loader />
+        ) : (
+          <View
+            style={{
+              ...noDataStyle,
+              justifyContent: "center",
+              alignItems: "flex-start",
+            }}>
+            <Text style={{ ...subHeader }}>No Watchlist added yet</Text>
+          </View>
+        )}
       </View>
     </Fragment>
   );

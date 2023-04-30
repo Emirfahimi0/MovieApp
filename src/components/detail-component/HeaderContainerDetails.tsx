@@ -1,4 +1,4 @@
-import { Alert, Image, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Alert, Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { Dispatch, Fragment, SetStateAction, useCallback, useContext, useState } from "react";
 import {
   CardContainer,
@@ -139,20 +139,27 @@ export const HeaderContainerDetails = ({
             <Text style={RatingText}>{selectedMovie?.vote_average.toFixed(1)}</Text>
           </View>
         </View>
-        <View style={{ ...smallDetail, flexWrap: "wrap" }}>
+        <View
+          style={{
+            ...smallDetail,
+            flexDirection: "row",
+            flexGrow: 1,
+            flexWrap: "wrap",
+          }}>
           {/* <Text style={{ ...additionalDetailText }}>Genre: </Text> */}
           {selectedMovie?.genres.map((value: Genre, index: number) => (
             <View
               key={index}
               style={{
-                width: 70,
-                backgroundColor: color.GREEN,
+                width: 100,
+                alignSelf: "auto",
+                backgroundColor: color.PRIMARY_COLOR,
                 paddingVertical: 6,
-                borderRadius: 10,
+                borderRadius: 5,
                 margin: 4,
                 alignItems: "center",
               }}>
-              <Text key={index} style={{ fontFamily: Font.BOLD, fontWeight: "900", fontSize: 8, color: color.SECONDARY_COLOR }}>
+              <Text key={index} style={{ fontFamily: Font.BOLD, fontWeight: "500", fontSize: 12, color: color.SECONDARY_COLOR }}>
                 {value.name}
               </Text>
             </View>

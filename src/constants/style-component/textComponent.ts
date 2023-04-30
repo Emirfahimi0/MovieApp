@@ -77,9 +77,9 @@ export const additionalDetailText:TextStyle ={
     fontSize: 12,
 }
 export const OverviewDetailsText:TextStyle ={
-  fontFamily:Font.SEMI_BOLD,
-  fontWeight:"500",
-  fontSize: 16,
+  fontFamily:Font.REGULAR,
+  fontWeight:"400",
+  fontSize: 14,
   textAlign:"justify",
 }
 

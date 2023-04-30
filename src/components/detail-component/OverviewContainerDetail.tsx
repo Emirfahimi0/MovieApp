@@ -9,10 +9,12 @@ export const SubContainerDetail = ({ overviewDetails, overViewStyle }) => {
     setShowmore(!showMore);
   };
   return (
-    <View style={{ padding: 20 }}>
-      <Text style={{ ...subHeader, fontSize: 16, marginLeft: 12, color: color.HEART, paddingVertical: 16 }}>Overview</Text>
-      <ScrollView>
-        <View style={overViewStyle}>
+    <>
+      <View style={{ margin: 16 }}>
+        <View style={{ ...overViewStyle, borderRadius: 10, backgroundColor: color.LIGHT_GRAY }}>
+          <View style={{ paddingVertical: 5 }}>
+            <Text style={{ ...subHeader, fontSize: 16, marginLeft: 12, color: color.BLACK }}>Overview</Text>
+          </View>
           <Text style={{ ...OverviewDetailsText, color: color.SECONDARY_COLOR }}>
             {showMore ? overviewDetails.split(" ").slice(0, 20).join(" ") : overviewDetails}
           </Text>
@@ -20,7 +22,7 @@ export const SubContainerDetail = ({ overviewDetails, overViewStyle }) => {
             {showMore ? "Show more" : "Show less"}
           </Text>
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </>
   );
 };

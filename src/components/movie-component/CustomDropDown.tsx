@@ -4,6 +4,7 @@ import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { normalText, primaryTitle } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
+import { getMovieType } from "../../services/api-services";
 
 interface ICustomDropDown {
   movieType: Array<{ label: string; value: string }>;
@@ -23,6 +24,13 @@ const CustomDropDown = ({ movieType }: ICustomDropDown) => {
       setData(tempData);
     } else {
       setData(movieType);
+    }
+  };
+
+  const handleMovieType = async (selected: string) => {
+    const selectedType = await getMovieType(selected);
+    if (selectedType !== undefined) {
+      console.log("Selecte movie", selectedMovieType);
     }
   };
   return (
@@ -97,9 +105,11 @@ const CustomDropDown = ({ movieType }: ICustomDropDown) => {
                   }}
                   onPress={() => {
                     setSelectedMovieType(item.label);
+                    handleMovieType(item.value);
                     setClicked(!clicked);
                     onSearch("");
                     setSearch("");
+                    console.log(index);
                     //to do
                   }}>
                   <Text style={normalText}>{item.label}</Text>

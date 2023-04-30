@@ -7,7 +7,6 @@ import { DetailContext } from "../../context/detail-context/DetailContext";
 import { useNavigation } from "@react-navigation/native";
 import { RootNavigationProp } from "types/global";
 import { POSTER_BASE_URL } from "../../constants/utilities";
-import LinearGradient from "react-native-linear-gradient";
 import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
 
@@ -32,7 +31,7 @@ const WatchListCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProp
   };
   const posterUrl = `${POSTER_BASE_URL}original/`;
   return (
-    <View style={{ padding: 10 }}>
+    <View style={{ padding: 16, shadowColor: color.SEMI_BLACK, shadowOpacity: 1.5, shadowOffset: { width: 0, height: 4 } }}>
       <FlatList
         data={MovieData}
         showsVerticalScrollIndicator={false}
@@ -48,20 +47,22 @@ const WatchListCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProp
                 <ImageBackground
                   source={{ uri: `${posterUrl}${POSTER_BASE_URL}original/${item.backdrop_path}` }}
                   style={{ height: 200, width: "100%", justifyContent: "center" }}
-                  imageStyle={{ borderRadius: 50 }}>
+                  imageStyle={{ borderRadius: 30 }}>
                   <View
                     style={{
                       flexDirection: "column",
                       marginTop: "auto",
                       width: "100%",
-                      borderBottomLeftRadius: 50,
-                      borderBottomRightRadius: 50,
+                      padding: 24,
+                      borderBottomLeftRadius: 30,
+                      borderBottomRightRadius: 30,
                       backgroundColor: "rgba(0,0,0,0.5)",
                       alignSelf: "center",
-                      alignContent: "center",
                     }}>
                     <View style={{ ...MovieCardTitle }}>
-                      <Text style={{ ...subHeader, color: color.SECONDARY_COLOR }}>{item.title}</Text>
+                      <Text numberOfLines={2} style={{ ...subHeader, color: color.SECONDARY_COLOR }}>
+                        {item.title}
+                      </Text>
                     </View>
                     <View style={subContainer}>
                       <View>
