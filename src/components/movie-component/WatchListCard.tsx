@@ -43,22 +43,11 @@ const WatchListCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProp
           <TouchableOpacity key={`${item.title}-${index}`} onPress={() => handleShowDetailScreen(item.id)}>
             {item.title?.toLowerCase().includes(keyword.toLowerCase()) ? (
               <Fragment>
-                {/* <LinearGradient start={{ x: 0.2, y: 0.2 }} end={{ x: 0.5, y: 1.0 }} locations={[0, 1]} colors={["#FFFFFF", "#00FFFFFF"]}> */}
                 <ImageBackground
                   source={{ uri: `${posterUrl}${POSTER_BASE_URL}original/${item.backdrop_path}` }}
                   style={{ height: 200, width: "100%", justifyContent: "center" }}
                   imageStyle={{ borderRadius: 30 }}>
-                  <View
-                    style={{
-                      flexDirection: "column",
-                      marginTop: "auto",
-                      width: "100%",
-                      padding: 24,
-                      borderBottomLeftRadius: 30,
-                      borderBottomRightRadius: 30,
-                      backgroundColor: "rgba(0,0,0,0.5)",
-                      alignSelf: "center",
-                    }}>
+                  <View style={{ ...overlay }}>
                     <View style={{ ...MovieCardTitle }}>
                       <Text numberOfLines={2} style={{ ...subHeader, color: color.SECONDARY_COLOR }}>
                         {item.title}
@@ -75,7 +64,6 @@ const WatchListCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProp
                     </View>
                   </View>
                 </ImageBackground>
-                {/* </LinearGradient> */}
               </Fragment>
             ) : null}
           </TouchableOpacity>
@@ -91,6 +79,16 @@ const subContainer: ViewStyle = {
   justifyContent: "space-between",
 };
 
+const overlay: ViewStyle = {
+  flexDirection: "column",
+  marginTop: "auto",
+  width: "100%",
+  padding: 24,
+  borderBottomLeftRadius: 30,
+  borderBottomRightRadius: 30,
+  backgroundColor: "rgba(0,0,0,0.5)",
+  alignSelf: "center",
+};
 const MovieCardTitle: ViewStyle = {
   marginTop: 5,
   alignItems: "center",

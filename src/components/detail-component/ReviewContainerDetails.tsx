@@ -25,7 +25,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
             return (
               <View style={{ padding: 10, width: setWidth(100) }} key={`${item.author}-${index}`}>
                 <ScrollView contentContainerStyle={{ ...overViewStyle, backgroundColor: color.PRIMARY_COLOR }}>
-                  <Text style={{ ...subHeader, color: color.BLACK }}>{item.author}</Text>
+                  <Text style={{ ...subHeader, color: color.GREEN }}>{item.author}</Text>
                   <Text style={{ ...OverviewDetailsText, color: color.SECONDARY_COLOR }}>{showText}</Text>
                   <Text
                     style={{ ...normalText, textAlign: "right", color: color.SECONDARY_COLOR, fontWeight: "800" }}

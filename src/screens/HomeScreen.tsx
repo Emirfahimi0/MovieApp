@@ -62,7 +62,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
 
   const handleWatchList = async () => {
     const navigationGoBack = true;
-    navigation.navigate("WatchlistScreen", { accountDetails: accountDetails, navGoBack: navigationGoBack });
+    navigation.navigate("WatchlistScreen", { navGoBack: navigationGoBack });
   };
 
   return (

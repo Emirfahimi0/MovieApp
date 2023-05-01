@@ -3,7 +3,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { homeCardContainer, noDataStyle } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types/global";
-import { SafeAreaView, ScrollView, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Text, TouchableWithoutFeedback, View } from "react-native";
 import Loader from "../components/features/Loader";
 import React, { useState, Fragment, useEffect, useContext } from "react";
 import { subHeader } from "../constants/style-component/textComponent";
@@ -12,18 +12,15 @@ import WatchListCard from "../components/movie-component/WatchListCard";
 import color from "../constants/Color";
 import { headerContainerStyle } from "../components/detail-component/HeaderContainerDetails";
 import Font from "../constants/Font";
-interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {
-  navGoBack: boolean;
-}
+interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {}
 
-const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps) => {
+const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
   //Access watchlist movie with context
-  const { accountDetails } = route.params;
   const [input, setInput] = useState<string>("");
   const { getWatchlistData, watchlistState } = useContext(WatchlistContext);
   const [loading, setLoading] = useState<boolean>();
   const handleGoBack = () => {
-    if (navGoBack) {
+    if (route.params.navGoBack) {
       navigation.goBack();
       // navigation.reset({
       //   index: 0,
@@ -50,14 +47,24 @@ const WatchlistScreen = ({ navigation, route, navGoBack }: IWatchlistScreenProps
           ...headerContainerStyle,
           backgroundColor: color.SEMI_BLACK,
           height: "auto",
-          justifyContent: "space-between",
           flexDirection: "row",
+          justifyContent: "center",
         }}>
-        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+        <TouchableWithoutFeedback onPress={handleGoBack}>
           <Icon name="md-chevron-back" size={32} color={"white"} />
         </TouchableWithoutFeedback>
-        <Text style={{ fontFamily: Font.BOLD, fontSize: 24, color: color.SECONDARY_COLOR }}>WATCHLIST</Text>
+        <View style={{ justifyContent: "flex-end" }}>
+          <Text
+            style={{
+              fontFamily: Font.BOLD,
+              fontSize: 24,
+              color: color.SECONDARY_COLOR,
+            }}>
+            WATCHLIST
+          </Text>
+        </View>
       </View>
+
       <View style={{ ...homeCardContainer, borderRadius: 50 }}>
         {watchlistState.length > 0 ? (
           <Fragment>

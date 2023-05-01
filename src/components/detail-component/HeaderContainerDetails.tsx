@@ -146,20 +146,16 @@ export const HeaderContainerDetails = ({
             flexGrow: 1,
             flexWrap: "wrap",
           }}>
-          {/* <Text style={{ ...additionalDetailText }}>Genre: </Text> */}
           {selectedMovie?.genres.map((value: Genre, index: number) => (
             <View
               key={index}
               style={{
-                width: 100,
-                alignSelf: "auto",
                 backgroundColor: color.PRIMARY_COLOR,
-                paddingVertical: 6,
-                borderRadius: 5,
+                padding: 4,
                 margin: 4,
-                alignItems: "center",
+                borderRadius: 5,
               }}>
-              <Text key={index} style={{ fontFamily: Font.BOLD, fontWeight: "500", fontSize: 12, color: color.SECONDARY_COLOR }}>
+              <Text key={index} style={{ fontFamily: Font.BOLD, fontSize: 12, color: color.SECONDARY_COLOR }}>
                 {value.name}
               </Text>
             </View>

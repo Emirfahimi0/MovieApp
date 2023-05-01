@@ -72,7 +72,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
             setPostRatingDisable={setPostRatingDisable}
             ratingVal={ratingVal}
           />
-          {/* <ProviderCardList selectedProviderMovie={selectedMovie?.["watch/providers"]} /> */}
+
           <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }}>
             <View style={homeCardContainer}>
               <SubContainerDetail overviewDetails={MovieDetailsState?.overview} overViewStyle={overViewTextArea} />
