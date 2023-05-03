@@ -15,7 +15,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   // always use set function
   const [searchText, setSearchText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>();
-  const { handleMovies, filteredMovieState, movieState } = useContext(MovieContext);
+  const { handleMovies, filteredMovieState } = useContext(MovieContext);
   const [genreState, setGenreState] = useState<TGenre[]>([]);
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
   const [selectedMovieType, setSelectedMovieType] = useState<string>("");
@@ -44,6 +44,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   const handleFetchMovies = async (): Promise<void> => {
     setLoading(true);
     const responseApiMovie: TMovieType[] = selectedMovieType === "" ? await getTrendingmovie() : await getMovieType(selectedMovieType);
+    console.log(responseApiMovie);
     const responseAccountDetails: IResponseAccount = await getAccountDetails();
     if (responseApiMovie !== undefined && responseAccountDetails !== undefined) {
       setAccountDetails(responseAccountDetails);
@@ -86,7 +87,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             handleWatchList={handleWatchList}
             accountDetails={accountDetails}
           />
-          <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} selectedMovieType={selectedMovieType} />
+          <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} />
           <ScreenCardContainer
             Genres={genreState}
             handleMovieDetail={handleMovieDetail}
