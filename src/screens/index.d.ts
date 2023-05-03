@@ -1,4 +1,3 @@
-import { IMovieDetail, IResultReview, IReview } from "../services";
 
 declare interface IMovie {
     page?:number
@@ -8,14 +7,7 @@ declare interface IMovie {
    
 }
 
-declare interface IListGenres {
-    genres: Genre[];
-  }
-  
-  export type Genre = {
-    id: number;
-    name: string;
-  }
+
 
 declare type TMovieType = {
     adult?:             boolean;

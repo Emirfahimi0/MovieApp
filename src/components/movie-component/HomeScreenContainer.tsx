@@ -1,5 +1,4 @@
-import { ListCardButtons } from "./CardButton";
-import { Genre, IDetailsMovie, TMovieType } from "../../screens";
+import { ListCardButtons } from "./ListCardButtons";
 import { homeCardContainer, noDataStyle, setWidth } from "../../constants/style-component/viewComponent";
 import { ListMovieCards } from "./ListMovieCards";
 import { ScrollView, Text, View } from "react-native";
@@ -10,20 +9,24 @@ import Loader from "../features/Loader";
 interface IScreenCardContainer {
   searchInput: string;
   Movie: TMovieType[];
-  Genres: Genre[];
-  loading: boolean;
+  Genres: TGenre[];
+  loading: boolean | undefined;
+  handlePressGenre: (item: TGenre, index: number) => void;
   handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
 
-export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDetail, loading }: IScreenCardContainer) => {
+type TOtherGenre = "Action" | "Comedy" | "Fantasy";
+type TWatchlist = "Favorite" | "To Watch";
+
+export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDetail, loading, handlePressGenre }: IScreenCardContainer) => {
   return (
     <Fragment>
       <View
         style={{
           ...homeCardContainer,
         }}>
-        <ListCardButtons data={Genres} />
-        <ScrollView horizontal={true}>
+        <ListCardButtons<TOtherGenre> data={Genres} handlePress={handlePressGenre} />
+        <View>
           {Object.keys(Movie).length > 0 ? (
             <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
           ) : loading ? (
@@ -35,7 +38,7 @@ export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDet
               <Text style={subHeader}> No Movie</Text>
             </View>
           )}
-        </ScrollView>
+        </View>
       </View>
     </Fragment>
   );

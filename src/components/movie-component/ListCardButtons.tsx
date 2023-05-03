@@ -2,18 +2,24 @@ import { FlatList, TextStyle, TouchableOpacity, View, ViewStyle } from "react-na
 import React, { useContext, useState } from "react";
 import { ViewCard } from "./ViewCard";
 import { ItemSeparator } from "./ItemSeparator";
-import { MovieContext } from "../../context/movie-context/MovieContext";
-import { Genre } from "../../services";
 import color from "../../constants/Color";
 import { setHeight } from "../../constants/style-component/viewComponent";
 
-interface ICardButtons {
-  data: Genre[];
+interface ICard<T> {
+  id: string;
+  value: T;
+}
+// const genres: TGenre[] = [];
+
+// const providerCardData: ICard[] = genres.map((eachGenre) => ({ id: eachGenre.id, value: eachGenre.name }));
+
+interface ICardButtons<T> {
+  data: ICard<T>[];
+  handlePress: (item: T, index: number) => void;
 }
 
-export const ListCardButtons = ({ data }: ICardButtons) => {
+export const ListCardButtons = <T extends string>({ data, handlePress }: ICardButtons<T>) => {
   const [active, setActive] = useState<number>(0);
-  const { filterMovieByGenre } = useContext(MovieContext);
   return (
     <View
       style={{
@@ -31,7 +37,7 @@ export const ListCardButtons = ({ data }: ICardButtons) => {
         renderItem={({ item, index }) => {
           const handleActive = () => {
             setActive(index);
-            filterMovieByGenre(item, index);
+            handlePress(item, index);
           };
           const selectedButton: ViewStyle =
             active === index ? { backgroundColor: color.ACTIVE } : { backgroundColor: color.BASIC_BACKGROUND };

@@ -1,10 +1,10 @@
+import { Dimensions, ImageStyle, ViewStyle } from "react-native";
+import color from "../Color";
 const { height, width } = Dimensions.get("screen");
 const h = 40
 const w = 145
 export const setHeight = (h:number) => (height/100) *h
 export const setWidth = (w:number) => (width / 100) * w;
-import { Dimensions, ImageStyle, ViewStyle } from "react-native";
-import color from "../Color";
 
 //Login
 export const Logincontainer: ViewStyle = {
@@ -47,14 +47,13 @@ export const CardContainer: ViewStyle = {
 
 export const movieContainer:ViewStyle= {
     backgroundColor: color.BUTTON,
-    borderBottomLeftRadius: 24,
-    borderTopRightRadius: 24,
+   borderRadius:20,
     elevation: 4,
     flexDirection: "row",
     height: 200,
     justifyContent: "space-between",
     marginVertical: 12,
-    width: 150,
+    width: 152,
   }
 
   export const homeCardContainer:ViewStyle={
@@ -86,17 +85,16 @@ export const movieContainer:ViewStyle= {
  export const ListPreviewMovie:ViewStyle = {
     flexDirection: "column",
     justifyContent:"center",
-    margin: 4,
-    paddingHorizontal:24,
+    margin: "auto",
+    paddingHorizontal:16,
     paddingTop: 8,
   }
 
   export const ImagePoster :ImageStyle={
 
-    borderBottomLeftRadius: movieContainer.borderBottomLeftRadius,
-    borderTopRightRadius: movieContainer.borderTopRightRadius,
+    borderRadius:movieContainer.borderRadius,
     height: movieContainer.height,
-    width:150,
+    width:150
   }
 
   // --> Detail Movie Screen Styling
@@ -111,7 +109,7 @@ export const  ImagePosterDetail:ViewStyle = {
 
   alignItems:"center",
   backgroundColor:color.SEMI_BLACK,
-  borderRadius:60,
+  borderRadius:20,
   justifyContent:"center",
   elevation: 8,
   height:setHeight(50),
@@ -132,7 +130,8 @@ export const posterImage:ImageStyle = {
   padding:"50%",
   borderRadius:ImagePosterDetail.borderRadius,
   resizeMode:"stretch",
-width:ImagePosterDetail.width}
+width:ImagePosterDetail.width
+};
 
 export const HeaderDetail:ViewStyle = {
 

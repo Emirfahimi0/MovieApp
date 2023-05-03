@@ -1,24 +1,26 @@
-import { Fragment, useRef, useState } from "react";
+import { Dispatch, Fragment, SetStateAction, useRef, useState } from "react";
 import { FlatList, Pressable, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { normalText, primaryTitle } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
-import { getMovieType } from "../../services/api-services";
 
 interface ICustomDropDown {
   movieType: Array<{ label: string; value: string }>;
+  selectedMovieType: string;
+  setSelectedMovieType: Dispatch<SetStateAction<string>>;
 }
 
-const CustomDropDown = ({ movieType }: ICustomDropDown) => {
+const CustomDropDown = ({ movieType, setSelectedMovieType, selectedMovieType }: ICustomDropDown) => {
   const [search, setSearch] = useState("");
   const [clicked, setClicked] = useState(false);
   const [data, setData] = useState(movieType);
-  const [selectedMovieType, setSelectedMovieType] = useState("");
+  const [value, setValue] = useState<string>("");
   const searchRef = useRef(null);
   const onSearch = (search: string) => {
     if (search !== "") {
       let tempData = data.filter((item) => {
+        // return item that index
         return item.label.toLowerCase().indexOf(search.toLowerCase()) > -1;
       });
       setData(tempData);
@@ -27,34 +29,42 @@ const CustomDropDown = ({ movieType }: ICustomDropDown) => {
     }
   };
 
-  const handleMovieType = async (selected: string) => {
-    const selectedType = await getMovieType(selected);
-    if (selectedType !== undefined) {
-      console.log("Selecte movie", selectedMovieType);
-    }
+  const pressStyle: ViewStyle = {
+    width: "90%",
+    height: 50,
+    borderRadius: 10,
+    borderWidth: 1.6,
+    borderColor: color.PURPLE,
+    alignSelf: "center",
+    marginTop: 32,
+    backgroundColor: color.PRIMARY_COLOR,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 15,
+  };
+
+  const inputSearchDrop: ViewStyle = {
+    width: "90%",
+    height: 50,
+    alignSelf: "center",
+    borderWidth: 0.2,
+    borderColor: "#8e8e8e",
+    borderRadius: 7,
+    marginTop: 20,
+    paddingLeft: 20,
   };
   return (
     <View style={{}}>
       <Pressable
         style={{
-          width: "90%",
-          height: 50,
-          borderRadius: 10,
-          borderWidth: 1.6,
-          borderColor: color.PURPLE,
-          alignSelf: "center",
-          marginTop: 32,
-          backgroundColor: color.PRIMARY_COLOR,
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingHorizontal: 15,
+          ...pressStyle,
         }}
         onPress={() => {
           setClicked(!clicked);
         }}>
         <Text style={{ ...primaryTitle, color: color.SECONDARY_COLOR }}>
-          {selectedMovieType == "" ? "Select movie type" : selectedMovieType}
+          {selectedMovieType === "" ? "Select movie type" : selectedMovieType}
         </Text>
         {clicked ? (
           <Fragment>
@@ -104,12 +114,11 @@ const CustomDropDown = ({ movieType }: ICustomDropDown) => {
                     borderColor: "#8e8e8e",
                   }}
                   onPress={() => {
-                    setSelectedMovieType(item.label);
-                    handleMovieType(item.value);
+                    setSelectedMovieType(item.value);
+                    setValue(item.label);
                     setClicked(!clicked);
                     onSearch("");
                     setSearch("");
-                    console.log(index);
                     //to do
                   }}>
                   <Text style={normalText}>{item.label}</Text>
@@ -121,17 +130,6 @@ const CustomDropDown = ({ movieType }: ICustomDropDown) => {
       ) : null}
     </View>
   );
-};
-
-const inputSearchDrop: ViewStyle = {
-  width: "90%",
-  height: 50,
-  alignSelf: "center",
-  borderWidth: 0.2,
-  borderColor: "#8e8e8e",
-  borderRadius: 7,
-  marginTop: 20,
-  paddingLeft: 20,
 };
 
 export default CustomDropDown;

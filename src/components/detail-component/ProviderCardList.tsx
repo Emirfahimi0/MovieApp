@@ -5,7 +5,6 @@ import { setHeight, setWidth } from "../../constants/style-component/viewCompone
 import Color from "../../constants/Color";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { normalText } from "../../constants/style-component/textComponent";
-import { IMovieDetail } from "../../services";
 
 const ProviderCardList = ({ selectedProviderMovie }) => {
   const [active, setActive] = useState<number>();

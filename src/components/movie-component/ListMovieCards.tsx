@@ -1,10 +1,8 @@
 import { DetailContext } from "../../context/detail-context/DetailContext";
 import { Fragment, useContext } from "react";
-import { IDetailsMovie, TMovieType } from "../../screens";
 import { ImagePoster, ListPreviewMovie, movieContainer } from "../../constants/style-component/viewComponent";
 import { ItemSeparator } from "./ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
-import { RootNavigationProp } from "types/global";
 import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
 import { Text, View, FlatList, TouchableOpacity, Image, ViewStyle } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -40,7 +38,7 @@ export const ListMovieCards = ({ MovieData, keyword, handleMovieDetail }: IMovie
       ) : (
         <FlatList
           data={MovieData}
-          numColumns={2}
+          horizontal
           showsVerticalScrollIndicator={false}
           keyExtractor={(item) => `${item.id}`}
           showsHorizontalScrollIndicator={false}
@@ -51,7 +49,7 @@ export const ListMovieCards = ({ MovieData, keyword, handleMovieDetail }: IMovie
               {item.title?.toLowerCase().includes(keyword.toLowerCase()) ? (
                 <View style={ListPreviewMovie}>
                   <View style={movieContainer}>
-                    <Image source={{ uri: `${posterUrl}${POSTER_BASE_URL}original/${item.backdrop_path}` }} style={ImagePoster}></Image>
+                    <Image source={{ uri: `${POSTER_BASE_URL}original${item.backdrop_path}` }} style={ImagePoster}></Image>
                   </View>
                   <View style={MovieCardTitle}>
                     <Text style={subHeader} numberOfLines={3}>

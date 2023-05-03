@@ -1,7 +1,6 @@
 import {  getAccountState, getGenreMovie, getMovieDetails, getMovieWatchlist, getReviewById, sessionWithLogIn } from "../../services/api-services";
 import { Alert } from "react-native";
 import { Genre, IDetailsMovie, TMovieType } from "../../screens";
-import { IMovieDetail, IAccountState, IResultReview, IResponseTokenMerge, IRequestBody } from "../../services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TouchID from "react-native-touch-id";
 

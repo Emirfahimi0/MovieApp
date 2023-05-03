@@ -1,9 +1,12 @@
-import { IResultReview } from "../../services";
 import { container, setWidth } from "../../constants/style-component/viewComponent";
 import { OverviewDetailsText, normalText, subHeader } from "../../constants/style-component/textComponent";
 import { ScrollView, Text, View } from "react-native";
 import color from "../../constants/Color";
 import React, { Fragment, useState } from "react";
+
+// interface IReviewContainerDetail {
+// reviewDetails:
+// }
 
 const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
   const [active, setActive] = useState<number>(0);

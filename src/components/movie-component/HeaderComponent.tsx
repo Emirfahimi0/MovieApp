@@ -1,8 +1,6 @@
 import { CardContainer, SearchBar, setHeight, setWidth } from "../../constants/style-component/viewComponent";
 import { Image, Pressable, Text, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import { InputSearcbBar, normalText, subTitle } from "../../constants/style-component/textComponent";
-import { IResponseAccount } from "src/services";
-import { RootNavigationProp } from "types/global";
 import { subHeader } from "../../constants/style-component/textComponent";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -75,7 +73,6 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
             </View>
 
             <View style={{ ...rowView }}>
-              {/* To put data */}
               <View style={{ flexDirection: "column" }}>
                 <Text style={{ ...subHeader, color: color.ACTIVE }}>ACTIVE</Text>
                 <Text style={{ ...subTitle, color: color.EXTRA_LIGHT_GRAY }}>Updated 2 mins ago</Text>

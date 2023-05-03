@@ -1,18 +1,15 @@
 import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
-import { IAccountState, IMovieDetail } from "../services";
 import { POSTER_BASE_URL } from "../constants/utilities";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types/global";
 import { ScrollView, ViewStyle, View } from "react-native";
 import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
 import Loader from "../components/features/Loader";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
 import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
 import color from "../constants/Color";
-import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
@@ -22,7 +19,6 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   const [accountState, setAccountState] = useState<IAccountState>();
   const [ratingVal, setRatingVal] = useState<number>(5);
   const [postRatingDisable, setPostRatingDisable] = useState<boolean | { value: number } | undefined>();
-  const { watchlistState } = useContext(WatchlistContext);
 
   // const ref = useRef()
   const handleGoBack = () => {
@@ -56,7 +52,13 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   useEffect(() => {
     getUpdatedAccState();
     //handleRenderTrailer();
-  }, [watchlistState]);
+  }, []);
+
+  const overViewTextArea: ViewStyle = {
+    backgroundColor: color.AMBER,
+    borderRadius: 24,
+    padding: 10,
+  };
 
   return (
     <ScrollView style={{ flex: 1 }} nestedScrollEnabled={true} bounces={false}>
@@ -73,10 +75,12 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
             ratingVal={ratingVal}
           />
 
-          <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }}>
+          <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }} nestedScrollEnabled={true}>
             <View style={homeCardContainer}>
               <SubContainerDetail overviewDetails={MovieDetailsState?.overview} overViewStyle={overViewTextArea} />
-              <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
+              <ScrollView contentContainerStyle={{ backgroundColor: "yellow" }}>
+                <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
+              </ScrollView>
             </View>
           </ScrollView>
         </>
@@ -88,9 +92,3 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 };
 
 export default DetailsMovieScreen;
-
-const overViewTextArea: ViewStyle = {
-  backgroundColor: color.AMBER,
-  borderRadius: 24,
-  padding: 10,
-};

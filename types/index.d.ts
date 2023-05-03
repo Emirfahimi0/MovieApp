@@ -1,30 +1,30 @@
-export type Ttoken = {
+declare type Ttoken = {
     password:string,
     request_token:string
     username:string,
 }
-export type TResponseToken = {
+declare type TResponseToken = {
     expires_at:string,
     request_token:string
     status_code:number,
     success:boolean,
 }
-export interface ICreateSession {
+declare interface ICreateSession {
     new_session: TSession
 }
 
-export interface IResponseTokenMerge {
+declare interface IResponseTokenMerge {
     success: boolean
     expires_at: string
     session_id: string
     request_token: string
   }
-  export interface IRequestBody {
+  declare interface IRequestBody {
     username:string,
     password:string,
     request_token:string 
   }
-export interface IResponseAccount{
+declare interface IResponseAccount{
     avatar: Avatar
     id: number,
     iso_639_1: string,
@@ -33,39 +33,39 @@ export interface IResponseAccount{
     include_adult: boolean,
     username: string
   }
-  export interface Avatar {
+  declare interface Avatar {
     gravatar: Gravatar;
 }
 
-export interface Gravatar {
+declare interface Gravatar {
     hash: string;
 }
 
-export type TSession = {
+declare type TSession = {
     session_id:string
     success:boolean,
 }
-export interface IListGenres {
-    genres: Genre[];
+declare interface IListGenres {
+    genres: TGenre[];
   }
   
-  export type Genre = {
+  declare type TGenre = {
     id: number;
     name: string;
   }
 
- export interface IWatchListResponse  { 
+ declare interface IWatchListResponse  { 
 status_code: number,
 status_message: string,
 success: boolean
  }
 
-  export interface IMovieDetail {
+  declare interface IMovieDetail {
     adult:                 boolean;
     backdrop_path:         string;
     belongs_to_collection: null;
     budget:                number;
-    genres:                Genre[];
+    genres:                TGenre[];
     homepage:              string;
     id:                    number;
     imdb_id:               string;
@@ -92,29 +92,29 @@ success: boolean
 
 }
 
-  export interface IProductionCompany {
+  declare interface IProductionCompany {
     id:             number;
     logo_path:      null | string;
     name:           string;
     origin_country: string;
 }
 
-export interface IProductionCountry {
+declare interface IProductionCountry {
     iso_3166_1: string;
     name:       string;
 }
 
-export interface ISpokenLanguage {
+declare interface ISpokenLanguage {
     iso_639_1: string;
     name:      string;
 }
 
 
-export interface IVideos {
+declare interface IVideos {
   results: IVideoResults[]
 }
 
-export interface IVideoResults {
+declare interface IVideoResults {
   iso_639_1: string
   iso_3166_1: string
   name: string
@@ -127,11 +127,11 @@ export interface IVideoResults {
   id: string
 }
 
-export interface IWatchProviders {
+declare interface IWatchProviders {
   results: IWatchProviderResults
 }
 
-export interface IWatchProviderResults {
+declare interface IWatchProviderResults {
   AT: At
   AU: Au
   BE: Be
@@ -158,294 +158,294 @@ export interface IWatchProviderResults {
   US: Us
 }
 
-export interface At {
+declare interface At {
   link: string
   buy: Buy[]
 }
 
-export interface Buy {
+declare interface Buy {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Au {
+declare interface Au {
   link: string
   buy: Buy2[]
 }
 
-export interface Buy2 {
+declare interface Buy2 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Be {
+declare interface Be {
   link: string
   buy: Buy3[]
 }
 
-export interface Buy3 {
+declare interface Buy3 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Ca {
+declare interface Ca {
   link: string
   buy: Buy4[]
 }
 
-export interface Buy4 {
+declare interface Buy4 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Ch {
+declare interface Ch {
   link: string
   buy: Buy5[]
 }
 
-export interface Buy5 {
+declare interface Buy5 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface De {
+declare interface De {
   link: string
   buy: Buy6[]
 }
 
-export interface Buy6 {
+declare interface Buy6 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Dk {
+declare interface Dk {
   link: string
   buy: Buy7[]
 }
 
-export interface Buy7 {
+declare interface Buy7 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Es {
+declare interface Es {
   link: string
   buy: Buy8[]
 }
 
-export interface Buy8 {
+declare interface Buy8 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Fi {
+declare interface Fi {
   link: string
   buy: Buy9[]
 }
 
-export interface Buy9 {
+declare interface Buy9 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Gb {
+declare interface Gb {
   link: string
   buy: Buy10[]
 }
 
-export interface Buy10 {
+declare interface Buy10 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Hk {
+declare interface Hk {
   link: string
   buy: Buy11[]
 }
 
-export interface Buy11 {
+declare interface Buy11 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Ie {
+declare interface Ie {
   link: string
   buy: Buy12[]
 }
 
-export interface Buy12 {
+declare interface Buy12 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface In {
+declare interface In {
   link: string
   buy: Buy13[]
 }
 
-export interface Buy13 {
+declare interface Buy13 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Is {
+declare interface Is {
   link: string
   buy: Buy14[]
 }
 
-export interface Buy14 {
+declare interface Buy14 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface It {
+declare interface It {
   link: string
   buy: Buy15[]
 }
 
-export interface Buy15 {
+declare interface Buy15 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Jp {
+declare interface Jp {
   link: string
   buy: Buy16[]
 }
 
-export interface Buy16 {
+declare interface Buy16 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Kr {
+declare interface Kr {
   link: string
   buy: Buy17[]
 }
 
-export interface Buy17 {
+declare interface Buy17 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Nl {
+declare interface Nl {
   link: string
   buy: Buy18[]
 }
 
-export interface Buy18 {
+declare interface Buy18 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface No {
+declare interface No {
   link: string
   buy: Buy19[]
 }
 
-export interface Buy19 {
+declare interface Buy19 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Nz {
+declare interface Nz {
   link: string
   buy: Buy20[]
 }
 
-export interface Buy20 {
+declare interface Buy20 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Pt {
+declare interface Pt {
   link: string
   buy: Buy21[]
 }
 
-export interface Buy21 {
+declare interface Buy21 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Se {
+declare interface Se {
   link: string
   buy: Buy22[]
 }
 
-export interface Buy22 {
+declare interface Buy22 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Tw {
+declare interface Tw {
   link: string
   buy: Buy23[]
 }
 
-export interface Buy23 {
+declare interface Buy23 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
 
-export interface Us {
+declare interface Us {
   link: string
   buy: Buy24[]
 }
 
-export interface Buy24 {
+declare interface Buy24 {
   logo_path: string
   provider_id: number
   provider_name: string
   display_priority: number
 }
-export interface IReview {
+declare interface IReview {
   id:            number;
   page:          number;
   results:       IResultReview[];
@@ -453,7 +453,7 @@ export interface IReview {
   total_results: number;
 }
 
-export interface IResultReview {
+declare interface IResultReview {
   author_details: IAuthorDetails;
   author:         string;
   content:        string;
@@ -464,13 +464,13 @@ export interface IResultReview {
   url:            string;
 }
 
-export interface IAuthorDetails {
+declare interface IAuthorDetails {
   avatar_path: null | string;
   name:        string;
   rating:      number | null;
   username:    string;
 }
-export interface IAccountState {
+declare interface IAccountState {
     favourite:boolean
     id:number;
     rated: boolean | { value: number };
@@ -479,7 +479,7 @@ export interface IAccountState {
 
 
 
-export interface IRating {
+declare interface IRating {
     status_code: number;
     status_message: string;
     success:boolean;

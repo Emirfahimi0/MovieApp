@@ -12,7 +12,6 @@ import {
 } from "../../constants/style-component/viewComponent";
 import { additionalDetailText, normalText, MovieDetailTitle, RatingText } from "../../constants/style-component/textComponent";
 import { ButtonModalRating } from "./ButtonModalRating";
-import { Genre, IMovieDetail, IAccountState, IWatchListResponse } from "../../services";
 import { ItemSeparator } from "../movie-component/ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { setWatchlist } from "../../services/api-services";

@@ -1,7 +1,6 @@
 import { Alert, Modal, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import { ButtonContainerRating, CardContainer } from "../../constants/style-component/viewComponent";
 import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
-import { IRating, IMovieDetail } from "../../services";
 import { TMovieType } from "../../screens";
 import { RatingText, normalText, subDetail } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
@@ -83,16 +82,16 @@ export const ButtonModalRating = ({
         <View style={centeredViewRating}>
           <TouchableOpacity onPressOut={() => setVisible(false)} style={{ ...centeredViewRating }}>
             <View style={modalViewRating}>
-              <Icon name="heart-sharp" size={20} color={color.GREEN} />
+              <Icon name="star-outline" size={20} color={color.GREEN} />
               <Text style={subDetail}> Submit your Review..</Text>
               <View style={RatingStarIcon}>
                 {review.map((item, index) => {
                   return (
                     <TouchableOpacity disabled={disable ? false : true} key={index} onPress={() => HandleSetRating(item)}>
                       {ratingVal < item ? (
-                        <Icon name="heart-outline" size={20} color="black" />
+                        <Icon name="star-outline" size={20} color="black" />
                       ) : (
-                        <Icon name="heart-sharp" size={25} color="red" />
+                        <Icon name="star" size={25} color="#F1DB4B" />
                       )}
                     </TouchableOpacity>
                   );

@@ -1,5 +1,3 @@
-import { TMovieType } from "src/screens";
-import { IMovieDetail, IResponseAccount, IResultReview } from "src/services";
 
 declare type RootStackParamList = {
    DetailScreen: {item:IMovieDetail,review:IResultReview[]},

@@ -1,10 +1,9 @@
 import { createContext, useState } from "react";
-import { Genre, TMovieType } from "../../screens";
 
 export interface IInitialState {
   filteredMovieState: TMovieType[];
   filterMovieByGenre: (item: Genre, index: number) => void;
-  handleTrendingMovies: (movie: TMovieType[], item: Genre) => void;
+  handleMovies: (movie: TMovieType[], item: Genre) => void;
   movieState: TMovieType[];
   activeGenreId: number;
 }
@@ -18,7 +17,7 @@ const initialState: IInitialState = {
   filteredMovieState: [],
   activeGenreId: 0,
 
-  handleTrendingMovies: () => Promise<void>,
+  handleMovies: () => Promise<void>,
   movieState: [],
   filterMovieByGenre: () => Promise<void>,
 };
@@ -30,7 +29,6 @@ export const MovieProvider = (props: React.PropsWithChildren<IMovieContextProvid
   const filterMovieByGenre = (item: Genre, index: number): void => {
     // check if the selected item is already in active filter in the state
     if (item.id === state.activeGenreId) {
-      console.log(index);
       return;
     }
     const currentFilter = state.movieState.filter((element) => {
@@ -40,7 +38,7 @@ export const MovieProvider = (props: React.PropsWithChildren<IMovieContextProvid
     // console.log(state.activeGenreId);
   };
 
-  const handleTrendingMovies = async (movies: TMovieType[], item: Genre): Promise<void> => {
+  const handleMovies = async (movies: TMovieType[], item: Genre): Promise<void> => {
     // check if the selected item is already in active filter in the state
     if (item.id === state.activeGenreId) {
       return;
@@ -55,7 +53,7 @@ export const MovieProvider = (props: React.PropsWithChildren<IMovieContextProvid
     <MovieContext.Provider
       value={{
         activeGenreId: state.activeGenreId,
-        handleTrendingMovies,
+        handleMovies: handleMovies,
         filteredMovieState: state.filteredMovieState,
         filterMovieByGenre,
         movieState: state.movieState,

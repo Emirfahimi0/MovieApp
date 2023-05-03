@@ -1,7 +1,6 @@
 import { TUser } from "../screens";
 import React, { createContext, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
-import { IAccountState } from "../services";
 import { handleIsLogin } from "../components/features/handleFunctions";
 
 export interface IInitialState {

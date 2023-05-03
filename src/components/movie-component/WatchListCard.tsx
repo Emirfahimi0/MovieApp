@@ -1,11 +1,9 @@
 import { FlatList, ImageBackground, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { Fragment, useContext } from "react";
-import { IDetailsMovie, TMovieType } from "../../screens";
 import { ItemSeparator } from "./ItemSeparator";
 import Icon from "react-native-vector-icons/Ionicons";
 import { DetailContext } from "../../context/detail-context/DetailContext";
 import { useNavigation } from "@react-navigation/native";
-import { RootNavigationProp } from "types/global";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
@@ -44,7 +42,7 @@ const WatchListCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProp
             {item.title?.toLowerCase().includes(keyword.toLowerCase()) ? (
               <Fragment>
                 <ImageBackground
-                  source={{ uri: `${posterUrl}${POSTER_BASE_URL}original/${item.backdrop_path}` }}
+                  source={{ uri: `${POSTER_BASE_URL}original${item.backdrop_path}` }}
                   style={{ height: 200, width: "100%", justifyContent: "center" }}
                   imageStyle={{ borderRadius: 30 }}>
                   <View style={{ ...overlay }}>

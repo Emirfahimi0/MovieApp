@@ -1,14 +1,11 @@
-import { getAccountDetails, getTrendingmovie } from "../services/api-services";
+import { getAccountDetails, getMovieType, getTrendingmovie } from "../services/api-services";
 import { ScreenCardContainer } from "../components/movie-component/HomeScreenContainer";
 import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { Genre, TMovieType } from ".";
 import { fetchGenreItem, handleMovieDetail } from "../components/features/handleFunctions";
 import Loader from "../components/features/Loader";
 import { Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types/global";
-import { IResponseAccount } from "../services";
 import { MovieContext } from "../context/movie-context/MovieContext";
 import CustomDropDown from "../components/movie-component/CustomDropDown";
 
@@ -17,48 +14,58 @@ interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "H
 const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   // always use set function
   const [searchText, setSearchText] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const { handleTrendingMovies, filteredMovieState, movieState } = useContext(MovieContext);
-  const [genreState, setGenreState] = useState<Genre[]>([]);
+  const [loading, setLoading] = useState<boolean>();
+  const { handleMovies, filteredMovieState, movieState } = useContext(MovieContext);
+  const [genreState, setGenreState] = useState<TGenre[]>([]);
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
+  const [selectedMovieType, setSelectedMovieType] = useState<string>("");
+  const { filterMovieByGenre } = useContext(MovieContext);
+  const actionId = genreState.filter((item) => item.name === "Action");
 
   const data: Array<{ label: string; value: string }> = [
-    { label: "Trending", value: "Trending" },
-    { label: "Get Latest", value: "latest" },
-    { label: "Get Popular", value: "popular" },
+    { label: " Top Rated", value: "top_rated" },
+    { label: " Upcoming", value: "upcoming" },
+    { label: " Popular", value: "popular" },
   ];
 
-  const handleRenderedGenre = async (): Promise<void> => {
-    const responseGenre: Genre[] = await fetchGenreItem();
+  const handleFetchGenre = async (): Promise<void> => {
+    const responseGenre: TGenre[] = await fetchGenreItem();
     // set state for in context provider for Genre [];
     if (responseGenre !== undefined) {
       setGenreState(responseGenre);
     }
   };
 
-  const handleGetMovies = async (): Promise<void> => {
+  const handlePressGenre = async (genre: TGenre, index: number) => {
+    filterMovieByGenre(genre, index);
+    console.log("is press?");
+  };
+
+  const handleFetchMovies = async (): Promise<void> => {
     setLoading(true);
-    const responseApiMovie: TMovieType[] = await getTrendingmovie();
+    const responseApiMovie: TMovieType[] = selectedMovieType === "" ? await getTrendingmovie() : await getMovieType(selectedMovieType);
     const responseAccountDetails: IResponseAccount = await getAccountDetails();
     if (responseApiMovie !== undefined && responseAccountDetails !== undefined) {
       setAccountDetails(responseAccountDetails);
-      setLoading(false);
       // set for trending movies with initial state
-      const actionId = genreState.filter((item) => item.name === "Action");
-      handleTrendingMovies(responseApiMovie, actionId[0]);
-    } else Alert.alert("Cannot fetch data from api");
+      handleMovies(responseApiMovie, actionId[0]);
+      setLoading(false);
+    } else {
+      Alert.alert("Cannot fetch data from api");
+      setLoading(false);
+    }
   };
   useEffect(() => {
     if (genreState.length === 0) {
-      handleRenderedGenre();
+      handleFetchGenre();
     }
   }, []);
 
   useEffect(() => {
-    if (genreState.length > 0) {
-      handleGetMovies().catch(console.error);
+    if (genreState.length > 0 || selectedMovieType !== "") {
+      handleFetchMovies().catch(console.error);
     }
-  }, [genreState]);
+  }, [genreState, selectedMovieType]);
 
   const handleWatchList = async () => {
     const navigationGoBack = true;
@@ -67,7 +74,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
 
   return (
     <Fragment>
-      {loading ? (
+      {loading || filteredMovieState.length < 0 ? (
         <>
           <Loader />
         </>
@@ -79,13 +86,14 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             handleWatchList={handleWatchList}
             accountDetails={accountDetails}
           />
-          <CustomDropDown movieType={data} />
+          <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} selectedMovieType={selectedMovieType} />
           <ScreenCardContainer
-            loading={loading}
-            handleMovieDetail={handleMovieDetail}
-            searchInput={searchText}
-            Movie={filteredMovieState}
             Genres={genreState}
+            handleMovieDetail={handleMovieDetail}
+            handlePressGenre={handlePressGenre}
+            loading={loading}
+            Movie={filteredMovieState}
+            searchInput={searchText}
           />
         </>
       )}

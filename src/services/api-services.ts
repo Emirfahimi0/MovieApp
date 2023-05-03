@@ -1,8 +1,5 @@
 import axios from "axios"
 import  {  API_KEY, ENDPOINTS, TMDB_API_KEY }  from "../constants/utilities";
-import {  Genre, IRating, IMovieDetail, TResponseToken, IAccountState,
-        TSession, IWatchListResponse, IResultReview, IResponseAccount, IResponseTokenMerge } from ".";
-import { TMovieType } from "../screens";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
@@ -20,11 +17,11 @@ export const  getTrendingmovie = async():Promise<TMovieType[]> => {
 }
 
 export const getMovieType = async (movieType:string):Promise<TMovieType[]>=>{
-    console.log(movieType)
+
 const data = await axios.get(`${ENDPOINTS.GET_MOVIETYPE}${movieType}?api_key=${API_KEY}`,{responseType:'json'}).then((response)=>{
-    console.log(response.data)
     return response.data.results;
 })
+console.log("movietype",data)
 return data
 }
 
@@ -399,7 +396,7 @@ export const getMovieDetails = async (id:number):Promise<IMovieDetail> => {
 }
 
 // GET method to fetch genre of all movies
-export const getGenreMovie = async ():Promise<Genre[]> => {
+export const getGenreMovie = async ():Promise<TGenre[]> => {
     const resGenre = await axios.get(ENDPOINTS.GET_GENRES, {
             responseType: "json",
           })
