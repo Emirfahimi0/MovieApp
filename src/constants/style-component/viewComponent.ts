@@ -73,7 +73,7 @@ export const movieContainer:ViewStyle= {
  export const  SearchBar:ViewStyle= {
     alignItems: "center",
     backgroundColor: color.SECONDARY_COLOR,
-    borderRadius: 10,
+    borderRadius: 50,
     flexDirection: "row",
     padding: 10,
     width: "90%",

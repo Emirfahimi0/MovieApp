@@ -29,7 +29,6 @@ export const ListMovieCards = ({ MovieData, keyword, handleMovieDetail }: IMovie
       navigation.navigate("DetailScreen", { item: getDetailsFromApi.detail, review: getDetailsFromApi.review });
     } else loading = true;
   };
-  const posterUrl = `${POSTER_BASE_URL}original/`;
 
   return (
     <Fragment>

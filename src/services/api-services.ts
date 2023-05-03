@@ -17,11 +17,11 @@ export const  getTrendingmovie = async():Promise<TMovieType[]> => {
 }
 
 export const getMovieType = async (movieType:string):Promise<TMovieType[]>=>{
-
+ 
 const data = await axios.get(`${ENDPOINTS.GET_MOVIETYPE}${movieType}?api_key=${API_KEY}`,{responseType:'json'}).then((response)=>{
     return response.data.results;
 })
-console.log("movietype",data)
+console.log(`movietype ${movieType}` ,data)
 return data
 }
 

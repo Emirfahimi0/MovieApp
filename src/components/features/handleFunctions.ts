@@ -1,6 +1,5 @@
 import {  getAccountState, getGenreMovie, getMovieDetails, getMovieWatchlist, getReviewById, sessionWithLogIn } from "../../services/api-services";
 import { Alert } from "react-native";
-import { Genre, IDetailsMovie, TMovieType } from "../../screens";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TouchID from "react-native-touch-id";
 
@@ -22,7 +21,7 @@ export const fetchMovieDetails = async (id: number) => {
     return data;
   };
   export const fetchGenreItem = async () => {
-    const responseGenre: Genre[] = await getGenreMovie();
+    const responseGenre: TGenre[] = await getGenreMovie();
     // set state for in context provider for Genre []
     return responseGenre;
   };

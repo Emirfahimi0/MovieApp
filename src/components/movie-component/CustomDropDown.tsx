@@ -7,15 +7,16 @@ import color from "../../constants/Color";
 
 interface ICustomDropDown {
   movieType: Array<{ label: string; value: string }>;
-  selectedMovieType: string;
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
   setSelectedMovieType: Dispatch<SetStateAction<string>>;
 }
 
-const CustomDropDown = ({ movieType, setSelectedMovieType, selectedMovieType }: ICustomDropDown) => {
+const CustomDropDown = ({ movieType, setSelectedMovieType, value, setValue }: ICustomDropDown) => {
   const [search, setSearch] = useState("");
   const [clicked, setClicked] = useState(false);
   const [data, setData] = useState(movieType);
-  const [value, setValue] = useState<string>("");
+
   const searchRef = useRef(null);
   const onSearch = (search: string) => {
     if (search !== "") {
@@ -44,16 +45,6 @@ const CustomDropDown = ({ movieType, setSelectedMovieType, selectedMovieType }: 
     paddingHorizontal: 15,
   };
 
-  const inputSearchDrop: ViewStyle = {
-    width: "90%",
-    height: 50,
-    alignSelf: "center",
-    borderWidth: 0.2,
-    borderColor: "#8e8e8e",
-    borderRadius: 7,
-    marginTop: 20,
-    paddingLeft: 20,
-  };
   return (
     <View style={{}}>
       <Pressable
@@ -63,9 +54,7 @@ const CustomDropDown = ({ movieType, setSelectedMovieType, selectedMovieType }: 
         onPress={() => {
           setClicked(!clicked);
         }}>
-        <Text style={{ ...primaryTitle, color: color.SECONDARY_COLOR }}>
-          {selectedMovieType === "" ? "Select movie type" : selectedMovieType}
-        </Text>
+        <Text style={{ ...primaryTitle, color: color.SECONDARY_COLOR }}>{value === "" ? "Select movie type" : value}</Text>
         {clicked ? (
           <Fragment>
             <Icon name="duplicate-outline" size={20} color={color.SECONDARY_COLOR} />
@@ -130,6 +119,17 @@ const CustomDropDown = ({ movieType, setSelectedMovieType, selectedMovieType }: 
       ) : null}
     </View>
   );
+};
+
+const inputSearchDrop: ViewStyle = {
+  width: "90%",
+  height: 50,
+  alignSelf: "center",
+  borderWidth: 0.2,
+  borderColor: "#8e8e8e",
+  borderRadius: 7,
+  marginTop: 20,
+  paddingLeft: 20,
 };
 
 export default CustomDropDown;

@@ -1,7 +1,7 @@
 import { ListCardButtons } from "./ListCardButtons";
 import { homeCardContainer, noDataStyle, setWidth } from "../../constants/style-component/viewComponent";
 import { ListMovieCards } from "./ListMovieCards";
-import { ScrollView, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { subHeader } from "../../constants/style-component/textComponent";
 import React, { Fragment } from "react";
 import Loader from "../features/Loader";

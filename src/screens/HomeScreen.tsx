@@ -19,10 +19,12 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   const [genreState, setGenreState] = useState<TGenre[]>([]);
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
   const [selectedMovieType, setSelectedMovieType] = useState<string>("");
+  const [value, setValue] = useState<string>("");
   const { filterMovieByGenre } = useContext(MovieContext);
   const actionId = genreState.filter((item) => item.name === "Action");
 
   const data: Array<{ label: string; value: string }> = [
+    { label: "Trending Movies", value: "Trending" },
     { label: " Top Rated", value: "top_rated" },
     { label: " Upcoming", value: "upcoming" },
     { label: " Popular", value: "popular" },
@@ -41,13 +43,18 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
     console.log("is press?");
   };
 
+  const handleFetchAccountDetails = async () => {
+    const responseAccountDetails: IResponseAccount = await getAccountDetails();
+    if (responseAccountDetails !== undefined) {
+      setAccountDetails(responseAccountDetails);
+    }
+  };
+
   const handleFetchMovies = async (): Promise<void> => {
     setLoading(true);
-    const responseApiMovie: TMovieType[] = selectedMovieType === "" ? await getTrendingmovie() : await getMovieType(selectedMovieType);
-    console.log(responseApiMovie);
-    const responseAccountDetails: IResponseAccount = await getAccountDetails();
-    if (responseApiMovie !== undefined && responseAccountDetails !== undefined) {
-      setAccountDetails(responseAccountDetails);
+    const responseApiMovie: TMovieType[] =
+      selectedMovieType === "" || selectedMovieType === "Trending" ? await getTrendingmovie() : await getMovieType(selectedMovieType);
+    if (responseApiMovie !== undefined) {
       // set for trending movies with initial state
       handleMovies(responseApiMovie, actionId[0]);
       setLoading(false);
@@ -56,10 +63,15 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     if (genreState.length === 0) {
       handleFetchGenre();
     }
+  }, []);
+
+  useEffect(() => {
+    handleFetchAccountDetails();
   }, []);
 
   useEffect(() => {
@@ -87,7 +99,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             handleWatchList={handleWatchList}
             accountDetails={accountDetails}
           />
-          <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} />
+          <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} value={value} setValue={setValue} />
           <ScreenCardContainer
             Genres={genreState}
             handleMovieDetail={handleMovieDetail}

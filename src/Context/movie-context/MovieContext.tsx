@@ -2,8 +2,8 @@ import { createContext, useState } from "react";
 
 export interface IInitialState {
   filteredMovieState: TMovieType[];
-  filterMovieByGenre: (item: Genre, index: number) => void;
-  handleMovies: (movie: TMovieType[], item: Genre) => void;
+  filterMovieByGenre: (item: TGenre, index: number) => void;
+  handleMovies: (movie: TMovieType[], item: TGenre) => void;
   movieState: TMovieType[];
   activeGenreId: number;
 }
@@ -26,7 +26,7 @@ export const MovieContext = createContext<IInitialState>(initialState);
 export const MovieProvider = (props: React.PropsWithChildren<IMovieContextProviderProps>) => {
   const [state, setState] = useState(initialState);
 
-  const filterMovieByGenre = (item: Genre, index: number): void => {
+  const filterMovieByGenre = (item: TGenre, index: number): void => {
     // check if the selected item is already in active filter in the state
     if (item.id === state.activeGenreId) {
       return;
@@ -38,15 +38,15 @@ export const MovieProvider = (props: React.PropsWithChildren<IMovieContextProvid
     // console.log(state.activeGenreId);
   };
 
-  const handleMovies = async (movies: TMovieType[], item: Genre): Promise<void> => {
+  const handleMovies = async (movies: TMovieType[], item: TGenre): Promise<void> => {
     // check if the selected item is already in active filter in the state
-    if (item.id === state.activeGenreId) {
-      return;
-    }
+    // let currentFilter: TMovieType[] = [];
+
     const currentFilter = movies.filter((element) => {
       return element.genre_ids.includes(item.id);
     });
     setState({ ...state, movieState: movies, filteredMovieState: currentFilter, activeGenreId: item.id });
+
     // call the function
   };
   return (

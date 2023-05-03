@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { IMovieDetail, IResultReview } from "../../../types";
 
 interface IInitialState {
   reviewState: IResultReview[];
