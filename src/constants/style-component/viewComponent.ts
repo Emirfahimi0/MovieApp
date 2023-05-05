@@ -1,8 +1,7 @@
 import { Dimensions, ImageStyle, ViewStyle } from "react-native";
 import color from "../Color";
 const { height, width } = Dimensions.get("screen");
-const h = 40
-const w = 145
+
 export const setHeight = (h:number) => (height/100) *h
 export const setWidth = (w:number) => (width / 100) * w;
 
@@ -43,20 +42,27 @@ export const CardContainer: ViewStyle = {
 
 
 
-  // --> Home/Movie Screen Styling
+// --> Home/Movie Screen Styling
 
+export const shadowStyle:ViewStyle = {
+  shadowColor: color.ACTIVE,
+  shadowOffset: { width: 0, height: -4 },
+  shadowOpacity: 1.0,
+  shadowRadius: 16,
+}
 export const movieContainer:ViewStyle= {
     backgroundColor: color.BUTTON,
-   borderRadius:20,
     elevation: 4,
     flexDirection: "row",
     height: 200,
     justifyContent: "space-between",
     marginVertical: 12,
     width: 152,
+   borderRadius:20,
   }
 
   export const homeCardContainer:ViewStyle={
+    ...shadowStyle,
     backgroundColor: color.SECONDARY_COLOR,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
@@ -64,10 +70,6 @@ export const movieContainer:ViewStyle= {
     flex:1,
     marginTop: 54,
     paddingTop: 8,
-    shadowColor: color.LIGHT_GRAY,
-    shadowOffset: { width: 0, height: -4 },
-    shadowOpacity: 1.0,
-    shadowRadius: 16,
   }
 
  export const  SearchBar:ViewStyle= {

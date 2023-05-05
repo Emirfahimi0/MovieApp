@@ -1,7 +1,6 @@
 import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
-import { POSTER_BASE_URL } from "../constants/utilities";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ScrollView, ViewStyle, View } from "react-native";
 import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
@@ -51,13 +50,13 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 
   useEffect(() => {
     getUpdatedAccState();
-    //handleRenderTrailer();
   }, []);
 
   const overViewTextArea: ViewStyle = {
     backgroundColor: color.AMBER,
     borderRadius: 24,
-    padding: 10,
+    flexDirection: "column",
+    padding: 12,
   };
 
   return (
@@ -78,9 +77,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
           <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }} nestedScrollEnabled={true}>
             <View style={homeCardContainer}>
               <SubContainerDetail overviewDetails={MovieDetailsState?.overview} overViewStyle={overViewTextArea} />
-              <ScrollView contentContainerStyle={{ backgroundColor: "yellow" }}>
-                <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
-              </ScrollView>
+              <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
             </View>
           </ScrollView>
         </>

@@ -1,4 +1,4 @@
-import { Dispatch, Fragment, SetStateAction, useRef, useState } from "react";
+import { Dispatch, Fragment, FunctionComponent, SetStateAction, useRef, useState } from "react";
 import { FlatList, Pressable, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -12,7 +12,7 @@ interface ICustomDropDown {
   setSelectedMovieType: Dispatch<SetStateAction<string>>;
 }
 
-const CustomDropDown = ({ movieType, setSelectedMovieType, value, setValue }: ICustomDropDown) => {
+const CustomDropDown: FunctionComponent<ICustomDropDown> = ({ movieType, setSelectedMovieType, value, setValue }: ICustomDropDown) => {
   const [search, setSearch] = useState("");
   const [clicked, setClicked] = useState(false);
   const [data, setData] = useState(movieType);
@@ -21,7 +21,7 @@ const CustomDropDown = ({ movieType, setSelectedMovieType, value, setValue }: IC
   const onSearch = (search: string) => {
     if (search !== "") {
       let tempData = data.filter((item) => {
-        // return item that index
+        // return item that index of based on search
         return item.label.toLowerCase().indexOf(search.toLowerCase()) > -1;
       });
       setData(tempData);
@@ -31,20 +31,42 @@ const CustomDropDown = ({ movieType, setSelectedMovieType, value, setValue }: IC
   };
 
   const pressStyle: ViewStyle = {
-    width: "90%",
-    height: 50,
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: color.PRIMARY_COLOR,
+    borderColor: color.PURPLE,
     borderRadius: 10,
     borderWidth: 1.6,
-    borderColor: color.PURPLE,
-    alignSelf: "center",
-    marginTop: 32,
-    backgroundColor: color.PRIMARY_COLOR,
     flexDirection: "row",
+    height: 50,
     justifyContent: "space-between",
-    alignItems: "center",
+    marginTop: 32,
     paddingHorizontal: 15,
+    width: "90%",
   };
 
+  const dropDownMenu: ViewStyle = {
+    alignSelf: "center",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    elevation: 5,
+    height: 300,
+    marginTop: -10,
+    position: "relative",
+    width: "90%",
+    zIndex: -1,
+  };
+
+  const inputSearchDrop: ViewStyle = {
+    alignSelf: "center",
+    borderColor: "#8e8e8e",
+    borderRadius: 7,
+    borderWidth: 0.2,
+    height: 50,
+    marginTop: 20,
+    paddingLeft: 20,
+    width: "90%",
+  };
   return (
     <View style={{}}>
       <Pressable
@@ -66,15 +88,7 @@ const CustomDropDown = ({ movieType, setSelectedMovieType, value, setValue }: IC
       {clicked ? (
         <View
           style={{
-            elevation: 5,
-            height: 300,
-            marginTop: -10,
-            alignSelf: "center",
-            width: "90%",
-            zIndex: -1,
-            position: "relative",
-            backgroundColor: "#fff",
-            borderRadius: 10,
+            ...dropDownMenu,
           }}>
           <TextInput
             placeholder="Search..."
@@ -119,17 +133,6 @@ const CustomDropDown = ({ movieType, setSelectedMovieType, value, setValue }: IC
       ) : null}
     </View>
   );
-};
-
-const inputSearchDrop: ViewStyle = {
-  width: "90%",
-  height: 50,
-  alignSelf: "center",
-  borderWidth: 0.2,
-  borderColor: "#8e8e8e",
-  borderRadius: 7,
-  marginTop: 20,
-  paddingLeft: 20,
 };
 
 export default CustomDropDown;

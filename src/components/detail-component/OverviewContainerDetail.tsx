@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import React, { useState } from "react";
 import { normalText, OverviewDetailsText } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
@@ -11,9 +11,9 @@ export const SubContainerDetail = ({ overviewDetails, overViewStyle }) => {
   return (
     <>
       <View style={{ margin: 16, paddingVertical: 8 }}>
-        <View style={{ ...overViewStyle, borderRadius: 10, backgroundColor: color.LIGHT_GRAY }}>
+        <View style={{ ...overViewStyle, borderRadius: 16, backgroundColor: color.SEMI_BLACK }}>
           <View style={{ paddingVertical: 8 }}>
-            <Text style={{ fontSize: 16, marginLeft: 12, color: color.ACTIVE }}>Overview</Text>
+            <Text style={{ fontSize: 16, marginLeft: 12, color: color.AMBER }}>Overview</Text>
           </View>
           <Text style={{ ...OverviewDetailsText, color: color.SECONDARY_COLOR }}>
             {showMore ? overviewDetails.split(" ").slice(0, 20).join(" ") : overviewDetails}

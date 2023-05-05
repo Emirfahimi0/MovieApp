@@ -145,7 +145,7 @@ export const HeaderContainerDetails = ({
             flexGrow: 1,
             flexWrap: "wrap",
           }}>
-          {selectedMovie?.genres.map((value: Genre, index: number) => (
+          {selectedMovie?.genres.map((value: TGenre, index: number) => (
             <View
               key={index}
               style={{

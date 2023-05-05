@@ -1,7 +1,6 @@
 import { Alert, Modal, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import { ButtonContainerRating, CardContainer } from "../../constants/style-component/viewComponent";
 import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
-import { TMovieType } from "../../screens";
 import { RatingText, normalText, subDetail } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
 import Icon from "react-native-vector-icons/Ionicons";
