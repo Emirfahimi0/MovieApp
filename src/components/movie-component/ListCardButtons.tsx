@@ -1,5 +1,5 @@
 import { FlatList, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { ViewCard } from "./ViewCard";
 import { ItemSeparator } from "./ItemSeparator";
 import color from "../../constants/Color";
@@ -16,10 +16,11 @@ interface ICard<T> {
 interface ICardButtons<T> {
   data: ICard<T>[];
   handlePress: (item: T, index: number) => void;
+  active: number;
+  setActive: Dispatch<SetStateAction<number>>;
 }
 
-export const ListCardButtons = <T extends string>({ data, handlePress }: ICardButtons<T>) => {
-  const [active, setActive] = useState<number>(0);
+export const ListCardButtons = <T extends string>({ data, handlePress, active, setActive }: ICardButtons<T>) => {
   return (
     <View
       style={{

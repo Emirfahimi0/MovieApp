@@ -2,13 +2,14 @@ import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ScrollView, ViewStyle, View } from "react-native";
+import { ScrollView, ViewStyle, View, TextStyle } from "react-native";
 import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
 import Loader from "../components/features/Loader";
 import React, { useContext, useEffect, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
 import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
 import color from "../constants/Color";
+import Font from "../constants/Font";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
@@ -57,8 +58,15 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
     borderRadius: 24,
     flexDirection: "column",
     padding: 12,
+    width: "auto",
+    height: "auto",
   };
-
+  const DetailTextHeader: TextStyle = {
+    fontFamily: Font.REGULAR,
+    fontSize: 16,
+    marginLeft: 12,
+    color: color.AMBER,
+  };
   return (
     <ScrollView style={{ flex: 1 }} nestedScrollEnabled={true} bounces={false}>
       {accountState !== undefined ? (
@@ -76,8 +84,12 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 
           <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }} nestedScrollEnabled={true}>
             <View style={homeCardContainer}>
-              <SubContainerDetail overviewDetails={MovieDetailsState?.overview} overViewStyle={overViewTextArea} />
-              <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} />
+              <SubContainerDetail
+                overviewDetails={MovieDetailsState?.overview}
+                overViewStyle={overViewTextArea}
+                DetailTextHeader={DetailTextHeader}
+              />
+              <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} DetailTextHeader={DetailTextHeader} />
             </View>
           </ScrollView>
         </>

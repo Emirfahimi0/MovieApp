@@ -3,7 +3,7 @@ import { homeCardContainer, noDataStyle, setWidth } from "../../constants/style-
 import { ListMovieCards } from "./ListMovieCards";
 import { Text, View } from "react-native";
 import { subHeader } from "../../constants/style-component/textComponent";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Loader from "../features/Loader";
 
 interface IScreenCardContainer {
@@ -15,19 +15,21 @@ interface IScreenCardContainer {
   handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
 
-type TOtherGenre = "Action" | "Comedy" | "Fantasy";
-type TWatchlist = "Favorite" | "To Watch";
+type TlistGenre = "Action" | "Comedy" | "Fantasy";
+// type TWatchlist = "Favorite" | "To Watch";
 
 export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDetail, loading, handlePressGenre }: IScreenCardContainer) => {
+  const [active, setActive] = useState<number>(0);
+
   return (
     <Fragment>
       <View
         style={{
           ...homeCardContainer,
         }}>
-        <ListCardButtons<TOtherGenre> data={Genres} handlePress={handlePressGenre} />
+        <ListCardButtons<TlistGenre> data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
         <View>
-          {Object.keys(Movie).length > 0 ? (
+          {Object.keys(Movie).length > 0 && active !== undefined ? (
             <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
           ) : loading ? (
             <View style={{ ...noDataStyle }}>

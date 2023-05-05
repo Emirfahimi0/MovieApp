@@ -15,7 +15,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   // always use set function
   const [searchText, setSearchText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>();
-  const { handleMovies, filteredMovieState } = useContext(MovieContext);
+  const { handleMovies, filteredMovieState, movieState } = useContext(MovieContext);
   const [genreState, setGenreState] = useState<TGenre[]>([]);
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
   const [selectedMovieType, setSelectedMovieType] = useState<string>("");
@@ -55,6 +55,8 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
     const responseApiMovie: TMovieType[] =
       selectedMovieType === "" || selectedMovieType === "Trending" ? await getTrendingmovie() : await getMovieType(selectedMovieType);
     if (responseApiMovie !== undefined) {
+      //reset the search components
+      setSearchText("");
       // set for trending movies with initial state
       handleMovies(responseApiMovie, actionId[0]);
       setLoading(false);
@@ -105,7 +107,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             handleMovieDetail={handleMovieDetail}
             handlePressGenre={handlePressGenre}
             loading={loading}
-            Movie={filteredMovieState}
+            Movie={searchText !== "" ? movieState : filteredMovieState}
             searchInput={searchText}
           />
         </>

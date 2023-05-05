@@ -457,7 +457,7 @@ declare interface IResultReview {
   author_details: IAuthorDetails;
   author:         string;
   content:        string;
-  created_at:     Date;
+  created_at:     string;
   id:             string;
   isShown:        boolean;
   updated_at:     Date;

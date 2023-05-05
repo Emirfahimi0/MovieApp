@@ -1,6 +1,6 @@
 import { container, setHeight, setWidth, shadowStyle } from "../../constants/style-component/viewComponent";
 import { OverviewDetailsText, normalText, subHeader } from "../../constants/style-component/textComponent";
-import { ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 import color from "../../constants/Color";
 import React, { Fragment, useState } from "react";
 
@@ -8,16 +8,36 @@ import React, { Fragment, useState } from "react";
 // reviewDetails:
 // }
 
-const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
+const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader }) => {
   const [active, setActive] = useState<number>(0);
+  const fetchAvatarImage = (avatar_path: string) => {
+    return RegExp("https://secure.gravatar.com/avatar").test(`${avatar_path}` as string)
+      ? `${avatar_path?.replace("/", "")}?s=128`
+      : `https://image.tmdb.org/t/p/w64_and_h64_face${avatar_path}`;
+  };
+
+  const parseDate = (dateString: string) => {
+    var parts = dateString.split("-") as string[];
+    // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
+    // January - 0, February - 1, etc.
+    var mydate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+    var longMonthName = mydate.toLocaleString("default", { month: "long" });
+    var res = mydate.toDateString().split(" ");
+    var unknownDate = res.filter((ele) => {
+      if (ele === "Invalid") return true;
+    });
+    if (unknownDate.length > 0) return "";
+    var resString = `${longMonthName} ${res[2]}, ${res[3]}`;
+    return resString;
+  };
 
   return (
     <Fragment>
-      <Text style={{ ...subHeader, fontSize: 16, marginLeft: 32, color: color.ACTIVE }}>Reviews</Text>
+      <Text style={{ ...DetailTextHeader, marginLeft: 42 }}>Reviews</Text>
       {reviewDetails.length > 0 ? (
         <View
-          style={{ ...shadowStyle, backgroundColor: color.BLACK, borderRadius: 16, height: setHeight(16), margin: 12, marginBottom: 20 }}>
-          <ScrollView nestedScrollEnabled={true} bounces={true}>
+          style={{ ...shadowStyle, backgroundColor: color.BLACK, borderRadius: 16, height: setHeight(24), margin: 12, marginBottom: 40 }}>
+          <ScrollView nestedScrollEnabled={true} bounces={false}>
             {reviewDetails.map((item: IResultReview, index: number) => {
               let [showMore, setShowmore] = useState<Boolean>(true);
 
@@ -36,7 +56,38 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle }) => {
                   }}
                   key={`${item.author}-${index}`}>
                   <View style={{ ...overViewStyle, backgroundColor: color.SECONDARY_COLOR, marginVertical: 12 }}>
-                    <Text style={{ ...subHeader, color: color.GREEN }}>{item.author}</Text>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        alignContent: "space-between",
+                      }}>
+                      {item.author_details ? (
+                        <View
+                          style={{
+                            width: setWidth(9),
+                            height: setHeight(4.1),
+                            backgroundColor: color.AMBER,
+                            borderRadius: 50,
+                            zIndex: -1,
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}>
+                          {item.author_details.avatar_path ? (
+                            <Image
+                              source={{ uri: fetchAvatarImage(item.author_details.avatar_path as string) }}
+                              style={{ width: "80%", height: "80%", borderRadius: 50, resizeMode: "cover" }}
+                            />
+                          ) : (
+                            <Text style={{ fontSize: 16, color: color.SECONDARY_COLOR }}> {item.author_details.username[0]}</Text>
+                          )}
+                        </View>
+                      ) : null}
+                      <Text style={{ ...subHeader, color: color.GREEN }}> {item.author}</Text>
+                    </View>
+                    <View style={{ justifyContent: "flex-end" }}>
+                      <Text style={{ ...subHeader }}>Posted on {parseDate(item.created_at)}</Text>
+                    </View>
                     <Text style={{ ...OverviewDetailsText, color: color.SEMI_BLACK }}>{showText}</Text>
                     <Text style={{ ...normalText, textAlign: "right", color: color.BLACK, fontWeight: "800" }} onPress={handleShowMore}>
                       {showMore ? "Show more" : "Show less"}
