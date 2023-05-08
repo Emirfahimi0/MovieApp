@@ -1,4 +1,4 @@
-import { Alert, Modal, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Modal, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import { ButtonContainerRating, CardContainer } from "../../constants/style-component/viewComponent";
 import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
 import { RatingText, normalText, subDetail } from "../../constants/style-component/textComponent";
@@ -38,7 +38,6 @@ export const ButtonModalRating = ({
     successMessage = resRating.success ? "success" : "error";
     if (resRating.success === true) {
       title = `Rating posted ${successMessage}`;
-      //Alert.alert("Rating posted succesfully.");
       setVisible(visible);
       setPostRatingDisable(true);
     }
@@ -109,7 +108,6 @@ export const ButtonModalRating = ({
         visible={visible}
         onRequestClose={() => {
           postRatingDisable;
-          Alert.alert("Modal has been closed.");
           setVisible(!visible);
         }}>
         <View style={centeredViewRating}>

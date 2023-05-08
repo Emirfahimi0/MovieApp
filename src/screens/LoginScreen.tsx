@@ -1,14 +1,14 @@
-import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { ButtonContainerRating, CardContainer, InputContainer, Logincontainer } from "../constants/style-component/viewComponent";
 import { InputLogin, normalText, loginText } from "../constants/style-component/textComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { useEffect, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
-import { fetchGenreItem, handleLoginWithFaceId } from "../components/features/handleFunctions";
+import { handleLoginWithFaceId } from "../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import color from "../constants/Color";
-import { Genre } from ".";
+import { ToastMessage } from "../components/features/ToastMessage";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");
@@ -30,11 +30,8 @@ const LoginScreen = ({ navigation }) => {
     const responseLoginFaceId: boolean = await handleLoginWithFaceId();
     console.log("is response face id?", responseLoginFaceId);
     if (responseLoginFaceId === true) {
-      const responseGenre: Genre[] = await fetchGenreItem();
-      if (responseGenre !== undefined) {
-        AsyncStorage.setItem("userLoggedIn", JSON.stringify(true));
-        navigation.navigate("HomeScreen");
-      }
+      AsyncStorage.setItem("userLoggedIn", JSON.stringify(true));
+      navigation.navigate("HomeScreen");
     } else {
       console.log("something wrong with authentication");
     }
@@ -43,20 +40,19 @@ const LoginScreen = ({ navigation }) => {
 
   // arrow function for handling validation and submission of the formdata
   const onSubmitHandler = async () => {
+    const success = "error";
     if (userEmail === "") {
-      Alert.alert("User email is empty");
+      ToastMessage(success, "Error", "User email is empty!");
     }
     if (userPassword === "") {
-      Alert.alert("User password is empty");
+      ToastMessage(success, "Error", "User password is empty!");
     } else {
       const isSuccess = await sessionWithLogIn(userEmail, userPassword);
       if (isSuccess) {
         navigation.navigate("HomeScreen");
+      } else {
+        ToastMessage(success, "Error", "Invalid credential!");
       }
-      // else {
-      //   Alert.alert("Invalid credential or unknown error occurs");
-      // }
-      //To do
     }
   };
   return (
