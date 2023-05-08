@@ -2,7 +2,6 @@ import { handleMovieDetail } from "../components/features/handleFunctions";
 import Icon from "react-native-vector-icons/Ionicons";
 import { homeCardContainer, noDataStyle } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types/global";
 import { Text, TouchableWithoutFeedback, View } from "react-native";
 import Loader from "../components/features/Loader";
 import React, { useState, Fragment, useEffect, useContext } from "react";
@@ -10,7 +9,7 @@ import { subHeader } from "../constants/style-component/textComponent";
 import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
 import WatchListCard from "../components/movie-component/WatchListCard";
 import color from "../constants/Color";
-import { headerContainerStyle } from "../components/detail-component/HeaderContainerDetails";
+import { headerContainerStyle } from "../constants/style-component/viewComponent";
 import Font from "../constants/Font";
 interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {}
 
@@ -48,12 +47,17 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
           backgroundColor: color.SEMI_BLACK,
           height: "auto",
           flexDirection: "row",
-          justifyContent: "center",
         }}>
-        <TouchableWithoutFeedback onPress={handleGoBack}>
-          <Icon name="md-chevron-back" size={32} color={"white"} />
-        </TouchableWithoutFeedback>
-        <View style={{ justifyContent: "flex-end" }}>
+        <View
+          style={{
+            justifyContent: "flex-start",
+            flexDirection: "row",
+          }}>
+          <TouchableWithoutFeedback onPress={handleGoBack}>
+            <Icon name="md-chevron-back" size={32} color={"white"} />
+          </TouchableWithoutFeedback>
+        </View>
+        <View style={{ justifyContent: "center", alignContent: "center", alignItems: "center", alignSelf: "center" }}>
           <Text
             style={{
               fontFamily: Font.BOLD,

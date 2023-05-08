@@ -1,10 +1,11 @@
 import { Alert, Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { Dispatch, Fragment, SetStateAction, useCallback, useContext, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useCallback, useState } from "react";
 import {
   CardContainer,
   ContainerRow,
   ImagePosterDetail,
   MovieDetailContainer,
+  headerContainerStyle,
   posterImage,
   setHeight,
   smallDetail,
@@ -14,59 +15,34 @@ import { additionalDetailText, normalText, MovieDetailTitle, RatingText } from "
 import { ButtonModalRating } from "./ButtonModalRating";
 import { ItemSeparator } from "../movie-component/ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
-import { setWatchlist } from "../../services/api-services";
 import Icon from "react-native-vector-icons/Ionicons";
 import color from "../../constants/Color";
-import { WatchlistContext } from "../../context/watchlist-context/WatchlistContext";
 import YoutubeIframe from "react-native-youtube-iframe";
 import Font from "../../constants/Font";
+import { ToastMessage } from "../features/ToastMessage";
 
 interface IHeaderContainerDetails {
-  getUpdatedAccState: () => void;
   onPress: () => void;
   postRatingDisable: boolean | { value: number } | undefined;
   ratingVal: number;
+  handleWatchlist: () => void;
   selectedMovie: IMovieDetail | undefined;
+  existWatchlist: boolean;
   setPostRatingDisable: Dispatch<SetStateAction<boolean | { value: number } | undefined>>;
   setRating: Dispatch<SetStateAction<number>>;
-  state: IAccountState;
 }
 
 export const HeaderContainerDetails = ({
-  getUpdatedAccState,
   onPress,
   postRatingDisable,
   ratingVal,
   selectedMovie,
   setPostRatingDisable,
   setRating,
-  state,
+  handleWatchlist,
+  existWatchlist,
 }: IHeaderContainerDetails) => {
-  const [existWatchlist, setExistWatchlist] = useState<boolean>(state?.watchlist);
   const [playTrailer, setPlayTrailer] = useState<boolean>(false);
-  const { getWatchlistData } = useContext(WatchlistContext);
-
-  const handleWatchList = async () => {
-    // Get the data first and complementary based on what user click
-    const data: IWatchListResponse = await setWatchlist(selectedMovie, !existWatchlist);
-    // if response of the data return success.
-    if (data.success) {
-      setExistWatchlist(!existWatchlist);
-      if (existWatchlist) {
-        getWatchlistData();
-        Alert.alert("Item remove from watchlist");
-      } else {
-        Alert.alert("Item added to watchlist!");
-      }
-    } else {
-      if (existWatchlist) {
-        Alert.alert("unable to add item in the watchlist.");
-      } else {
-        Alert.alert("unable to remove item in the watchlist.");
-      }
-    }
-  };
-
   const trailer = selectedMovie?.videos.results.find((vid) => vid.name === "Official Trailer");
 
   const onStateChange = useCallback((state: string) => {
@@ -79,11 +55,24 @@ export const HeaderContainerDetails = ({
   const togglePlaying = useCallback(() => {
     setPlayTrailer((prev) => !prev);
   }, []);
+
+  const playButton: ViewStyle = {
+    flexDirection: "row",
+    position: "absolute",
+    alignSelf: "center",
+    bottom: "80%",
+    borderRadius: 50,
+    backgroundColor: color.TRANSPARENT,
+    borderColor: color.SECONDARY_COLOR,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1,
+  };
   return (
     <Fragment>
-      <View style={{ position: "absolute", paddingHorizontal: "4%", zIndex: 1, top: 40, left: 30 }}>
+      <View style={{ position: "absolute", zIndex: 1, top: 32, left: 8 }}>
         <TouchableOpacity onPress={onPress}>
-          <Icon name="return-up-back-outline" size={30} color={color.HEART} />
+          <Icon name="chevron-back-outline" size={30} color={color.ACTIVE} />
         </TouchableOpacity>
       </View>
       <View style={headerContainerStyle}>
@@ -129,11 +118,11 @@ export const HeaderContainerDetails = ({
         </View>
 
         <ItemSeparator height={setHeight(2)} />
-        <View style={MovieDetailContainer}>
+        <View style={{ ...MovieDetailContainer, flexDirection: "column", flex: 1 }}>
           <Text style={MovieDetailTitle} numberOfLines={2}>
             {selectedMovie?.title}
           </Text>
-          <View style={ContainerRow}>
+          <View style={{ ...ContainerRow, paddingTop: 8 }}>
             <Icon name="heart-sharp" size={15} color="red" />
             <Text style={RatingText}>{selectedMovie?.vote_average.toFixed(1)}</Text>
           </View>
@@ -170,7 +159,7 @@ export const HeaderContainerDetails = ({
           <Text style={additionalDetailText}>Status: {selectedMovie?.status.toString()}</Text>
         </View>
         <View style={{ ...smallDetail }}>
-          <TouchableOpacity onPress={() => handleWatchList()}>
+          <TouchableOpacity onPress={handleWatchlist}>
             <View
               style={{
                 ...(existWatchlist
@@ -190,9 +179,9 @@ export const HeaderContainerDetails = ({
 
           <ButtonModalRating
             selectedMovie={selectedMovie}
-            getUpdatedAccState={getUpdatedAccState}
             ratingVal={ratingVal}
             setRating={setRating}
+            ToastMessage={ToastMessage}
             postRatingDisable={postRatingDisable}
             setPostRatingDisable={setPostRatingDisable}
           />
@@ -200,33 +189,4 @@ export const HeaderContainerDetails = ({
       </View>
     </Fragment>
   );
-};
-
-export const headerContainerStyle: ViewStyle = {
-  alignItems: "center",
-  alignContent: "center",
-  justifyContent: "center",
-  borderBottomRightRadius: 40,
-  borderBottomLeftRadius: 40,
-  backgroundColor: color.SECONDARY_COLOR,
-  paddingHorizontal: 10,
-  paddingVertical: 80,
-  shadowOpacity: 1.0,
-  shadowOffset: {
-    height: 0,
-    width: -3,
-  },
-};
-
-const playButton: ViewStyle = {
-  flexDirection: "row",
-  position: "absolute",
-  alignSelf: "center",
-  bottom: "80%",
-  borderRadius: 50,
-  backgroundColor: color.TRANSPARENT,
-  borderColor: color.SECONDARY_COLOR,
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 1,
 };

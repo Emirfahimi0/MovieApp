@@ -5,13 +5,10 @@ import { ItemSeparator } from "./ItemSeparator";
 import color from "../../constants/Color";
 import { setHeight } from "../../constants/style-component/viewComponent";
 
-interface ICard<T> {
+interface ICard<TGenre> {
   id: string;
-  value: T;
+  value: TGenre;
 }
-// const genres: TGenre[] = [];
-
-// const providerCardData: ICard[] = genres.map((eachGenre) => ({ id: eachGenre.id, value: eachGenre.name }));
 
 interface ICardButtons<T> {
   data: ICard<T>[];

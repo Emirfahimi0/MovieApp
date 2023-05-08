@@ -107,6 +107,21 @@ export const movieContainer:ViewStyle= {
     flex:1,
     paddingBottom:30
   }
+
+  export const headerContainerStyle: ViewStyle = {
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
+    paddingVertical: "12%",
+    borderBottomRightRadius: 40,
+    borderBottomLeftRadius: 40,
+    backgroundColor: color.SECONDARY_COLOR,
+    shadowOpacity: 1.0,
+    shadowOffset: {
+      height: 0,
+      width: -3,
+    },
+  };
 export const  ImagePosterDetail:ViewStyle = {
 
   alignItems:"center",

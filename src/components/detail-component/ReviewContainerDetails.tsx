@@ -17,26 +17,43 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader
   };
 
   const parseDate = (dateString: string) => {
-    var parts = dateString.split("-") as string[];
+    let parts = dateString.split("-") as string[];
     // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
     // January - 0, February - 1, etc.
-    var mydate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-    var longMonthName = mydate.toLocaleString("default", { month: "long" });
-    var res = mydate.toDateString().split(" ");
-    var unknownDate = res.filter((ele) => {
-      if (ele === "Invalid") return true;
+    let mydate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+    const longMonthName = mydate.toLocaleString("default", { month: "long" });
+    const res = mydate.toDateString().split(" ");
+    const unknownDate = res.filter((ele) => {
+      return ele === "Invalid" ? true : false;
     });
     if (unknownDate.length > 0) return "";
-    var resString = `${longMonthName} ${res[2]}, ${res[3]}`;
+    const resString = `${longMonthName} ${res[2]}, ${res[3]}`;
     return resString;
   };
 
   return (
     <Fragment>
-      <Text style={{ ...DetailTextHeader, marginLeft: 42 }}>Reviews</Text>
+      <View
+        style={{
+          backgroundColor: color.SEMI_BLACK,
+          marginHorizontal: 32,
+          borderTopLeftRadius: 25,
+          borderBottomRightRadius: 25,
+          padding: 8,
+          alignItems: "center",
+        }}>
+        <Text style={{ ...DetailTextHeader, justifyContent: "center" }}>Reviews</Text>
+      </View>
       {reviewDetails.length > 0 ? (
         <View
-          style={{ ...shadowStyle, backgroundColor: color.BLACK, borderRadius: 16, height: setHeight(24), margin: 12, marginBottom: 40 }}>
+          style={{
+            ...shadowStyle,
+            backgroundColor: color.BLACK,
+            borderRadius: 16,
+            height: reviewDetails.length === 1 ? "auto" : setHeight(24),
+            margin: 12,
+            marginBottom: 40,
+          }}>
           <ScrollView nestedScrollEnabled={true} bounces={false}>
             {reviewDetails.map((item: IResultReview, index: number) => {
               let [showMore, setShowmore] = useState<Boolean>(true);

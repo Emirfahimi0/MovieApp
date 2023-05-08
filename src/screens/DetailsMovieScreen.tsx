@@ -1,51 +1,77 @@
 import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
+import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ScrollView, ViewStyle, View, TextStyle } from "react-native";
+import { setWatchlist } from "../services/api-services";
 import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
+import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
+import color from "../constants/Color";
+import Font from "../constants/Font";
 import Loader from "../components/features/Loader";
 import React, { useContext, useEffect, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
-import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
-import color from "../constants/Color";
-import Font from "../constants/Font";
+import { ToastMessage } from "../components/features/ToastMessage";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
 const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   const { MovieDetailsState, reviewState } = useContext(DetailContext);
   const selectedMovie: IMovieDetail | undefined = MovieDetailsState;
-  const [accountState, setAccountState] = useState<IAccountState>();
+  const { getWatchlistData } = useContext(WatchlistContext);
   const [ratingVal, setRatingVal] = useState<number>(5);
-  const [postRatingDisable, setPostRatingDisable] = useState<boolean | { value: number } | undefined>();
-
+  const [loading, setLoading] = useState<boolean>(false);
+  const [existWatchlist, setExistWatchlist] = useState<boolean>(true);
+  const [postRatingDisable, setPostRatingDisable] = useState<boolean | { value: number } | undefined>(true);
+  let title = `${selectedMovie?.id}`;
+  let message = "";
   // const ref = useRef()
   const handleGoBack = () => {
     navigation.goBack();
   };
-  // console.log(`${POSTER_BASE_URL}w300/${item.logo_path}`)
-  //console.log(`${POSTER_BASE_URL}w300/${MovieDetailsState["watch/providers"].results.AT.buy[0].logo_path}`);
+
   const getUpdatedAccState = async (): Promise<void> => {
     const resFetchState: IAccountState = await fetchAccountState(MovieDetailsState?.id);
-
     try {
       if (resFetchState !== undefined) {
-        setAccountState(resFetchState);
-        if (typeof accountState?.rated === "object") {
-          setRatingVal(accountState?.rated.value);
+        setExistWatchlist(resFetchState.watchlist);
+        if (typeof resFetchState.rated === "object") {
+          setRatingVal(resFetchState.rated.value);
           setPostRatingDisable(true);
-        } else if (resFetchState?.rated === false) {
-          let stateRating: boolean | { value: number } = resFetchState?.rated;
+        } else if (resFetchState.rated === false) {
+          let stateRating: boolean | { value: number } = resFetchState.rated;
           setPostRatingDisable(stateRating);
           setRatingVal(0);
-        } else {
-          setAccountState(resFetchState);
-          console.log("something satisfied here");
         }
+        setLoading(false);
       }
     } catch (error) {
       console.log("error ", error);
+    }
+  };
+  const handleWatchList = async () => {
+    // Get the data first and complementary based on what user click
+    const data: IWatchListResponse = await setWatchlist(selectedMovie, !existWatchlist);
+    // if response of the data return success.
+    const responseSuccess = data.success ? "success" : "error";
+    if (data.success) {
+      setExistWatchlist(!existWatchlist);
+      if (existWatchlist) {
+        getWatchlistData();
+        message = `${selectedMovie?.title} is removed from watchlist`;
+      } else {
+        message = `${selectedMovie?.title} Item added to watchlist😎`;
+      }
+
+      ToastMessage(responseSuccess, title, message);
+    } else {
+      if (existWatchlist) {
+        message = `Unable to add ${selectedMovie?.title} in the watchlist.${data.status_message}`;
+      } else {
+        message = `unable to add ${selectedMovie?.title} in the watchlist.${data.status_message}`;
+      }
+      ToastMessage(responseSuccess, "error", message);
     }
   };
 
@@ -69,14 +95,14 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   };
   return (
     <ScrollView style={{ flex: 1 }} nestedScrollEnabled={true} bounces={false}>
-      {accountState !== undefined ? (
+      {!loading ? (
         <>
           <HeaderContainerDetails
             selectedMovie={selectedMovie}
-            getUpdatedAccState={getUpdatedAccState}
             onPress={handleGoBack}
+            existWatchlist={existWatchlist}
+            handleWatchlist={handleWatchList}
             postRatingDisable={postRatingDisable}
-            state={accountState}
             setRating={setRatingVal}
             setPostRatingDisable={setPostRatingDisable}
             ratingVal={ratingVal}

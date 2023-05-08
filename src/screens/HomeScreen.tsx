@@ -13,14 +13,14 @@ interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "H
 
 const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   // always use set function
-  const [searchText, setSearchText] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>();
-  const { handleMovies, filteredMovieState, movieState } = useContext(MovieContext);
-  const [genreState, setGenreState] = useState<TGenre[]>([]);
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
+  const [genreState, setGenreState] = useState<TGenre[]>([]);
+  const [loading, setLoading] = useState<boolean>();
+  const [searchText, setSearchText] = useState<string>("");
   const [selectedMovieType, setSelectedMovieType] = useState<string>("");
   const [value, setValue] = useState<string>("");
   const { filterMovieByGenre } = useContext(MovieContext);
+  const { handleMovies, filteredMovieState, movieState } = useContext(MovieContext);
   const actionId = genreState.filter((item) => item.name === "Action");
 
   const data: Array<{ label: string; value: string }> = [
@@ -40,7 +40,6 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
 
   const handlePressGenre = async (genre: TGenre, index: number) => {
     filterMovieByGenre(genre, index);
-    console.log("is press?");
   };
 
   const handleFetchAccountDetails = async () => {
@@ -61,8 +60,8 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
       handleMovies(responseApiMovie, actionId[0]);
       setLoading(false);
     } else {
+      //Toast Message
       Alert.alert("Cannot fetch data from api");
-      setLoading(false);
     }
   };
 
@@ -84,23 +83,24 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
 
   const handleWatchList = async () => {
     const navigationGoBack = true;
+
     navigation.navigate("WatchlistScreen", { navGoBack: navigationGoBack });
   };
 
   return (
     <Fragment>
+      <HeaderComponent
+        searchText={searchText}
+        setSearchText={setSearchText}
+        handleWatchList={handleWatchList}
+        accountDetails={accountDetails}
+      />
       {loading || filteredMovieState.length < 0 ? (
         <>
           <Loader />
         </>
       ) : (
         <>
-          <HeaderComponent
-            searchText={searchText}
-            setSearchText={setSearchText}
-            handleWatchList={handleWatchList}
-            accountDetails={accountDetails}
-          />
           <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} value={value} setValue={setValue} />
           <ScreenCardContainer
             Genres={genreState}

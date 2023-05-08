@@ -11,19 +11,23 @@ export interface IButtonModalRating {
   ratingVal: number;
   setPostRatingDisable: Dispatch<SetStateAction<boolean | { value: number } | undefined>>;
   postRatingDisable: boolean | { value: number } | undefined;
-  getUpdatedAccState: () => void;
+  ToastMessage: (type: string, title: string, message: string) => void;
   setRating: Dispatch<SetStateAction<number>>;
 }
 export const ButtonModalRating = ({
   selectedMovie,
   ratingVal,
   setRating,
-  getUpdatedAccState,
   postRatingDisable,
   setPostRatingDisable,
+  ToastMessage,
 }: IButtonModalRating) => {
   const [visible, setVisible] = useState<boolean>(false);
+
   const review: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  let subMessage = "";
+  let successMessage = "";
+  let title = `${selectedMovie}`;
 
   const openModal = () => {
     setVisible(true);
@@ -31,19 +35,15 @@ export const ButtonModalRating = ({
 
   const HandlePostRating = async () => {
     const resRating: IRating = await postRatingbyId(selectedMovie?.id, ratingVal);
+    successMessage = resRating.success ? "success" : "error";
     if (resRating.success === true) {
-      Alert.alert("Rating posted succesfully.");
-      // setPostRatingDisable(false);
-      //getUpdatedAccState();
+      title = `Rating posted ${successMessage}`;
+      //Alert.alert("Rating posted succesfully.");
       setVisible(visible);
-    } else {
-      Alert.alert("unknown error occured");
+      setPostRatingDisable(true);
     }
-    console.log(resRating.status_message);
-    setPostRatingDisable(true);
-    setVisible(!visible);
-
-    //To do --> Open modal and submit rating
+    // setVisible(!visible);
+    ToastMessage(successMessage, title, resRating.status_message);
   };
 
   const HandleSetRating = (value: number) => {
@@ -57,15 +57,49 @@ export const ButtonModalRating = ({
   const HandleDeleteRating = async () => {
     console.log("current rating", ratingVal);
     const resRating: IRating = await deleteRatingbyId(selectedMovie?.id, ratingVal);
+    subMessage = resRating.status_message;
+    successMessage = resRating.success ? "success" : "error";
     if (resRating.status_code === 13) {
-      Alert.alert("rating deleted successfully.");
+      title = "Rating deleted successful";
       setVisible(false);
       setRating(0);
       setPostRatingDisable(false);
-      //getUpdatedAccState();
     }
+    //getUpdatedAccState();
+    ToastMessage(successMessage, title, subMessage);
   };
-  let disable = postRatingDisable === false ? true : false;
+  let disable = postRatingDisable ? false : true;
+
+  const centeredViewRating: ViewStyle = {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+  const modalViewRating: ViewStyle = {
+    margin: 20,
+    width: 300,
+    height: 200,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    flexDirection: "column",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  };
+
+  const RatingStarIcon: ViewStyle = {
+    paddingTop: 25,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+  };
 
   return (
     <View style={ButtonContainerRating}>
@@ -112,35 +146,4 @@ export const ButtonModalRating = ({
       </TouchableOpacity>
     </View>
   );
-};
-
-const centeredViewRating: ViewStyle = {
-  flex: 1,
-  width: "100%",
-  justifyContent: "center",
-  alignItems: "center",
-};
-const modalViewRating: ViewStyle = {
-  margin: 20,
-  width: 300,
-  height: 200,
-  backgroundColor: "white",
-  borderRadius: 20,
-  padding: 35,
-  alignItems: "center",
-  shadowColor: "#000",
-  flexDirection: "column",
-  shadowOffset: {
-    width: 0,
-    height: 2,
-  },
-  shadowOpacity: 0.25,
-  shadowRadius: 4,
-  elevation: 5,
-};
-
-const RatingStarIcon: ViewStyle = {
-  paddingTop: 25,
-  flexDirection: "row",
-  justifyContent: "space-evenly",
 };

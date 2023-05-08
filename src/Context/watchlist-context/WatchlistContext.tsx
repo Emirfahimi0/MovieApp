@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { TMovieType } from "../../screens";
 import { fetchWatchlist } from "../../components/features/handleFunctions";
 
 export interface IInitialState {

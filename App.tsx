@@ -1,19 +1,21 @@
-import React from "react";
-import { StackNavigator } from "./src/components/features//StackNavigator";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StatusBar } from "react-native";
 import { AppContextProviders } from "./src/context/utils/AppContextProvider";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StackNavigator } from "./src/components/features//StackNavigator";
+import { StatusBar } from "react-native";
+import React, { Fragment } from "react";
+import Toast from "react-native-toast-message";
 
 function App() {
   return (
-    <React.Fragment>
+    <Fragment>
       <AppContextProviders>
         <SafeAreaView>
           <StatusBar barStyle={"dark-content"} translucent={false} />
         </SafeAreaView>
         <StackNavigator />
+        <Toast />
       </AppContextProviders>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

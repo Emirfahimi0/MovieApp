@@ -27,7 +27,7 @@ export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDet
         style={{
           ...homeCardContainer,
         }}>
-        <ListCardButtons<TlistGenre> data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
+        <ListCardButtons<TGenre> data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
         <View>
           {Object.keys(Movie).length > 0 && active !== undefined ? (
             <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
