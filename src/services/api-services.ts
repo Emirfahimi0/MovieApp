@@ -10,8 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // Get method for trending movie
 export const  getTrendingmovie = async():Promise<TMovieType[]> => {
     const data = await axios.get(ENDPOINTS.GET_TRENDING,{responseType:'json'}).then((response)=>{
-        let responseData = response.data.results
-        return responseData
+        return response.data.results
     })
     return data
 }
@@ -24,13 +23,33 @@ const data = await axios.get(`${ENDPOINTS.GET_MOVIETYPE}${movieType}?api_key=${A
 return data
 }
 
+// Get method that fetch details of the movie
+export const getMovieDetails = async (id:number):Promise<IMovieDetail> => {
+    const params = {
+        append_to_response:"watch/providers,videos"
+    }
+    const url = `${ENDPOINTS.GET_DETAILS}${id}?${TMDB_API_KEY}`
+    const data = await axios.get(url,{params:params,responseType:"json"}).then((res)=>{
+        return res.data
+    })
+    return data
+
+}
+
+// GET method to fetch genre of all movies
+export const getGenreMovie = async ():Promise<TGenre[]> => {
+    const resGenre = await axios.get(ENDPOINTS.GET_GENRES, {
+            responseType: "json",
+          })
+          .then((response)=> {
+            return response.data.genres;
+          });
+    return resGenre;
+}
 /* Get request token*/
 export const createRequestToken = async  (): Promise<TResponseToken> => {
    const data:TResponseToken =  (await Promise.resolve(axios.get<TResponseToken>(ENDPOINTS.CREATE_REQUEST_TOKEN,{responseType:"json"}))).data
         return data;
-    
-    
-    
 } 
 /* create new session */
 export const createNewSession = async(token:string): Promise<TSession> => {
@@ -70,7 +89,6 @@ export const createNewSession = async(token:string): Promise<TSession> => {
  /* Session with log In  */
 export const sessionWithLogIn = async (username:string,password:string):Promise<boolean> => {
              let isAuthenticated = false;
-        
       
             const requestToken: TResponseToken  = await createRequestToken()
             if( requestToken.success===true){
@@ -117,9 +135,7 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
             }
             isAuthenticated = true
         }
-
    
-    console.log("isAuthenticated",isAuthenticated)
     return isAuthenticated;
     
  }
@@ -189,8 +205,6 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
 
  
 
-
-
 // POST method for adding watchlist
 export const setWatchlist =async (movie:IMovieDetail | TMovieType |undefined,value:boolean):Promise<IWatchListResponse> => {
     //need body request
@@ -198,9 +212,8 @@ export const setWatchlist =async (movie:IMovieDetail | TMovieType |undefined,val
         status_code :0,
         status_message:"",
         success: true
-
-
     }
+
     let current_Session:IResponseTokenMerge = {
         success: false,
         request_token:"",
@@ -231,11 +244,11 @@ export const setWatchlist =async (movie:IMovieDetail | TMovieType |undefined,val
         };
       
        await axios.request(options)
-        .then( (response)=>{
+        .then((response)=>{
             response = response.data
            
         })
-        .catch( (error)=> {
+        .catch((error)=> {
             console.error("error",error);
     
         });
@@ -308,15 +321,14 @@ export const postRatingbyId = async (id:number|undefined,rateValue:number):Promi
     };
    
    await axios.request(options)
-    .then( (response) =>{
+    .then((response) =>{
         responseRating =response.data
          
     })
-    .catch( (error) =>{
+    .catch((error) =>{
         console.error("error",error);
 
     });
-    console.log('response Rating',responseRating)
     return responseRating
 }
 
@@ -354,13 +366,13 @@ export const deleteRatingbyId = async (id:number|undefined,rateValue:number):Pro
         
     };
    await axios.request(options)
-    .then( (response)=> {
+    .then((response)=> {
         console.log("response from session login",response.data.success);
         responseRating =response.data
         
 
     })
-    .catch( (error)=> {
+    .catch((error)=> {
         console.error("error",error);
 
     });
@@ -380,27 +392,3 @@ export const getReviewById = async (id:number) => {
 
 }
 
-
-// Get method that fetch details of the movie
-export const getMovieDetails = async (id:number):Promise<IMovieDetail> => {
-    const params = {
-        append_to_response:"watch/providers,videos"
-    }
-    const url = `${ENDPOINTS.GET_DETAILS}${id}?${TMDB_API_KEY}`
-    let data = await axios.get(url,{params:params,responseType:"json"}).then((res)=>{
-        return res.data
-    })
-    return data
-
-}
-
-// GET method to fetch genre of all movies
-export const getGenreMovie = async ():Promise<TGenre[]> => {
-    const resGenre = await axios.get(ENDPOINTS.GET_GENRES, {
-            responseType: "json",
-          })
-          .then(function(response) {
-            return response.data.genres;
-          });
-    return resGenre;
-}
