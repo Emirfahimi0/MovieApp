@@ -77,8 +77,8 @@ export const ButtonModalRating = ({
   };
   const modalViewRating: ViewStyle = {
     margin: 20,
-    width: 300,
-    height: 200,
+    width: 250,
+    height: "auto",
     backgroundColor: "white",
     borderRadius: 20,
     padding: 35,

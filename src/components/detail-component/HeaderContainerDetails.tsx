@@ -60,12 +60,11 @@ export const HeaderContainerDetails = ({
     flexDirection: "row",
     position: "absolute",
     alignSelf: "center",
-    bottom: "80%",
+    bottom: "77%",
     borderRadius: 50,
-    backgroundColor: color.TRANSPARENT,
-    borderColor: color.SECONDARY_COLOR,
+    backgroundColor: color.BLACK,
+    borderColor: color.AMBER,
     justifyContent: "center",
-    alignItems: "center",
     zIndex: 1,
   };
   return (
@@ -118,11 +117,11 @@ export const HeaderContainerDetails = ({
         </View>
 
         <ItemSeparator height={setHeight(2)} />
-        <View style={{ ...MovieDetailContainer, flexDirection: "column", flex: 1 }}>
-          <Text style={MovieDetailTitle} numberOfLines={2}>
+        <View style={{ ...MovieDetailContainer, justifyContent: "center", flex: 1 }}>
+          <Text style={{ ...MovieDetailTitle }} numberOfLines={2}>
             {selectedMovie?.title}
           </Text>
-          <View style={{ ...ContainerRow, paddingTop: 8 }}>
+          <View style={{ ...ContainerRow, justifyContent: "center", alignItems: "center" }}>
             <Icon name="heart-sharp" size={15} color="red" />
             <Text style={RatingText}>{selectedMovie?.vote_average.toFixed(1)}</Text>
           </View>
@@ -155,9 +154,9 @@ export const HeaderContainerDetails = ({
         <View style={smallDetail}>
           <Text style={additionalDetailText}>Release Date: {selectedMovie?.release_date.toString()}</Text>
         </View>
-        <View style={smallDetail}>
+        {/* <View style={smallDetail}>
           <Text style={additionalDetailText}>Status: {selectedMovie?.status.toString()}</Text>
-        </View>
+        </View> */}
         <View style={{ ...smallDetail, paddingBottom: 32 }}>
           <TouchableOpacity onPress={handleWatchlist}>
             <View

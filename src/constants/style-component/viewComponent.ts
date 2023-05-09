@@ -48,7 +48,7 @@ export const shadowStyle:ViewStyle = {
   shadowColor: color.ACTIVE,
   shadowOffset: { width: 0, height: -4 },
   shadowOpacity: 1.0,
-  shadowRadius: 16,
+  shadowRadius: 8,
 }
 export const movieContainer:ViewStyle= {
     backgroundColor: color.BUTTON,
@@ -110,8 +110,6 @@ export const movieContainer:ViewStyle= {
 
   export const headerContainerStyle: ViewStyle = {
     alignItems: "center",
-    alignContent: "center",
-    justifyContent: "center",
     paddingVertical: "12%",
     borderBottomRightRadius: 40,
     borderBottomLeftRadius: 40,
@@ -179,7 +177,7 @@ export const MovieDetailContainer:ViewStyle = {
   alignItems: "center",
   flexDirection: "row",
   justifyContent: "space-between",
-  paddingHorizontal: smallDetail.paddingHorizontal,
+  paddingHorizontal: 64,
 }
 
 export const ContainerRow :ViewStyle ={

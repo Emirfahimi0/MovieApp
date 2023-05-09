@@ -37,8 +37,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader
         style={{
           backgroundColor: color.SEMI_BLACK,
           marginHorizontal: 32,
-          borderTopLeftRadius: 25,
-          borderBottomRightRadius: 25,
+          borderRadius: 24,
           padding: 8,
           alignItems: "center",
         }}>
@@ -52,7 +51,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader
             borderRadius: 16,
             height: reviewDetails.length === 1 ? "auto" : setHeight(24),
             margin: 12,
-            marginBottom: 40,
+            marginBottom: 8,
           }}>
           <ScrollView nestedScrollEnabled={true} bounces={false}>
             {reviewDetails.map((item: IResultReview, index: number) => {
@@ -117,7 +116,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader
         </View>
       ) : (
         <View style={{ ...container, marginHorizontal: 20, backgroundColor: color.TRANSPARENT }}>
-          <Text style={{ ...normalText, marginLeft: 16, paddingVertical: 16, fontSize: 16 }}>no review...</Text>
+          <Text style={{ ...normalText, marginLeft: 16, paddingVertical: 16, fontSize: 16, textAlign: "center" }}>no review...</Text>
         </View>
       )}
     </Fragment>

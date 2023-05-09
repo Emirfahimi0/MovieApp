@@ -1,7 +1,7 @@
 import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState, handleMovieDetail } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
-import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
+import { homeCardContainer, noDataStyle, setHeight } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text, ImageBackground } from "react-native";
 import { setWatchlist } from "../services/api-services";
@@ -122,52 +122,9 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
               setPostRatingDisable={setPostRatingDisable}
               ratingVal={ratingVal}
             />
-            <View style={{ padding: 24, top: 4 }}>
-              <Text style={{ ...normalText, fontSize: 16 }}>Recommendations</Text>
-              <FlatList
-                data={selectedMovie?.recommendations.results}
-                horizontal
-                showsHorizontalScrollIndicator={true}
-                ItemSeparatorComponent={() => <ItemSeparator width={20} />}
-                ListFooterComponent={() => <ItemSeparator width={20} />}
-                renderItem={({ item, index }) => {
-                  const handleActive = () => {
-                    // setActive(index);
-                    // handlePress(item, index);
-                    handlePressRecommendations(item.id);
-                    console.log(item.id);
-                  };
-                  // const selectedButton: ViewStyle =
-                  //   active === index ? { backgroundColor: color.ACTIVE } : { backgroundColor: color.BASIC_BACKGROUND };
-                  // const selectedText: TextStyle = active === index ? { color: color.SECONDARY_COLOR, fontWeight: "800" } : { color: color.BLACK };
-
-                  return (
-                    <TouchableOpacity onPress={handleActive} key={index}>
-                      <View
-                        style={{
-                          alignItems: "center",
-                          flexDirection: "column",
-                          borderRadius: 5,
-                          justifyContent: "space-between",
-                          padding: 8,
-                          width: "auto",
-                        }}>
-                        <ImageBackground
-                          source={{ uri: `${POSTER_BASE_URL}original/${item.poster_path}` }}
-                          style={{ height: 80, width: 120, alignContent: "center" }}
-                          imageStyle={{ borderRadius: 10, width: 120 }}></ImageBackground>
-                        <Text style={{ fontFamily: Font.BOLD, fontSize: 14, color: color.ACTIVE, width: 120 }} numberOfLines={2}>
-                          {item.title}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                }}
-              />
-            </View>
 
             <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }} nestedScrollEnabled={true}>
-              <View style={{ ...homeCardContainer }}>
+              <View style={{ ...homeCardContainer, paddingTop: 12 }}>
                 <SubContainerDetail
                   overviewDetails={MovieDetailsState?.overview}
                   overViewStyle={overViewTextArea}
@@ -176,6 +133,50 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
                 <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} DetailTextHeader={DetailTextHeader} />
               </View>
             </ScrollView>
+            <View style={{ padding: 24, top: 0 }}>
+              <Text style={{ ...normalText, fontSize: 16 }}>Recommendations</Text>
+              {selectedMovie?.recommendations.results.length !== 0 ? (
+                <FlatList
+                  data={selectedMovie?.recommendations.results}
+                  horizontal
+                  showsHorizontalScrollIndicator={true}
+                  ItemSeparatorComponent={() => <ItemSeparator width={20} />}
+                  ListFooterComponent={() => <ItemSeparator width={20} />}
+                  renderItem={({ item, index }) => {
+                    const handleActive = () => {
+                      handlePressRecommendations(item.id);
+                      console.log(item.id);
+                    };
+
+                    return (
+                      <TouchableOpacity onPress={handleActive} key={index}>
+                        <View
+                          style={{
+                            alignItems: "center",
+                            flexDirection: "column",
+                            borderRadius: 5,
+                            justifyContent: "space-between",
+                            padding: 8,
+                            width: "auto",
+                          }}>
+                          <ImageBackground
+                            source={{ uri: `${POSTER_BASE_URL}original/${item.poster_path}` }}
+                            style={{ height: 80, width: 120, alignContent: "center" }}
+                            imageStyle={{ borderRadius: 10, width: 120 }}></ImageBackground>
+                          <Text
+                            style={{ fontFamily: Font.BOLD, fontSize: 14, color: color.ACTIVE, width: 120, textAlign: "center" }}
+                            numberOfLines={2}>
+                            {item.title}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  }}
+                />
+              ) : (
+                <Text style={normalText}> no recommendations availables</Text>
+              )}
+            </View>
           </>
         ) : (
           <Loader />
