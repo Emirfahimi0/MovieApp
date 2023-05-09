@@ -4,6 +4,7 @@ import { StackNavigator } from "./src/components/features//StackNavigator";
 import { StatusBar } from "react-native";
 import React, { Fragment } from "react";
 import Toast from "react-native-toast-message";
+import Color from "./src/constants/Color";
 
 function App() {
   return (

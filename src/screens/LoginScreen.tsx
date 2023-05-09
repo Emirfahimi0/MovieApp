@@ -3,16 +3,18 @@ import { ButtonContainerRating, CardContainer, InputContainer, Logincontainer } 
 import { InputLogin, normalText, loginText } from "../constants/style-component/textComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
 import { handleLoginWithFaceId } from "../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import color from "../constants/Color";
 import { ToastMessage } from "../components/features/ToastMessage";
+import { GlobalContext } from "../context/GlobalState";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
+  const { isUserLoggedIn } = useContext(GlobalContext);
 
   useEffect(() => {
     handleFaceID();
@@ -30,15 +32,19 @@ const LoginScreen = ({ navigation }) => {
     const responseLoginFaceId: boolean = await handleLoginWithFaceId();
     console.log("is response face id?", responseLoginFaceId);
     if (responseLoginFaceId === true) {
+      console.log("responseLoginFaceId is ", responseLoginFaceId);
+      isUserLoggedIn(true);
       AsyncStorage.setItem("userLoggedIn", JSON.stringify(true));
       navigation.navigate("HomeScreen");
     } else {
+      console.log("responseLoginFaceId is false");
+      isUserLoggedIn(false);
       console.log("something wrong with authentication");
     }
     //}
   };
 
-  // arrow function for handling validation and submission of the formdata
+  // arrow function for handling validation and submission
   const onSubmitHandler = async () => {
     const success = "error";
     if (userEmail === "") {

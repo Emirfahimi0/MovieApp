@@ -4,10 +4,10 @@ import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { fetchGenreItem, handleMovieDetail } from "../components/features/handleFunctions";
 import Loader from "../components/features/Loader";
-import { Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { MovieContext } from "../context/movie-context/MovieContext";
 import CustomDropDown from "../components/movie-component/CustomDropDown";
+import { ToastMessage } from "../components/features/ToastMessage";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -61,7 +61,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
       setLoading(false);
     } else {
       //Toast Message
-      Alert.alert("Cannot fetch data from api");
+      ToastMessage("error", "Error", "Cannot fetch data from api");
     }
   };
 
@@ -107,7 +107,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             handleMovieDetail={handleMovieDetail}
             handlePressGenre={handlePressGenre}
             loading={loading}
-            Movie={searchText !== "" ? movieState : filteredMovieState}
+            Movies={searchText !== "" ? movieState : filteredMovieState}
             searchInput={searchText}
           />
         </>

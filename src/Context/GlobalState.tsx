@@ -1,12 +1,10 @@
-import { TUser } from "../screens";
 import React, { createContext, useState } from "react";
-import { sessionWithLogIn } from "../services/api-services";
-import { handleIsLogin } from "../components/features/handleFunctions";
 
 export interface IInitialState {
-  accountState: IAccountState;
   storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
   userState: TUser;
+  isUserLoggedIn: (isLoggedIn: boolean) => Promise<void>;
+  isLoggedIn: boolean;
 }
 
 const existingUser = [
@@ -21,19 +19,15 @@ interface GlobalProviderProps {
 }
 
 const initialState: IInitialState = {
-  accountState: {
-    favourite: true,
-    id: 0,
-    rated: true,
-    watchlist: true,
-  },
   storeUser: () => Promise.resolve(""),
+  isUserLoggedIn: () => Promise.resolve(),
   userState: {
     id: "",
     password: "",
     responseToken: "",
     username: "",
   },
+  isLoggedIn: false,
 };
 
 // create Context
@@ -44,34 +38,28 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   const [state, setState] = useState(initialState);
 
   // Get local user store
-  const storeUser = async (username: string, password: string, requestToken?: string, authMethod?: string): Promise<string> => {
+  const storeUser = async (username: string, password: string): Promise<string> => {
     let message = "";
-    let tryAuth = false;
-
-    if (authMethod === "faceId") {
-      tryAuth = await handleIsLogin(); // Function to authenticate with Face ID
+    const currentUser = existingUser.find((item) => item.username === username.toLowerCase() && item.password === password);
+    if (currentUser) {
+      setState({ ...state, userState: { ...currentUser } });
+      message = "success!";
     } else {
-      tryAuth = await sessionWithLogIn(username, password);
+      message = "no user found";
     }
 
-    if (tryAuth) {
-      const currentUser = existingUser.find((item) => item.username === username.toLowerCase() && item.password === password);
-      if (currentUser) {
-        setState({ ...state, userState: { ...currentUser } });
-        message = "success!";
-      } else {
-        message = "no user found";
-      }
-    } else {
-      message = "authentication failed";
-    }
     return message;
+  };
+
+  const isUserLoggedIn = async (isLoggedIn: boolean) => {
+    setState({ ...state, isLoggedIn: isLoggedIn });
   };
 
   return (
     <GlobalContext.Provider
       value={{
-        accountState: state.accountState,
+        isLoggedIn: state.isLoggedIn,
+        isUserLoggedIn,
         storeUser,
         userState: state.userState,
       }}>

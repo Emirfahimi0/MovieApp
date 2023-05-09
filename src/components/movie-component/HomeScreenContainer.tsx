@@ -1,25 +1,73 @@
 import { ListCardButtons } from "./ListCardButtons";
-import { homeCardContainer, noDataStyle, setWidth } from "../../constants/style-component/viewComponent";
-import { ListMovieCards } from "./ListMovieCards";
-import { Text, View } from "react-native";
-import { subHeader } from "../../constants/style-component/textComponent";
-import React, { Fragment, useState } from "react";
+import {
+  ImagePoster,
+  ListPreviewMovie,
+  homeCardContainer,
+  movieContainer,
+  noDataStyle,
+  setWidth,
+} from "../../constants/style-component/viewComponent";
+import Icon from "react-native-vector-icons/Ionicons";
+import { FlatList, Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
+import React, { Fragment, useContext, useState } from "react";
 import Loader from "../features/Loader";
+import { useNavigation } from "@react-navigation/native";
+import { DetailContext } from "../../context/detail-context/DetailContext";
+import { ItemSeparator } from "./ItemSeparator";
+import { POSTER_BASE_URL } from "../../constants/utilities";
 
 interface IScreenCardContainer {
   searchInput: string;
-  Movie: TMovieType[];
+  Movies: TMovieType[];
   Genres: TGenre[];
   loading: boolean | undefined;
   handlePressGenre: (item: TGenre, index: number) => void;
   handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
 }
 
-type TlistGenre = "Action" | "Comedy" | "Fantasy";
 // type TWatchlist = "Favorite" | "To Watch";
 
-export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDetail, loading, handlePressGenre }: IScreenCardContainer) => {
+export const ScreenCardContainer = ({
+  searchInput,
+  Movies,
+  Genres,
+  handleMovieDetail,
+  loading,
+  handlePressGenre,
+}: IScreenCardContainer) => {
   const [active, setActive] = useState<number>(0);
+  const { storeAllDetailsState } = useContext(DetailContext);
+  const navigation: RootNavigationProp = useNavigation();
+  loading = false;
+  const handleShowDetailScreen = async (id: number) => {
+    const getDetailsFromApi = await handleMovieDetail(id);
+    if (getDetailsFromApi !== undefined) {
+      loading = false;
+      storeAllDetailsState(getDetailsFromApi.detail, getDetailsFromApi.review);
+      // navigate...
+      navigation.navigate("DetailScreen", { item: getDetailsFromApi.detail, review: getDetailsFromApi.review });
+    } else loading = true;
+  };
+  const subContainer: ViewStyle = {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  };
+
+  const MovieCardTitle: ViewStyle = {
+    marginTop: 5,
+    alignItems: "flex-start",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    paddingVertical: 2,
+    paddingLeft: 3,
+    width: 150,
+  };
+  const Rating: ViewStyle = {
+    alignItems: "center",
+    flexDirection: "row",
+  };
 
   return (
     <Fragment>
@@ -29,8 +77,49 @@ export const ScreenCardContainer = ({ searchInput, Movie, Genres, handleMovieDet
         }}>
         <ListCardButtons<TGenre> data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
         <View>
-          {Object.keys(Movie).length > 0 && active !== undefined ? (
-            <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
+          {Object.keys(Movies).length > 0 && active !== undefined ? (
+            // <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
+            <Fragment>
+              {loading ? (
+                <Loader />
+              ) : (
+                // render MovieCard list
+                <FlatList
+                  data={Movies}
+                  horizontal
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={(item) => `${item.id}`}
+                  showsHorizontalScrollIndicator={false}
+                  ItemSeparatorComponent={() => <ItemSeparator width={20} />}
+                  ListFooterComponent={() => <ItemSeparator width={20} />}
+                  renderItem={({ item, index }) => (
+                    <TouchableOpacity key={`${item.title}-${index}`} onPress={() => handleShowDetailScreen(item.id)}>
+                      {item.title?.toLowerCase().includes(searchInput.toLowerCase()) ? (
+                        <View style={ListPreviewMovie}>
+                          <View style={movieContainer}>
+                            <Image source={{ uri: `${POSTER_BASE_URL}original${item.backdrop_path}` }} style={ImagePoster}></Image>
+                          </View>
+                          <View style={MovieCardTitle}>
+                            <Text style={subHeader} numberOfLines={3}>
+                              {item.title}
+                            </Text>
+                          </View>
+                          <View style={subContainer}>
+                            <View>
+                              <Text style={subTitle}> {item.release_date}</Text>
+                            </View>
+                            <View style={Rating}>
+                              <Icon iconStyle={{ marginRight: 10 }} name="heart-sharp" size={12} color="red" />
+                              <Text style={subDetail}> {item.vote_average.toFixed(1)}</Text>
+                            </View>
+                          </View>
+                        </View>
+                      ) : null}
+                    </TouchableOpacity>
+                  )}
+                />
+              )}
+            </Fragment>
           ) : loading ? (
             <View style={{ ...noDataStyle }}>
               <Loader />

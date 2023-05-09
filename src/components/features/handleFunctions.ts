@@ -25,10 +25,7 @@ export const fetchMovieDetails = async (id: number) => {
     // set state for in context provider for Genre []
     return responseGenre;
   };
-  export const fetchMovieType =async (params:string) => {
-    
-    
-  }
+ 
 
   // Functions use in HomeScreen and WatchlistScreen
  export const  handleMovieDetail = async (id: number ):Promise<IDetailsMovie> => {
@@ -54,6 +51,7 @@ export const fetchMovieDetails = async (id: number) => {
 
 //true if session id exist ,false if no session
  export  const handleIsLogin = async (): Promise<boolean> => {
+  console.warn("handleIsLogin run")
 
     let isValidate:boolean = false
     
@@ -74,6 +72,7 @@ export const fetchMovieDetails = async (id: number) => {
           }
         }
         else{
+          isValidate = false
           console.log("not authenticated token received...")
         }
       }
@@ -81,36 +80,47 @@ export const fetchMovieDetails = async (id: number) => {
 
         isValidate = false
       }
+      console.log("isValidate",isValidate)
       return isValidate  
 }
 
    // if true returns face id  
 export const handleLoginWithFaceId = async():Promise<boolean> =>{
   const isLogin = await  handleIsLogin()
-  console.log("isValidate",isLogin)
-  let isSuccess:boolean = true
+  console.log("isLogin",isLogin)
+  let isLoggedIn:boolean = true
    
   if(isLogin === false){
    const response =  await sessionWithLogIn("emirfahimi","adidas") 
-   if(response === true){
-    
       TouchID.authenticate("Authenticate with Face ID")
-        .then(success => {      
-          //resolve(true);
-          isSuccess = success
+        .then(success => {   
+          if(response === true){
+            success(true);
+            isLoggedIn = true
+          }
+          else 
+           
+          isLoggedIn = false   
         })
         .catch((error: string) => {
           console.log("error",error)
           
         });
-
-   }  
-   else isSuccess = false
-    
+  }
+  else if(isLogin === true){
+    TouchID.authenticate("Authenticate with Face ID")
+    .then(success => {   
+        success(true);
+        isLoggedIn = true
+    })
+    .catch((error: string) => {
+      console.log("error",error)
+      
+    });
   }
   else 
-  isSuccess = false
+  isLoggedIn = false
  
-  return isSuccess
+  return isLoggedIn
 
 };

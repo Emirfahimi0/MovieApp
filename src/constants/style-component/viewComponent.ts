@@ -129,6 +129,7 @@ export const  ImagePosterDetail:ViewStyle = {
   borderRadius:20,
   justifyContent:"center",
   elevation: 8,
+  paddingTop: "auto",
   height:setHeight(50),
   width:setWidth(80),
 }

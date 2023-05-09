@@ -13,6 +13,7 @@ import Loader from "../components/features/Loader";
 import React, { useContext, useEffect, useState } from "react";
 import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
 import { ToastMessage } from "../components/features/ToastMessage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
@@ -94,35 +95,46 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
     color: color.AMBER,
   };
   return (
-    <ScrollView style={{ flex: 1 }} nestedScrollEnabled={true} bounces={false}>
-      {!loading ? (
-        <>
-          <HeaderContainerDetails
-            selectedMovie={selectedMovie}
-            onPress={handleGoBack}
-            existWatchlist={existWatchlist}
-            handleWatchlist={handleWatchList}
-            postRatingDisable={postRatingDisable}
-            setRating={setRatingVal}
-            setPostRatingDisable={setPostRatingDisable}
-            ratingVal={ratingVal}
-          />
+    <SafeAreaView style={{ height: "100%" }}>
+      <ScrollView nestedScrollEnabled={true} bounces={false}>
+        {!loading ? (
+          <>
+            <HeaderContainerDetails
+              selectedMovie={selectedMovie}
+              onPress={handleGoBack}
+              existWatchlist={existWatchlist}
+              handleWatchlist={handleWatchList}
+              postRatingDisable={postRatingDisable}
+              setRating={setRatingVal}
+              setPostRatingDisable={setPostRatingDisable}
+              ratingVal={ratingVal}
+            />
 
-          <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }} nestedScrollEnabled={true}>
-            <View style={homeCardContainer}>
-              <SubContainerDetail
-                overviewDetails={MovieDetailsState?.overview}
-                overViewStyle={overViewTextArea}
-                DetailTextHeader={DetailTextHeader}
-              />
-              <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} DetailTextHeader={DetailTextHeader} />
-            </View>
-          </ScrollView>
-        </>
-      ) : (
-        <Loader />
-      )}
-    </ScrollView>
+            <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }} nestedScrollEnabled={true}>
+              <View style={{ ...homeCardContainer }}>
+                <SubContainerDetail
+                  overviewDetails={MovieDetailsState?.overview}
+                  overViewStyle={overViewTextArea}
+                  DetailTextHeader={DetailTextHeader}
+                />
+                <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} DetailTextHeader={DetailTextHeader} />
+              </View>
+            </ScrollView>
+          </>
+        ) : (
+          <Loader />
+        )}
+      </ScrollView>
+      <View
+        style={{
+          bottom: 0,
+          height: 34,
+          backgroundColor: color.SECONDARY_COLOR,
+          width: "100%",
+          position: "absolute",
+          zIndex: 1,
+        }}></View>
+    </SafeAreaView>
   );
 };
 

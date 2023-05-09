@@ -1,4 +1,4 @@
-import { Alert, Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { Dispatch, Fragment, SetStateAction, useCallback, useState } from "react";
 import {
   CardContainer,
@@ -48,7 +48,7 @@ export const HeaderContainerDetails = ({
   const onStateChange = useCallback((state: string) => {
     if (state === "ended") {
       setPlayTrailer(false);
-      Alert.alert("video has finished playing!");
+      ToastMessage("success", "Finished", "video has finished playing!");
     }
   }, []);
 
@@ -70,12 +70,12 @@ export const HeaderContainerDetails = ({
   };
   return (
     <Fragment>
-      <View style={{ position: "absolute", zIndex: 1, top: 32, left: 8 }}>
+      <View style={{ position: "absolute", zIndex: 1, top: 8, left: 8 }}>
         <TouchableOpacity onPress={onPress}>
           <Icon name="chevron-back-outline" size={30} color={color.ACTIVE} />
         </TouchableOpacity>
       </View>
-      <View style={headerContainerStyle}>
+      <View style={{ ...headerContainerStyle, paddingBottom: "3%", paddingVertical: 0 }}>
         <Fragment>
           {selectedMovie?.videos && playTrailer ? (
             <View style={{ justifyContent: "center", flexDirection: "column", alignContent: "space-between" }}>
@@ -158,7 +158,7 @@ export const HeaderContainerDetails = ({
         <View style={smallDetail}>
           <Text style={additionalDetailText}>Status: {selectedMovie?.status.toString()}</Text>
         </View>
-        <View style={{ ...smallDetail }}>
+        <View style={{ ...smallDetail, paddingBottom: 32 }}>
           <TouchableOpacity onPress={handleWatchlist}>
             <View
               style={{

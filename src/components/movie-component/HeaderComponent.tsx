@@ -28,8 +28,8 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
   const navigation: RootNavigationProp = useNavigation();
   const handleLogOut = async () => {
     //To do
-    navigation.popToTop();
     AsyncStorage.clear();
+    navigation.replace("LoginScreen");
   };
   return (
     <>
