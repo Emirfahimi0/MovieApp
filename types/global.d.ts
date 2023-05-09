@@ -4,7 +4,7 @@ declare type RootStackParamList = {
    HomeScreen:undefined
    LoginScreen:undefined
    SplashScreen:undefined,
-   WatchlistScreen:{navGoBack:boolean,}
+   WatchlistScreen:{navGoBack:boolean}
 
   };
   

@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 import React, { useState } from "react";
-import { normalText, OverviewDetailsText } from "../../constants/style-component/textComponent";
+import { OverviewDetailsText } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
 import Font from "../../constants/Font";
 

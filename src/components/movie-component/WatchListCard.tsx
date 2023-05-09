@@ -1,33 +1,20 @@
 import { FlatList, ImageBackground, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { Fragment, useContext } from "react";
+import React, { Dispatch, Fragment, SetStateAction } from "react";
 import { ItemSeparator } from "./ItemSeparator";
 import Icon from "react-native-vector-icons/Ionicons";
-import { DetailContext } from "../../context/detail-context/DetailContext";
-import { useNavigation } from "@react-navigation/native";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
+import { handleShowDetailScreen } from "../features/handleFunctions";
 
 interface IMovieCardProps {
   keyword: string;
   MovieData: TMovieType[];
-  handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
+  navigation: RootNavigationProp;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  storeAllDetailsState: (details: IMovieDetail, review: IResultReview[]) => Promise<void>;
 }
-const WatchListCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProps) => {
-  const { storeAllDetailsState } = useContext(DetailContext);
-  const navigation: RootNavigationProp = useNavigation();
-  let loading = false;
-  const handleShowDetailScreen = async (id: number) => {
-    const getDetailsFromApi = await handleMovieDetail(id);
-    console.log("details of selected movie", getDetailsFromApi.detail);
-    if (getDetailsFromApi !== undefined) {
-      loading = false;
-      storeAllDetailsState(getDetailsFromApi.detail, getDetailsFromApi.review);
-      // navigate...
-      navigation.navigate("DetailScreen", { item: getDetailsFromApi.detail, review: getDetailsFromApi.review });
-    } else loading = true;
-  };
-  const posterUrl = `${POSTER_BASE_URL}original/`;
+const WatchListCard = ({ MovieData, keyword, navigation, setLoading, storeAllDetailsState }: IMovieCardProps) => {
   return (
     <View style={{ padding: 16, shadowColor: color.SEMI_BLACK, shadowOpacity: 1.5, shadowOffset: { width: 0, height: 4 } }}>
       <FlatList
@@ -38,7 +25,9 @@ const WatchListCard = ({ MovieData, keyword, handleMovieDetail }: IMovieCardProp
         ItemSeparatorComponent={() => <ItemSeparator height={20} />}
         ListFooterComponent={() => <ItemSeparator height={20} />}
         renderItem={({ item, index }) => (
-          <TouchableOpacity key={`${item.title}-${index}`} onPress={() => handleShowDetailScreen(item.id)}>
+          <TouchableOpacity
+            key={`${item.title}-${index}`}
+            onPress={() => handleShowDetailScreen(item.id, navigation, setLoading, storeAllDetailsState)}>
             {item.title?.toLowerCase().includes(keyword.toLowerCase()) ? (
               <Fragment>
                 <ImageBackground

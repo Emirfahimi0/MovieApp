@@ -26,7 +26,7 @@ return data
 // Get method that fetch details of the movie
 export const getMovieDetails = async (id:number):Promise<IMovieDetail> => {
     const params = {
-        append_to_response:"watch/providers,videos"
+        append_to_response:"watch/providers,videos,recommendations"
     }
     const url = `${ENDPOINTS.GET_DETAILS}${id}?${TMDB_API_KEY}`
     const data = await axios.get(url,{params:params,responseType:"json"}).then((res)=>{

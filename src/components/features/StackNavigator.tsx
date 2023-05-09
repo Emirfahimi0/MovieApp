@@ -3,14 +3,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import DetailsMovieScreen from "../../screens/DetailsMovieScreen";
 import HomeScreen from "../../screens/HomeScreen";
 import LoginScreen from "../../screens/LoginScreen";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import WatchListScreen from "../../screens/WatchListScreen";
 import { GlobalContext } from "../../context/GlobalState";
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export const StackNavigator = () => {
-  const [loading, setLoading] = useState<boolean>(true);
   // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const { isLoggedIn } = useContext(GlobalContext);
 
@@ -22,7 +21,7 @@ export const StackNavigator = () => {
   };
   useEffect(() => {
     handleIsUserLoggedIn();
-    setTimeout(() => setLoading(false), 1000);
+    // setTimeout(() => setLoading(false), 1000);
   }, []);
 
   console.log("isLoggedIn", isLoggedIn);

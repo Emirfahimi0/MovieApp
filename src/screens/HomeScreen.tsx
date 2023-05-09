@@ -1,13 +1,14 @@
 import { getAccountDetails, getMovieType, getTrendingmovie } from "../services/api-services";
-import { ScreenCardContainer } from "../components/movie-component/HomeScreenContainer";
+import { BottomScreenCardContainer } from "../components/movie-component/HomeScreenContainer";
 import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { fetchGenreItem, handleMovieDetail } from "../components/features/handleFunctions";
+import { fetchGenreItem, handleShowDetailScreen } from "../components/features/handleFunctions";
 import Loader from "../components/features/Loader";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { MovieContext } from "../context/movie-context/MovieContext";
 import CustomDropDown from "../components/movie-component/CustomDropDown";
 import { ToastMessage } from "../components/features/ToastMessage";
+import { DetailContext } from "../context/detail-context/DetailContext";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -15,12 +16,12 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   // always use set function
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
   const [genreState, setGenreState] = useState<TGenre[]>([]);
-  const [loading, setLoading] = useState<boolean>();
+  const [loading, setLoading] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>("");
   const [selectedMovieType, setSelectedMovieType] = useState<string>("");
   const [value, setValue] = useState<string>("");
-  const { filterMovieByGenre } = useContext(MovieContext);
-  const { handleMovies, filteredMovieState, movieState } = useContext(MovieContext);
+  const { storeAllDetailsState } = useContext(DetailContext);
+  const { handleMovies, filteredMovieState, movieState, filterMovieByGenre } = useContext(MovieContext);
   const actionId = genreState.filter((item) => item.name === "Action");
 
   const data: Array<{ label: string; value: string }> = [
@@ -102,11 +103,13 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
       ) : (
         <>
           <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} value={value} setValue={setValue} />
-          <ScreenCardContainer
+          <BottomScreenCardContainer
             Genres={genreState}
-            handleMovieDetail={handleMovieDetail}
+            storeAllDetailsState={storeAllDetailsState}
+            handleShowDetailScreen={handleShowDetailScreen}
             handlePressGenre={handlePressGenre}
             loading={loading}
+            setLoading={setLoading}
             Movies={searchText !== "" ? movieState : filteredMovieState}
             searchInput={searchText}
           />

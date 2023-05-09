@@ -26,7 +26,15 @@ export const fetchMovieDetails = async (id: number) => {
     return responseGenre;
   };
  
-
+  export const handleShowDetailScreen = async (id: number,navigation,setLoading,storeAllDetailsState): Promise<void> => {
+    const getDetailsFromApi = await handleMovieDetail(id);
+    if (getDetailsFromApi !== undefined) {
+      setLoading(false);
+      storeAllDetailsState(getDetailsFromApi.detail, getDetailsFromApi.review);
+      // navigate...
+      navigation.navigate("DetailScreen", { item: getDetailsFromApi.detail, review: getDetailsFromApi.review });
+    } else setLoading(true);
+  };
   // Functions use in HomeScreen and WatchlistScreen
  export const  handleMovieDetail = async (id: number ):Promise<IDetailsMovie> => {
     const resDetail: IMovieDetail = await fetchMovieDetails(id);

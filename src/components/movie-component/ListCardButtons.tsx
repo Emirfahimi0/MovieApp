@@ -43,7 +43,7 @@ export const ListCardButtons = <T extends string>({ data, handlePress, active, s
 
           return (
             <TouchableOpacity onPress={handleActive} key={index}>
-              <ViewCard genre={item} isSelected={selectedButton} selectedText={selectedText} />
+              <ViewCard data={item} isSelected={selectedButton} selectedText={selectedText} />
             </TouchableOpacity>
           );
         }}

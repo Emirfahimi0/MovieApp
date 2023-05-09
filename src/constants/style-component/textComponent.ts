@@ -79,7 +79,7 @@ export const additionalDetailText:TextStyle ={
 export const OverviewDetailsText:TextStyle ={
   fontFamily:Font.REGULAR,
   fontWeight:"400",
-  fontSize: 12,
+  fontSize: 14,
   textAlign:"justify",
 }
 

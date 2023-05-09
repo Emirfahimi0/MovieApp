@@ -1,4 +1,3 @@
-import { handleMovieDetail } from "../components/features/handleFunctions";
 import Icon from "react-native-vector-icons/Ionicons";
 import { homeCardContainer, noDataStyle } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -11,13 +10,15 @@ import WatchListCard from "../components/movie-component/WatchListCard";
 import color from "../constants/Color";
 import { headerContainerStyle } from "../constants/style-component/viewComponent";
 import Font from "../constants/Font";
+import { DetailContext } from "../context/detail-context/DetailContext";
 interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {}
 
 const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
   //Access watchlist movie with context
   const [input, setInput] = useState<string>("");
+  const { storeAllDetailsState } = useContext(DetailContext);
   const { getWatchlistData, watchlistState } = useContext(WatchlistContext);
-  const [loading, setLoading] = useState<boolean>();
+  const [loading, setLoading] = useState<boolean>(false);
   const handleGoBack = () => {
     if (route.params.navGoBack) {
       navigation.goBack();
@@ -72,7 +73,13 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
       <View style={{ ...homeCardContainer, borderRadius: 50 }}>
         {watchlistState.length > 0 ? (
           <Fragment>
-            <WatchListCard handleMovieDetail={handleMovieDetail} MovieData={watchlistState} keyword={input} />
+            <WatchListCard
+              navigation={navigation}
+              setLoading={setLoading}
+              storeAllDetailsState={storeAllDetailsState}
+              MovieData={watchlistState}
+              keyword={input}
+            />
           </Fragment>
         ) : !loading ? (
           <Loader />

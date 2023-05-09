@@ -60,7 +60,10 @@ status_message: string,
 success: boolean
  }
 
+ 
+
   declare interface IMovieDetail {
+    "watch/providers": IWatchProviders;
     adult:                 boolean;
     backdrop_path:         string;
     belongs_to_collection: null;
@@ -76,6 +79,7 @@ success: boolean
     poster_path:           null;
     production_companies:  IProductionCompany[];
     production_countries:  IProductionCountry[];
+    recommendations : IMovie;
     release_date:          Date;
     revenue:               number;
     reviews:                IReview;
@@ -85,10 +89,9 @@ success: boolean
     tagline:               string;
     title:                 string;
     video:                 boolean;
+    videos:                IVideos;
     vote_average:          number;
     vote_count:            number;
-    videos:                IVideos;
-    "watch/providers": IWatchProviders;
 
 }
 

@@ -10,45 +10,44 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { FlatList, Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
-import React, { Fragment, useContext, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
 import Loader from "../features/Loader";
 import { useNavigation } from "@react-navigation/native";
-import { DetailContext } from "../../context/detail-context/DetailContext";
 import { ItemSeparator } from "./ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 
-interface IScreenCardContainer {
+interface IBottomScreenCardContainer {
   searchInput: string;
   Movies: TMovieType[];
   Genres: TGenre[];
   loading: boolean | undefined;
+  setLoading: Dispatch<SetStateAction<boolean>>;
   handlePressGenre: (item: TGenre, index: number) => void;
-  handleMovieDetail: (id: number) => Promise<IDetailsMovie>;
+  handleShowDetailScreen: (
+    id: number,
+    navigation: RootNavigationProp,
+    setLoading: Dispatch<SetStateAction<boolean>>,
+    storeAllDetailsState: (detail: IMovieDetail, review: IResultReview[]) => Promise<void>,
+  ) => Promise<void>;
+  storeAllDetailsState: (detail: IMovieDetail, review: IResultReview[]) => Promise<void>;
 }
 
 // type TWatchlist = "Favorite" | "To Watch";
 
-export const ScreenCardContainer = ({
+export const BottomScreenCardContainer = ({
   searchInput,
   Movies,
   Genres,
-  handleMovieDetail,
+  handleShowDetailScreen,
   loading,
+  setLoading,
   handlePressGenre,
-}: IScreenCardContainer) => {
+  storeAllDetailsState,
+}: IBottomScreenCardContainer) => {
   const [active, setActive] = useState<number>(0);
-  const { storeAllDetailsState } = useContext(DetailContext);
   const navigation: RootNavigationProp = useNavigation();
   loading = false;
-  const handleShowDetailScreen = async (id: number) => {
-    const getDetailsFromApi = await handleMovieDetail(id);
-    if (getDetailsFromApi !== undefined) {
-      loading = false;
-      storeAllDetailsState(getDetailsFromApi.detail, getDetailsFromApi.review);
-      // navigate...
-      navigation.navigate("DetailScreen", { item: getDetailsFromApi.detail, review: getDetailsFromApi.review });
-    } else loading = true;
-  };
+
   const subContainer: ViewStyle = {
     alignItems: "flex-start",
     flexDirection: "row",
@@ -93,7 +92,9 @@ export const ScreenCardContainer = ({
                   ItemSeparatorComponent={() => <ItemSeparator width={20} />}
                   ListFooterComponent={() => <ItemSeparator width={20} />}
                   renderItem={({ item, index }) => (
-                    <TouchableOpacity key={`${item.title}-${index}`} onPress={() => handleShowDetailScreen(item.id)}>
+                    <TouchableOpacity
+                      key={`${item.title}-${index}`}
+                      onPress={() => handleShowDetailScreen(item.id, navigation, setLoading, storeAllDetailsState)}>
                       {item.title?.toLowerCase().includes(searchInput.toLowerCase()) ? (
                         <View style={ListPreviewMovie}>
                           <View style={movieContainer}>
