@@ -49,7 +49,7 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
           height: "auto",
           flexDirection: "row",
         }}>
-        <View style={{}}>
+        <View style={{ paddingLeft: 12 }}>
           <TouchableWithoutFeedback onPress={handleGoBack}>
             <Icon name="md-chevron-back" size={32} color={"white"} />
           </TouchableWithoutFeedback>

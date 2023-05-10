@@ -9,6 +9,7 @@ export const SubContainerDetail = ({ overviewDetails, overViewStyle, DetailTextH
   const handleShowMore = () => {
     setShowmore(!showMore);
   };
+
   return (
     <>
       <View style={{ padding: 16 }}>
