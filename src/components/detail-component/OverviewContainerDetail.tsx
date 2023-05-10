@@ -11,16 +11,16 @@ export const SubContainerDetail = ({ overviewDetails, overViewStyle, DetailTextH
   };
   return (
     <>
-      <View style={{ margin: 16, paddingVertical: 8 }}>
-        <View style={{ ...overViewStyle, borderRadius: 16, backgroundColor: color.SEMI_BLACK }}>
-          <View style={{ paddingVertical: 8, alignItems: "center" }}>
+      <View style={{ padding: 16 }}>
+        <View style={{ borderRadius: 16 }}>
+          <View style={{ paddingVertical: 8 }}>
             <Text style={{ ...DetailTextHeader }}>Overview</Text>
           </View>
-          <Text style={{ ...OverviewDetailsText, color: color.SECONDARY_COLOR }}>
+          <Text style={{ ...OverviewDetailsText, color: color.ACTIVE }}>
             {showMore ? overviewDetails.split(" ").slice(0, 20).join(" ") : overviewDetails}
           </Text>
           <Text
-            style={{ fontFamily: Font.BOLD, textAlign: "right", color: color.SECONDARY_COLOR, fontWeight: "800", fontSize: 12 }}
+            style={{ fontFamily: Font.BOLD, textAlign: "right", color: color.ACTIVE, fontWeight: "800", fontSize: 12 }}
             onPress={handleShowMore}>
             {showMore ? "Show more" : "Show less"}
           </Text>

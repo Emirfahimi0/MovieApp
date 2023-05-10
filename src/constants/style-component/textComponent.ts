@@ -68,6 +68,7 @@ export const primaryTitle: TextStyle = {
 export const MovieDetailTitle:TextStyle ={
     fontFamily: Font.BOLD,
     fontSize:16,
+    textAlign:"center",
     color:color.SEMI_BLACK
 }
 export const additionalDetailText:TextStyle ={
@@ -79,7 +80,8 @@ export const additionalDetailText:TextStyle ={
 export const OverviewDetailsText:TextStyle ={
   fontFamily:Font.REGULAR,
   fontWeight:"400",
-  fontSize: 14,
+  fontSize: 12,
+  color:color.GRAY,
   textAlign:"justify",
 }
 
@@ -88,7 +90,6 @@ export const OverviewDetailsText:TextStyle ={
 export const RatingText :TextStyle ={
   color:color.SEMI_BLACK,
   fontFamily:Font.BOLD,
-  textAlign:"auto",
   fontSize:12,
   fontWeight:"800"
 

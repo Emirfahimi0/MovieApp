@@ -75,10 +75,10 @@ export const BottomScreenCardContainer = ({
           ...homeCardContainer,
         }}>
         <ListCardButtons<TGenre> data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
-        <View>
+        <View style={{ flex: 1 }}>
           {Object.keys(Movies).length > 0 && active !== undefined ? (
             // <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
-            <Fragment>
+            <View style={{ flex: 1 }}>
               {loading ? (
                 <Loader />
               ) : (
@@ -120,7 +120,7 @@ export const BottomScreenCardContainer = ({
                   )}
                 />
               )}
-            </Fragment>
+            </View>
           ) : loading ? (
             <View style={{ ...noDataStyle }}>
               <Loader />

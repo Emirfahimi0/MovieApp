@@ -105,7 +105,7 @@ export const movieContainer:ViewStyle= {
 
     backgroundColor:color.BASIC_BACKGROUND,
     flex:1,
-    paddingBottom:30
+    paddingBottom:24
   }
 
   export const headerContainerStyle: ViewStyle = {
@@ -117,7 +117,7 @@ export const movieContainer:ViewStyle= {
     shadowOpacity: 1.0,
     shadowOffset: {
       height: 0,
-      width: -3,
+      width: -4,
     },
   };
 export const  ImagePosterDetail:ViewStyle = {
@@ -185,8 +185,7 @@ export const ContainerRow :ViewStyle ={
     justifyContent:"center",
     flexDirection: "row",
     alignContent:"space-between",
-    width:"15%",
-    paddingLeft:20
+    width:"24%",
 
     
 }

@@ -1,7 +1,7 @@
 import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState, handleMovieDetail } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
-import { homeCardContainer, noDataStyle, setHeight } from "../constants/style-component/viewComponent";
+import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text, ImageBackground } from "react-native";
 import { setWatchlist } from "../services/api-services";
@@ -22,7 +22,6 @@ interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParam
 
 const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => {
   const { MovieDetailsState, reviewState, storeAllDetailsState } = useContext(DetailContext);
-  console.log(route.params.item);
   const selectedMovie: IMovieDetail | undefined = MovieDetailsState;
   const { getWatchlistData } = useContext(WatchlistContext);
   const [ratingVal, setRatingVal] = useState<number>(5);
@@ -104,11 +103,19 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
   const DetailTextHeader: TextStyle = {
     fontFamily: Font.REGULAR,
     fontSize: 16,
-    marginLeft: 12,
     color: color.AMBER,
   };
   return (
-    <SafeAreaView style={{ height: "100%", backgroundColor: color.SECONDARY_COLOR }}>
+    <SafeAreaView style={{ height: "100%" }}>
+      <View
+        style={{
+          top: 0,
+          height: 44,
+          backgroundColor: color.SECONDARY_COLOR,
+          width: "100%",
+          position: "absolute",
+          zIndex: 1,
+        }}></View>
       <ScrollView nestedScrollEnabled={true} bounces={false}>
         {!loading ? (
           <>
@@ -133,7 +140,7 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
                 <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} DetailTextHeader={DetailTextHeader} />
               </View>
             </ScrollView>
-            <View style={{ padding: 24, top: 0 }}>
+            <View style={{ padding: 24, top: 0, backgroundColor: color.SECONDARY_COLOR }}>
               <Text style={{ ...normalText, fontSize: 16 }}>Recommendations</Text>
               {selectedMovie?.recommendations.results.length !== 0 ? (
                 <FlatList
@@ -160,11 +167,11 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
                             width: "auto",
                           }}>
                           <ImageBackground
-                            source={{ uri: `${POSTER_BASE_URL}original/${item.poster_path}` }}
+                            source={{ uri: `${POSTER_BASE_URL}original/${item.backdrop_path ? item.backdrop_path : item.poster_path}` }}
                             style={{ height: 80, width: 120, alignContent: "center" }}
-                            imageStyle={{ borderRadius: 10, width: 120 }}></ImageBackground>
+                            imageStyle={{ borderRadius: 10, resizeMode: "cover" }}></ImageBackground>
                           <Text
-                            style={{ fontFamily: Font.BOLD, fontSize: 14, color: color.ACTIVE, width: 120, textAlign: "center" }}
+                            style={{ fontFamily: Font.BOLD, fontSize: 14, color: color.GREEN, width: 120, textAlign: "center" }}
                             numberOfLines={2}>
                             {item.title}
                           </Text>

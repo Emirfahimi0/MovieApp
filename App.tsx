@@ -11,7 +11,7 @@ function App() {
     <Fragment>
       <AppContextProviders>
         <SafeAreaView>
-          <StatusBar barStyle={"light-content"} translucent={true} />
+          <StatusBar barStyle={"dark-content"} translucent={true} />
         </SafeAreaView>
         <StackNavigator />
         <Toast />

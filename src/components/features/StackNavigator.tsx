@@ -32,7 +32,7 @@ export const StackNavigator = () => {
           <>
             <RootStack.Group>
               <RootStack.Screen name="HomeScreen" component={HomeScreen} />
-              <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} options={{ headerShown: false }} />
+              <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} />
               <RootStack.Screen name="WatchlistScreen" component={WatchListScreen as React.ComponentType<any>} />
             </RootStack.Group>
           </>

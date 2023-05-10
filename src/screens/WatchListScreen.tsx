@@ -45,24 +45,21 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
       <View
         style={{
           ...headerContainerStyle,
-          backgroundColor: color.SEMI_BLACK,
+          backgroundColor: color.AMBER,
           height: "auto",
           flexDirection: "row",
         }}>
-        <View
-          style={{
-            justifyContent: "flex-start",
-            flexDirection: "row",
-          }}>
+        <View style={{}}>
           <TouchableWithoutFeedback onPress={handleGoBack}>
             <Icon name="md-chevron-back" size={32} color={"white"} />
           </TouchableWithoutFeedback>
         </View>
-        <View style={{ justifyContent: "center", alignContent: "center", alignItems: "center", alignSelf: "center" }}>
+        <View style={{ justifyContent: "center", alignContent: "center", marginLeft: 92 }}>
           <Text
             style={{
-              fontFamily: Font.BOLD,
+              fontFamily: Font.REGULAR,
               fontSize: 24,
+              fontWeight: "800",
               color: color.SECONDARY_COLOR,
             }}>
             WATCHLIST

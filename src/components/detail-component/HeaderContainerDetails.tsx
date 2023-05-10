@@ -74,7 +74,7 @@ export const HeaderContainerDetails = ({
           <Icon name="chevron-back-outline" size={30} color={color.ACTIVE} />
         </TouchableOpacity>
       </View>
-      <View style={{ ...headerContainerStyle, paddingBottom: "3%", paddingVertical: 0 }}>
+      <View style={{ ...headerContainerStyle, paddingVertical: 8 }}>
         <Fragment>
           {selectedMovie?.videos && playTrailer ? (
             <View style={{ justifyContent: "center", flexDirection: "column", alignContent: "space-between" }}>
@@ -101,7 +101,7 @@ export const HeaderContainerDetails = ({
               : {
                   ...playButton,
                   top: 40,
-                  right: 10,
+                  right: 8,
                   height: 40,
                   width: 40,
                   backgroundColor: color.TRANSPARENT,
@@ -117,13 +117,20 @@ export const HeaderContainerDetails = ({
         </View>
 
         <ItemSeparator height={setHeight(2)} />
-        <View style={{ ...MovieDetailContainer, justifyContent: "center", flex: 1 }}>
+        <View style={{ justifyContent: "center", width: 320, flexDirection: "row", alignContent: "space-between" }}>
           <Text style={{ ...MovieDetailTitle }} numberOfLines={2}>
             {selectedMovie?.title}
           </Text>
-          <View style={{ ...ContainerRow, justifyContent: "center", alignItems: "center" }}>
-            <Icon name="heart-sharp" size={15} color="red" />
-            <Text style={RatingText}>{selectedMovie?.vote_average.toFixed(1)}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignContent: "space-between",
+              paddingTop: 4,
+              paddingLeft: 16,
+              justifyContent: "flex-end",
+            }}>
+            <Icon name="heart-sharp" size={16} color="red" />
+            <Text style={{ ...RatingText, textAlign: "center" }}>{selectedMovie?.vote_average.toFixed(1)}</Text>
           </View>
         </View>
         <View

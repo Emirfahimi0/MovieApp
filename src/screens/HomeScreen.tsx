@@ -9,6 +9,7 @@ import { MovieContext } from "../context/movie-context/MovieContext";
 import CustomDropDown from "../components/movie-component/CustomDropDown";
 import { ToastMessage } from "../components/features/ToastMessage";
 import { DetailContext } from "../context/detail-context/DetailContext";
+import { ScrollView } from "react-native";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -103,6 +104,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
       ) : (
         <>
           <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} value={value} setValue={setValue} />
+
           <BottomScreenCardContainer
             Genres={genreState}
             storeAllDetailsState={storeAllDetailsState}

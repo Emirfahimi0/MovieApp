@@ -54,28 +54,25 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                alignItems: "flex-start",
-                paddingBottom: 30,
+                alignItems: "baseline",
+                paddingBottom: 32,
               }}>
-              <View style={{ flexDirection: "column" }}>
-                <Text style={{ ...subTitle, color: color.SECONDARY_COLOR }}>{handleGoBack ? "" : "Welcome Back"}</Text>
-                <Text style={{ ...normalText, fontSize: 24, fontWeight: "900", color: color.SECONDARY_COLOR }}>
-                  {accountDetails?.name.toUpperCase()}
-                </Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={{ ...normalText, fontSize: 16, color: color.SECONDARY_COLOR }}>{handleGoBack ? "" : "Hello! "}</Text>
+                <Text style={{ ...normalText, fontSize: 16, fontWeight: "900", color: color.SECONDARY_COLOR }}>{accountDetails?.name}</Text>
               </View>
 
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Pressable onPress={handleLogOut}>
                   <Icon name="exit-outline" size={32} color="#fff" />
                 </Pressable>
-                <Image source={{ uri: urlAvatar }} resizeMode="cover" style={{ width: 40, height: 40, borderRadius: 20, marginLeft: 15 }} />
+                <Image source={{ uri: urlAvatar }} resizeMode="cover" style={{ width: 56, height: 56, borderRadius: 25, marginLeft: 16 }} />
               </View>
             </View>
 
             <View style={{ ...rowView }}>
               <View style={{ flexDirection: "column" }}>
-                <Text style={{ ...subHeader, color: color.ACTIVE }}>ACTIVE</Text>
-                <Text style={{ ...subTitle, color: color.EXTRA_LIGHT_GRAY }}>Updated 2 mins ago</Text>
+                <Text style={{ ...subHeader, color: color.SECONDARY_COLOR }}>Book your favourite movie now!</Text>
               </View>
               {handleGoBack ? null : (
                 <TouchableWithoutFeedback onPress={handleWatchList}>
