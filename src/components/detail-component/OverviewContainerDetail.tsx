@@ -1,10 +1,14 @@
-import { Text, View } from "react-native";
+import { Text, TextStyle, View, ViewStyle } from "react-native";
 import React, { useState } from "react";
 import { OverviewDetailsText } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
 import Font from "../../constants/Font";
-
-export const SubContainerDetail = ({ overviewDetails, overViewStyle, DetailTextHeader }) => {
+interface ISubContainerDetails {
+  overviewDetails: string | undefined;
+  overViewStyle: ViewStyle;
+  DetailTextHeader: TextStyle;
+}
+export const SubContainerDetail = ({ overviewDetails, overViewStyle, DetailTextHeader }: ISubContainerDetails) => {
   const [showMore, setShowmore] = useState<Boolean>(true);
   const handleShowMore = () => {
     setShowmore(!showMore);
@@ -17,7 +21,7 @@ export const SubContainerDetail = ({ overviewDetails, overViewStyle, DetailTextH
             <Text style={{ ...DetailTextHeader }}>Overview</Text>
           </View>
           <Text style={{ ...OverviewDetailsText, color: color.ACTIVE }}>
-            {showMore ? overviewDetails.split(" ").slice(0, 20).join(" ") : overviewDetails}
+            {showMore ? overviewDetails?.split(" ").slice(0, 20).join(" ") : overviewDetails}
           </Text>
           <Text
             style={{ fontFamily: Font.BOLD, textAlign: "right", color: color.ACTIVE, fontWeight: "800", fontSize: 12 }}

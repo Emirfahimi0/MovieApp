@@ -1,14 +1,16 @@
 import { container, setHeight, setWidth, shadowStyle } from "../../constants/style-component/viewComponent";
 import { OverviewDetailsText, normalText, subHeader } from "../../constants/style-component/textComponent";
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, TextStyle, View, ViewStyle } from "react-native";
 import color from "../../constants/Color";
 import React, { Fragment, useState } from "react";
 
-// interface IReviewContainerDetail {
-// reviewDetails:
-// }
+interface IReviewContainerDetail {
+  reviewDetails: IResultReview[];
+  overViewStyle: ViewStyle;
+  DetailTextHeader: TextStyle;
+}
 
-const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader }) => {
+const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader }: IReviewContainerDetail) => {
   const [active, setActive] = useState<number>(0);
   const fetchAvatarImage = (avatar_path: string) => {
     return RegExp("https://secure.gravatar.com/avatar").test(`${avatar_path}` as string)
@@ -43,6 +45,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader
         }}>
         <Text style={{ ...DetailTextHeader, justifyContent: "center" }}>Reviews</Text>
       </View>
+
       {reviewDetails.length > 0 ? (
         <View
           style={{
