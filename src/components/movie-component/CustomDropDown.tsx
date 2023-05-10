@@ -1,5 +1,5 @@
 import { Dispatch, Fragment, FunctionComponent, SetStateAction, useRef, useState } from "react";
-import { FlatList, Pressable, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
+import { FlatList, Pressable, SafeAreaView, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { normalText, primaryTitle } from "../../constants/style-component/textComponent";
@@ -68,7 +68,7 @@ const CustomDropDown: FunctionComponent<ICustomDropDown> = ({ movieType, setSele
     width: "90%",
   };
   return (
-    <View style={{}}>
+    <Fragment>
       <Pressable
         style={{
           ...pressStyle,
@@ -102,11 +102,9 @@ const CustomDropDown: FunctionComponent<ICustomDropDown> = ({ movieType, setSele
               ...inputSearchDrop,
             }}
           />
-
-          <FlatList
-            data={data}
-            renderItem={({ item, index }) => {
-              return (
+          {data.map((item, index) => {
+            return (
+              <Fragment key={index}>
                 <TouchableOpacity
                   style={{
                     width: "85%",
@@ -126,12 +124,12 @@ const CustomDropDown: FunctionComponent<ICustomDropDown> = ({ movieType, setSele
                   }}>
                   <Text style={normalText}>{item.label}</Text>
                 </TouchableOpacity>
-              );
-            }}
-          />
+              </Fragment>
+            );
+          })}
         </View>
       ) : null}
-    </View>
+    </Fragment>
   );
 };
 
