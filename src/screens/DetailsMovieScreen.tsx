@@ -140,7 +140,7 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
                 <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} DetailTextHeader={DetailTextHeader} />
               </View>
             </ScrollView>
-            <View style={{ padding: 24, top: 0, backgroundColor: color.SECONDARY_COLOR }}>
+            <View style={{ padding: 24, bottom: "auto", backgroundColor: color.SECONDARY_COLOR }}>
               <Text style={{ ...normalText, fontSize: 16 }}>Recommendations</Text>
               {selectedMovie?.recommendations.results.length !== 0 ? (
                 <FlatList

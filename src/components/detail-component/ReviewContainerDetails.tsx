@@ -37,7 +37,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader
         style={{
           backgroundColor: color.SEMI_BLACK,
           marginHorizontal: 32,
-          borderRadius: 8,
+          borderRadius: 16,
           padding: 8,
           alignItems: "center",
         }}>
