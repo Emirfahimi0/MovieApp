@@ -9,7 +9,8 @@ import { MovieContext } from "../context/movie-context/MovieContext";
 import CustomDropDown from "../components/movie-component/CustomDropDown";
 import { ToastMessage } from "../components/features/ToastMessage";
 import { DetailContext } from "../context/detail-context/DetailContext";
-import { ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
+import { setHeight } from "../constants/style-component/viewComponent";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -91,32 +92,34 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
 
   return (
     <Fragment>
-      <HeaderComponent
-        searchText={searchText}
-        setSearchText={setSearchText}
-        handleWatchList={handleWatchList}
-        accountDetails={accountDetails}
-      />
-      {loading || filteredMovieState.length < 0 ? (
-        <>
-          <Loader />
-        </>
-      ) : (
-        <>
-          <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} value={value} setValue={setValue} />
+      <ScrollView bounces={false}>
+        <HeaderComponent
+          searchText={searchText}
+          setSearchText={setSearchText}
+          handleWatchList={handleWatchList}
+          accountDetails={accountDetails}
+        />
 
-          <BottomScreenCardContainer
-            Genres={genreState}
-            storeAllDetailsState={storeAllDetailsState}
-            handleShowDetailScreen={handleShowDetailScreen}
-            handlePressGenre={handlePressGenre}
-            loading={loading}
-            setLoading={setLoading}
-            Movies={searchText !== "" ? movieState : filteredMovieState}
-            searchInput={searchText}
-          />
-        </>
-      )}
+        {loading || filteredMovieState.length < 0 ? (
+          <>
+            <Loader />
+          </>
+        ) : (
+          <>
+            <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} value={value} setValue={setValue} />
+            <BottomScreenCardContainer
+              Genres={genreState}
+              storeAllDetailsState={storeAllDetailsState}
+              handleShowDetailScreen={handleShowDetailScreen}
+              handlePressGenre={handlePressGenre}
+              loading={loading}
+              setLoading={setLoading}
+              Movies={searchText !== "" ? movieState : filteredMovieState}
+              searchInput={searchText}
+            />
+          </>
+        )}
+      </ScrollView>
     </Fragment>
   );
 };

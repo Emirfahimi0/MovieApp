@@ -68,8 +68,8 @@ export const movieContainer:ViewStyle= {
     borderTopRightRadius: 40,
     elevation: 3,
     flex:1,
-    marginTop: 54,
-    paddingTop: 8,
+    marginTop: setHeight(8),
+    paddingVertical: 24,
   }
 
  export const  SearchBar:ViewStyle= {
