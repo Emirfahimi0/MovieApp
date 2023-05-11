@@ -170,11 +170,11 @@ declare interface IRating {
     success:boolean;
   }
 
-  declare type FlexStyle = import("react-native").FlexStyle
-  declare type ShadowStyleIOS = import("react-native").ShadowStyleIOS
-  declare type TransformsStyle = import("react-native").TransformsStyle
+  declare type FastImageFlex = import("react-native").FlexStyle
+  declare type FastImageShadow = import("react-native").ShadowStyleIOS
+  declare type FastImageTransform = import("react-native").TransformsStyle
 
-  declare interface FastImageStyle extends FlexStyle, TransformsStyle, ShadowStyleIOS {
+  declare interface FastImageStyle extends FastImageFlex, FastImageShadow, FastImageTransform {
     backfaceVisibility?: "visible" | "hidden";
     backgroundColor?: string;
     borderBottomLeftRadius?: number;
