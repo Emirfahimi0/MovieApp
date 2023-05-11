@@ -1,10 +1,8 @@
-import { Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { Dispatch, Fragment, SetStateAction, useCallback, useState } from "react";
 import {
   CardContainer,
-  ContainerRow,
   ImagePosterDetail,
-  MovieDetailContainer,
   headerContainerStyle,
   posterImage,
   setHeight,
@@ -20,6 +18,7 @@ import color from "../../constants/Color";
 import YoutubeIframe from "react-native-youtube-iframe";
 import Font from "../../constants/Font";
 import { ToastMessage } from "../features/ToastMessage";
+import FastImage from "react-native-fast-image";
 
 interface IHeaderContainerDetails {
   onPress: () => void;
@@ -89,7 +88,11 @@ export const HeaderContainerDetails = ({
             </View>
           ) : (
             <View style={ImagePosterDetail}>
-              <Image style={posterImage} source={{ uri: `${POSTER_BASE_URL}original/${selectedMovie?.poster_path}` }} />
+              <FastImage
+                style={posterImage}
+                source={{ uri: `${POSTER_BASE_URL}original/${selectedMovie?.poster_path}` }}
+                resizeMode="cover"
+              />
             </View>
           )}
         </Fragment>

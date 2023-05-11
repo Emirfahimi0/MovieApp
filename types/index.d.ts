@@ -169,3 +169,21 @@ declare interface IRating {
     status_message: string;
     success:boolean;
   }
+
+  declare type FlexStyle = import("react-native").FlexStyle
+  declare type ShadowStyleIOS = import("react-native").ShadowStyleIOS
+  declare type TransformsStyle = import("react-native").TransformsStyle
+
+  declare interface FastImageStyle extends FlexStyle, TransformsStyle, ShadowStyleIOS {
+    backfaceVisibility?: "visible" | "hidden";
+    backgroundColor?: string;
+    borderBottomLeftRadius?: number;
+    borderBottomRightRadius?: number;
+    borderColor?: string;
+    borderRadius?: number;
+    borderTopLeftRadius?: number;
+    borderTopRightRadius?: number;
+    borderWidth?: number;
+    opacity?: number;
+    overlayColor?: string;
+  }
