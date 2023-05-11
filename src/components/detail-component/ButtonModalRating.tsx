@@ -1,4 +1,4 @@
-import { Modal, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Modal, Pressable, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import { ButtonContainerRating, CardContainer } from "../../constants/style-component/viewComponent";
 import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
 import { RatingText, normalText, subDetail } from "../../constants/style-component/textComponent";
@@ -7,19 +7,19 @@ import Icon from "react-native-vector-icons/Ionicons";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
 export interface IButtonModalRating {
-  selectedMovie: TMovieType | IMovieDetail | undefined;
-  ratingVal: number;
-  setPostRatingDisable: Dispatch<SetStateAction<boolean | { value: number } | undefined>>;
   postRatingDisable: boolean | { value: number } | undefined;
-  ToastMessage: (type: string, title: string, message: string) => void;
+  ratingVal: number;
+  selectedMovie: TMovieType | IMovieDetail | undefined;
+  setPostRatingDisable: Dispatch<SetStateAction<boolean | { value: number } | undefined>>;
   setRating: Dispatch<SetStateAction<number>>;
+  ToastMessage: (type: string, title: string, message: string) => void;
 }
 export const ButtonModalRating = ({
-  selectedMovie,
-  ratingVal,
-  setRating,
   postRatingDisable,
+  ratingVal,
+  selectedMovie,
   setPostRatingDisable,
+  setRating,
   ToastMessage,
 }: IButtonModalRating) => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -69,7 +69,7 @@ export const ButtonModalRating = ({
   };
   let disable = postRatingDisable ? false : true;
 
-  const centeredViewRating: ViewStyle = {
+  const outsideViewRating: ViewStyle = {
     flex: 1,
     width: "100%",
     justifyContent: "center",
@@ -103,37 +103,39 @@ export const ButtonModalRating = ({
   return (
     <View style={ButtonContainerRating}>
       <Modal
-        animationType="fade"
+        animationType="slide"
         transparent={true}
         visible={visible}
         onRequestClose={() => {
           postRatingDisable;
           setVisible(!visible);
         }}>
-        <View style={centeredViewRating}>
-          <TouchableOpacity onPressOut={() => setVisible(false)} style={{ ...centeredViewRating }}>
-            <View style={modalViewRating}>
-              <Icon name="star-outline" size={20} color={color.GREEN} />
-              <Text style={subDetail}> Submit your Review..</Text>
-              <View style={RatingStarIcon}>
-                {review.map((item, index) => {
-                  return (
-                    <TouchableOpacity disabled={disable ? false : true} key={index} onPress={() => HandleSetRating(item)}>
-                      {ratingVal < item ? (
-                        <Icon name="star-outline" size={20} color="black" />
-                      ) : (
-                        <Icon name="star" size={25} color="#F1DB4B" />
-                      )}
-                    </TouchableOpacity>
-                  );
-                })}
+        <View style={outsideViewRating}>
+          <TouchableOpacity onPressOut={() => setVisible(false)} style={{ ...outsideViewRating }}>
+            <Pressable onPress={() => setVisible(true)}>
+              <View style={modalViewRating}>
+                <Icon name="star-outline" size={20} color={color.GREEN} />
+                <Text style={subDetail}> Submit your Review..</Text>
+                <View style={RatingStarIcon}>
+                  {review.map((item, index) => {
+                    return (
+                      <TouchableOpacity disabled={disable ? false : true} key={index} onPress={() => HandleSetRating(item)}>
+                        {ratingVal < item ? (
+                          <Icon name="star-outline" size={20} color="black" />
+                        ) : (
+                          <Icon name="star" size={25} color="#F1DB4B" />
+                        )}
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+                <TouchableOpacity
+                  style={{ ...CardContainer, marginTop: 30, backgroundColor: disable ? color.ACTIVE : color.PRIMARY_COLOR }}
+                  onPress={disable ? HandlePostRating : HandleDeleteRating}>
+                  <Text style={{ ...RatingText, color: color.SECONDARY_COLOR }}>{disable ? "Post Rating" : "Delete Rating"}</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                style={{ ...CardContainer, marginTop: 30, backgroundColor: disable ? color.ACTIVE : color.PRIMARY_COLOR }}
-                onPress={disable ? HandlePostRating : HandleDeleteRating}>
-                <Text style={{ ...RatingText, color: color.SECONDARY_COLOR }}>{disable ? "Post Rating" : "Delete Rating"}</Text>
-              </TouchableOpacity>
-            </View>
+            </Pressable>
           </TouchableOpacity>
         </View>
       </Modal>
