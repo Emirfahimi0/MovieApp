@@ -1,7 +1,6 @@
-import { Dimensions, ImageStyle, ViewStyle } from "react-native";
+import { Dimensions,  ViewStyle } from "react-native";
 import color from "../Color";
 const { height, width } = Dimensions.get("screen");
-
 export const setHeight = (h:number) => (height/100) *h
 export const setWidth = (w:number) => (width / 100) * w;
 
@@ -92,12 +91,7 @@ export const movieContainer:ViewStyle= {
     paddingTop: 8,
   }
 
-  export const ImagePoster :ImageStyle={
 
-    borderRadius:movieContainer.borderRadius,
-    height: movieContainer.height,
-    width:150
-  }
 
   // --> Detail Movie Screen Styling
 
@@ -140,12 +134,11 @@ export const youtubePlayerView: ViewStyle = {
   alignContent:"center",
   justifyContent:"center",
 };
-export const posterImage:ImageStyle = {
+export const posterImage:FastImageStyle = {
 
   height:ImagePosterDetail.height,
   padding:"50%",
   borderRadius:ImagePosterDetail.borderRadius,
-  resizeMode:"stretch",
 width:ImagePosterDetail.width
 };
 

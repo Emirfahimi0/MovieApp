@@ -3,7 +3,7 @@ import { fetchAccountState, handleMovieDetail } from "../components/features/han
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
 import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text, ImageBackground } from "react-native";
+import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text } from "react-native";
 import { setWatchlist } from "../services/api-services";
 import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
 import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
@@ -17,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ItemSeparator } from "../components/movie-component/ItemSeparator";
 import { normalText } from "../constants/style-component/textComponent";
 import { POSTER_BASE_URL } from "../constants/utilities";
+import FastImage from "react-native-fast-image";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
@@ -166,10 +167,11 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
                             padding: 8,
                             width: "auto",
                           }}>
-                          <ImageBackground
+                          <FastImage
                             source={{ uri: `${POSTER_BASE_URL}original/${item.backdrop_path ? item.backdrop_path : item.poster_path}` }}
-                            style={{ height: 80, width: 120, alignContent: "center" }}
-                            imageStyle={{ borderRadius: 10, resizeMode: "cover" }}></ImageBackground>
+                            style={{ height: 80, width: 152, alignContent: "center", borderRadius: 10 }}
+                            resizeMode="cover"
+                          />
                           <Text
                             style={{ fontFamily: Font.BOLD, fontSize: 14, color: color.GREEN, width: 120, textAlign: "center" }}
                             numberOfLines={2}>
