@@ -1,16 +1,17 @@
 import { container, setHeight, setWidth, shadowStyle } from "../../constants/style-component/viewComponent";
-import { OverviewDetailsText, normalText, subHeader } from "../../constants/style-component/textComponent";
 import { Image, ScrollView, Text, TextStyle, View, ViewStyle } from "react-native";
+import { OverviewDetailsText, normalText, subHeader } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
 import React, { Fragment, useState } from "react";
+import Font from "../../constants/Font";
 
 interface IReviewContainerDetail {
-  reviewDetails: IResultReview[];
-  overViewStyle: ViewStyle;
   DetailTextHeader: TextStyle;
+  StyleTextArea: ViewStyle;
+  reviewDetails: IResultReview[];
 }
 
-const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader }: IReviewContainerDetail) => {
+const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader }: IReviewContainerDetail) => {
   const [active, setActive] = useState<number>(0);
   const fetchAvatarImage = (avatar_path: string) => {
     return RegExp("https://secure.gravatar.com/avatar").test(`${avatar_path}` as string)
@@ -32,6 +33,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader
     const resString = `${longMonthName} ${res[2]}, ${res[3]}`;
     return resString;
   };
+  const checkExistReview = reviewDetails.length <= 1 ? false : true;
 
   return (
     <Fragment>
@@ -39,23 +41,23 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader
         style={{
           backgroundColor: color.SEMI_BLACK,
           marginHorizontal: 32,
-          borderRadius: 16,
+          borderRadius: 8,
           padding: 8,
           alignItems: "center",
         }}>
         <Text style={{ ...DetailTextHeader, justifyContent: "center" }}>Reviews</Text>
       </View>
 
-      {reviewDetails.length > 0 ? (
-        <View
-          style={{
-            ...shadowStyle,
-            backgroundColor: color.BLACK,
-            borderRadius: 16,
-            height: reviewDetails.length === 1 ? "auto" : setHeight(24),
-            margin: 12,
-            marginBottom: 8,
-          }}>
+      <View
+        style={{
+          ...(checkExistReview ? shadowStyle : null),
+          backgroundColor: checkExistReview ? color.BLACK : color.SECONDARY_COLOR,
+          borderRadius: 16,
+          height: checkExistReview ? setHeight(24) : "auto",
+          margin: 12,
+          marginBottom: checkExistReview ? 0 : 8,
+        }}>
+        {reviewDetails.length > 0 ? (
           <ScrollView nestedScrollEnabled={true} bounces={false}>
             {reviewDetails.map((item: IResultReview, index: number) => {
               let [showMore, setShowmore] = useState<Boolean>(true);
@@ -74,7 +76,7 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader
                     minHeight: "auto",
                   }}
                   key={`${item.author}-${index}`}>
-                  <View style={{ ...overViewStyle, backgroundColor: color.SECONDARY_COLOR, marginVertical: 12 }}>
+                  <View style={{ ...StyleTextArea, backgroundColor: color.SECONDARY_COLOR, marginVertical: 12 }}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -116,12 +118,20 @@ const ReviewContainerDetails = ({ reviewDetails, overViewStyle, DetailTextHeader
               );
             })}
           </ScrollView>
-        </View>
-      ) : (
-        <View style={{ ...container, marginHorizontal: 20, backgroundColor: color.TRANSPARENT }}>
-          <Text style={{ ...normalText, marginLeft: 16, paddingVertical: 16, fontSize: 16, textAlign: "center" }}>no review...</Text>
-        </View>
-      )}
+        ) : (
+          <Text
+            style={{
+              fontFamily: Font.BOLD,
+              color: color.SEMI_BLACK,
+              marginLeft: 16,
+              paddingVertical: 16,
+              fontSize: 16,
+              textAlign: "center",
+            }}>
+            no review...
+          </Text>
+        )}
+      </View>
     </Fragment>
   );
 };

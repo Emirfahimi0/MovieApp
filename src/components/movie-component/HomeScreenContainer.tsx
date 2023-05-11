@@ -1,20 +1,14 @@
 import { ListCardButtons } from "./ListCardButtons";
-import {
-  ImagePoster,
-  ListPreviewMovie,
-  homeCardContainer,
-  movieContainer,
-  noDataStyle,
-  setWidth,
-} from "../../constants/style-component/viewComponent";
+import { ListPreviewMovie, homeCardContainer, movieContainer, noDataStyle, setWidth } from "../../constants/style-component/viewComponent";
 import Icon from "react-native-vector-icons/Ionicons";
-import { FlatList, Image, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { FlatList, FlexStyle, ShadowStyleIOS, Text, TouchableOpacity, TransformsStyle, View, ViewStyle } from "react-native";
 import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
 import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
 import Loader from "../features/Loader";
 import { useNavigation } from "@react-navigation/native";
 import { ItemSeparator } from "./ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
+import FastImage from "react-native-fast-image";
 
 interface IBottomScreenCardContainer {
   searchInput: string;
@@ -32,6 +26,11 @@ interface IBottomScreenCardContainer {
   storeAllDetailsState: (detail: IMovieDetail, review: IResultReview[]) => Promise<void>;
 }
 
+export const ImagePoster: FastImageStyle = {
+  borderRadius: movieContainer.borderRadius,
+  height: movieContainer.height,
+  width: 150,
+};
 // type TWatchlist = "Favorite" | "To Watch";
 
 export const BottomScreenCardContainer = ({
@@ -74,11 +73,11 @@ export const BottomScreenCardContainer = ({
         style={{
           ...homeCardContainer,
         }}>
-        <ListCardButtons<TGenre> data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
+        <ListCardButtons<any> data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
         <View style={{ flex: 1 }}>
           {Object.keys(Movies).length > 0 && active !== undefined ? (
             // <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, flexDirection: "row" }}>
               {loading ? (
                 <Loader />
               ) : (
@@ -96,9 +95,13 @@ export const BottomScreenCardContainer = ({
                       key={`${item.title}-${index}`}
                       onPress={() => handleShowDetailScreen(item.id, navigation, setLoading, storeAllDetailsState)}>
                       {item.title?.toLowerCase().includes(searchInput.toLowerCase()) ? (
-                        <View style={ListPreviewMovie}>
+                        <View style={{ ...ListPreviewMovie }}>
                           <View style={movieContainer}>
-                            <Image source={{ uri: `${POSTER_BASE_URL}original${item.backdrop_path}` }} style={ImagePoster}></Image>
+                            <FastImage
+                              source={{ uri: `${POSTER_BASE_URL}original${item.poster_path}` }}
+                              style={ImagePoster}
+                              resizeMode={FastImage.resizeMode.cover}
+                            />
                           </View>
                           <View style={MovieCardTitle}>
                             <Text style={subHeader} numberOfLines={3}>
@@ -126,7 +129,7 @@ export const BottomScreenCardContainer = ({
               <Loader />
             </View>
           ) : (
-            <View style={{ ...noDataStyle, width: setWidth(100) }}>
+            <View style={{ ...noDataStyle, width: setWidth(80) }}>
               <Text style={subHeader}> No Movie</Text>
             </View>
           )}

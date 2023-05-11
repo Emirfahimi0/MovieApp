@@ -4,11 +4,11 @@ import { OverviewDetailsText } from "../../constants/style-component/textCompone
 import color from "../../constants/Color";
 import Font from "../../constants/Font";
 interface ISubContainerDetails {
-  overviewDetails: string | undefined;
-  overViewStyle: ViewStyle;
   DetailTextHeader: TextStyle;
+  overviewDetails: string | undefined;
+  StyleTextArea: ViewStyle;
 }
-export const SubContainerDetail = ({ overviewDetails, overViewStyle, DetailTextHeader }: ISubContainerDetails) => {
+export const SubContainerDetail = ({ overviewDetails, StyleTextArea, DetailTextHeader }: ISubContainerDetails) => {
   const [showMore, setShowmore] = useState<Boolean>(true);
   const handleShowMore = () => {
     setShowmore(!showMore);

@@ -21,25 +21,25 @@ import { ToastMessage } from "../features/ToastMessage";
 import FastImage from "react-native-fast-image";
 
 interface IHeaderContainerDetails {
+  existWatchlist: boolean;
+  handleWatchlist: () => void;
   onPress: () => void;
   postRatingDisable: boolean | { value: number } | undefined;
   ratingVal: number;
-  handleWatchlist: () => void;
   selectedMovie: IMovieDetail | undefined;
-  existWatchlist: boolean;
   setPostRatingDisable: Dispatch<SetStateAction<boolean | { value: number } | undefined>>;
   setRating: Dispatch<SetStateAction<number>>;
 }
 
 export const HeaderContainerDetails = ({
+  existWatchlist,
+  handleWatchlist,
   onPress,
   postRatingDisable,
   ratingVal,
   selectedMovie,
   setPostRatingDisable,
   setRating,
-  handleWatchlist,
-  existWatchlist,
 }: IHeaderContainerDetails) => {
   const [playTrailer, setPlayTrailer] = useState<boolean>(false);
   const trailer = selectedMovie?.videos.results.find((vid) => vid.name === "Official Trailer");

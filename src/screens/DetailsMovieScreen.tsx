@@ -79,7 +79,6 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
       ToastMessage(responseSuccess, "error", message);
     }
   };
-
   const handlePressRecommendations = async (id: number) => {
     setLoading(true);
     const selectedMovie = await handleMovieDetail(id);
@@ -93,7 +92,7 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
     getUpdatedAccState();
   }, []);
 
-  const overViewTextArea: ViewStyle = {
+  const StyleTextArea: ViewStyle = {
     backgroundColor: color.AMBER,
     borderRadius: 24,
     flexDirection: "column",
@@ -135,10 +134,10 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
               <View style={{ ...homeCardContainer, paddingTop: 12 }}>
                 <SubContainerDetail
                   overviewDetails={MovieDetailsState?.overview}
-                  overViewStyle={overViewTextArea}
+                  StyleTextArea={StyleTextArea}
                   DetailTextHeader={DetailTextHeader}
                 />
-                <ReviewContainerDetails reviewDetails={reviewState} overViewStyle={overViewTextArea} DetailTextHeader={DetailTextHeader} />
+                <ReviewContainerDetails reviewDetails={reviewState} StyleTextArea={StyleTextArea} DetailTextHeader={DetailTextHeader} />
               </View>
             </ScrollView>
             <View style={{ padding: 24, bottom: "auto", backgroundColor: color.SECONDARY_COLOR }}>
@@ -153,7 +152,7 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
                   renderItem={({ item, index }) => {
                     const handleActive = () => {
                       handlePressRecommendations(item.id);
-                      console.log(item.id);
+                      console.log(item);
                     };
 
                     return (

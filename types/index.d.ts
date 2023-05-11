@@ -65,7 +65,7 @@ success: boolean
   declare interface IMovieDetail {
     adult:                 boolean;
     backdrop_path:         string;
-    belongs_to_collection: null;
+    belongs_to_collection: string |null;
     budget:                number;
     genres:                TGenre[];
     homepage:              string;
@@ -75,13 +75,13 @@ success: boolean
     original_title:        string;
     overview:              string;
     popularity:            number;
-    poster_path:           null;
+    poster_path:           string |null;
     production_companies:  IProductionCompany[];
     production_countries:  IProductionCountry[];
-    recommendations : IMovie;
+    recommendations :      IMovie;
     release_date:          Date;
     revenue:               number;
-    reviews:                IReview;
+    reviews:               IReview;
     runtime:               number;
     spoken_languages:      ISpokenLanguage[];
     status:                string;
