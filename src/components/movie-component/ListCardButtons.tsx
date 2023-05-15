@@ -1,9 +1,9 @@
-import { FlatList, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
+import { FlatList, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { Dispatch, SetStateAction } from "react";
-import { ViewCard } from "./ViewCard";
 import { ItemSeparator } from "./ItemSeparator";
 import color from "../../constants/Color";
-import { setHeight } from "../../constants/style-component/viewComponent";
+import { CardContainer, setHeight } from "../../constants/style-component/viewComponent";
+import { normalText } from "../../constants/style-component/textComponent";
 
 interface ICard<TGenre> {
   id: string;
@@ -43,7 +43,9 @@ export const ListCardButtons = <T extends string>({ data, handlePress, active, s
 
           return (
             <TouchableOpacity onPress={handleActive} key={index}>
-              <ViewCard data={item} isSelected={selectedButton} selectedText={selectedText} />
+              <View style={{ ...CardContainer, ...selectedButton }}>
+                <Text style={{ ...normalText, ...selectedText }}>{item.name}</Text>
+              </View>
             </TouchableOpacity>
           );
         }}

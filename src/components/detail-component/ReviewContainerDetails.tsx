@@ -106,7 +106,7 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
                     <View style={{ justifyContent: "flex-end" }}>
                       <Text style={{ ...subHeader }}>Posted on {parseDate(item.created_at)}</Text>
                     </View>
-                    <Text style={{ ...OverviewDetailsText, color: color.SEMI_BLACK }}>{showText}</Text>
+                    <Text style={{ ...OverviewDetailsText, color: color.ACTIVE }}>{showText}</Text>
                     <Text style={{ ...normalText, textAlign: "right", color: color.BLACK, fontWeight: "800" }} onPress={handleShowMore}>
                       {showMore ? "Show more" : "Show less"}
                     </Text>

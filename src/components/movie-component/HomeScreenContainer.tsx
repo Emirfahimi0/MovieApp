@@ -1,9 +1,9 @@
 import { ListCardButtons } from "./ListCardButtons";
-import { ListPreviewMovie, bottomCardContainer, movieContainer, noDataStyle } from "../../constants/style-component/viewComponent";
+import { ListPreviewMovie, bottomCardContainer, movieContainer, sectionStyle } from "../../constants/style-component/viewComponent";
 import Icon from "react-native-vector-icons/Ionicons";
 import { FlatList, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
-import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
 import Loader from "../features/Loader";
 import { useNavigation } from "@react-navigation/native";
 import { ItemSeparator } from "./ItemSeparator";
@@ -70,13 +70,28 @@ export const BottomScreenCardContainer = ({
   // const searchMovies = Movies.filter((item) => {
   //   item.title !== undefined && item.title.toLowerCase().includes(searchInput !== "" ? searchInput.toLowerCase() : "");
   // });
+  const useDebounce = (searchInput: string, delay: number) => {
+    // State and setters for debounced value
+    const [debouncedValue, setDebouncedValue] = useState(searchInput);
+    useEffect(() => {
+      //set debounce vale after certain passed delay
+      const handler = setTimeout(() => {
+        setDebouncedValue(searchInput);
+      }, delay);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [searchInput]);
+
+    return debouncedValue;
+  };
+  useDebounce(searchInput, 5000);
 
   const searchMovies = Movies.map((item) => {
     const isIncluded = item.title !== undefined && item.title.toLowerCase().includes(searchInput !== "" ? searchInput.toLowerCase() : "");
     return isIncluded ? item : null;
   }).filter((item) => item !== null);
-
-  // console.log("searchMovies", { searchMovies: searchMovies, searchInput: searchInput });
 
   return (
     <Fragment>
@@ -86,70 +101,66 @@ export const BottomScreenCardContainer = ({
         }}>
         <ListCardButtons<TGenre> data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
 
-        {Object.keys(Movies).length > 0 && active !== undefined && searchMovies ? (
-          // <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
-          <View style={{ ...noDataStyle }}>
-            {loading ? (
-              <Loader />
-            ) : (
-              // render MovieCard list
-              <FlatList
-                data={searchMovies}
-                horizontal
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => `${item?.id}`}
-                showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <ItemSeparator width={20} />}
-                ListFooterComponent={() => <ItemSeparator width={20} />}
-                renderItem={({ item, index }) => (
-                  <Fragment>
-                    {Object.keys(searchMovies).length <= 0 || searchMovies === null || searchMovies === undefined ? (
-                      <View style={{ ...noDataStyle }}>
+        <View style={{ ...sectionStyle }}>
+          {Object.keys(searchMovies).length > 0 && active !== undefined && searchMovies ? (
+            // <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
+            <Fragment>
+              {loading ? (
+                <Loader />
+              ) : (
+                // render MovieCard list
+                <FlatList
+                  data={searchMovies}
+                  horizontal
+                  showsVerticalScrollIndicator={false}
+                  keyExtractor={(item) => `${item?.id}`}
+                  showsHorizontalScrollIndicator={false}
+                  ItemSeparatorComponent={() => <ItemSeparator width={24} />}
+                  ListFooterComponent={() => <ItemSeparator width={24} />}
+                  renderItem={({ item, index }) => (
+                    <Fragment>
+                      {Object.keys(searchMovies).length == 0 || searchMovies == null || searchMovies === undefined ? (
                         <Text style={subHeader}> No Movie found{":("}</Text>
-                      </View>
-                    ) : (
-                      <TouchableOpacity
-                        key={`${item?.title}-${index}`}
-                        onPress={() => handleShowDetailScreen(item?.id, navigation, setLoading, storeAllDetailsState)}>
-                        <View style={{ ...ListPreviewMovie }}>
-                          <View style={movieContainer}>
-                            <FastImage
-                              source={{ uri: `${POSTER_BASE_URL}original${item?.poster_path}` }}
-                              style={ImagePoster}
-                              resizeMode={FastImage.resizeMode.cover}
-                            />
-                          </View>
-                          <View style={MovieCardTitle}>
-                            <Text style={subHeader} numberOfLines={3}>
-                              {item?.title}
-                            </Text>
-                          </View>
-                          <View style={subContainer}>
-                            <View>
-                              <Text style={subTitle}> {item?.release_date}</Text>
+                      ) : (
+                        <TouchableOpacity
+                          key={`${item?.title}-${index}`}
+                          onPress={() => handleShowDetailScreen(item?.id, navigation, setLoading, storeAllDetailsState)}>
+                          <View style={{ ...ListPreviewMovie }}>
+                            <View style={movieContainer}>
+                              <FastImage
+                                source={{ uri: `${POSTER_BASE_URL}original${item?.poster_path}` }}
+                                style={ImagePoster}
+                                resizeMode={FastImage.resizeMode.cover}
+                              />
                             </View>
-                            <View style={Rating}>
-                              <Icon iconStyle={{ marginRight: 10 }} name="heart-sharp" size={12} color="red" />
-                              <Text style={subDetail}> {item?.vote_average.toFixed(1)}</Text>
+                            <View style={MovieCardTitle}>
+                              <Text style={subHeader} numberOfLines={3}>
+                                {item?.title}
+                              </Text>
+                            </View>
+                            <View style={subContainer}>
+                              <View>
+                                <Text style={subTitle}> {item?.release_date}</Text>
+                              </View>
+                              <View style={Rating}>
+                                <Icon name="heart-sharp" size={12} color="red" />
+                                <Text style={subDetail}> {item?.vote_average.toFixed(1)}</Text>
+                              </View>
                             </View>
                           </View>
-                        </View>
-                      </TouchableOpacity>
-                    )}
-                  </Fragment>
-                )}
-              />
-            )}
-          </View>
-        ) : loading ? (
-          <View style={{ ...noDataStyle }}>
+                        </TouchableOpacity>
+                      )}
+                    </Fragment>
+                  )}
+                />
+              )}
+            </Fragment>
+          ) : loading ? (
             <Loader />
-          </View>
-        ) : (
-          <View style={{ ...noDataStyle }}>
+          ) : (
             <Text style={subHeader}> No Movie based on this genre</Text>
-          </View>
-        )}
+          )}
+        </View>
       </View>
     </Fragment>
   );

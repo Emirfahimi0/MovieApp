@@ -153,11 +153,11 @@ export const HeaderDetail:ViewStyle = {
   right:0,
   top:32,
 }
-export const noDataStyle: ViewStyle = {
+export const sectionStyle: ViewStyle = {
   alignItems: "center",
   height: setHeight(40), 
   justifyContent: "center",
-  width: setWidth(100), 
+  width: setWidth(107), 
 
 };
 

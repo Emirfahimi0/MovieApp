@@ -8,7 +8,7 @@ interface ISubContainerDetails {
   overviewDetails: string | undefined;
   StyleTextArea: ViewStyle;
 }
-export const SubContainerDetail = ({ overviewDetails, StyleTextArea, DetailTextHeader }: ISubContainerDetails) => {
+export const SubContainerDetail = ({ overviewDetails, DetailTextHeader }: ISubContainerDetails) => {
   const [showMore, setShowmore] = useState<Boolean>(true);
   const handleShowMore = () => {
     setShowmore(!showMore);

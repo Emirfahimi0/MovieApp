@@ -110,7 +110,7 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
       <View
         style={{
           top: 0,
-          height: 44,
+          height: 48,
           backgroundColor: color.SECONDARY_COLOR,
           width: "100%",
           position: "absolute",

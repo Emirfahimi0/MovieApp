@@ -81,7 +81,7 @@ export const OverviewDetailsText:TextStyle ={
   fontFamily:Font.REGULAR,
   fontWeight:"400",
   fontSize: 12,
-  color:color.GRAY,
+  color:color.LIGHT_GRAY,
   textAlign:"justify",
 }
 

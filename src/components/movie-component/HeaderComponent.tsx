@@ -1,4 +1,4 @@
-import { CardContainer, SearchBar, setHeight, setWidth } from "../../constants/style-component/viewComponent";
+import { CardContainer, SearchBar, setHeight } from "../../constants/style-component/viewComponent";
 import { Image, Pressable, Text, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import { InputSearcbBar, normalText, subTitle } from "../../constants/style-component/textComponent";
 import { subHeader } from "../../constants/style-component/textComponent";
@@ -85,7 +85,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
           </View>
           <View style={{ ...styleView }}>
             <View style={SearchBar}>
-              <Icon iconStyle={{ marginRight: 10 }} name="ios-search" size={22} color={color.AMBER} />
+              <Icon name="ios-search" size={22} color={color.AMBER} />
               <View style={{ width: "100%" }}>
                 <TextInput
                   value={searchText}

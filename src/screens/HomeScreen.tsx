@@ -1,17 +1,16 @@
-import { getAccountDetails, getMovieType, getTrendingmovie } from "../services/api-services";
 import { BottomScreenCardContainer } from "../components/movie-component/HomeScreenContainer";
-import { HeaderComponent } from "../components/movie-component/HeaderComponent";
-import React, { Fragment, useContext, useEffect, useState } from "react";
-import { fetchGenreItem, handleShowDetailScreen } from "../components/features/handleFunctions";
-import Loader from "../components/features/Loader";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { MovieContext } from "../context/movie-context/MovieContext";
-import CustomDropDown from "../components/movie-component/CustomDropDown";
-import { ToastMessage } from "../components/features/ToastMessage";
 import { DetailContext } from "../context/detail-context/DetailContext";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { fetchGenreItem, handleShowDetailScreen } from "../components/features/handleFunctions";
+import { getAccountDetails, getMovieType, getTrendingmovie } from "../services/api-services";
+import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import { ItemSeparator } from "../components/movie-component/ItemSeparator";
-import { setHeight } from "src/constants/style-component/viewComponent";
+import { MovieContext } from "../context/movie-context/MovieContext";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ScrollView } from "react-native";
+import { ToastMessage } from "../components/features/ToastMessage";
+import CustomDropDown from "../components/movie-component/CustomDropDown";
+import Loader from "../components/features/Loader";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -44,6 +43,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
 
   const handlePressGenre = async (genre: TGenre, index: number) => {
     filterMovieByGenre(genre, index);
+    setSearchText("");
   };
 
   const handleFetchAccountDetails = async () => {
@@ -117,6 +117,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
               loading={loading}
               setLoading={setLoading}
               Movies={searchText !== "" ? movieState : filteredMovieState}
+              // Movies={searchText !== "" ? movieState : filteredMovieState}
               searchInput={searchText}
             />
           </>

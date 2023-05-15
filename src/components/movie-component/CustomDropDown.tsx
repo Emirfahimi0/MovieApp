@@ -50,6 +50,8 @@ const CustomDropDown: FunctionComponent<ICustomDropDown> = ({ movieType, setSele
     backgroundColor: "#fff",
     borderRadius: 10,
     elevation: 5,
+    height: 320,
+    marginTop: -10,
     position: "relative",
     width: "90%",
     zIndex: -1,
