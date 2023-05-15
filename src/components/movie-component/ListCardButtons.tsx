@@ -10,14 +10,14 @@ interface ICard<TGenre> {
   value: TGenre;
 }
 
-interface ICardButtons<T> {
-  data: ICard<T>[];
-  handlePress: (item: T, index: number) => void;
+interface ICardButtons {
+  data: TGenre[];
+  handlePress: (item: TGenre, index: number) => void;
   active: number;
   setActive: Dispatch<SetStateAction<number>>;
 }
 
-export const ListCardButtons = <T extends string>({ data, handlePress, active, setActive }: ICardButtons<T>) => {
+export const ListCardButtons = ({ data, handlePress, active, setActive }: ICardButtons) => {
   return (
     <View
       style={{
