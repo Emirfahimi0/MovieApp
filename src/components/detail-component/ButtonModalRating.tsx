@@ -48,13 +48,11 @@ export const ButtonModalRating = ({
   const HandleSetRating = (value: number) => {
     // setPostRatingDisable(false);
     setRating(value);
-    console.log("set Rating", value);
 
     //To do
   };
 
   const HandleDeleteRating = async () => {
-    console.log("current rating", ratingVal);
     const resRating: IRating = await deleteRatingbyId(selectedMovie?.id, ratingVal);
     subMessage = resRating.status_message;
     successMessage = resRating.success ? "success" : "error";
@@ -115,7 +113,7 @@ export const ButtonModalRating = ({
             <Pressable onPress={() => setVisible(true)}>
               <View style={modalViewRating}>
                 <Icon name="star-outline" size={20} color={color.GREEN} />
-                <Text style={subDetail}> Submit your Review..</Text>
+                <Text style={{ ...subDetail, color: color.ACTIVE }}> Submit your Review..</Text>
                 <View style={RatingStarIcon}>
                   {review.map((item, index) => {
                     return (

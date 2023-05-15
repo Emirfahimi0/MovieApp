@@ -1,5 +1,5 @@
 import Icon from "react-native-vector-icons/Ionicons";
-import { bottomCardContainer, noDataStyle } from "../constants/style-component/viewComponent";
+import { bottomCardContainer, sectionStyle } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Text, TouchableWithoutFeedback, View } from "react-native";
 import Loader from "../components/features/Loader";
@@ -19,7 +19,7 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
   const [input, setInput] = useState<string>("");
   const { storeAllDetailsState } = useContext(DetailContext);
   const { getWatchlistData, watchlistState } = useContext(WatchlistContext);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const handleGoBack = () => {
     if (route.params.navGoBack) {
       navigation.goBack();
@@ -46,8 +46,7 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
       <View
         style={{
           ...headerContainerStyle,
-          backgroundColor: color.AMBER,
-          height: "auto",
+          backgroundColor: color.PRIMARY_COLOR,
           flexDirection: "row",
         }}>
         <View style={{ left: 24 }}>
@@ -67,8 +66,8 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
           </Text>
         </View>
       </View>
-      <ItemSeparator height={24} />
-      <View style={{ ...bottomCardContainer, borderRadius: 50 }}>
+      <ItemSeparator height={32} />
+      <View style={{ ...bottomCardContainer, backgroundColor: color.ACTIVE, borderRadius: 20 }}>
         {watchlistState.length > 0 ? (
           <Fragment>
             <WatchListCard
@@ -84,11 +83,11 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
         ) : (
           <View
             style={{
-              ...noDataStyle,
+              ...sectionStyle,
               justifyContent: "center",
-              alignItems: "flex-start",
+              alignItems: "center",
             }}>
-            <Text style={{ ...subHeader }}>No Watchlist added yet</Text>
+            <Text style={{ ...subHeader }}>No movie added in watchlist yet</Text>
           </View>
         )}
       </View>

@@ -85,8 +85,8 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
           </View>
           <View style={{ ...styleView }}>
             <View style={SearchBar}>
-              <Icon name="ios-search" size={22} color={color.AMBER} />
-              <View style={{ width: "100%" }}>
+              <Icon name="ios-search" size={22} color={color.SECONDARY_COLOR} />
+              <View style={{ width: SearchBar.width }}>
                 <TextInput
                   value={searchText}
                   placeholderTextColor={color.PRIMARY_COLOR}

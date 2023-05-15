@@ -1,9 +1,10 @@
-import { container, setHeight, setWidth, shadowStyle } from "../../constants/style-component/viewComponent";
+import { setHeight, setWidth, shadowStyle } from "../../constants/style-component/viewComponent";
 import { Image, ScrollView, Text, TextStyle, View, ViewStyle } from "react-native";
 import { OverviewDetailsText, normalText, subHeader } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
 import React, { Fragment, useState } from "react";
 import Font from "../../constants/Font";
+import { ItemSeparator } from "../movie-component/ItemSeparator";
 
 interface IReviewContainerDetail {
   DetailTextHeader: TextStyle;
@@ -55,7 +56,8 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
           marginBottom: checkExistReview ? 0 : 8,
         }}>
         {reviewDetails.length > 0 ? (
-          <ScrollView nestedScrollEnabled={true} bounces={false}>
+          <ScrollView nestedScrollEnabled={true} bounces={false} horizontal={true}>
+            <ItemSeparator width={20} />
             {reviewDetails.map((item: IResultReview, index: number) => {
               let [showMore, setShowmore] = useState<Boolean>(true);
 
@@ -69,11 +71,18 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
                 <View
                   style={{
                     alignSelf: "center",
+                    margin: 24,
                     width: setWidth(80),
-                    minHeight: "auto",
                   }}
                   key={`${item.author}-${index}`}>
-                  <View style={{ ...StyleTextArea, backgroundColor: color.SECONDARY_COLOR, marginVertical: 12 }}>
+                  <ScrollView
+                    contentContainerStyle={{ paddingBottom: 24 }}
+                    style={{
+                      ...StyleTextArea,
+                      backgroundColor: color.SECONDARY_COLOR,
+                      width: setWidth(80),
+                      height: setHeight(16),
+                    }}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -104,13 +113,13 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
                       <Text style={{ ...subHeader, color: color.GREEN }}> {item.author}</Text>
                     </View>
                     <View style={{ justifyContent: "flex-end" }}>
-                      <Text style={{ ...subHeader }}>Posted on {parseDate(item.created_at)}</Text>
+                      <Text style={{ ...subHeader, color: color.GRAY }}>Posted on {parseDate(item.created_at)}</Text>
                     </View>
                     <Text style={{ ...OverviewDetailsText, color: color.ACTIVE }}>{showText}</Text>
                     <Text style={{ ...normalText, textAlign: "right", color: color.BLACK, fontWeight: "800" }} onPress={handleShowMore}>
                       {showMore ? "Show more" : "Show less"}
                     </Text>
-                  </View>
+                  </ScrollView>
                 </View>
               );
             })}

@@ -4,8 +4,8 @@ import color from "../../constants/Color";
 
 const Loader = () => {
   return (
-    <View style={{ ...activityContainer, padding: "54%", flex: 1 }}>
-      <ActivityIndicator size="large" color={color.ACTIVE} />
+    <View style={{ ...activityContainer, flex: 1 }}>
+      <ActivityIndicator size="large" color={color.GREEN} />
     </View>
   );
 };
@@ -16,5 +16,5 @@ const activityContainer: ViewStyle = {
   flex: 1,
   justifyContent: "center",
   flexDirection: "row",
-  padding: 10,
+  padding: 16,
 };

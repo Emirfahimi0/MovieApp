@@ -1,7 +1,7 @@
 import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState, handleMovieDetail } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
-import { bottomCardContainer, setHeight } from "../constants/style-component/viewComponent";
+import { bottomCardContainer, sectionStyle, setHeight } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text } from "react-native";
 import { setWatchlist } from "../services/api-services";
@@ -21,7 +21,7 @@ import FastImage from "react-native-fast-image";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
-const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => {
+const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   const { MovieDetailsState, reviewState, storeAllDetailsState } = useContext(DetailContext);
   const selectedMovie: IMovieDetail | undefined = MovieDetailsState;
   const { getWatchlistData } = useContext(WatchlistContext);
@@ -129,10 +129,10 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
               setPostRatingDisable={setPostRatingDisable}
               ratingVal={ratingVal}
             />
-
+            {/* bottom container of details screen */}
             <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }}>
               <ItemSeparator height={24} />
-              <View style={{ ...bottomCardContainer, paddingTop: 12 }}>
+              <View style={{ ...bottomCardContainer, backgroundColor: color.SECONDARY_COLOR }}>
                 <SubContainerDetail
                   overviewDetails={MovieDetailsState?.overview}
                   StyleTextArea={StyleTextArea}
@@ -141,8 +141,12 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
                 <ReviewContainerDetails reviewDetails={reviewState} StyleTextArea={StyleTextArea} DetailTextHeader={DetailTextHeader} />
               </View>
             </ScrollView>
+            <View style={{ backgroundColor: color.SECONDARY_COLOR }}>
+              <ItemSeparator height={24} />
+            </View>
+
             {/* Recommendation sections */}
-            <View style={{ padding: 24, bottom: "auto", backgroundColor: color.SECONDARY_COLOR }}>
+            <View style={{ paddingHorizontal: 24, bottom: "auto", backgroundColor: color.SECONDARY_COLOR }}>
               <Text style={{ ...normalText, fontSize: 16 }}>Recommendations</Text>
               {selectedMovie?.recommendations.results.length !== 0 ? (
                 <FlatList

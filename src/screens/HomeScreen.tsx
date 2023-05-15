@@ -93,7 +93,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
 
   return (
     <Fragment>
-      <ScrollView bounces={false}>
+      <ScrollView bounces={false} contentContainerStyle={{ minHeight: "100%" }} style={{}}>
         <HeaderComponent
           searchText={searchText}
           setSearchText={setSearchText}

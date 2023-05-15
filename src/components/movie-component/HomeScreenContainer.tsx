@@ -119,9 +119,7 @@ export const BottomScreenCardContainer = ({
                   ListFooterComponent={() => <ItemSeparator width={24} />}
                   renderItem={({ item, index }) => (
                     <Fragment>
-                      {Object.keys(searchMovies).length == 0 || searchMovies == null || searchMovies === undefined ? (
-                        <Text style={subHeader}> No Movie found{":("}</Text>
-                      ) : (
+                      {Object.keys(searchMovies).length == 0 || searchMovies == null || searchMovies === undefined ? null : (
                         <TouchableOpacity
                           key={`${item?.title}-${index}`}
                           onPress={() => handleShowDetailScreen(item?.id, navigation, setLoading, storeAllDetailsState)}>
@@ -158,7 +156,7 @@ export const BottomScreenCardContainer = ({
           ) : loading ? (
             <Loader />
           ) : (
-            <Text style={subHeader}> No Movie based on this genre</Text>
+            <Text style={subHeader}> No Movie found{":("}</Text>
           )}
         </View>
       </View>

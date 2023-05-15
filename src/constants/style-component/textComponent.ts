@@ -35,18 +35,18 @@ export const InputTextStyle: TextStyle = {
   fontFamily: Font.BOLD,
 };
   export const InputSearcbBar: TextStyle= {
-    color:color.BLACK,
+    color:color.SECONDARY_COLOR,
     fontFamily:Font.SEMI_BOLD,
     fontSize:16
     }
 export const subTitle: TextStyle = {
     fontFamily: Font.EXTRA_BOLD,
     fontSize: 12,
-    color: color.GRAY,
+    color: color.SECONDARY_COLOR,
   };
 
 export const subHeader :TextStyle = {
-    color:color.GRAY,
+    color:color.SECONDARY_COLOR,
     fontFamily: Font.REGULAR,
     fontSize: 12,
 }
@@ -54,7 +54,7 @@ export const subHeader :TextStyle = {
 export const subDetail : TextStyle = {
     fontFamily: Font.BOLD,
     fontSize: 12,
-    color:color.BLACK
+    color:color.SECONDARY_COLOR
 
 }
 

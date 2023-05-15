@@ -38,7 +38,7 @@ export const ListCardButtons = <T extends string>({ data, handlePress, active, s
             handlePress(item, index);
           };
           const selectedButton: ViewStyle =
-            active === index ? { backgroundColor: color.ACTIVE } : { backgroundColor: color.BASIC_BACKGROUND };
+            active === index ? { backgroundColor: color.PRIMARY_COLOR } : { backgroundColor: color.BASIC_BACKGROUND };
           const selectedText: TextStyle = active === index ? { color: color.SECONDARY_COLOR, fontWeight: "800" } : { color: color.BLACK };
 
           return (

@@ -16,7 +16,7 @@ interface IMovieCardProps {
 }
 const WatchListCard = ({ MovieData, keyword, navigation, setLoading, storeAllDetailsState }: IMovieCardProps) => {
   return (
-    <View style={{ padding: 16, shadowColor: color.SEMI_BLACK, shadowOpacity: 1.5, shadowOffset: { width: 0, height: 4 } }}>
+    <View style={{ padding: 16, shadowColor: color.SEMI_BLACK, shadowOpacity: 1, shadowOffset: { width: 0, height: 3 } }}>
       <FlatList
         data={MovieData}
         showsVerticalScrollIndicator={false}
@@ -45,7 +45,7 @@ const WatchListCard = ({ MovieData, keyword, navigation, setLoading, storeAllDet
                         <Text style={{ ...subTitle, color: color.SECONDARY_COLOR }}> {item.release_date}</Text>
                       </View>
                       <View style={Rating}>
-                        <Icon iconStyle={{ marginRight: 10 }} name="heart-sharp" size={12} color="red" />
+                        <Icon name="heart-sharp" size={12} color="red" />
                         <Text style={{ ...subDetail, color: color.SECONDARY_COLOR }}> {item.vote_average.toFixed(1)}</Text>
                       </View>
                     </View>
@@ -73,7 +73,7 @@ const overlay: ViewStyle = {
   padding: 24,
   borderBottomLeftRadius: 30,
   borderBottomRightRadius: 30,
-  backgroundColor: "rgba(0,0,0,0.5)",
+  backgroundColor: "rgba(0,0,0,0.3)",
   alignSelf: "center",
 };
 const MovieCardTitle: ViewStyle = {

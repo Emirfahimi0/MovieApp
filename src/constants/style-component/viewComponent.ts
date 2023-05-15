@@ -62,20 +62,19 @@ export const movieContainer:ViewStyle= {
 
   export const bottomCardContainer:ViewStyle={
     ...shadowStyle,
-    backgroundColor: color.SECONDARY_COLOR,
+    backgroundColor: color.ACTIVE,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    elevation: 3,
+    elevation: 5,
     flex:1,
-    paddingVertical: 24,
   }
 
  export const  SearchBar:ViewStyle= {
     alignItems: "center",
-    backgroundColor: color.SECONDARY_COLOR,
-    borderRadius: 50,
+    backgroundColor: color.PRIMARY_COLOR,
+    borderRadius: 20,
     flexDirection: "row",
-    padding: 10,
+    padding: 8,
     width: "90%",
     
   }
@@ -117,11 +116,11 @@ export const  ImagePosterDetail:ViewStyle = {
 
   alignItems:"center",
   backgroundColor:color.SEMI_BLACK,
-  borderRadius:20,
+  borderRadius:16,
   justifyContent:"center",
   elevation: 8,
   paddingTop: "auto",
-  height:setHeight(50),
+  height:setHeight(40),
   width:setWidth(80),
 }
 
