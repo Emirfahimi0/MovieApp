@@ -1,5 +1,5 @@
 import Icon from "react-native-vector-icons/Ionicons";
-import { homeCardContainer, noDataStyle } from "../constants/style-component/viewComponent";
+import { bottomCardContainer, noDataStyle } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Text, TouchableWithoutFeedback, View } from "react-native";
 import Loader from "../components/features/Loader";
@@ -11,6 +11,7 @@ import color from "../constants/Color";
 import { headerContainerStyle } from "../constants/style-component/viewComponent";
 import Font from "../constants/Font";
 import { DetailContext } from "../context/detail-context/DetailContext";
+import { ItemSeparator } from "../components/movie-component/ItemSeparator";
 interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {}
 
 const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
@@ -66,8 +67,8 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
           </Text>
         </View>
       </View>
-
-      <View style={{ ...homeCardContainer, borderRadius: 50 }}>
+      <ItemSeparator height={24} />
+      <View style={{ ...bottomCardContainer, borderRadius: 50 }}>
         {watchlistState.length > 0 ? (
           <Fragment>
             <WatchListCard

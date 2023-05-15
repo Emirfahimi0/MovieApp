@@ -3,12 +3,12 @@ import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TouchID from "react-native-touch-id";
 
-export const fetchMovieDetails = async (id: number) => {
+export const fetchMovieDetails = async (id: number | undefined) => {
     const data: IMovieDetail = await getMovieDetails(id);
     return data;
   };
 
-  export const fetchReviewMovieDetails = async (id: number) => {
+  export const fetchReviewMovieDetails = async (id: number | undefined) => {
     const data: IResultReview[] = await getReviewById(id);
     return data;
   };
@@ -26,7 +26,7 @@ export const fetchMovieDetails = async (id: number) => {
     return responseGenre;
   };
  
-  export const handleShowDetailScreen = async (id: number,navigation,setLoading,storeAllDetailsState): Promise<void> => {
+  export const handleShowDetailScreen = async (id: number | undefined ,navigation,setLoading:(loading:boolean)=>void,storeAllDetailsState:(detail:IMovieDetail,review:IResultReview[])=>void): Promise<void> => {
     const getDetailsFromApi = await handleMovieDetail(id);
     if (getDetailsFromApi !== undefined) {
       setLoading(false);
@@ -36,7 +36,7 @@ export const fetchMovieDetails = async (id: number) => {
     } else setLoading(true);
   };
   // Functions use in HomeScreen and WatchlistScreen
- export const  handleMovieDetail = async (id: number ):Promise<IDetailsMovie> => {
+ export const  handleMovieDetail = async (id: number | undefined ):Promise<IDetailsMovie> => {
     const resDetail: IMovieDetail = await fetchMovieDetails(id);
     const resReview: IResultReview[] = await fetchReviewMovieDetails(id);
     //const navigation:RootNavigationProp = useNavigation()

@@ -33,17 +33,14 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
     const resString = `${longMonthName} ${res[2]}, ${res[3]}`;
     return resString;
   };
-  const checkExistReview = reviewDetails.length <= 1 ? false : true;
+  const checkExistReview = reviewDetails.length < 1 ? false : true;
 
   return (
     <Fragment>
       <View
         style={{
-          backgroundColor: color.SEMI_BLACK,
-          marginHorizontal: 32,
+          marginHorizontal: 16,
           borderRadius: 8,
-          padding: 8,
-          alignItems: "center",
         }}>
         <Text style={{ ...DetailTextHeader, justifyContent: "center" }}>Reviews</Text>
       </View>

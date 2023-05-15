@@ -24,7 +24,7 @@ return data
 }
 
 // Get method that fetch details of the movie
-export const getMovieDetails = async (id:number):Promise<IMovieDetail> => {
+export const getMovieDetails = async (id:number | undefined):Promise<IMovieDetail> => {
     const params = {
         append_to_response:"watch/providers,videos,recommendations"
     }
@@ -186,7 +186,7 @@ export const sessionWithLogIn = async (username:string,password:string):Promise<
 
         const data = JSON.parse(value as string)
         current_Session = data
-        console.log("current session from account details",current_Session)
+      
 
     })
     const params = {
@@ -381,7 +381,7 @@ export const deleteRatingbyId = async (id:number|undefined,rateValue:number):Pro
 
 //Get method to retrieve movie review by its ID
 
-export const getReviewById = async (id:number) => {
+export const getReviewById = async (id:number | undefined) => {
   
 
     const url = `${ENDPOINTS.GET_REVIEWS_BY_ID}${id}/reviews?${TMDB_API_KEY}`

@@ -121,6 +121,6 @@ const rowView: ViewStyle = {
 export const headerCard: ViewStyle = {
   flexDirection: "column",
   marginTop: setHeight(640 / 100),
-  marginBottom: setWidth(640 / 100),
+  marginBottom: setHeight(320 / 100),
   paddingHorizontal: "4%",
 };

@@ -10,7 +10,8 @@ import CustomDropDown from "../components/movie-component/CustomDropDown";
 import { ToastMessage } from "../components/features/ToastMessage";
 import { DetailContext } from "../context/detail-context/DetailContext";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import { setHeight } from "../constants/style-component/viewComponent";
+import { ItemSeparator } from "../components/movie-component/ItemSeparator";
+import { setHeight } from "src/constants/style-component/viewComponent";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -107,6 +108,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
         ) : (
           <>
             <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} value={value} setValue={setValue} />
+            <ItemSeparator height={24} />
             <BottomScreenCardContainer
               Genres={genreState}
               storeAllDetailsState={storeAllDetailsState}

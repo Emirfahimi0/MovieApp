@@ -1,7 +1,7 @@
 import { DetailContext } from "../context/detail-context/DetailContext";
 import { fetchAccountState, handleMovieDetail } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
-import { homeCardContainer, setHeight } from "../constants/style-component/viewComponent";
+import { bottomCardContainer, setHeight } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text } from "react-native";
 import { setWatchlist } from "../services/api-services";
@@ -130,8 +130,9 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
               ratingVal={ratingVal}
             />
 
-            <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }} nestedScrollEnabled={true}>
-              <View style={{ ...homeCardContainer, paddingTop: 12 }}>
+            <ScrollView contentContainerStyle={{ minHeight: setHeight(2) }}>
+              <ItemSeparator height={24} />
+              <View style={{ ...bottomCardContainer, paddingTop: 12 }}>
                 <SubContainerDetail
                   overviewDetails={MovieDetailsState?.overview}
                   StyleTextArea={StyleTextArea}
@@ -140,6 +141,7 @@ const DetailsMovieScreen = ({ navigation, route }: IDetailsMovieScreenProps) => 
                 <ReviewContainerDetails reviewDetails={reviewState} StyleTextArea={StyleTextArea} DetailTextHeader={DetailTextHeader} />
               </View>
             </ScrollView>
+            {/* Recommendation sections */}
             <View style={{ padding: 24, bottom: "auto", backgroundColor: color.SECONDARY_COLOR }}>
               <Text style={{ ...normalText, fontSize: 16 }}>Recommendations</Text>
               {selectedMovie?.recommendations.results.length !== 0 ? (

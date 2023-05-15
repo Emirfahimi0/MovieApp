@@ -60,14 +60,13 @@ export const movieContainer:ViewStyle= {
    borderRadius:20,
   }
 
-  export const homeCardContainer:ViewStyle={
+  export const bottomCardContainer:ViewStyle={
     ...shadowStyle,
     backgroundColor: color.SECONDARY_COLOR,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     elevation: 3,
     flex:1,
-    marginTop: setHeight(8),
     paddingVertical: 24,
   }
 
@@ -155,9 +154,11 @@ export const HeaderDetail:ViewStyle = {
   top:32,
 }
 export const noDataStyle: ViewStyle = {
-  justifyContent: "center",
   alignItems: "center",
-  width: setWidth(4),
+  height: setHeight(40), 
+  justifyContent: "center",
+  width: setWidth(100), 
+
 };
 
 export const smallDetail : ViewStyle ={
@@ -189,8 +190,8 @@ export const OverviewContainer:ViewStyle = {
   backgroundColor:color.ACTIVE,
   flexDirection: "column",
   flex:1.4,
-  borderTopRightRadius:homeCardContainer.borderTopRightRadius,
-  borderTopLeftRadius:homeCardContainer.borderTopLeftRadius,
+  borderTopRightRadius:bottomCardContainer.borderTopRightRadius,
+  borderTopLeftRadius:bottomCardContainer.borderTopLeftRadius,
   justifyContent: "space-between",
 }
 
