@@ -5,12 +5,12 @@ import { Text, TouchableWithoutFeedback, View } from "react-native";
 import Loader from "../components/features/Loader";
 import React, { useState, Fragment, useEffect, useContext } from "react";
 import { subHeader } from "../constants/style-component/textComponent";
-import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
+import { WatchlistContext } from "../contextStore/watchlist-context/WatchlistContext";
 import WatchListCard from "../components/movie-component/WatchListCard";
 import color from "../constants/Color";
 import { headerContainerStyle } from "../constants/style-component/viewComponent";
 import Font from "../constants/Font";
-import { DetailContext } from "../context/detail-context/DetailContext";
+import { DetailContext } from "../contextStore/detail-context/DetailContext";
 import { ItemSeparator } from "../components/movie-component/ItemSeparator";
 interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {}
 

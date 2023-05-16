@@ -9,7 +9,7 @@ import { handleLoginWithFaceId } from "../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import color from "../constants/Color";
 import { ToastMessage } from "../components/features/ToastMessage";
-import { GlobalContext } from "../context/GlobalState";
+import { GlobalContext } from "../contextStore/GlobalState";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");
