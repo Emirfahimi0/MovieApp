@@ -24,7 +24,7 @@ export const SubContainerDetail = ({ overviewDetails, DetailTextHeader }: ISubCo
             {showMore ? overviewDetails?.split(" ").slice(0, 20).join(" ") : overviewDetails}
           </Text>
           <Text
-            style={{ fontFamily: Font.BOLD, textAlign: "right", color: color.ACTIVE, fontWeight: "800", fontSize: 12 }}
+            style={{ fontFamily: Font.BOLD, textAlign: "right", color: color.PRIMARY_COLOR, fontWeight: "800", fontSize: 12 }}
             onPress={handleShowMore}>
             {showMore ? "Show more" : "Show less"}
           </Text>

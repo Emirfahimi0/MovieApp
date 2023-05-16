@@ -66,7 +66,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
                 <Pressable onPress={handleLogOut}>
                   <Icon name="exit-outline" size={32} color="#fff" />
                 </Pressable>
-                <Image source={{ uri: urlAvatar }} resizeMode="cover" style={{ width: 56, height: 56, borderRadius: 25, marginLeft: 16 }} />
+                <Image source={{ uri: urlAvatar }} resizeMode="cover" style={{ width: 52, height: 52, borderRadius: 50, marginLeft: 16 }} />
               </View>
             </View>
 

@@ -99,7 +99,7 @@ export const BottomScreenCardContainer = ({
         style={{
           ...bottomCardContainer,
         }}>
-        <ListCardButtons<TGenre> data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
+        <ListCardButtons data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
 
         <View style={{ ...sectionStyle }}>
           {Object.keys(searchMovies).length > 0 && active !== undefined && searchMovies ? (
@@ -114,15 +114,22 @@ export const BottomScreenCardContainer = ({
                   horizontal
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item) => `${item?.id}`}
+                  pagingEnabled={true}
                   showsHorizontalScrollIndicator={false}
-                  ItemSeparatorComponent={() => <ItemSeparator width={24} />}
                   ListFooterComponent={() => <ItemSeparator width={24} />}
                   renderItem={({ item, index }) => (
                     <Fragment>
                       {Object.keys(searchMovies).length == 0 || searchMovies == null || searchMovies === undefined ? null : (
                         <TouchableOpacity
                           key={`${item?.title}-${index}`}
-                          onPress={() => handleShowDetailScreen(item?.id, navigation, setLoading, storeAllDetailsState)}>
+                          onPress={() =>
+                            handleShowDetailScreen(
+                              item?.id ? item?.id : searchMovies.indexOf(item),
+                              navigation,
+                              setLoading,
+                              storeAllDetailsState,
+                            )
+                          }>
                           <View style={{ ...ListPreviewMovie }}>
                             <View style={movieContainer}>
                               <FastImage

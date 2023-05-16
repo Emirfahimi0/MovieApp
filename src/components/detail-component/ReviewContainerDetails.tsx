@@ -1,6 +1,6 @@
 import { setHeight, setWidth, shadowStyle } from "../../constants/style-component/viewComponent";
 import { Image, ScrollView, Text, TextStyle, View, ViewStyle } from "react-native";
-import { OverviewDetailsText, normalText, subHeader } from "../../constants/style-component/textComponent";
+import { OverviewDetailsText, subHeader } from "../../constants/style-component/textComponent";
 import color from "../../constants/Color";
 import React, { Fragment, useState } from "react";
 import Font from "../../constants/Font";
@@ -36,6 +36,15 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
   };
   const checkExistReview = reviewDetails.length < 1 ? false : true;
 
+  const textShowMore: TextStyle = {
+    color: color.BLACK,
+    fontFamily: Font.BOLD,
+    fontSize: 12,
+    fontWeight: "800",
+    textAlign: "right",
+    justifyContent: "space-evenly",
+  };
+
   return (
     <Fragment>
       <View
@@ -56,8 +65,18 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
           marginBottom: checkExistReview ? 0 : 8,
         }}>
         {reviewDetails.length > 0 ? (
-          <ScrollView nestedScrollEnabled={true} bounces={false} horizontal={true}>
-            <ItemSeparator width={20} />
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            automaticallyAdjustsScrollIndicatorInsets={true}
+            bounces={false}
+            showsHorizontalScrollIndicator={true}
+            decelerationRate={"normal"}
+            horizontal={true}
+            indicatorStyle={"white"}
+            nestedScrollEnabled={true}
+            disableIntervalMomentum={true}
+            snapToInterval={344}>
+            <ItemSeparator width={12} />
             {reviewDetails.map((item: IResultReview, index: number) => {
               let [showMore, setShowmore] = useState<Boolean>(true);
 
@@ -66,12 +85,15 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
                 setShowmore(!showMore);
                 // test
               };
-              const showText = showMore ? item.content.split(" ").slice(0, 15).join(" ") : item.content;
+              const showText = showMore ? item.content.split(" ").slice(0, 10).join(" ") : item.content;
+
+              showText.length <= item.content.length ? !showMore : showMore;
+
               return (
                 <View
                   style={{
                     alignSelf: "center",
-                    margin: 24,
+                    margin: 16,
                     width: setWidth(80),
                   }}
                   key={`${item.author}-${index}`}>
@@ -112,13 +134,15 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
                       ) : null}
                       <Text style={{ ...subHeader, color: color.GREEN }}> {item.author}</Text>
                     </View>
-                    <View style={{ justifyContent: "flex-end" }}>
+                    <View style={{ justifyContent: "center", alignContent: "flex-end" }}>
                       <Text style={{ ...subHeader, color: color.GRAY }}>Posted on {parseDate(item.created_at)}</Text>
+                      <Text style={{ ...OverviewDetailsText, color: color.ACTIVE }}>{showText}</Text>
                     </View>
-                    <Text style={{ ...OverviewDetailsText, color: color.ACTIVE }}>{showText}</Text>
-                    <Text style={{ ...normalText, textAlign: "right", color: color.BLACK, fontWeight: "800" }} onPress={handleShowMore}>
-                      {showMore ? "Show more" : "Show less"}
-                    </Text>
+                    <View style={{ alignSelf: "flex-end" }}>
+                      <Text style={{ ...textShowMore }} onPress={handleShowMore}>
+                        {showMore ? "Show more" : "Show less"}
+                      </Text>
+                    </View>
                   </ScrollView>
                 </View>
               );
@@ -127,11 +151,11 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
         ) : (
           <Text
             style={{
-              fontFamily: Font.BOLD,
               color: color.SEMI_BLACK,
+              fontFamily: Font.BOLD,
+              fontSize: 16,
               marginLeft: 16,
               paddingVertical: 16,
-              fontSize: 16,
               textAlign: "center",
             }}>
             no review...

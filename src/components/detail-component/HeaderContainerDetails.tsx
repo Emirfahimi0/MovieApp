@@ -56,31 +56,29 @@ export const HeaderContainerDetails = ({
   }, []);
 
   const playButton: ViewStyle = {
-    flexDirection: "row",
     position: "absolute",
-    alignSelf: "center",
-    bottom: "77%",
+    alignItems: "center",
+    bottom: "72%",
     borderRadius: 50,
     backgroundColor: color.BLACK,
-    borderColor: color.AMBER,
     justifyContent: "center",
     zIndex: 1,
   };
   return (
     <Fragment>
-      <View style={{ position: "absolute", zIndex: 1, top: 8, left: 8 }}>
+      <View style={{ position: "absolute", zIndex: playTrailer ? -1 : 1, top: 8, left: 8 }}>
         <TouchableOpacity onPress={onPress}>
           <Icon name="chevron-back-outline" size={30} color={color.ACTIVE} />
         </TouchableOpacity>
       </View>
-      <View style={{ ...headerContainerStyle, paddingVertical: 8 }}>
+      <View style={{ ...headerContainerStyle }}>
         <Fragment>
           {selectedMovie?.videos && playTrailer ? (
-            <View style={{ justifyContent: "center", flexDirection: "column", alignContent: "space-between" }}>
+            <View style={{ justifyContent: "center", flexDirection: "column", paddingHorizontal: 32 }}>
               <YoutubeIframe
                 webViewStyle={{ ...youtubePlayerView }}
-                height={200}
-                width={300}
+                height={300}
+                width={500}
                 play={playTrailer}
                 videoId={trailer?.key}
                 onChangeState={onStateChange}
@@ -100,21 +98,21 @@ export const HeaderContainerDetails = ({
           //Play button
           style={
             !playTrailer
-              ? playButton
+              ? { ...playButton, padding: 10 }
               : {
                   ...playButton,
-                  top: 40,
-                  right: 8,
-                  height: 40,
-                  width: 40,
+                  top: 2,
+                  alignSelf: "flex-end",
+                  height: 32,
+                  width: 32,
                   backgroundColor: color.TRANSPARENT,
                 }
           }>
           <TouchableOpacity onPress={togglePlaying}>
             {playTrailer ? (
-              <Icon name="close-outline" style={{ marginLeft: 2 }} size={35} color={color.BLACK} />
+              <Icon name="close-outline" size={24} style={{ fontWeight: "800" }} color={color.PRIMARY_COLOR} />
             ) : (
-              <Icon name="play-outline" style={{ marginLeft: 5 }} size={50} color={color.AMBER} />
+              <Icon name="play-outline" size={52} color={color.AMBER} />
             )}
           </TouchableOpacity>
         </View>

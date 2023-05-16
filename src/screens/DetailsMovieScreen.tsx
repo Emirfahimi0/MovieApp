@@ -147,7 +147,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
 
             {/* Recommendation sections */}
             <View style={{ paddingHorizontal: 24, bottom: "auto", backgroundColor: color.SECONDARY_COLOR }}>
-              <Text style={{ ...normalText, fontSize: 16 }}>Recommendations</Text>
+              <Text style={{ ...DetailTextHeader }}>Recommendations</Text>
               {selectedMovie?.recommendations.results.length !== 0 ? (
                 <FlatList
                   data={selectedMovie?.recommendations.results}
@@ -158,7 +158,6 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
                   renderItem={({ item, index }) => {
                     const handleActive = () => {
                       handlePressRecommendations(item.id);
-                      console.log(item);
                     };
 
                     return (
@@ -178,7 +177,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
                             resizeMode="cover"
                           />
                           <Text
-                            style={{ fontFamily: Font.BOLD, fontSize: 14, color: color.GREEN, width: 120, textAlign: "center" }}
+                            style={{ fontFamily: Font.BOLD, fontSize: 14, color: color.ACTIVE, width: 120, textAlign: "center" }}
                             numberOfLines={2}>
                             {item.title}
                           </Text>

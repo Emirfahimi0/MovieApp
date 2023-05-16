@@ -46,6 +46,7 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
       <View
         style={{
           ...headerContainerStyle,
+          paddingVertical: "12%",
           backgroundColor: color.PRIMARY_COLOR,
           flexDirection: "row",
         }}>

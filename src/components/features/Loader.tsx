@@ -17,4 +17,5 @@ const activityContainer: ViewStyle = {
   justifyContent: "center",
   flexDirection: "row",
   padding: 16,
+  alignContent: "center",
 };

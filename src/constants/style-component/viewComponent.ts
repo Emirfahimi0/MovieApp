@@ -102,15 +102,10 @@ export const movieContainer:ViewStyle= {
 
   export const headerContainerStyle: ViewStyle = {
     alignItems: "center",
-    paddingVertical: "12%",
     borderBottomRightRadius: 40,
     borderBottomLeftRadius: 40,
     backgroundColor: color.SECONDARY_COLOR,
-    shadowOpacity: 1.0,
-    shadowOffset: {
-      height: 0,
-      width: -4,
-    },
+   ... shadowStyle
   };
 export const  ImagePosterDetail:ViewStyle = {
 
@@ -119,8 +114,7 @@ export const  ImagePosterDetail:ViewStyle = {
   borderRadius:16,
   justifyContent:"center",
   elevation: 8,
-  paddingTop: "auto",
-  height:setHeight(40),
+  height:setHeight(50),
   width:setWidth(80),
 }
 
