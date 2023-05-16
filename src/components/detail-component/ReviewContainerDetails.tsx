@@ -58,7 +58,7 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
       <View
         style={{
           ...(checkExistReview ? shadowStyle : null),
-          backgroundColor: checkExistReview ? color.BLACK : color.SECONDARY_COLOR,
+          backgroundColor: !checkExistReview ? color.BLACK : color.SEMI_BLACK,
           borderRadius: 16,
           height: checkExistReview ? setHeight(24) : "auto",
           margin: 12,
@@ -151,9 +151,9 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
         ) : (
           <Text
             style={{
-              color: color.SEMI_BLACK,
+              color: color.SECONDARY_COLOR,
               fontFamily: Font.BOLD,
-              fontSize: 16,
+              fontSize: 14,
               marginLeft: 16,
               paddingVertical: 16,
               textAlign: "center",

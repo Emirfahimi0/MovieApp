@@ -60,4 +60,3 @@ declare interface IDetailsMovie {
  detail:IMovieDetail ,
  review:IResultReview[]
 }
-

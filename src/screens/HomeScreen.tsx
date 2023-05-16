@@ -70,13 +70,10 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   };
 
   useEffect(() => {
+    handleFetchAccountDetails();
     if (genreState.length === 0) {
       handleFetchGenre();
     }
-  }, []);
-
-  useEffect(() => {
-    handleFetchAccountDetails();
   }, []);
 
   useEffect(() => {

@@ -69,18 +69,18 @@ export const MovieDetailTitle:TextStyle ={
     fontFamily: Font.BOLD,
     fontSize:16,
     textAlign:"center",
-    color:color.SEMI_BLACK
+    color:color.SECONDARY_COLOR
 }
 export const additionalDetailText:TextStyle ={
-    color: color.SEMI_BLACK,
-        fontFamily: Font.LIGHT,
-    fontWeight: "700",
+    fontFamily: Font.LIGHT,
+    color: color.SECONDARY_COLOR,
     fontSize: 12,
+    fontWeight: "800",
 }
 export const OverviewDetailsText:TextStyle ={
   fontFamily:Font.REGULAR,
   fontWeight:"600",
-  fontSize: 12,
+  fontSize: 14,
   color:color.LIGHT_GRAY,
   textAlign:"justify",
 }

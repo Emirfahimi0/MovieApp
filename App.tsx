@@ -1,4 +1,4 @@
-import { AppContextProviders } from "./src/context/utils/AppContextProvider";
+import { AppContextProviders } from "./src/context/utils/AppContextProviders";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StackNavigator } from "./src/components/features//StackNavigator";
 import { StatusBar } from "react-native";
@@ -11,7 +11,7 @@ function App() {
     <Fragment>
       <AppContextProviders>
         <SafeAreaView>
-          <StatusBar barStyle={"dark-content"} translucent={true} />
+          <StatusBar barStyle={"light-content"} translucent={true} />
         </SafeAreaView>
         <StackNavigator />
         <Toast />

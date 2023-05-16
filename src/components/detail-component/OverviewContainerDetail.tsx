@@ -20,7 +20,7 @@ export const SubContainerDetail = ({ overviewDetails, DetailTextHeader }: ISubCo
           <View style={{ paddingVertical: 8 }}>
             <Text style={{ ...DetailTextHeader }}>Overview</Text>
           </View>
-          <Text style={{ ...OverviewDetailsText, color: color.ACTIVE }}>
+          <Text style={{ ...OverviewDetailsText, color: color.SECONDARY_COLOR }}>
             {showMore ? overviewDetails?.split(" ").slice(0, 20).join(" ") : overviewDetails}
           </Text>
           <Text

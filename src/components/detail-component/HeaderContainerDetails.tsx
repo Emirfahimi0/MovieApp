@@ -68,10 +68,11 @@ export const HeaderContainerDetails = ({
     <Fragment>
       <View style={{ position: "absolute", zIndex: playTrailer ? -1 : 1, top: 8, left: 8 }}>
         <TouchableOpacity onPress={onPress}>
-          <Icon name="chevron-back-outline" size={30} color={color.ACTIVE} />
+          <Icon name="chevron-back-outline" size={30} color={color.SECONDARY_COLOR} />
         </TouchableOpacity>
       </View>
-      <View style={{ ...headerContainerStyle }}>
+
+      <View style={{ ...headerContainerStyle, backgroundColor: color.PRIMARY_COLOR }}>
         <Fragment>
           {selectedMovie?.videos && playTrailer ? (
             <View style={{ justifyContent: "center", flexDirection: "column", paddingHorizontal: 32 }}>
@@ -131,7 +132,9 @@ export const HeaderContainerDetails = ({
               justifyContent: "flex-end",
             }}>
             <Icon name="heart-sharp" size={16} color="red" />
-            <Text style={{ ...RatingText, textAlign: "center" }}>{selectedMovie?.vote_average.toFixed(1)}</Text>
+            <Text style={{ ...RatingText, textAlign: "center", color: color.SECONDARY_COLOR }}>
+              {selectedMovie?.vote_average.toFixed(1)}
+            </Text>
           </View>
         </View>
         <View
@@ -145,7 +148,7 @@ export const HeaderContainerDetails = ({
             <View
               key={index}
               style={{
-                backgroundColor: color.PRIMARY_COLOR,
+                backgroundColor: color.GREEN,
                 padding: 4,
                 margin: 4,
                 borderRadius: 5,
