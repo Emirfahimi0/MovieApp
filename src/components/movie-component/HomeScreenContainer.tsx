@@ -86,10 +86,11 @@ export const BottomScreenCardContainer = ({
 
     return debouncedValue;
   };
-  useDebounce(searchInput, 5000);
+  const debouncedValues = useDebounce(searchInput, 1000);
 
   const searchMovies = Movies.map((item) => {
-    const isIncluded = item.title !== undefined && item.title.toLowerCase().includes(searchInput !== "" ? searchInput.toLowerCase() : "");
+    const isIncluded =
+      item.title !== undefined && item.title.toLowerCase().includes(debouncedValues !== "" ? debouncedValues.toLowerCase() : "");
     return isIncluded ? item : null;
   }).filter((item) => item !== null);
 
