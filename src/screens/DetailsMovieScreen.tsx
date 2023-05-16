@@ -1,4 +1,4 @@
-import { DetailContext } from "../context/detail-context/DetailContext";
+import { DetailContext } from "../contextStore/detail-context/DetailContext";
 import { fetchAccountState, handleMovieDetail } from "../components/features/handleFunctions";
 import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
 import { bottomCardContainer, setHeight } from "../constants/style-component/viewComponent";
@@ -6,7 +6,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text } from "react-native";
 import { setWatchlist } from "../services/api-services";
 import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
-import { WatchlistContext } from "../context/watchlist-context/WatchlistContext";
+import { WatchlistContext } from "../contextStore/watchlist-context/WatchlistContext";
 import color from "../constants/Color";
 import Font from "../constants/Font";
 import Loader from "../components/features/Loader";

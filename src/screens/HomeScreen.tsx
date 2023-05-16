@@ -1,10 +1,10 @@
 import { BottomScreenCardContainer } from "../components/movie-component/HomeScreenContainer";
-import { DetailContext } from "../context/detail-context/DetailContext";
+import { DetailContext } from "../contextStore/detail-context/DetailContext";
 import { fetchGenreItem, handleShowDetailScreen } from "../components/features/handleFunctions";
 import { getAccountDetails, getMovieType, getTrendingmovie } from "../services/api-services";
 import { HeaderComponent } from "../components/movie-component/HeaderComponent";
 import { ItemSeparator } from "../components/movie-component/ItemSeparator";
-import { MovieContext } from "../context/movie-context/MovieContext";
+import { MovieContext } from "../contextStore/movie-context/MovieContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ScrollView } from "react-native";
 import { ToastMessage } from "../components/features/ToastMessage";

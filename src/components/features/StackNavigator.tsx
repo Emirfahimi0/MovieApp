@@ -5,7 +5,7 @@ import HomeScreen from "../../screens/HomeScreen";
 import LoginScreen from "../../screens/LoginScreen";
 import React, { useContext, useEffect } from "react";
 import WatchListScreen from "../../screens/WatchListScreen";
-import { GlobalContext } from "../../context/GlobalState";
+import { GlobalContext } from "../../contextStore/GlobalState";
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
