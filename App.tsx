@@ -1,4 +1,4 @@
-import { AppContextProviders } from "./src/context/utils/AppContextProviders";
+import { AppContextProviders } from "./src/contextStore//utils/AppContextProviders";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StackNavigator } from "./src/components/features//StackNavigator";
 import { StatusBar } from "react-native";
