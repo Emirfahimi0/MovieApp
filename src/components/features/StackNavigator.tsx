@@ -13,7 +13,7 @@ export const StackNavigator = () => {
   const { isLoggedIn } = useContext(GlobalContext);
 
   const handleIsUserLoggedIn = async () => {
-    if (isLoggedIn) {
+    if (isLoggedIn === true) {
       // setIsLoggedIn(true);
       console.log("loggedIn", isLoggedIn);
     }
@@ -25,18 +25,16 @@ export const StackNavigator = () => {
 
   return (
     <>
-      <RootStack.Navigator initialRouteName="HomeScreen" screenOptions={{ headerShown: false }}>
-        {isLoggedIn ? (
-          <RootStack.Group>
-            <RootStack.Screen name="HomeScreen" component={HomeScreen} />
-            <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} />
-            <RootStack.Screen name="WatchlistScreen" component={WatchListScreen as React.ComponentType<any>} />
-          </RootStack.Group>
-        ) : (
-          <RootStack.Group>
-            <RootStack.Screen name="LoginScreen" component={LoginScreen} />
-          </RootStack.Group>
-        )}
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        <RootStack.Group>
+          <RootStack.Screen name="HomeScreen" component={HomeScreen} />
+          <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} />
+          <RootStack.Screen name="WatchlistScreen" component={WatchListScreen as React.ComponentType<any>} />
+        </RootStack.Group>
+
+        <RootStack.Group>
+          <RootStack.Screen name="LoginScreen" component={LoginScreen} />
+        </RootStack.Group>
       </RootStack.Navigator>
     </>
   );

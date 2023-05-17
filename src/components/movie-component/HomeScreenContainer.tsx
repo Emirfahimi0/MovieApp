@@ -102,7 +102,7 @@ export const BottomScreenCardContainer = ({
         <ListCardButtons data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
 
         <View style={{ ...sectionStyle }}>
-          {Object.keys(searchMovies).length > 0 && active !== undefined && searchMovies ? (
+          {Object.keys(searchMovies).length > 0 && active !== undefined && searchMovies !== undefined ? (
             // <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
             <Fragment>
               {loading ? (
@@ -160,7 +160,7 @@ export const BottomScreenCardContainer = ({
                 />
               )}
             </Fragment>
-          ) : loading ? (
+          ) : !loading ? (
             <Loader />
           ) : (
             <Text style={subHeader}> No Movie found{":("}</Text>

@@ -27,7 +27,8 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
   const navigation: RootNavigationProp = useNavigation();
   const handleLogOut = async () => {
     //To do
-    await AsyncStorage.setItem("userLoggedIn", JSON.stringify(false));
+    await AsyncStorage.clear();
+    // await AsyncStorage.setItem("userLoggedIn", JSON.stringify(false));
     isUserLoggedIn(false);
     navigation.replace("LoginScreen");
   };
