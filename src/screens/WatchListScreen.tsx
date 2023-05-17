@@ -1,7 +1,7 @@
 import Icon from "react-native-vector-icons/Ionicons";
 import { bottomCardContainer, sectionStyle } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Text, TouchableWithoutFeedback, View } from "react-native";
+import { Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
 import Loader from "../components/features/Loader";
 import React, { useState, Fragment, useEffect, useContext } from "react";
 import { subHeader } from "../constants/style-component/textComponent";
@@ -22,6 +22,7 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const handleGoBack = () => {
     if (route.params.navGoBack) {
+      console.log(typeof route.params.navGoBack);
       navigation.goBack();
       // navigation.reset({
       //   index: 0,
@@ -50,12 +51,12 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
           backgroundColor: color.PRIMARY_COLOR,
           flexDirection: "row",
         }}>
-        <View style={{ left: 24 }}>
-          <TouchableWithoutFeedback onPress={handleGoBack}>
+        <View style={{ left: 24, zIndex: 1 }}>
+          <Pressable onPress={handleGoBack}>
             <Icon name="md-chevron-back" size={32} color={"white"} />
-          </TouchableWithoutFeedback>
+          </Pressable>
         </View>
-        <View style={{ justifyContent: "center", alignContent: "center", marginLeft: 92 }}>
+        <View style={{ justifyContent: "center", alignContent: "center", paddingLeft: 92 }}>
           <Text
             style={{
               fontFamily: Font.REGULAR,
