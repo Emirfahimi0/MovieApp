@@ -86,6 +86,43 @@ export const createNewSession = async(token:string): Promise<TSession> => {
     return current_Session
      
  }
+ export const deleteSession =async (session_Id:string) => {
+
+  const responseToken:IResponseTokenMerge =   await AsyncStorage.getItem('responseToken').then((value) => {
+
+        const data = JSON.parse(value as string)
+        return  data
+    })
+    try {
+        if(responseToken.session_id === session_Id){
+            const options = {
+                method: 'DELETE',
+                url: 'https://api.themoviedb.org/3/authentication/session',
+                headers: {
+                  accept: 'application/json',
+                  'content-type': 'application/json',
+                  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjOGRkNDFhZTYwOTIwMGE0YzlhZWYyNWU5NjU0NDk0YSIsInN1YiI6IjY0MjIzMGJhYzdhN2UwMDBhMzdiNjM0OSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.IvePC5OYOyxp1GySYiPFDgDeBIt-01c7kM0pfNKG8jM'
+                },
+                data: {session_id: responseToken.session_id}
+              };
+              axios
+              .request(options)
+              .then(function (response) {
+                console.log(response.data);
+              })
+              .catch(function (error) {
+                console.error(error);
+              });
+        }
+        
+    } catch (error) {
+        console.log(error)
+    }
+
+      
+    
+    
+ }
  /* Session with log In  */
 export const sessionWithLogIn = async (username:string,password:string):Promise<boolean> => {
              let isAuthenticated = false;
