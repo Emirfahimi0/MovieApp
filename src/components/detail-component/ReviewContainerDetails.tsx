@@ -4,7 +4,7 @@ import { OverviewDetailsText, subHeader } from "../../constants/style-component/
 import color from "../../constants/Color";
 import React, { Fragment, useState } from "react";
 import Font from "../../constants/Font";
-import { ItemSeparator } from "../movie-component/ItemSeparator";
+import { ItemSeparator } from "../movie-component";
 
 interface IReviewContainerDetail {
   DetailTextHeader: TextStyle;

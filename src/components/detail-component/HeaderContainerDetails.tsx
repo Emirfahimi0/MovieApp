@@ -11,7 +11,7 @@ import {
 } from "../../constants/style-component/viewComponent";
 import { additionalDetailText, normalText, MovieDetailTitle, RatingText } from "../../constants/style-component/textComponent";
 import { ButtonModalRating } from "./ButtonModalRating";
-import { ItemSeparator } from "../movie-component/ItemSeparator";
+import { ItemSeparator } from "../movie-component";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import Icon from "react-native-vector-icons/Ionicons";
 import color from "../../constants/Color";
