@@ -1,21 +1,21 @@
+import { bottomCardContainer, setHeight } from "../constants/style-component/viewComponent";
 import { DetailContext } from "../contextStore/detail-context/DetailContext";
 import { fetchAccountState, handleMovieDetail } from "../components/features/handleFunctions";
-import { bottomCardContainer, setHeight } from "../constants/style-component/viewComponent";
+import { HeaderContainerDetails, ReviewContainerDetails, SubContainerDetail } from "../components/detail-component";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { normalText } from "../constants/style-component/textComponent";
+import { POSTER_BASE_URL } from "../constants/utilities";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text } from "react-native";
 import { setWatchlist } from "../services/api-services";
+import { ToastMessage } from "../components/features/ToastMessage";
 import { WatchlistContext } from "../contextStore/watchlist-context/WatchlistContext";
 import color from "../constants/Color";
+import FastImage from "react-native-fast-image";
 import Font from "../constants/Font";
 import Loader from "../components/features/Loader";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { ToastMessage } from "../components/features/ToastMessage";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { ItemSeparator } from "../components/movie-component/ItemSeparator";
-import { normalText } from "../constants/style-component/textComponent";
-import { POSTER_BASE_URL } from "../constants/utilities";
-import FastImage from "react-native-fast-image";
-import { HeaderContainerDetails, ReviewContainerDetails, SubContainerDetail } from "../components/detail-component";
+import { ItemSeparator } from "../components/movie-component";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 

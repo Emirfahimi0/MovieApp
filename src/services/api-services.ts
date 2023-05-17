@@ -88,7 +88,7 @@ export const createNewSession = async(token:string): Promise<TSession> => {
  }
  export const deleteSession =async (session_Id:string) => {
 
-  const responseToken:IResponseTokenMerge =   await AsyncStorage.getItem('responseToken').then((value) => {
+    const responseToken:IResponseTokenMerge =   await AsyncStorage.getItem('responseToken').then((value) => {
 
         const data = JSON.parse(value as string)
         return  data

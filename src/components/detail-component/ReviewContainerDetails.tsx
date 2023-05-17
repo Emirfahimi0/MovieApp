@@ -12,7 +12,7 @@ interface IReviewContainerDetail {
   reviewDetails: IResultReview[];
 }
 
-const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader }: IReviewContainerDetail) => {
+export const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader }: IReviewContainerDetail) => {
   const [active, setActive] = useState<number>(0);
   const fetchAvatarImage = (avatar_path: string) => {
     return RegExp("https://secure.gravatar.com/avatar").test(`${avatar_path}` as string)
@@ -160,5 +160,3 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
     </Fragment>
   );
 };
-
-export default ReviewContainerDetails;
