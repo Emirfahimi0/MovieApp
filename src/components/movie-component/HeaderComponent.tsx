@@ -1,11 +1,12 @@
-import { CardContainer, SearchBar, setHeight, InputSearcbBar, normalText, subTitle, color, Font } from "../../constants";
+import { CardContainer, SearchBar, setHeight, InputSearcbBar, normalText, subTitle, color } from "../../constants";
 import { Image, Pressable, Text, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import { subHeader } from "../../constants/style-component/textComponent";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
-import React, { Dispatch, Fragment, SetStateAction } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useContext } from "react";
+import { GlobalContext } from "../../contextStore/GlobalState";
 
 interface IHeaderComponent {
   accountDetails: IResponseAccount | undefined;
@@ -22,11 +23,12 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
   handleGoBack,
 }: IHeaderComponent) => {
   const urlAvatar = `https://secure.gravatar.com/avatar/${accountDetails?.avatar.gravatar.hash}.jpg?s=64`;
-
+  const { isUserLoggedIn } = useContext(GlobalContext);
   const navigation: RootNavigationProp = useNavigation();
   const handleLogOut = async () => {
     //To do
-    AsyncStorage.clear();
+    await AsyncStorage.setItem("userLoggedIn", JSON.stringify(false));
+    isUserLoggedIn(false);
     navigation.replace("LoginScreen");
   };
   return (

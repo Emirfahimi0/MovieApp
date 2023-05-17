@@ -3,19 +3,22 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StackNavigator } from "./src/components/features//StackNavigator";
 import { StatusBar } from "react-native";
 import React, { Fragment } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+
 import Toast from "react-native-toast-message";
-import Color from "./src/constants/Color";
 
 function App() {
   return (
     <Fragment>
-      <AppContextProviders>
-        <SafeAreaView>
-          <StatusBar barStyle={"light-content"} translucent={true} />
-        </SafeAreaView>
-        <StackNavigator />
-        <Toast />
-      </AppContextProviders>
+      <NavigationContainer>
+        <AppContextProviders>
+          <SafeAreaView>
+            <StatusBar barStyle={"light-content"} translucent={true} />
+          </SafeAreaView>
+          <StackNavigator />
+          <Toast />
+        </AppContextProviders>
+      </NavigationContainer>
     </Fragment>
   );
 }

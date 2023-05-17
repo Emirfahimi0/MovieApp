@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useState } from "react";
 
 export interface IInitialState {
@@ -52,7 +53,13 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   };
 
   const isUserLoggedIn = async (isLoggedIn: boolean) => {
-    setState({ ...state, isLoggedIn: isLoggedIn });
+    const isUserlogged = await AsyncStorage.getItem("userLoggedIn").then((value) => {
+      const storage = JSON.parse(value ?? "null");
+      return storage;
+    });
+    if (isUserlogged === null) {
+      setState({ ...state, isLoggedIn: isLoggedIn });
+    } else setState({ ...state, isLoggedIn: isUserlogged });
   };
 
   return (

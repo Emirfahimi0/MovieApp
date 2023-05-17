@@ -40,9 +40,13 @@ const LoginScreen = ({ navigation }) => {
     console.log("is response face id?", responseLoginFaceId);
     if (responseLoginFaceId === true) {
       console.log("responseLoginFaceId is ", responseLoginFaceId);
-      isUserLoggedIn(true);
-      AsyncStorage.setItem("userLoggedIn", JSON.stringify(true));
-      navigation.navigate("HomeScreen");
+      const asyncLoginIn = await AsyncStorage.getItem("userLoggedIn").then((value) => {
+        const response = JSON.parse(value ?? "null");
+        return response;
+      });
+      isUserLoggedIn(asyncLoginIn);
+      await AsyncStorage.setItem("userLoggedIn", JSON.stringify(true));
+      navigation.replace("HomeScreen");
     } else {
       console.log("responseLoginFaceId is false");
       isUserLoggedIn(false);

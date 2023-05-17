@@ -1,5 +1,4 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
 import DetailsMovieScreen from "../../screens/DetailsMovieScreen";
 import HomeScreen from "../../screens/HomeScreen";
 import LoginScreen from "../../screens/LoginScreen";
@@ -24,23 +23,22 @@ export const StackNavigator = () => {
     // setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  console.log("isLoggedIn", isLoggedIn);
   return (
-    <NavigationContainer>
-      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+    <>
+      <RootStack.Navigator initialRouteName="HomeScreen" screenOptions={{ headerShown: false }}>
         {isLoggedIn ? (
-          <>
-            <RootStack.Group>
-              <RootStack.Screen name="HomeScreen" component={HomeScreen} />
-              <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} />
-              <RootStack.Screen name="WatchlistScreen" component={WatchListScreen as React.ComponentType<any>} />
-            </RootStack.Group>
-          </>
+          <RootStack.Group>
+            <RootStack.Screen name="HomeScreen" component={HomeScreen} />
+            <RootStack.Screen name="DetailScreen" component={DetailsMovieScreen} />
+            <RootStack.Screen name="WatchlistScreen" component={WatchListScreen as React.ComponentType<any>} />
+          </RootStack.Group>
         ) : (
-          <RootStack.Screen name="LoginScreen" component={LoginScreen} />
+          <RootStack.Group>
+            <RootStack.Screen name="LoginScreen" component={LoginScreen} />
+          </RootStack.Group>
         )}
       </RootStack.Navigator>
-    </NavigationContainer>
+    </>
   );
 };
 

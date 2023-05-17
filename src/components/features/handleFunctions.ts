@@ -59,8 +59,7 @@ export const fetchMovieDetails = async (id: number | undefined) => {
 
 //true if session id exist ,false if no session
  export  const handleIsLogin = async (): Promise<boolean> => {
-  console.warn("handleIsLogin run")
-
+ 
     let isValidate:boolean = false
     
       const resAsyncToken = await AsyncStorage?.getItem ("responseToken").then((value) => {
@@ -96,19 +95,19 @@ export const fetchMovieDetails = async (id: number | undefined) => {
 export const handleLoginWithFaceId = async():Promise<boolean> =>{
   const isLogin = await  handleIsLogin()
   console.log("isLogin",isLogin)
-  let isLoggedIn:boolean = true
+  let isLoggedIn:boolean = isLogin
    
   if(isLogin === false){
    const response =  await sessionWithLogIn("emirfahimi","adidas") 
-      TouchID.authenticate("Authenticate with Face ID")
+    await TouchID.authenticate("Authenticate with Face ID")
         .then(success => {   
           if(response === true){
             success(true);
-            isLoggedIn = true
+            return isLoggedIn
           }
           else 
            
-          isLoggedIn = false   
+          return isLoggedIn
         })
         .catch((error: string) => {
           console.log("error",error)
@@ -116,10 +115,10 @@ export const handleLoginWithFaceId = async():Promise<boolean> =>{
         });
   }
   else if(isLogin === true){
-    TouchID.authenticate("Authenticate with Face ID")
+  await TouchID.authenticate("Authenticate with Face ID")
     .then(success => {   
         success(true);
-        isLoggedIn = true
+        return isLoggedIn
     })
     .catch((error: string) => {
       console.log("error",error)
@@ -127,7 +126,7 @@ export const handleLoginWithFaceId = async():Promise<boolean> =>{
     });
   }
   else 
-  isLoggedIn = false
+  return isLoggedIn
  
   return isLoggedIn
 
