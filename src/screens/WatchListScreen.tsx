@@ -1,17 +1,15 @@
-import Icon from "react-native-vector-icons/Ionicons";
 import { bottomCardContainer, sectionStyle } from "../constants/style-component/viewComponent";
+import { DetailContext } from "../contextStore/detail-context/DetailContext";
+import { headerContainerStyle, color, Font } from "../constants";
+import { ItemSeparator } from "../components/movie-component";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Pressable, Text, View } from "react-native";
-import Loader from "../components/features/Loader";
-import React, { useState, Fragment, useEffect, useContext } from "react";
 import { subHeader } from "../constants/style-component/textComponent";
 import { WatchlistContext } from "../contextStore/watchlist-context/WatchlistContext";
+import Icon from "react-native-vector-icons/Ionicons";
+import Loader from "../components/features/Loader";
+import React, { useState, Fragment, useEffect, useContext } from "react";
 import WatchListCard from "../components/movie-component/WatchListCard";
-import color from "../constants/Color";
-import { headerContainerStyle } from "../constants/style-component/viewComponent";
-import Font from "../constants/Font";
-import { DetailContext } from "../contextStore/detail-context/DetailContext";
-import { ItemSeparator } from "../components/movie-component";
 interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamList, "WatchlistScreen"> {}
 
 const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {

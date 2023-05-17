@@ -10,12 +10,11 @@ import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Tex
 import { setWatchlist } from "../services/api-services";
 import { ToastMessage } from "../components/features/ToastMessage";
 import { WatchlistContext } from "../contextStore/watchlist-context/WatchlistContext";
-import color from "../constants/Color";
 import FastImage from "react-native-fast-image";
-import Font from "../constants/Font";
 import Loader from "../components/features/Loader";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { ItemSeparator } from "../components/movie-component";
+import { color, Font } from "../constants";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 

@@ -2,8 +2,7 @@ import { Dispatch, Fragment, FunctionComponent, SetStateAction, useRef, useState
 import { Pressable, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { normalText, primaryTitle } from "../../constants/style-component/textComponent";
-import color from "../../constants/Color";
+import { normalText, primaryTitle, color } from "../../constants";
 
 interface ICustomDropDown {
   movieType: Array<{ label: string; value: string }>;

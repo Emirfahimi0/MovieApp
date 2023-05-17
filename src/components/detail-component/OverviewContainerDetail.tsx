@@ -1,8 +1,6 @@
 import { Text, TextStyle, View, ViewStyle } from "react-native";
 import React, { Dispatch, SetStateAction } from "react";
-import { OverviewDetailsText } from "../../constants/style-component/textComponent";
-import color from "../../constants/Color";
-import Font from "../../constants/Font";
+import { OverviewDetailsText, Font, color } from "../../constants";
 interface ISubContainerDetails {
   DetailTextHeader: TextStyle;
   overviewDetails: string | undefined;

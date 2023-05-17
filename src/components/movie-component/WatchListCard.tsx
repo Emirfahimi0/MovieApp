@@ -1,11 +1,10 @@
 import { FlatList, ImageBackground, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import React, { Dispatch, Fragment, SetStateAction } from "react";
-import { ItemSeparator } from "./ItemSeparator";
-import Icon from "react-native-vector-icons/Ionicons";
-import { POSTER_BASE_URL } from "../../constants/utilities";
-import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
-import color from "../../constants/Color";
 import { handleShowDetailScreen } from "../features/handleFunctions";
+import { ItemSeparator } from "./ItemSeparator";
+import { POSTER_BASE_URL } from "../../constants/utilities";
+import { subDetail, subHeader, subTitle, color } from "../../constants";
+import Icon from "react-native-vector-icons/Ionicons";
+import React, { Dispatch, Fragment, SetStateAction } from "react";
 
 interface IMovieCardProps {
   keyword: string;

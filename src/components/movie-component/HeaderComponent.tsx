@@ -1,10 +1,8 @@
-import { CardContainer, SearchBar, setHeight } from "../../constants/style-component/viewComponent";
+import { CardContainer, SearchBar, setHeight, InputSearcbBar, normalText, subTitle, color, Font } from "../../constants";
 import { Image, Pressable, Text, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
-import { InputSearcbBar, normalText, subTitle } from "../../constants/style-component/textComponent";
 import { subHeader } from "../../constants/style-component/textComponent";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import color from "../../constants/Color";
 import Icon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
 import React, { Dispatch, Fragment, SetStateAction } from "react";

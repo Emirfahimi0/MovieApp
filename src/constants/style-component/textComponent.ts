@@ -1,6 +1,6 @@
 import { TextStyle } from "react-native/types";
-import color from "../Color";
-import Font from "../Font";
+import { color } from "../Color";
+import { Font } from "../Font";
 
 
 // --> normal Text

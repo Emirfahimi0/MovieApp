@@ -1,5 +1,5 @@
 import { Dimensions,  ViewStyle } from "react-native";
-import color from "../Color";
+import { color } from "../Color";
 const { height, width } = Dimensions.get("screen");
 export const setHeight = (h:number) => (height/100) *h
 export const setWidth = (w:number) => (width / 100) * w;

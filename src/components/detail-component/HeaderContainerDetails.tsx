@@ -8,15 +8,18 @@ import {
   setHeight,
   smallDetail,
   youtubePlayerView,
-} from "../../constants/style-component/viewComponent";
-import { additionalDetailText, normalText, MovieDetailTitle, RatingText } from "../../constants/style-component/textComponent";
+  color,
+  Font,
+  additionalDetailText,
+  normalText,
+  MovieDetailTitle,
+  RatingText,
+} from "../../constants";
 import { ButtonModalRating } from "./ButtonModalRating";
 import { ItemSeparator } from "../movie-component";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import Icon from "react-native-vector-icons/Ionicons";
-import color from "../../constants/Color";
 import YoutubeIframe from "react-native-youtube-iframe";
-import Font from "../../constants/Font";
 import { ToastMessage } from "../features/ToastMessage";
 import FastImage from "react-native-fast-image";
 

@@ -1,13 +1,20 @@
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import { ButtonContainerRating, CardContainer, InputContainer, Logincontainer } from "../constants/style-component/viewComponent";
-import { InputLogin, normalText, loginText } from "../constants/style-component/textComponent";
+import {
+  ButtonContainerRating,
+  CardContainer,
+  InputContainer,
+  Logincontainer,
+  color,
+  InputLogin,
+  normalText,
+  loginText,
+} from "../constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { useContext, useEffect, useState } from "react";
 import { sessionWithLogIn } from "../services/api-services";
 import { handleLoginWithFaceId } from "../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import color from "../constants/Color";
 import { ToastMessage } from "../components/features/ToastMessage";
 import { GlobalContext } from "../contextStore/GlobalState";
 

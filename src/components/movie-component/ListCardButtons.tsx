@@ -1,9 +1,7 @@
 import { FlatList, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { Dispatch, SetStateAction } from "react";
 import { ItemSeparator } from "./ItemSeparator";
-import color from "../../constants/Color";
-import { CardContainer, setHeight } from "../../constants/style-component/viewComponent";
-import { normalText } from "../../constants/style-component/textComponent";
+import { CardContainer, setHeight, normalText, color } from "../../constants";
 
 interface ICard<TGenre> {
   id: string;

@@ -1,10 +1,8 @@
-import { setHeight, setWidth, shadowStyle } from "../../constants/style-component/viewComponent";
 import { Image, ScrollView, Text, TextStyle, View, ViewStyle } from "react-native";
-import { OverviewDetailsText, subHeader } from "../../constants/style-component/textComponent";
-import color from "../../constants/Color";
-import React, { Fragment, useState } from "react";
-import Font from "../../constants/Font";
 import { ItemSeparator } from "../movie-component";
+import { OverviewDetailsText, subHeader, color, Font } from "../../constants";
+import { setHeight, setWidth, shadowStyle } from "../../constants/style-component/viewComponent";
+import React, { Fragment, useState } from "react";
 
 interface IReviewContainerDetail {
   DetailTextHeader: TextStyle;

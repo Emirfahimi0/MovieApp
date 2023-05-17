@@ -1,4 +1,4 @@
-export default {
+export const Font = {
     BOLD: "NunitoSans-Bold",
     EXTRA_BOLDItalic: "NunitoSans-ExtraBoldItalic",
     EXTRA_BOLD:"NunitoSans-ExtraBold",

@@ -1,14 +1,13 @@
 import { ListCardButtons } from "./ListCardButtons";
-import { ListPreviewMovie, bottomCardContainer, movieContainer, sectionStyle } from "../../constants/style-component/viewComponent";
-import Icon from "react-native-vector-icons/Ionicons";
+import { bottomCardContainer, ListPreviewMovie, movieContainer, sectionStyle, subDetail, subHeader, subTitle } from "../../constants";
 import { FlatList, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import { subDetail, subHeader, subTitle } from "../../constants/style-component/textComponent";
-import React, { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
-import Loader from "../features/Loader";
-import { useNavigation } from "@react-navigation/native";
-import { POSTER_BASE_URL } from "../../constants/utilities";
-import FastImage from "react-native-fast-image";
 import { ItemSeparator } from "./ItemSeparator";
+import { POSTER_BASE_URL } from "../../constants/utilities";
+import { useNavigation } from "@react-navigation/native";
+import FastImage from "react-native-fast-image";
+import Icon from "react-native-vector-icons/Ionicons";
+import Loader from "../features/Loader";
+import React, { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
 
 interface IBottomScreenCardContainer {
   searchInput: string;

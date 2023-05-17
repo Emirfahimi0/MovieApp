@@ -1,4 +1,4 @@
-export default {
+export const color =  {
     ACTIVE: "#151515",
     AMBER:"rgb(255, 143, 0)",
     BASIC_BACKGROUND: "#F5F7FA",
