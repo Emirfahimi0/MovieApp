@@ -14,7 +14,7 @@ interface IWatchlistScreenProps extends NativeStackScreenProps<RootStackParamLis
 
 const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
   //Access watchlist movie with context
-  const [input, setInput] = useState<string>("");
+
   const { storeAllDetailsState } = useContext(DetailContext);
   const { getWatchlistData, watchlistState } = useContext(WatchlistContext);
   const [loading, setLoading] = useState<boolean>(true);
@@ -75,7 +75,6 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
               setLoading={setLoading}
               storeAllDetailsState={storeAllDetailsState}
               MovieData={watchlistState}
-              keyword={input}
             />
           </Fragment>
         ) : !loading ? (

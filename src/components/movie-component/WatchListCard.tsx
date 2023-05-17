@@ -7,13 +7,12 @@ import Icon from "react-native-vector-icons/Ionicons";
 import React, { Dispatch, Fragment, SetStateAction } from "react";
 
 interface IMovieCardProps {
-  keyword: string;
   MovieData: TMovieType[];
   navigation: RootNavigationProp;
   setLoading: Dispatch<SetStateAction<boolean>>;
   storeAllDetailsState: (details: IMovieDetail, review: IResultReview[]) => Promise<void>;
 }
-const WatchListCard = ({ MovieData, keyword, navigation, setLoading, storeAllDetailsState }: IMovieCardProps) => {
+const WatchListCard = ({ MovieData, navigation, setLoading, storeAllDetailsState }: IMovieCardProps) => {
   return (
     <View style={{ padding: 16, shadowColor: color.SEMI_BLACK, shadowOpacity: 1, shadowOffset: { width: 0, height: 3 } }}>
       <FlatList
@@ -27,31 +26,29 @@ const WatchListCard = ({ MovieData, keyword, navigation, setLoading, storeAllDet
           <TouchableOpacity
             key={`${item.title}-${index}`}
             onPress={() => handleShowDetailScreen(item.id, navigation, setLoading, storeAllDetailsState)}>
-            {item.title?.toLowerCase().includes(keyword.toLowerCase()) ? (
-              <Fragment>
-                <ImageBackground
-                  source={{ uri: `${POSTER_BASE_URL}original${item.backdrop_path}` }}
-                  style={{ height: 200, width: "100%", justifyContent: "center" }}
-                  imageStyle={{ borderRadius: 30 }}>
-                  <View style={{ ...overlay }}>
-                    <View style={{ ...MovieCardTitle }}>
-                      <Text numberOfLines={2} style={{ ...subHeader, color: color.SECONDARY_COLOR }}>
-                        {item.title}
-                      </Text>
+            <Fragment>
+              <ImageBackground
+                source={{ uri: `${POSTER_BASE_URL}original${item.backdrop_path}` }}
+                style={{ height: 200, width: "100%", justifyContent: "center" }}
+                imageStyle={{ borderRadius: 30 }}>
+                <View style={{ ...overlay }}>
+                  <View style={{ ...MovieCardTitle }}>
+                    <Text numberOfLines={2} style={{ ...subHeader, color: color.SECONDARY_COLOR }}>
+                      {item.title}
+                    </Text>
+                  </View>
+                  <View style={subContainer}>
+                    <View>
+                      <Text style={{ ...subTitle, color: color.SECONDARY_COLOR }}> {item.release_date}</Text>
                     </View>
-                    <View style={subContainer}>
-                      <View>
-                        <Text style={{ ...subTitle, color: color.SECONDARY_COLOR }}> {item.release_date}</Text>
-                      </View>
-                      <View style={Rating}>
-                        <Icon name="heart-sharp" size={12} color="red" />
-                        <Text style={{ ...subDetail, color: color.SECONDARY_COLOR }}> {item.vote_average.toFixed(1)}</Text>
-                      </View>
+                    <View style={Rating}>
+                      <Icon name="heart-sharp" size={12} color="red" />
+                      <Text style={{ ...subDetail, color: color.SECONDARY_COLOR }}> {item.vote_average.toFixed(1)}</Text>
                     </View>
                   </View>
-                </ImageBackground>
-              </Fragment>
-            ) : null}
+                </View>
+              </ImageBackground>
+            </Fragment>
           </TouchableOpacity>
         )}
       />
