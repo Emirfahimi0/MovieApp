@@ -1,23 +1,21 @@
 import { DetailContext } from "../contextStore/detail-context/DetailContext";
 import { fetchAccountState, handleMovieDetail } from "../components/features/handleFunctions";
-import { HeaderContainerDetails } from "../components/detail-component/HeaderContainerDetails";
 import { bottomCardContainer, setHeight } from "../constants/style-component/viewComponent";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text } from "react-native";
 import { setWatchlist } from "../services/api-services";
-import { SubContainerDetail } from "../components/detail-component/OverviewContainerDetail";
 import { WatchlistContext } from "../contextStore/watchlist-context/WatchlistContext";
 import color from "../constants/Color";
 import Font from "../constants/Font";
 import Loader from "../components/features/Loader";
-import React, { useContext, useEffect, useState } from "react";
-import ReviewContainerDetails from "../components/detail-component/ReviewContainerDetails";
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { ToastMessage } from "../components/features/ToastMessage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ItemSeparator } from "../components/movie-component/ItemSeparator";
 import { normalText } from "../constants/style-component/textComponent";
 import { POSTER_BASE_URL } from "../constants/utilities";
 import FastImage from "react-native-fast-image";
+import { HeaderContainerDetails, ReviewContainerDetails, SubContainerDetail } from "../components/detail-component";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
@@ -29,6 +27,8 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [existWatchlist, setExistWatchlist] = useState<boolean>(true);
   const [postRatingDisable, setPostRatingDisable] = useState<boolean | { value: number } | undefined>(true);
+  const [showMore, setShowmore] = useState<boolean>(true);
+
   let title = `${selectedMovie?.id}`;
   let message = "";
   // const ref = useRef()
@@ -36,6 +36,9 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
     navigation.goBack();
   };
 
+  const handleShowMore = (showMore: boolean, setShowmore: Dispatch<SetStateAction<boolean>>) => {
+    setShowmore(!showMore);
+  };
   const getUpdatedAccState = async (): Promise<void> => {
     const resFetchState: IAccountState = await fetchAccountState(MovieDetailsState?.id);
     try {
@@ -134,9 +137,11 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
               <ItemSeparator height={24} />
               <View style={{ ...bottomCardContainer, backgroundColor: color.ACTIVE }}>
                 <SubContainerDetail
-                  overviewDetails={MovieDetailsState?.overview}
-                  StyleTextArea={StyleTextArea}
                   DetailTextHeader={DetailTextHeader}
+                  overviewDetails={MovieDetailsState?.overview}
+                  setShowMore={setShowmore}
+                  showMore={showMore}
+                  StyleTextArea={StyleTextArea}
                 />
                 <ReviewContainerDetails reviewDetails={reviewState} StyleTextArea={StyleTextArea} DetailTextHeader={DetailTextHeader} />
               </View>
