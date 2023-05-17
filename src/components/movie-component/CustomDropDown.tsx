@@ -1,5 +1,5 @@
 import { Dispatch, Fragment, FunctionComponent, SetStateAction, useRef, useState } from "react";
-import { FlatList, Pressable, SafeAreaView, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Pressable, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { normalText, primaryTitle } from "../../constants/style-component/textComponent";
