@@ -80,11 +80,6 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
             {reviewDetails.map((item: IResultReview, index: number) => {
               let [showMore, setShowmore] = useState<Boolean>(true);
 
-              const handleShowMore = () => {
-                setActive(index);
-                setShowmore(!showMore);
-                // test
-              };
               const showText = showMore ? item.content.split(" ").slice(0, 10).join(" ") : item.content;
 
               showText.length <= item.content.length ? !showMore : showMore;
@@ -139,7 +134,7 @@ const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTextHeader
                       <Text style={{ ...OverviewDetailsText, color: color.ACTIVE }}>{showText}</Text>
                     </View>
                     <View style={{ alignSelf: "flex-end" }}>
-                      <Text style={{ ...textShowMore }} onPress={handleShowMore}>
+                      <Text style={{ ...textShowMore }} onPress={() => setShowmore(!showMore)}>
                         {showMore ? "Show more" : "Show less"}
                       </Text>
                     </View>
