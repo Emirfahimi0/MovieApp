@@ -12,7 +12,12 @@ interface ICustomDropDown {
   setSelectedMovieType: Dispatch<SetStateAction<string>>;
 }
 
-const CustomDropDown: FunctionComponent<ICustomDropDown> = ({ movieType, setSelectedMovieType, value, setValue }: ICustomDropDown) => {
+export const CustomDropDown: FunctionComponent<ICustomDropDown> = ({
+  movieType,
+  setSelectedMovieType,
+  value,
+  setValue,
+}: ICustomDropDown) => {
   const [search, setSearch] = useState("");
   const [clicked, setClicked] = useState(false);
   const [data, setData] = useState(movieType);
@@ -60,12 +65,12 @@ const CustomDropDown: FunctionComponent<ICustomDropDown> = ({ movieType, setSele
   const inputSearchDrop: ViewStyle = {
     alignSelf: "center",
     borderColor: "#8e8e8e",
-    borderRadius: 7,
-    borderWidth: 0.2,
+    borderRadius: 25,
+    borderWidth: 1.6,
     height: 50,
     marginTop: 20,
     paddingLeft: 20,
-    width: "90%",
+    width: "92%",
   };
   return (
     <Fragment>
@@ -132,5 +137,3 @@ const CustomDropDown: FunctionComponent<ICustomDropDown> = ({ movieType, setSele
     </Fragment>
   );
 };
-
-export default CustomDropDown;
