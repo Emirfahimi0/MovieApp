@@ -6,9 +6,9 @@ import { subDetail, subHeader, subTitle } from "../../constants/style-component/
 import React, { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
 import Loader from "../features/Loader";
 import { useNavigation } from "@react-navigation/native";
-import { ItemSeparator } from "./ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import FastImage from "react-native-fast-image";
+import { ItemSeparator } from "./ItemSeparator";
 
 interface IBottomScreenCardContainer {
   searchInput: string;
