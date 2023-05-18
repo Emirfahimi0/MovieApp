@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { fetchWatchlist } from "../../components/features/handleFunctions";
+import { fetchWatchlist } from "../../components/utils/handleFunctions";
 
 export interface IInitialState {
   getWatchlistData: () => void;

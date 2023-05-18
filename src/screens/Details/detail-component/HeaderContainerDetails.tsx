@@ -18,9 +18,9 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import YoutubeIframe from "react-native-youtube-iframe";
 import FastImage from "react-native-fast-image";
-import { ToastMessage } from "../../../components/features/ToastMessage";
+import { ToastMessage } from "../../../components/toastMessage/ToastMessage";
 import { POSTER_BASE_URL } from "../../../constants/utilities";
-import { ItemSeparator } from "../../../components/movie-component";
+import { ItemSeparator } from "../../../components";
 import { ButtonModalRating } from "./ButtonModalRating";
 
 interface IHeaderContainerDetails {

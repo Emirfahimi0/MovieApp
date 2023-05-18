@@ -1,18 +1,18 @@
 import { bottomCardContainer, setHeight } from "../../constants/style-component/viewComponent";
 import { DetailContext } from "../../contextStore/detail-context/DetailContext";
-import { fetchAccountState, handleMovieDetail } from "../../components/features/handleFunctions";
+import { handleMovieDetail } from "../../components/utils/handleFunctions";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { normalText } from "../../constants/style-component/textComponent";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text } from "react-native";
-import { setWatchlist } from "../../services/api-services";
-import { ToastMessage } from "../../components/features/ToastMessage";
+import { getAccountState, setWatchlist } from "../../services/api-services";
+import { ToastMessage } from "../../components/toastMessage/ToastMessage";
 import { WatchlistContext } from "../../contextStore/watchlist-context/WatchlistContext";
 import FastImage from "react-native-fast-image";
 import Loader from "../../components/loader/Loader";
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { ItemSeparator } from "../../components/movie-component";
+import React, { useContext, useEffect, useState } from "react";
+import { ItemSeparator } from "../../components";
 import { color, Font } from "../../constants";
 import { HeaderContainerDetails, ReviewContainerDetails, SubContainerDetail } from "./detail-component";
 
@@ -35,6 +35,10 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
     navigation.goBack();
   };
 
+  const fetchAccountState = async (id: number | undefined) => {
+    const data: IAccountState = await getAccountState(id);
+    return data;
+  };
   const getUpdatedAccState = async (): Promise<void> => {
     const resFetchState: IAccountState = await fetchAccountState(MovieDetailsState?.id);
     try {

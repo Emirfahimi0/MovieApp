@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import DetailsMovieScreen from "../../screens/Details/DetailsMovieScreen";
-import HomeScreen from "../../screens/Home/HomeScreen";
+import DetailsMovieScreen from "../../screens/Details";
+import HomeScreen from "../../screens/Home";
 import LoginScreen from "../../screens/Login/LoginScreen";
-import React, { useContext, useEffect, useState } from "react";
-import WatchListScreen from "../../screens/Watchlist/WatchListScreen";
+import React, { useContext, useEffect } from "react";
+import WatchListScreen from "../../screens/Watchlist";
 import { GlobalContext } from "../../contextStore/GlobalState";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 

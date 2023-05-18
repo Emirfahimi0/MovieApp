@@ -1,7 +1,7 @@
 import { bottomCardContainer, sectionStyle } from "../../constants/style-component/viewComponent";
 import { DetailContext } from "../../contextStore/detail-context/DetailContext";
 import { headerContainerStyle, color, Font } from "../../constants";
-import { ItemSeparator } from "../../components/movie-component";
+import { ItemSeparator } from "../../components";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Pressable, Text, View } from "react-native";
 import { subHeader } from "../../constants/style-component/textComponent";

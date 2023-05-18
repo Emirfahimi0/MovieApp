@@ -1,7 +1,7 @@
 import { Image, ScrollView, Text, TextStyle, View, ViewStyle } from "react-native";
 import React, { Fragment, useState } from "react";
 import { Font, OverviewDetailsText, color, setHeight, setWidth, shadowStyle, subHeader } from "../../../constants";
-import { ItemSeparator } from "../../../components/movie-component";
+import { ItemSeparator } from "../../../components";
 
 interface IReviewContainerDetail {
   DetailTextHeader: TextStyle;

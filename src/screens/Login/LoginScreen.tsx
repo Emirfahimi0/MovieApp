@@ -13,10 +13,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { useContext, useEffect, useState } from "react";
 import { sessionWithLogIn } from "../../services/api-services";
-import { handleLoginWithFaceId } from "../../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ToastMessage } from "../../components/features/ToastMessage";
+import { ToastMessage } from "../../components/toastMessage/ToastMessage";
 import { GlobalContext } from "../../contextStore/GlobalState";
+import { handleLoginWithFaceId } from "../../components/utils";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");

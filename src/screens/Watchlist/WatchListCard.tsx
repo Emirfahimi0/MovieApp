@@ -1,5 +1,5 @@
 import { FlatList, ImageBackground, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import { handleShowDetailScreen } from "../../components/features/handleFunctions";
+import { handleShowDetailScreen } from "../../components/utils/handleFunctions";
 import { ItemSeparator } from "../../components/itemSeparator/ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { subDetail, subHeader, subTitle, color } from "../../constants";

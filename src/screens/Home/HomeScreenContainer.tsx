@@ -7,7 +7,7 @@ import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
 import Loader from "../../components/loader/Loader";
-import { ItemSeparator } from "../../components/movie-component";
+import { ItemSeparator } from "../../components";
 
 interface IBottomScreenCardContainer {
   searchInput: string;
