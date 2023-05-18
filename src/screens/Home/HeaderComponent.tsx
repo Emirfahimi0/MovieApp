@@ -28,9 +28,9 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
   const handleLogOut = async () => {
     //To do
     await AsyncStorage.clear();
-    // await AsyncStorage.setItem("userLoggedIn", JSON.stringify(false));
+    //  await AsyncStorage.setItem("userLoggedIn", JSON.stringify(false));
     isUserLoggedIn(false);
-    navigation.replace("LoginScreen");
+    // navigation.replace("LoginScreen");
   };
   return (
     <>

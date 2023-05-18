@@ -5,6 +5,7 @@ export interface IInitialState {
   storeUser: (username: string, password: string, requestToken: string, faceId?: string) => Promise<string>;
   userState: TUser;
   isUserLoggedIn: (isLoggedIn: boolean) => Promise<void>;
+  setIsLoggedIn?: (isLoggedIn: boolean) => void;
   isLoggedIn: boolean;
 }
 
@@ -53,16 +54,21 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
   };
 
   const isUserLoggedIn = async (isLoggedIn: boolean) => {
-    const isUserlogged = await AsyncStorage.getItem("userLoggedIn").then((value) => {
+    const isUserlogged: boolean = await AsyncStorage.getItem("userLoggedIn").then((value) => {
       const storage = JSON.parse(value ?? "null");
-      console.log(storage);
+      console.log("storage", storage);
       return storage;
     });
-    if (isUserlogged === null) {
-      setState({ ...state, isLoggedIn: isLoggedIn });
-    } else {
+    if (isUserlogged === true) {
       setState({ ...state, isLoggedIn: isUserlogged });
+    } else {
+      console.log(isLoggedIn);
+      setState({ ...state, isLoggedIn: isLoggedIn });
     }
+  };
+
+  const setIsLoggedIn = (isLoggedIn: boolean) => {
+    setState({ ...state, isLoggedIn: isLoggedIn });
   };
 
   return (
@@ -70,6 +76,7 @@ export const GlobalProvider = (props: React.PropsWithChildren<GlobalProviderProp
       value={{
         isLoggedIn: state.isLoggedIn,
         isUserLoggedIn,
+        setIsLoggedIn,
         storeUser,
         userState: state.userState,
       }}>

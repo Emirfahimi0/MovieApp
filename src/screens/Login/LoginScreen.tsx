@@ -8,15 +8,15 @@ import {
   InputLogin,
   normalText,
   loginText,
-} from "../constants";
+} from "../../constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { useContext, useEffect, useState } from "react";
-import { sessionWithLogIn } from "../services/api-services";
-import { handleLoginWithFaceId } from "../components/features/handleFunctions";
+import { sessionWithLogIn } from "../../services/api-services";
+import { handleLoginWithFaceId } from "../../components/features/handleFunctions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ToastMessage } from "../components/features/ToastMessage";
-import { GlobalContext } from "../contextStore/GlobalState";
+import { ToastMessage } from "../../components/features/ToastMessage";
+import { GlobalContext } from "../../contextStore/GlobalState";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");
@@ -46,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
       });
       isUserLoggedIn(asyncLoginIn);
       await AsyncStorage.setItem("userLoggedIn", JSON.stringify(true));
-      navigation.replace("HomeScreen");
+      // navigation.replace("HomeScreen");
     } else {
       console.log("responseLoginFaceId is false");
       isUserLoggedIn(false);

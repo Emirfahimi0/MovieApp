@@ -14,14 +14,14 @@ import {
   normalText,
   MovieDetailTitle,
   RatingText,
-} from "../../constants";
-import { ButtonModalRating } from "./ButtonModalRating";
-import { ItemSeparator } from "../movie-component";
-import { POSTER_BASE_URL } from "../../constants/utilities";
+} from "../../../constants";
 import Icon from "react-native-vector-icons/Ionicons";
 import YoutubeIframe from "react-native-youtube-iframe";
-import { ToastMessage } from "../features/ToastMessage";
 import FastImage from "react-native-fast-image";
+import { ToastMessage } from "../../../components/features/ToastMessage";
+import { POSTER_BASE_URL } from "../../../constants/utilities";
+import { ItemSeparator } from "../../../components/movie-component";
+import { ButtonModalRating } from "./ButtonModalRating";
 
 interface IHeaderContainerDetails {
   existWatchlist: boolean;

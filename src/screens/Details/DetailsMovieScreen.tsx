@@ -1,20 +1,20 @@
-import { bottomCardContainer, setHeight } from "../constants/style-component/viewComponent";
-import { DetailContext } from "../contextStore/detail-context/DetailContext";
-import { fetchAccountState, handleMovieDetail } from "../components/features/handleFunctions";
-import { HeaderContainerDetails, ReviewContainerDetails, SubContainerDetail } from "../components/detail-component";
+import { bottomCardContainer, setHeight } from "../../constants/style-component/viewComponent";
+import { DetailContext } from "../../contextStore/detail-context/DetailContext";
+import { fetchAccountState, handleMovieDetail } from "../../components/features/handleFunctions";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { normalText } from "../constants/style-component/textComponent";
-import { POSTER_BASE_URL } from "../constants/utilities";
+import { normalText } from "../../constants/style-component/textComponent";
+import { POSTER_BASE_URL } from "../../constants/utilities";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView, ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text } from "react-native";
-import { setWatchlist } from "../services/api-services";
-import { ToastMessage } from "../components/features/ToastMessage";
-import { WatchlistContext } from "../contextStore/watchlist-context/WatchlistContext";
+import { setWatchlist } from "../../services/api-services";
+import { ToastMessage } from "../../components/features/ToastMessage";
+import { WatchlistContext } from "../../contextStore/watchlist-context/WatchlistContext";
 import FastImage from "react-native-fast-image";
-import Loader from "../components/features/Loader";
+import Loader from "../../components/loader/Loader";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { ItemSeparator } from "../components/movie-component";
-import { color, Font } from "../constants";
+import { ItemSeparator } from "../../components/movie-component";
+import { color, Font } from "../../constants";
+import { HeaderContainerDetails, ReviewContainerDetails, SubContainerDetail } from "./detail-component";
 
 interface IDetailsMovieScreenProps extends NativeStackScreenProps<RootStackParamList, "DetailScreen"> {}
 
@@ -35,9 +35,6 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
     navigation.goBack();
   };
 
-  const handleShowMore = (showMore: boolean, setShowmore: Dispatch<SetStateAction<boolean>>) => {
-    setShowmore(!showMore);
-  };
   const getUpdatedAccState = async (): Promise<void> => {
     const resFetchState: IAccountState = await fetchAccountState(MovieDetailsState?.id);
     try {

@@ -1,13 +1,13 @@
 import { ListCardButtons } from "./ListCardButtons";
 import { bottomCardContainer, ListPreviewMovie, movieContainer, sectionStyle, subDetail, subHeader, subTitle } from "../../constants";
 import { FlatList, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import { ItemSeparator } from "./ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
-import Loader from "../features/Loader";
 import React, { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
+import Loader from "../../components/loader/Loader";
+import { ItemSeparator } from "../../components/movie-component";
 
 interface IBottomScreenCardContainer {
   searchInput: string;
@@ -160,7 +160,7 @@ export const BottomScreenCardContainer = ({
                 />
               )}
             </Fragment>
-          ) : !loading ? (
+          ) : loading ? (
             <Loader />
           ) : (
             <Text style={subHeader}> No Movie found{":("}</Text>

@@ -1,8 +1,8 @@
 import { Modal, Pressable, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import { ButtonContainerRating, CardContainer, RatingText, normalText, subDetail, color } from "../../constants";
-import { deleteRatingbyId, postRatingbyId } from "../../services/api-services";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { deleteRatingbyId, postRatingbyId } from "../../../services/api-services";
+import { ButtonContainerRating, CardContainer, RatingText, color, normalText, subDetail } from "../../../constants";
 
 export interface IButtonModalRating {
   postRatingDisable: boolean | { value: number } | undefined;

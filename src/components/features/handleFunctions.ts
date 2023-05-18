@@ -93,16 +93,22 @@ export const fetchMovieDetails = async (id: number | undefined) => {
 
    // if true returns face id  
 export const handleLoginWithFaceId = async():Promise<boolean> =>{
+  const valueStorage = await AsyncStorage.getItem('userLoggedIn').then((value)=>{
+    const storage = JSON.parse(value??"null")
+    console.log("handleLogin storage",storage)
+    return storage
+  })
   const isLogin = await  handleIsLogin()
   console.log("isLogin",isLogin)
-  let isLoggedIn:boolean = isLogin
+  let isLoggedIn:boolean = isLogin === true
    
-  if(isLogin === false){
+  if(isLogin === false && valueStorage === null){
    const response =  await sessionWithLogIn("emirfahimi","adidas") 
     await TouchID.authenticate("Authenticate with Face ID")
         .then(success => {   
           if(response === true){
             success(true);
+            isLoggedIn = true
             return isLoggedIn
           }
           else 

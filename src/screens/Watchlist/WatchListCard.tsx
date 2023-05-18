@@ -1,6 +1,6 @@
 import { FlatList, ImageBackground, Text, TouchableOpacity, View, ViewStyle } from "react-native";
-import { handleShowDetailScreen } from "../features/handleFunctions";
-import { ItemSeparator } from "./ItemSeparator";
+import { handleShowDetailScreen } from "../../components/features/handleFunctions";
+import { ItemSeparator } from "../../components/itemSeparator/ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { subDetail, subHeader, subTitle, color } from "../../constants";
 import Icon from "react-native-vector-icons/Ionicons";

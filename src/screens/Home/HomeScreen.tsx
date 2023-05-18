@@ -1,13 +1,15 @@
-import { BottomScreenCardContainer, ItemSeparator, HeaderComponent, CustomDropDown } from "../components/movie-component";
-import { DetailContext } from "../contextStore/detail-context/DetailContext";
-import { fetchGenreItem, handleShowDetailScreen } from "../components/features/handleFunctions";
-import { getAccountDetails, getMovieType, getTrendingmovie } from "../services/api-services";
-import { MovieContext } from "../contextStore/movie-context/MovieContext";
+import { DetailContext } from "../../contextStore/detail-context/DetailContext";
+import { fetchGenreItem, handleShowDetailScreen } from "../../components/features/handleFunctions";
+import { getAccountDetails, getMovieType, getTrendingmovie } from "../../services/api-services";
+import { MovieContext } from "../../contextStore/movie-context/MovieContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ScrollView } from "react-native";
-import { ToastMessage } from "../components/features/ToastMessage";
-import Loader from "../components/features/Loader";
+import { ToastMessage } from "../../components/features/ToastMessage";
+import Loader from "../../components/loader/Loader";
 import React, { Fragment, useContext, useEffect, useState } from "react";
+import { HeaderComponent } from "./HeaderComponent";
+import { BottomScreenCardContainer } from "./HomeScreenContainer";
+import { CustomDropDown, ItemSeparator } from "../../components/movie-component";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -15,7 +17,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
   // always use set function
   const [accountDetails, setAccountDetails] = useState<IResponseAccount>();
   const [genreState, setGenreState] = useState<TGenre[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [searchText, setSearchText] = useState<string>("");
   const [selectedMovieType, setSelectedMovieType] = useState<string>("");
   const [value, setValue] = useState<string>("");
