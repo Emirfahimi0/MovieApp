@@ -69,9 +69,9 @@ export const HeaderContainerDetails = ({
   };
   return (
     <Fragment>
-      <View style={{ position: "absolute", zIndex: playTrailer ? -1 : 1, top: 8, left: 8 }}>
+      <View style={{ position: "absolute", zIndex: playTrailer ? -1 : 1, left: 8 }}>
         <TouchableOpacity onPress={onPress}>
-          <Icon name="chevron-back-outline" size={30} color={color.SECONDARY_COLOR} />
+          <Icon name="chevron-back-outline" size={32} color={color.SECONDARY_COLOR} />
         </TouchableOpacity>
       </View>
 

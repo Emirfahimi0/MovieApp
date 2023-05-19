@@ -1,15 +1,16 @@
 import { DetailContext } from "../../contextStore/detail-context/DetailContext";
-import { fetchGenreItem, handleShowDetailScreen } from "../../components/utils/handleFunctions";
+import { fetchGenreItem, handleShowDetailScreen } from "../../components/utils";
 import { getAccountDetails, getMovieType, getTrendingmovie } from "../../services/api-services";
 import { MovieContext } from "../../contextStore/movie-context/MovieContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ScrollView } from "react-native";
-import { ToastMessage } from "../../components/toastMessage/ToastMessage";
+import { Animated, ScrollView } from "react-native";
+import { ToastMessage } from "../../components/toastMessage";
 import Loader from "../../components/loader/Loader";
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useRef, useState } from "react";
 import { HeaderComponent } from "./HeaderComponent";
 import { BottomScreenCardContainer } from "./HomeScreenContainer";
 import { CustomDropDown, ItemSeparator } from "../../components";
+import { setHeight } from "../../constants";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
@@ -68,6 +69,18 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
     }
   };
 
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  console.log(typeof fadeAnim);
+
+  const fadeIn = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  };
+
   useEffect(() => {
     handleFetchAccountDetails();
     if (genreState.length === 0) {
@@ -79,6 +92,7 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
     if (genreState.length > 0 || selectedMovieType !== "") {
       handleFetchMovies().catch(console.error);
     }
+    fadeIn();
   }, [genreState, selectedMovieType]);
 
   const handleWatchList = async () => {
@@ -104,8 +118,9 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
         ) : (
           <>
             <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} value={value} setValue={setValue} />
-            <ItemSeparator height={24} />
+            <ItemSeparator height={setHeight(4)} />
             <BottomScreenCardContainer
+              fadeAnim={fadeAnim}
               Genres={genreState}
               storeAllDetailsState={storeAllDetailsState}
               handleShowDetailScreen={handleShowDetailScreen}

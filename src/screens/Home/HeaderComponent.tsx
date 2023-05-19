@@ -30,7 +30,7 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
     await AsyncStorage.clear();
     //  await AsyncStorage.setItem("userLoggedIn", JSON.stringify(false));
     isUserLoggedIn(false);
-    // navigation.replace("LoginScreen");
+    navigation.navigate("LoginScreen");
   };
   return (
     <>

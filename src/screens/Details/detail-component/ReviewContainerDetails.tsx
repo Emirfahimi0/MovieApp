@@ -71,8 +71,8 @@ export const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTex
             indicatorStyle={"white"}
             nestedScrollEnabled={true}
             disableIntervalMomentum={true}
-            snapToInterval={344}>
-            <ItemSeparator width={12} />
+            snapToInterval={setWidth(80)}>
+            <ItemSeparator width={setWidth(4)} />
             {reviewDetails.map((item: IResultReview, index: number) => {
               let [showMore, setShowmore] = useState<Boolean>(true);
 

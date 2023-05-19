@@ -16,44 +16,13 @@ import { sessionWithLogIn } from "../../services/api-services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ToastMessage } from "../../components/toastMessage/ToastMessage";
 import { GlobalContext } from "../../contextStore/GlobalState";
-import { handleLoginWithFaceId } from "../../components/utils";
+import TouchID from "react-native-touch-id";
+import { getStorageData, setStorageData } from "../..//utils";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
   const { isUserLoggedIn } = useContext(GlobalContext);
-
-  useEffect(() => {
-    handleFaceID();
-  }, []);
-
-  const handleFaceID = async () => {
-    const data = await AsyncStorage.getAllKeys();
-    console.log("check data", data);
-    //By doing this, ensuring that the data value is always compared to a boolean value, which avoids the type error.
-    // if (!!data) {
-    //   console.log("user already logged In", data);
-    // navigation.navigate("HomeScreen");
-    // } else {
-
-    const responseLoginFaceId: boolean = await handleLoginWithFaceId();
-    console.log("is response face id?", responseLoginFaceId);
-    if (responseLoginFaceId === true) {
-      console.log("responseLoginFaceId is ", responseLoginFaceId);
-      const asyncLoginIn = await AsyncStorage.getItem("userLoggedIn").then((value) => {
-        const response = JSON.parse(value ?? "null");
-        return response;
-      });
-      isUserLoggedIn(asyncLoginIn);
-      await AsyncStorage.setItem("userLoggedIn", JSON.stringify(true));
-      // navigation.replace("HomeScreen");
-    } else {
-      console.log("responseLoginFaceId is false");
-      isUserLoggedIn(false);
-      console.log("something wrong with authentication");
-    }
-    //}
-  };
 
   // arrow function for handling validation and submission
   const onSubmitHandler = async () => {
@@ -72,6 +41,122 @@ const LoginScreen = ({ navigation }) => {
       }
     }
   };
+
+  const checkForValidSession = async (): Promise<boolean> => {
+    console.log("checkForValidSession");
+    // let isValidate: boolean = false;
+
+    const resAsyncToken = await getStorageData("responseToken");
+    const resAsyncRequestBody = await getStorageData("requestBody");
+
+    console.log("resAsyncToken", resAsyncToken);
+    console.log("resAsyncRequestBody", resAsyncRequestBody);
+
+    // AsyncStorage?.getItem("responseToken").then((value) => {
+    //   const responseToken: IResponseTokenMerge = JSON.parse(value ?? "null");
+    //   return responseToken;
+    // });
+    // const resAsyncRequestBody = await AsyncStorage?.getItem("requestBody").then((value) => {
+    //   const responseToken: IRequestBody = JSON.parse(value ?? "null");
+    //   return responseToken;
+    // });
+
+    if (resAsyncToken !== null && resAsyncRequestBody !== null) {
+      if (resAsyncToken.request_token === resAsyncRequestBody.request_token) {
+        if (resAsyncToken.session_id) {
+          // isValidate = true;
+          console.log("authenticated session received...");
+          return true;
+        }
+      } else {
+        console.log("not authenticated token received...");
+        return false;
+      }
+    }
+    // else {
+    //   isValidate = false;
+    // }
+    // console.log("isValidate", isValidate);
+    // return isValidate;
+
+    return false;
+  };
+
+  // if true returns face id
+  const handleLoginWithFaceId = async (): Promise<boolean> => {
+    console.log("handleLoginWithFaceId");
+    const valueStorage = await getStorageData("userLoggedIn");
+    console.log("valueStorage", valueStorage);
+    const isSessionValid = await checkForValidSession();
+    console.log("isSessionValid", isSessionValid);
+
+    let isLoggedIn: boolean = isSessionValid === true;
+
+    if (isSessionValid === false && valueStorage === null) {
+      const response = await sessionWithLogIn("emirfahimi", "adidas");
+      console.log("will show face id");
+      await TouchID.authenticate("Authenticate with Face ID")
+        .then((success) => {
+          if (response === true) {
+            success(true);
+            isLoggedIn = true;
+            return isLoggedIn;
+          } else return isLoggedIn;
+        })
+        .catch((error: string) => {
+          console.log("error", error);
+        });
+    } else if (isSessionValid === true) {
+      await TouchID.authenticate("Authenticate with Face ID")
+        .then((success) => {
+          success(true);
+          return isLoggedIn;
+        })
+        .catch((error: string) => {
+          console.log("error", error);
+        });
+    } else return isLoggedIn;
+
+    return isLoggedIn;
+  };
+
+  const handleFaceID = async () => {
+    console.log("LoginScreen handleFaceID");
+    // const data = await AsyncStorage.getAllKeys();
+    // console.log("check data", data);
+    //By doing this, ensuring that the data value is always compared to a boolean value, which avoids the type error.
+    // if (!!data) {
+    //   console.log("user already logged In", data);
+    // navigation.navigate("HomeScreen");
+    // } else {
+
+    const responseLoginFaceId: boolean = await handleLoginWithFaceId();
+    console.log("LoginScreen is response face id?", responseLoginFaceId);
+    if (responseLoginFaceId === true) {
+      console.log("responseLoginFaceId is ", responseLoginFaceId);
+      const asyncLoginIn = await getStorageData("userLoggedIn");
+
+      // AsyncStorage.getItem("userLoggedIn").then((value) => {
+      //   const response = JSON.parse(value ?? "null");
+      //   return response;
+      // });
+      isUserLoggedIn(asyncLoginIn);
+      await setStorageData("userLoggedIn", true);
+      // AsyncStorage.setItem("userLoggedIn", JSON.stringify(true));
+      navigation.navigate("HomeScreen");
+    } else {
+      console.log("responseLoginFaceId is false");
+      isUserLoggedIn(false);
+      console.log("something wrong with authentication");
+    }
+    //}
+  };
+
+  useEffect(() => {
+    console.log("effect LoginScreen");
+    handleFaceID();
+  }, []);
+
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: color.BUTTON }}>
       <View style={Logincontainer}>

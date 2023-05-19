@@ -1,11 +1,20 @@
 import { ListCardButtons } from "./ListCardButtons";
-import { bottomCardContainer, ListPreviewMovie, movieContainer, sectionStyle, subDetail, subHeader, subTitle } from "../../constants";
-import { FlatList, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import {
+  bottomCardContainer,
+  ListPreviewMovie,
+  movieContainer,
+  sectionStyle,
+  subDetail,
+  subHeader,
+  subTitle,
+  useDebounce,
+} from "../../constants";
+import { FlatList, Text, TouchableOpacity, View, ViewStyle, Animated } from "react-native";
 import { POSTER_BASE_URL } from "../../constants/utilities";
 import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
-import React, { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useRef, useState } from "react";
 import Loader from "../../components/loader/Loader";
 import { ItemSeparator } from "../../components";
 
@@ -23,15 +32,16 @@ interface IBottomScreenCardContainer {
     storeAllDetailsState: (detail: IMovieDetail, review: IResultReview[]) => Promise<void>,
   ) => Promise<void>;
   storeAllDetailsState: (detail: IMovieDetail, review: IResultReview[]) => Promise<void>;
+  fadeAnim: typeof useRef;
 }
+
+// type TWatchlist = "Favorite" | "To Watch";
 
 export const ImagePoster: FastImageStyle = {
   borderRadius: movieContainer.borderRadius,
   height: movieContainer.height,
   width: 150,
 };
-// type TWatchlist = "Favorite" | "To Watch";
-
 export const BottomScreenCardContainer = ({
   searchInput,
   Movies,
@@ -41,6 +51,7 @@ export const BottomScreenCardContainer = ({
   setLoading,
   handlePressGenre,
   storeAllDetailsState,
+  fadeAnim,
 }: IBottomScreenCardContainer) => {
   const [active, setActive] = useState<number>(0);
   const navigation: RootNavigationProp = useNavigation();
@@ -69,23 +80,8 @@ export const BottomScreenCardContainer = ({
   // const searchMovies = Movies.filter((item) => {
   //   item.title !== undefined && item.title.toLowerCase().includes(searchInput !== "" ? searchInput.toLowerCase() : "");
   // });
-  const useDebounce = (searchInput: string, delay: number) => {
-    // State and setters for debounced value
-    const [debouncedValue, setDebouncedValue] = useState(searchInput);
-    useEffect(() => {
-      //set debounce vale after certain passed delay
-      const handler = setTimeout(() => {
-        setDebouncedValue(searchInput);
-      }, delay);
 
-      return () => {
-        clearTimeout(handler);
-      };
-    }, [searchInput]);
-
-    return debouncedValue;
-  };
-  const debouncedValues = useDebounce(searchInput, 1000);
+  const debouncedValues = useDebounce(searchInput, 800);
 
   const searchMovies = Movies.map((item) => {
     const isIncluded =
@@ -95,15 +91,15 @@ export const BottomScreenCardContainer = ({
 
   return (
     <Fragment>
-      <View
+      <Animated.View
         style={{
+          opacity: fadeAnim,
           ...bottomCardContainer,
         }}>
         <ListCardButtons data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
 
         <View style={{ ...sectionStyle }}>
           {Object.keys(searchMovies).length > 0 && active !== undefined && searchMovies !== undefined ? (
-            // <ListMovieCards handleMovieDetail={handleMovieDetail} MovieData={Movie} keyword={searchInput} />
             <Fragment>
               {loading ? (
                 <Loader />
@@ -166,7 +162,7 @@ export const BottomScreenCardContainer = ({
             <Text style={subHeader}> No Movie found{":("}</Text>
           )}
         </View>
-      </View>
+      </Animated.View>
     </Fragment>
   );
 };

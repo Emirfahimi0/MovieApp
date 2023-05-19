@@ -2,7 +2,7 @@ import { FlatList, ImageBackground, Text, TouchableOpacity, View, ViewStyle } fr
 import { handleShowDetailScreen } from "../../components/utils/handleFunctions";
 import { ItemSeparator } from "../../components/itemSeparator/ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
-import { subDetail, subHeader, subTitle, color } from "../../constants";
+import { subDetail, subHeader, subTitle, color, setHeight } from "../../constants";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { Dispatch, Fragment, SetStateAction } from "react";
 
@@ -20,8 +20,8 @@ const WatchListCard = ({ MovieData, navigation, setLoading, storeAllDetailsState
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => `${item.id}`}
         showsHorizontalScrollIndicator={false}
-        ItemSeparatorComponent={() => <ItemSeparator height={20} />}
-        ListFooterComponent={() => <ItemSeparator height={20} />}
+        ItemSeparatorComponent={() => <ItemSeparator height={setHeight(2)} />}
+        ListFooterComponent={() => <ItemSeparator height={setHeight(2)} />}
         renderItem={({ item, index }) => (
           <TouchableOpacity
             key={`${item.title}-${index}`}

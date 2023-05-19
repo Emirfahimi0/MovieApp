@@ -1,7 +1,7 @@
 import { FlatList, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { Dispatch, SetStateAction } from "react";
 import { ItemSeparator } from "../../components/itemSeparator/ItemSeparator";
-import { CardContainer, setHeight, normalText, color } from "../../constants";
+import { CardContainer, setHeight, normalText, color, setWidth } from "../../constants";
 
 interface ICard<TGenre> {
   id: string;
@@ -28,8 +28,8 @@ export const ListCardButtons = ({ data, handlePress, active, setActive }: ICardB
         data={data}
         horizontal
         showsHorizontalScrollIndicator={false}
-        ItemSeparatorComponent={() => <ItemSeparator width={20} />}
-        ListFooterComponent={() => <ItemSeparator width={20} />}
+        ItemSeparatorComponent={() => <ItemSeparator width={setWidth(8)} />}
+        ListFooterComponent={() => <ItemSeparator width={setWidth(8)} />}
         renderItem={({ item, index }) => {
           const handleActive = () => {
             setActive(index);

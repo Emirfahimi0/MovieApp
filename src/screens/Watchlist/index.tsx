@@ -1,4 +1,4 @@
-import { bottomCardContainer, sectionStyle } from "../../constants/style-component/viewComponent";
+import { bottomCardContainer, sectionStyle, setHeight } from "../../constants/style-component/viewComponent";
 import { DetailContext } from "../../contextStore/detail-context/DetailContext";
 import { headerContainerStyle, color, Font } from "../../constants";
 import { ItemSeparator } from "../../components";
@@ -54,7 +54,7 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
             <Icon name="md-chevron-back" size={32} color={"white"} />
           </Pressable>
         </View>
-        <View style={{ justifyContent: "center", alignContent: "center", paddingLeft: 92 }}>
+        <View style={{ justifyContent: "center", alignContent: "center", paddingLeft: "24%" }}>
           <Text
             style={{
               fontFamily: Font.REGULAR,
@@ -66,7 +66,7 @@ const WatchlistScreen = ({ navigation, route }: IWatchlistScreenProps) => {
           </Text>
         </View>
       </View>
-      <ItemSeparator height={32} />
+      <ItemSeparator height={setHeight(2)} />
       <View style={{ ...bottomCardContainer, backgroundColor: color.ACTIVE, borderRadius: 20 }}>
         {watchlistState.length > 0 ? (
           <Fragment>
