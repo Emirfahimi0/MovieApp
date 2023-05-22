@@ -1,6 +1,7 @@
 import { ListCardButtons } from "./ListCardButtons";
 import {
   bottomCardContainer,
+  height,
   ListPreviewMovie,
   movieContainer,
   sectionStyle,
@@ -14,9 +15,10 @@ import { POSTER_BASE_URL } from "../../constants/utilities";
 import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
-import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useRef, useState } from "react";
 import Loader from "../../components/loader/Loader";
 import { ItemSeparator } from "../../components";
+import { animateMove } from "../Details/detail-component";
 
 interface IBottomScreenCardContainer {
   searchInput: string;
@@ -32,7 +34,6 @@ interface IBottomScreenCardContainer {
     storeAllDetailsState: (detail: IMovieDetail, review: IResultReview[]) => Promise<void>,
   ) => Promise<void>;
   storeAllDetailsState: (detail: IMovieDetail, review: IResultReview[]) => Promise<void>;
-  fadeAnim: Animated.Value;
 }
 
 // type TWatchlist = "Favorite" | "To Watch";
@@ -51,7 +52,6 @@ export const BottomScreenCardContainer = ({
   setLoading,
   handlePressGenre,
   storeAllDetailsState,
-  fadeAnim,
 }: IBottomScreenCardContainer) => {
   const [active, setActive] = useState<number>(0);
   const navigation: RootNavigationProp = useNavigation();
@@ -77,9 +77,8 @@ export const BottomScreenCardContainer = ({
     flexDirection: "row",
   };
 
-  // const searchMovies = Movies.filter((item) => {
-  //   item.title !== undefined && item.title.toLowerCase().includes(searchInput !== "" ? searchInput.toLowerCase() : "");
-  // });
+  const scaleUpAnim = useRef(new Animated.Value(height)).current;
+  animateMove(scaleUpAnim, 0);
 
   const debouncedValues = useDebounce(searchInput, 800);
 
@@ -94,6 +93,7 @@ export const BottomScreenCardContainer = ({
       <Animated.View
         style={{
           ...bottomCardContainer,
+          transform: [{ translateY: scaleUpAnim }],
         }}>
         <ListCardButtons data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
 

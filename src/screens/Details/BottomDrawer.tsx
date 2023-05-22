@@ -5,7 +5,7 @@ import { animateMove, getNextState } from "./detail-component";
 
 interface BottomDrawerProps {
   children?: React.ReactNode;
-  onDrawerStateChange?: (nextState: DrawerState) => void;
+  onDrawerStateChange?: (nextState?: DrawerState) => void;
 }
 
 const BottomDrawer: React.FunctionComponent<BottomDrawerProps> = ({ children, onDrawerStateChange }) => {
@@ -13,7 +13,7 @@ const BottomDrawer: React.FunctionComponent<BottomDrawerProps> = ({ children, on
   const y = useRef(new Animated.Value(DrawerState.Closed)).current;
   /* Declare another variable to keep track of the state. We need a separate variable for this because y will also change whilst the user is in the process of moving the drawer up or down */
   const state = useRef(new Animated.Value(DrawerState.Closed)).current;
-  const margin = 0.05 * height;
+  const margin = 0.08 * height;
   const movementValue = (moveY: number) => height - moveY;
 
   /* This event is triggered when the animated view is moving. We want the user to be able to drag/swipe up or down and the drawer should move simultaneously. */
@@ -46,13 +46,12 @@ const BottomDrawer: React.FunctionComponent<BottomDrawerProps> = ({ children, on
   const drawerContainer: ViewStyle = {
     width: "100%",
     height: height,
-    paddingVertical: 8,
     borderRadius: 25,
     zIndex: 1,
     position: "absolute",
-    bottom: -height + 48,
+    bottom: -height + 64,
     /* Refers to y variable which changes as the user performs a gesture */
-    transform: [{ translateY: y }],
+    transform: [{ translateY: y }, { translateX: 0 }],
   };
 
   return (
@@ -72,10 +71,10 @@ export const HorizontalLine: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   alignSelf: "center",
-  borderRadius: 50,
-  top: 12,
+  borderRadius: 100,
+  top: 16,
   height: 4,
   zIndex: 1,
-  width: " 12%",
+  width: " 10%",
   backgroundColor: color.PRIMARY_COLOR,
 };

@@ -52,19 +52,9 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
       setAccountDetails(responseAccountDetails);
     }
   };
-  const fadeAnim = useRef(new Animated.Value(0)).current;
 
-  const fadeIn = () => {
-    // Will change fadeAnim value to 1 in 5 seconds
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  };
   const handleFetchMovies = async (): Promise<void> => {
     setLoading(true);
-    fadeIn();
 
     const responseApiMovie: TMovieType[] =
       selectedMovieType === "" || selectedMovieType === "Trending" ? await getTrendingmovie() : await getMovieType(selectedMovieType);
@@ -118,7 +108,6 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
             <CustomDropDown movieType={data} setSelectedMovieType={setSelectedMovieType} value={value} setValue={setValue} />
             <ItemSeparator height={setHeight(4)} />
             <BottomScreenCardContainer
-              fadeAnim={fadeAnim}
               Genres={genreState}
               storeAllDetailsState={storeAllDetailsState}
               handleShowDetailScreen={handleShowDetailScreen}

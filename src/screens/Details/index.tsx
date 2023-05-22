@@ -1,4 +1,4 @@
-import { bottomCardContainer, setHeight, setWidth } from "../../constants/style-component/viewComponent";
+import { DrawerState, bottomCardContainer, setHeight, setWidth } from "../../constants/style-component/viewComponent";
 import { DetailContext } from "../../contextStore/detail-context/DetailContext";
 import { handleMovieDetail } from "../../components/utils/handleFunctions";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -91,7 +91,11 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
     }
   };
 
-  const setDefaultHeight = () => {};
+  const setDefaultHeight = () => {
+    if (DrawerState.Open) {
+      return 24;
+    }
+  };
 
   useEffect(() => {
     getUpdatedAccState();
@@ -107,7 +111,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   const DetailTextHeader: TextStyle = {
     fontFamily: Font.REGULAR,
     fontSize: 16,
-    color: color.AMBER,
+    color: color.PRIMARY_COLOR,
   };
   return (
     <Fragment>
@@ -125,9 +129,10 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
               ratingVal={ratingVal}
             />
             <ItemSeparator height={setHeight(2)} />
-            <BottomDrawer>
+            {/* bottom container of details screen */}
+            <BottomDrawer onDrawerStateChange={setDefaultHeight}>
               <View style={{ flex: 1 }}>
-                <View style={{ ...bottomCardContainer, backgroundColor: color.ACTIVE }}>
+                <View style={{ ...bottomCardContainer, backgroundColor: color.SECONDARY_COLOR }}>
                   <SubContainerDetail
                     DetailTextHeader={DetailTextHeader}
                     overviewDetails={MovieDetailsState?.overview}
@@ -137,13 +142,11 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
                   />
                   <ReviewContainerDetails reviewDetails={reviewState} StyleTextArea={StyleTextArea} DetailTextHeader={DetailTextHeader} />
 
-                  {/* bottom container of details screen */}
-
-                  <View style={{ backgroundColor: color.ACTIVE }}>
+                  <View style={{ backgroundColor: color.SECONDARY_COLOR }}>
                     <ItemSeparator height={setHeight(4)} />
                   </View>
                   {/* Recommendation sections */}
-                  <View style={{ paddingHorizontal: 16, backgroundColor: color.ACTIVE, flex: 1 }}>
+                  <View style={{ paddingHorizontal: 16, backgroundColor: color.SECONDARY_COLOR, flex: 1 }}>
                     <Text style={{ ...DetailTextHeader }}>Recommendations</Text>
                     {selectedMovie?.recommendations.results.length !== 0 ? (
                       <FlatList
@@ -179,7 +182,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
                                   style={{
                                     fontFamily: Font.BOLD,
                                     fontSize: 14,
-                                    color: color.SECONDARY_COLOR,
+                                    color: color.ACTIVE,
                                     width: 120,
                                     textAlign: "center",
                                   }}
@@ -192,7 +195,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
                         }}
                       />
                     ) : (
-                      <Text style={{ ...normalText, color: color.SECONDARY_COLOR }}> no recommendations availables</Text>
+                      <Text style={{ ...normalText, color: color.ACTIVE }}> no recommendations availables</Text>
                     )}
                   </View>
                 </View>

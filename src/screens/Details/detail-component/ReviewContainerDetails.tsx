@@ -89,6 +89,7 @@ export const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTex
                   }}
                   key={`${item.author}-${index}`}>
                   <ScrollView
+                    bounces={false}
                     contentContainerStyle={{ paddingBottom: 24 }}
                     style={{
                       ...StyleTextArea,
@@ -129,7 +130,7 @@ export const ReviewContainerDetails = ({ reviewDetails, StyleTextArea, DetailTex
                       <Text style={{ ...subHeader, color: color.GRAY }}>Posted on {parseDate(item.created_at)}</Text>
                       <Text style={{ ...OverviewDetailsText, color: color.ACTIVE }}>{showText}</Text>
                     </View>
-                    <View style={{ alignSelf: "flex-end" }}>
+                    <View style={{ alignSelf: "flex-end", position: "absolute", bottom: 0 }}>
                       <Text style={{ ...textShowMore }} onPress={() => setShowmore(!showMore)}>
                         {showMore ? "Show more" : "Show less"}
                       </Text>

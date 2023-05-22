@@ -100,12 +100,13 @@ export const container: ViewStyle = {
 
 export const headerContainerStyle: ViewStyle = {
   alignItems: "center",
+  borderRadius: 24,
   backgroundColor: color.SECONDARY_COLOR,
   ...shadowStyle,
 };
 export const ImagePosterDetail: ViewStyle = {
   alignItems: "center",
-  marginTop: setHeight(6),
+  marginTop: setHeight(5),
   backgroundColor: color.SEMI_BLACK,
   borderRadius: 16,
   borderBottomLeftRadius: 25,
