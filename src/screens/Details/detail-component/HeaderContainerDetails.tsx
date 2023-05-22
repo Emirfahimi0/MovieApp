@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { ImageBackground, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import React, { Dispatch, Fragment, SetStateAction, useCallback, useState } from "react";
 import {
   CardContainer,
@@ -14,6 +14,7 @@ import {
   normalText,
   MovieDetailTitle,
   RatingText,
+  overlay,
 } from "../../../constants";
 import Icon from "react-native-vector-icons/Ionicons";
 import YoutubeIframe from "react-native-youtube-iframe";
@@ -61,7 +62,7 @@ export const HeaderContainerDetails = ({
   const playButton: ViewStyle = {
     position: "absolute",
     alignItems: "center",
-    bottom: "72%",
+    bottom: "64%",
     borderRadius: 50,
     backgroundColor: color.BLACK,
     justifyContent: "center",
@@ -69,13 +70,16 @@ export const HeaderContainerDetails = ({
   };
   return (
     <Fragment>
-      <View style={{ position: "absolute", zIndex: playTrailer ? -1 : 1, left: 8 }}>
-        <TouchableOpacity onPress={onPress}>
-          <Icon name="chevron-back-outline" size={32} color={color.SECONDARY_COLOR} />
-        </TouchableOpacity>
-      </View>
+      <ImageBackground
+        style={{ ...headerContainerStyle }}
+        source={{ uri: `${POSTER_BASE_URL}original/${selectedMovie?.poster_path}` }}
+        resizeMode="cover">
+        <View style={{ position: "absolute", zIndex: playTrailer ? -1 : 1, left: 8, top: 46, flex: 1 }}>
+          <TouchableOpacity onPress={onPress}>
+            <Icon name="chevron-back-outline" size={32} color={color.SECONDARY_COLOR} />
+          </TouchableOpacity>
+        </View>
 
-      <View style={{ ...headerContainerStyle, backgroundColor: color.PRIMARY_COLOR }}>
         <Fragment>
           {selectedMovie?.videos && playTrailer ? (
             <View style={{ justifyContent: "center", flexDirection: "column", paddingHorizontal: 32 }}>
@@ -105,8 +109,7 @@ export const HeaderContainerDetails = ({
               ? { ...playButton, padding: 10 }
               : {
                   ...playButton,
-                  top: 2,
-                  alignSelf: "flex-end",
+
                   height: 32,
                   width: 32,
                   backgroundColor: color.TRANSPARENT,
@@ -120,86 +123,94 @@ export const HeaderContainerDetails = ({
             )}
           </TouchableOpacity>
         </View>
-
-        <ItemSeparator height={setHeight(2)} />
-        <View style={{ justifyContent: "center", width: 320, flexDirection: "row", alignContent: "space-between" }}>
-          <Text style={{ ...MovieDetailTitle }} numberOfLines={2}>
-            {selectedMovie?.title}
-          </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              alignContent: "space-between",
-              paddingTop: 4,
-              paddingLeft: 16,
-              justifyContent: "flex-end",
-            }}>
-            <Icon name="heart-sharp" size={16} color="red" />
-            <Text style={{ ...RatingText, textAlign: "center", color: color.SECONDARY_COLOR }}>
-              {selectedMovie?.vote_average.toFixed(1)}
-            </Text>
-          </View>
-        </View>
+        <ItemSeparator height={8} />
         <View
           style={{
-            ...smallDetail,
-            flexDirection: "row",
-            flexGrow: 1,
-            flexWrap: "wrap",
+            ...overlay,
+            alignItems: "center",
+            borderRadius: 25,
+            backgroundColor: "rgba(0,0,0,0.7)",
           }}>
-          {selectedMovie?.genres.map((value: TGenre, index: number) => (
+          <View style={{ justifyContent: "center", width: 320, flexDirection: "row", alignContent: "space-between" }}>
+            <Text style={{ ...MovieDetailTitle }} numberOfLines={2}>
+              {selectedMovie?.title}
+            </Text>
             <View
-              key={index}
               style={{
-                backgroundColor: color.GREEN,
-                padding: 4,
-                margin: 4,
-                borderRadius: 5,
+                flexDirection: "row",
+                alignContent: "space-between",
+                paddingTop: 4,
+                paddingLeft: 16,
+                justifyContent: "flex-end",
               }}>
-              <Text key={index} style={{ fontFamily: Font.BOLD, fontSize: 12, color: color.SECONDARY_COLOR }}>
-                {value.name}
+              <Icon name="heart-sharp" size={16} color="red" />
+              <Text style={{ ...RatingText, textAlign: "center", color: color.SECONDARY_COLOR, overflow: "scroll" }}>
+                {" "}
+                {selectedMovie?.vote_average.toFixed(1)}
               </Text>
             </View>
-          ))}
-        </View>
-        <View style={smallDetail}>
-          <Text style={additionalDetailText}>Original Language: {selectedMovie?.original_language}</Text>
-        </View>
-        <View style={smallDetail}>
-          <Text style={additionalDetailText}>Release Date: {selectedMovie?.release_date.toString()}</Text>
-        </View>
-        {/* <View style={smallDetail}>
+          </View>
+          <View
+            style={{
+              ...smallDetail,
+              flexDirection: "row",
+              flexGrow: 1,
+              flexWrap: "wrap",
+            }}>
+            {selectedMovie?.genres.map((value: TGenre, index: number) => (
+              <View
+                key={index}
+                style={{
+                  backgroundColor: color.PRIMARY_COLOR,
+                  padding: 4,
+                  margin: 4,
+                  borderRadius: 5,
+                }}>
+                <Text key={index} style={{ fontFamily: Font.BOLD, fontSize: 12, color: color.SECONDARY_COLOR }}>
+                  {value.name}
+                </Text>
+              </View>
+            ))}
+          </View>
+          <View style={smallDetail}>
+            <Text style={additionalDetailText}>Original Language: {selectedMovie?.original_language}</Text>
+          </View>
+          <View style={smallDetail}>
+            <Text style={additionalDetailText}>Release Date: {selectedMovie?.release_date.toString()}</Text>
+          </View>
+          {/* <View style={smallDetail}>
           <Text style={additionalDetailText}>Status: {selectedMovie?.status.toString()}</Text>
         </View> */}
-        <View style={{ ...smallDetail, paddingBottom: 32 }}>
-          <TouchableOpacity onPress={handleWatchlist}>
-            <View
-              style={{
-                ...(existWatchlist
-                  ? { ...CardContainer, ...{ backgroundColor: "#2C2C2C", width: 150 } }
-                  : { ...CardContainer, ...{ width: 150 } }),
-              }}>
-              <Icon
-                name={existWatchlist ? "bookmark" : "bookmark-outline"}
-                size={18}
-                color={existWatchlist ? color.EXTRA_LIGHT_GRAY : color.BLACK}
-              />
-              <Text style={existWatchlist ? { ...normalText, color: color.SECONDARY_COLOR } : normalText}>
-                {existWatchlist ? "Added in Watchlist" : "Add to Watchlist"}
-              </Text>
-            </View>
-          </TouchableOpacity>
+          <View style={{ ...smallDetail, paddingBottom: 32 }}>
+            <TouchableOpacity onPress={handleWatchlist}>
+              <View
+                style={{
+                  ...(existWatchlist
+                    ? { ...CardContainer, ...{ backgroundColor: "#2C2C2C", width: 150 } }
+                    : { ...CardContainer, ...{ width: 150 } }),
+                }}>
+                <Icon
+                  name={existWatchlist ? "bookmark" : "bookmark-outline"}
+                  size={18}
+                  color={existWatchlist ? color.EXTRA_LIGHT_GRAY : color.BLACK}
+                />
+                <Text style={existWatchlist ? { ...normalText, color: color.SECONDARY_COLOR } : normalText}>
+                  {existWatchlist ? "Added in Watchlist" : "Add to Watchlist"}
+                </Text>
+              </View>
+            </TouchableOpacity>
 
-          <ButtonModalRating
-            selectedMovie={selectedMovie}
-            ratingVal={ratingVal}
-            setRating={setRating}
-            ToastMessage={ToastMessage}
-            postRatingDisable={postRatingDisable}
-            setPostRatingDisable={setPostRatingDisable}
-          />
+            <ButtonModalRating
+              selectedMovie={selectedMovie}
+              ratingVal={ratingVal}
+              setRating={setRating}
+              ToastMessage={ToastMessage}
+              postRatingDisable={postRatingDisable}
+              setPostRatingDisable={setPostRatingDisable}
+            />
+          </View>
         </View>
-      </View>
+      </ImageBackground>
     </Fragment>
   );
 };

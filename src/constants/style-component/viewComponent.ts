@@ -100,17 +100,17 @@ export const container: ViewStyle = {
 
 export const headerContainerStyle: ViewStyle = {
   alignItems: "center",
-  borderBottomRightRadius: 25,
-  borderBottomLeftRadius: 25,
   backgroundColor: color.SECONDARY_COLOR,
   ...shadowStyle,
 };
 export const ImagePosterDetail: ViewStyle = {
   alignItems: "center",
+  marginTop: setHeight(6),
   backgroundColor: color.SEMI_BLACK,
   borderRadius: 16,
+  borderBottomLeftRadius: 25,
+  borderBottomRightRadius: 25,
   justifyContent: "center",
-  elevation: 8,
   height: setHeight(60),
   width: setWidth(80),
 };
@@ -182,4 +182,15 @@ export const ButtonContainerRating: ViewStyle = {
   justifyContent: "center",
   marginLeft: 52,
   position: "relative",
+};
+
+export const overlay: ViewStyle = {
+  flexDirection: "column",
+  marginTop: "auto",
+  width: "100%",
+  padding: 24,
+  borderBottomLeftRadius: 30,
+  borderBottomRightRadius: 30,
+  backgroundColor: "rgba(0,0,0,0.5)",
+  alignSelf: "center",
 };

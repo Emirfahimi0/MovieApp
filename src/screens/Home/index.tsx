@@ -52,9 +52,20 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
       setAccountDetails(responseAccountDetails);
     }
   };
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
+  const fadeIn = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  };
   const handleFetchMovies = async (): Promise<void> => {
     setLoading(true);
+    fadeIn();
+
     const responseApiMovie: TMovieType[] =
       selectedMovieType === "" || selectedMovieType === "Trending" ? await getTrendingmovie() : await getMovieType(selectedMovieType);
     if (responseApiMovie !== undefined) {
@@ -69,18 +80,6 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
     }
   };
 
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  console.log(typeof fadeAnim);
-
-  const fadeIn = () => {
-    // Will change fadeAnim value to 1 in 5 seconds
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  };
-
   useEffect(() => {
     handleFetchAccountDetails();
     if (genreState.length === 0) {
@@ -92,7 +91,6 @@ const HomeScreen = ({ navigation }: IHomeScreenProps) => {
     if (genreState.length > 0 || selectedMovieType !== "") {
       handleFetchMovies().catch(console.error);
     }
-    fadeIn();
   }, [genreState, selectedMovieType]);
 
   const handleWatchList = async () => {

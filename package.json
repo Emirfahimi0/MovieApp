@@ -13,6 +13,7 @@
     "ios:plus:14": "react-native run-ios --simulator=\"iPhone 14 Plus\"",
     "ios:pro:14": "react-native run-ios --simulator=\"iPhone 14 Pro\"",
     "ios:pro:11": "react-native run-ios --simulator=\"iPad Pro (11-inch) (3rd generation)\"",
+    "ios:13:mini":"react-native run-ios --simulator=\"iPhone 13 mini\"",
     "test": "jest"
   },
   "dependencies": {

@@ -1,5 +1,5 @@
-import { Animated, Dimensions, GestureResponderEvent, PanResponder, PanResponderGestureState, Text, View, ViewStyle } from "react-native";
-import { DrawerState, color, height, subHeader } from "../../constants";
+import { Animated, GestureResponderEvent, PanResponder, PanResponderGestureState, View, ViewStyle } from "react-native";
+import { DrawerState, color, height, setHeight } from "../../constants";
 import React, { useRef } from "react";
 import { animateMove, getNextState } from "./detail-component";
 
@@ -46,12 +46,11 @@ const BottomDrawer: React.FunctionComponent<BottomDrawerProps> = ({ children, on
   const drawerContainer: ViewStyle = {
     width: "100%",
     height: height,
-    backgroundColor: color.ACTIVE,
     paddingVertical: 8,
     borderRadius: 25,
     zIndex: 1,
     position: "absolute",
-    bottom: -height,
+    bottom: -height + 48,
     /* Refers to y variable which changes as the user performs a gesture */
     transform: [{ translateY: y }],
   };
@@ -73,9 +72,10 @@ export const HorizontalLine: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   alignSelf: "center",
-  borderRadius: 25,
-  height: 8,
+  borderRadius: 50,
+  top: 12,
+  height: 4,
   zIndex: 1,
-  width: " 16%",
+  width: " 12%",
   backgroundColor: color.PRIMARY_COLOR,
 };

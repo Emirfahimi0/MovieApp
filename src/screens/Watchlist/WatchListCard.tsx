@@ -2,7 +2,7 @@ import { FlatList, ImageBackground, Text, TouchableOpacity, View, ViewStyle } fr
 import { handleShowDetailScreen } from "../../components/utils/handleFunctions";
 import { ItemSeparator } from "../../components/itemSeparator/ItemSeparator";
 import { POSTER_BASE_URL } from "../../constants/utilities";
-import { subDetail, subHeader, subTitle, color, setHeight } from "../../constants";
+import { subDetail, subHeader, subTitle, color, setHeight, overlay } from "../../constants";
 import Icon from "react-native-vector-icons/Ionicons";
 import React, { Dispatch, Fragment, SetStateAction } from "react";
 
@@ -62,16 +62,6 @@ const subContainer: ViewStyle = {
   justifyContent: "space-between",
 };
 
-const overlay: ViewStyle = {
-  flexDirection: "column",
-  marginTop: "auto",
-  width: "100%",
-  padding: 24,
-  borderBottomLeftRadius: 30,
-  borderBottomRightRadius: 30,
-  backgroundColor: "rgba(0,0,0,0.3)",
-  alignSelf: "center",
-};
 const MovieCardTitle: ViewStyle = {
   marginTop: 5,
   alignItems: "center",

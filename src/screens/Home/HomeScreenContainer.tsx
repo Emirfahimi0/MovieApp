@@ -14,7 +14,7 @@ import { POSTER_BASE_URL } from "../../constants/utilities";
 import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
-import React, { Dispatch, Fragment, SetStateAction, useRef, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
 import Loader from "../../components/loader/Loader";
 import { ItemSeparator } from "../../components";
 
@@ -32,7 +32,7 @@ interface IBottomScreenCardContainer {
     storeAllDetailsState: (detail: IMovieDetail, review: IResultReview[]) => Promise<void>,
   ) => Promise<void>;
   storeAllDetailsState: (detail: IMovieDetail, review: IResultReview[]) => Promise<void>;
-  fadeAnim: typeof useRef;
+  fadeAnim: Animated.Value;
 }
 
 // type TWatchlist = "Favorite" | "To Watch";
@@ -93,7 +93,6 @@ export const BottomScreenCardContainer = ({
     <Fragment>
       <Animated.View
         style={{
-          opacity: fadeAnim,
           ...bottomCardContainer,
         }}>
         <ListCardButtons data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />
