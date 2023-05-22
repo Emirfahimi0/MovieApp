@@ -47,9 +47,9 @@ const BottomDrawer: React.FunctionComponent<BottomDrawerProps> = ({ children, on
     width: "100%",
     height: height,
     borderRadius: 25,
-    zIndex: 1,
     position: "absolute",
     bottom: -height + 64,
+    paddingVertical: setHeight(2),
     /* Refers to y variable which changes as the user performs a gesture */
     transform: [{ translateY: y }, { translateX: 0 }],
   };

@@ -4,7 +4,7 @@ import { handleMovieDetail } from "../../components/utils/handleFunctions";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { normalText } from "../../constants/style-component/textComponent";
 import { POSTER_BASE_URL } from "../../constants/utilities";
-import { ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text } from "react-native";
+import { ViewStyle, View, TextStyle, FlatList, TouchableOpacity, Text, ScrollView } from "react-native";
 import { getAccountState, setWatchlist } from "../../services/api-services";
 import { ToastMessage } from "../../components/toastMessage/ToastMessage";
 import { WatchlistContext } from "../../contextStore/watchlist-context/WatchlistContext";
@@ -115,7 +115,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   };
   return (
     <Fragment>
-      <View style={{}}>
+      <ScrollView style={{ flex: 1 }} bounces={false}>
         {!loading ? (
           <Fragment>
             <HeaderContainerDetails
@@ -205,7 +205,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
         ) : (
           <Loader />
         )}
-      </View>
+      </ScrollView>
     </Fragment>
   );
 };

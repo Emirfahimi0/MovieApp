@@ -10,7 +10,7 @@ import React, { Fragment, useContext, useEffect, useRef, useState } from "react"
 import { HeaderComponent } from "./HeaderComponent";
 import { BottomScreenCardContainer } from "./HomeScreenContainer";
 import { CustomDropDown, ItemSeparator } from "../../components";
-import { setHeight } from "../../constants";
+import { height, setHeight } from "../../constants";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 

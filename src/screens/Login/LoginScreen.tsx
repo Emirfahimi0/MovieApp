@@ -1,4 +1,4 @@
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
 import {
   ButtonContainerRating,
   CardContainer,
@@ -157,8 +157,23 @@ const LoginScreen = ({ navigation }) => {
     handleFaceID();
   }, []);
 
+  const buttonsocial: ViewStyle = {
+    alignItems: "center",
+    alignContent: "center",
+    flexDirection: "row",
+    backgroundColor: "#DFE0E0",
+    padding: 8,
+    borderRadius: 50,
+  };
+
+  const iconSocial = [
+    { name: "instagram", color: "purple", size: 25 },
+    { name: "twitter", color: "blue", size: 25 },
+    { name: "facebook", color: "blue", size: 25 },
+  ];
+
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: color.BUTTON }}>
+    <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: color.ACTIVE }}>
       <View style={Logincontainer}>
         <View style={{ alignItems: "center" }}>
           <Text style={{ ...normalText, color: color.SECONDARY_COLOR }}>WELCOME!</Text>
@@ -187,7 +202,7 @@ const LoginScreen = ({ navigation }) => {
         </View>
 
         <View style={{ ...ButtonContainerRating, marginRight: 40, padding: 20 }}>
-          <TouchableOpacity style={{ ...CardContainer, backgroundColor: color.HEART }} onPress={() => onSubmitHandler()}>
+          <TouchableOpacity style={{ ...CardContainer, backgroundColor: color.GRAY }} onPress={() => onSubmitHandler()}>
             <Text style={loginText}>Login</Text>
           </TouchableOpacity>
         </View>
@@ -199,24 +214,18 @@ const LoginScreen = ({ navigation }) => {
             flex: 1,
             alignContent: "space-between",
           }}>
-          <TouchableOpacity onPress={() => AsyncStorage.clear()}>
-            <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
-              <Icon name="md-logo-instagram" size={20} color="purple" />
-              <Text style={{ ...normalText, marginLeft: 5 }}>Instagram</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
-              <Icon name="md-logo-twitter" size={20} color="#1DBAFA" />
-              <Text style={{ ...normalText, marginLeft: 5 }}>Twitter</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={{ ...CardContainer, borderRadius: 15, width: 100 }}>
-              <Icon name="md-logo-facebook" size={20} color="blue" />
-              <Text style={{ ...normalText, marginLeft: 5 }}>Facebook</Text>
-            </View>
-          </TouchableOpacity>
+          {iconSocial.map((item, index) => {
+            return (
+              <TouchableOpacity key={index}>
+                <View
+                  style={{
+                    ...buttonsocial,
+                  }}>
+                  <Icon name={`md-logo-${item.name}`} size={item.size} color={`${item.color}`} />
+                </View>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </View>
     </SafeAreaView>

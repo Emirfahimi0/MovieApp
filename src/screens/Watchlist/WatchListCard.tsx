@@ -31,7 +31,7 @@ const WatchListCard = ({ MovieData, navigation, setLoading, storeAllDetailsState
                 source={{ uri: `${POSTER_BASE_URL}original${item.backdrop_path}` }}
                 style={{ height: 200, width: "100%", justifyContent: "center" }}
                 imageStyle={{ borderRadius: 30 }}>
-                <View style={{ ...overlay }}>
+                <View style={{ ...overlay, borderBottomRightRadius: 30, borderBottomLeftRadius: 30 }}>
                   <View style={{ ...MovieCardTitle }}>
                     <Text numberOfLines={2} style={{ ...subHeader, color: color.SECONDARY_COLOR }}>
                       {item.title}

@@ -37,7 +37,6 @@ export const CardContainer: ViewStyle = {
   flexDirection: "row",
   backgroundColor: "#DFE0E0",
   borderRadius: 5,
-  elevation: 3,
   paddingEnd: 8,
   justifyContent: "center",
   marginVertical: 2,
@@ -190,8 +189,8 @@ export const overlay: ViewStyle = {
   marginTop: "auto",
   width: "100%",
   padding: 24,
-  borderBottomLeftRadius: 30,
-  borderBottomRightRadius: 30,
+  // borderBottomLeftRadius: 30,
+  // borderBottomRightRadius: 30,
   backgroundColor: "rgba(0,0,0,0.5)",
   alignSelf: "center",
 };

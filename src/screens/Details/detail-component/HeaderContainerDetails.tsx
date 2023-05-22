@@ -128,10 +128,11 @@ export const HeaderContainerDetails = ({
           style={{
             ...overlay,
             alignItems: "center",
-            borderRadius: 25,
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
             backgroundColor: "rgba(0,0,0,0.7)",
           }}>
-          <View style={{ justifyContent: "center", width: 320, flexDirection: "row", alignContent: "space-between" }}>
+          <View style={{ justifyContent: "center", flexDirection: "row", alignContent: "space-between" }}>
             <Text style={{ ...MovieDetailTitle }} numberOfLines={2}>
               {selectedMovie?.title}
             </Text>
@@ -154,8 +155,7 @@ export const HeaderContainerDetails = ({
             style={{
               ...smallDetail,
               flexDirection: "row",
-              flexGrow: 1,
-              flexWrap: "wrap",
+              justifyContent: "center",
             }}>
             {selectedMovie?.genres.map((value: TGenre, index: number) => (
               <View
@@ -181,18 +181,18 @@ export const HeaderContainerDetails = ({
           {/* <View style={smallDetail}>
           <Text style={additionalDetailText}>Status: {selectedMovie?.status.toString()}</Text>
         </View> */}
-          <View style={{ ...smallDetail, paddingBottom: 32 }}>
+          <View style={{ ...smallDetail, paddingBottom: 16 }}>
             <TouchableOpacity onPress={handleWatchlist}>
               <View
                 style={{
                   ...(existWatchlist
                     ? { ...CardContainer, ...{ backgroundColor: "#2C2C2C", width: 150 } }
-                    : { ...CardContainer, ...{ width: 150 } }),
+                    : { ...CardContainer, width: 150 }),
                 }}>
                 <Icon
                   name={existWatchlist ? "bookmark" : "bookmark-outline"}
                   size={18}
-                  color={existWatchlist ? color.EXTRA_LIGHT_GRAY : color.BLACK}
+                  color={existWatchlist ? color.PRIMARY_COLOR : color.BLACK}
                 />
                 <Text style={existWatchlist ? { ...normalText, color: color.SECONDARY_COLOR } : normalText}>
                   {existWatchlist ? "Added in Watchlist" : "Add to Watchlist"}

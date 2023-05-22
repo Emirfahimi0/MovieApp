@@ -1,8 +1,9 @@
-import { Dispatch, Fragment, FunctionComponent, SetStateAction, useRef, useState } from "react";
-import { Pressable, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Dispatch, Fragment, FunctionComponent, SetStateAction, useEffect, useRef, useState } from "react";
+import { Animated, Pressable, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { normalText, primaryTitle, color } from "../../constants";
+import { normalText, primaryTitle, color, height, width } from "../../constants";
+import { animateMove } from "../../screens/Details/detail-component";
 
 interface ICustomDropDown {
   movieType: Array<{ label: string; value: string }>;
@@ -71,6 +72,14 @@ export const CustomDropDown: FunctionComponent<ICustomDropDown> = ({
     paddingLeft: 20,
     width: "92%",
   };
+
+  const dropScale = useRef(new Animated.Value(-width)).current;
+  useEffect(() => {
+    if (clicked) {
+      animateMove(dropScale, 0);
+    }
+  }, [clicked, search]);
+
   return (
     <Fragment>
       <Pressable
@@ -90,9 +99,10 @@ export const CustomDropDown: FunctionComponent<ICustomDropDown> = ({
         )}
       </Pressable>
       {clicked ? (
-        <View
+        <Animated.View
           style={{
             ...dropDownMenu,
+            transform: [{ translateX: dropScale }],
           }}>
           <TextInput
             placeholder="Search..."
@@ -131,7 +141,7 @@ export const CustomDropDown: FunctionComponent<ICustomDropDown> = ({
               </Fragment>
             );
           })}
-        </View>
+        </Animated.View>
       ) : null}
     </Fragment>
   );
