@@ -12,7 +12,7 @@ export const SubContainerDetail = ({ overviewDetails, DetailTextHeader, showMore
   return (
     <>
       <View style={{ padding: 16 }}>
-        <View style={{ paddingTop: 56 }}>
+        <View style={{ paddingTop: 64 }}>
           <Text style={{ ...DetailTextHeader }}>Synopsis</Text>
         </View>
         <View style={{ borderRadius: 16 }}>

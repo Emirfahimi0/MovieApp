@@ -68,7 +68,6 @@ export const bottomCardContainer: ViewStyle = {
   backgroundColor: color.ACTIVE,
   borderTopLeftRadius: 40,
   borderTopRightRadius: 40,
-  elevation: 5,
   flex: 1,
 };
 
@@ -101,6 +100,7 @@ export const headerContainerStyle: ViewStyle = {
   alignItems: "center",
   borderRadius: 24,
   backgroundColor: color.SECONDARY_COLOR,
+
   ...shadowStyle,
 };
 export const ImagePosterDetail: ViewStyle = {

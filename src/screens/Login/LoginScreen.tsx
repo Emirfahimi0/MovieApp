@@ -95,6 +95,7 @@ const LoginScreen = ({ navigation }) => {
     if (isSessionValid === false && valueStorage === null) {
       const response = await sessionWithLogIn("emirfahimi", "adidas");
       console.log("will show face id");
+
       await TouchID.authenticate("Authenticate with Face ID")
         .then((success) => {
           if (response === true) {
@@ -201,8 +202,8 @@ const LoginScreen = ({ navigation }) => {
           />
         </View>
 
-        <View style={{ ...ButtonContainerRating, marginRight: 40, padding: 20 }}>
-          <TouchableOpacity style={{ ...CardContainer, backgroundColor: color.GRAY }} onPress={() => onSubmitHandler()}>
+        <View style={{ ...ButtonContainerRating, marginRight: 40, padding: 20, borderRadius: 50 }}>
+          <TouchableOpacity style={{ ...CardContainer, backgroundColor: color.GREEN }} onPress={onSubmitHandler}>
             <Text style={loginText}>Login</Text>
           </TouchableOpacity>
         </View>
@@ -213,6 +214,7 @@ const LoginScreen = ({ navigation }) => {
             flexDirection: "row",
             flex: 1,
             alignContent: "space-between",
+            alignSelf: "stretch",
           }}>
           {iconSocial.map((item, index) => {
             return (

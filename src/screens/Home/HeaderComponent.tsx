@@ -1,4 +1,4 @@
-import { CardContainer, SearchBar, setHeight, InputSearcbBar, normalText, subTitle, color } from "../../constants";
+import { CardContainer, SearchBar, setHeight, InputSearcbBar, normalText, subTitle, color, setWidth } from "../../constants";
 import { Image, Pressable, Text, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import { subHeader } from "../../constants/style-component/textComponent";
 import { useNavigation } from "@react-navigation/native";
@@ -7,6 +7,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
 import React, { Dispatch, Fragment, SetStateAction, useContext } from "react";
 import { GlobalContext } from "../../contextStore/GlobalState";
+import FastImage from "react-native-fast-image";
 
 interface IHeaderComponent {
   accountDetails: IResponseAccount | undefined;
@@ -67,7 +68,11 @@ export const HeaderComponent: React.FunctionComponent<IHeaderComponent> = ({
                 <Pressable onPress={handleLogOut}>
                   <Icon name="exit-outline" size={32} color="#fff" />
                 </Pressable>
-                <Image source={{ uri: urlAvatar }} resizeMode="cover" style={{ width: 52, height: 52, borderRadius: 50, marginLeft: 16 }} />
+                <FastImage
+                  source={{ uri: urlAvatar }}
+                  resizeMode="cover"
+                  style={{ width: setWidth(9), height: setHeight(4), borderRadius: 50, marginLeft: 16 }}
+                />
               </View>
             </View>
 

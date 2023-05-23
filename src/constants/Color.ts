@@ -14,4 +14,5 @@ export const color = {
   SEMI_BLACK: "#272827",
   SECONDARY_COLOR: "#FFFFFF",
   TRANSPARENT: "rgba(255,255,255,0.3)",
+  OVERLAY: "rgba(0,0,0,0.7)",
 };

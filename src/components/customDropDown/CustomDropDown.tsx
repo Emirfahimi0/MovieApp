@@ -1,9 +1,9 @@
 import { Dispatch, Fragment, FunctionComponent, SetStateAction, useEffect, useRef, useState } from "react";
-import { Animated, Pressable, Text, TextInput, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Animated, Pressable, Text, TextInput, TouchableOpacity, Easing, ViewStyle } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { normalText, primaryTitle, color, height, width } from "../../constants";
-import { animateMove } from "../../screens/Details/detail-component";
+import { normalText, primaryTitle, color, width } from "../../constants";
+import { animateMove } from "../../screens/Details";
 
 interface ICustomDropDown {
   movieType: Array<{ label: string; value: string }>;
@@ -54,10 +54,8 @@ export const CustomDropDown: FunctionComponent<ICustomDropDown> = ({
     alignSelf: "center",
     backgroundColor: "#fff",
     borderRadius: 10,
-    elevation: 5,
     height: 320,
     marginTop: -10,
-    position: "relative",
     width: "90%",
     zIndex: -1,
   };
@@ -74,9 +72,17 @@ export const CustomDropDown: FunctionComponent<ICustomDropDown> = ({
   };
 
   const dropScale = useRef(new Animated.Value(-width)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
   useEffect(() => {
     if (clicked) {
-      animateMove(dropScale, 0);
+      // animateMove(dropScale, 0);
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+        easing: Easing.circle,
+      }).start();
     }
   }, [clicked, search]);
 
@@ -102,7 +108,8 @@ export const CustomDropDown: FunctionComponent<ICustomDropDown> = ({
         <Animated.View
           style={{
             ...dropDownMenu,
-            transform: [{ translateX: dropScale }],
+            // transform: [{ translateX: dropScale }],
+            opacity: fadeAnim,
           }}>
           <TextInput
             placeholder="Search..."

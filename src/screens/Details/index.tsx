@@ -1,4 +1,4 @@
-import { DrawerState, bottomCardContainer, setHeight, setWidth } from "../../constants/style-component/viewComponent";
+import { DrawerState, bottomCardContainer, height, setHeight, setWidth } from "../../constants/style-component/viewComponent";
 import { DetailContext } from "../../contextStore/detail-context/DetailContext";
 import { handleMovieDetail } from "../../components/utils/handleFunctions";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -32,6 +32,7 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   let message = "";
   // const ref = useRef()
   const handleGoBack = () => {
+    console.log("go back");
     navigation.goBack();
   };
 
@@ -115,97 +116,99 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
   };
   return (
     <Fragment>
-      <ScrollView style={{ flex: 1 }} bounces={false}>
-        {!loading ? (
-          <Fragment>
-            <HeaderContainerDetails
-              selectedMovie={selectedMovie}
-              onPress={handleGoBack}
-              existWatchlist={existWatchlist}
-              handleWatchlist={handleWatchList}
-              postRatingDisable={postRatingDisable}
-              setRating={setRatingVal}
-              setPostRatingDisable={setPostRatingDisable}
-              ratingVal={ratingVal}
-            />
-            <ItemSeparator height={setHeight(2)} />
-            {/* bottom container of details screen */}
-            <BottomDrawer onDrawerStateChange={setDefaultHeight}>
-              <View style={{ flex: 1 }}>
-                <View style={{ ...bottomCardContainer, backgroundColor: color.SECONDARY_COLOR }}>
-                  <SubContainerDetail
-                    DetailTextHeader={DetailTextHeader}
-                    overviewDetails={MovieDetailsState?.overview}
-                    setShowMore={setShowmore}
-                    showMore={showMore}
-                    StyleTextArea={StyleTextArea}
-                  />
-                  <ReviewContainerDetails reviewDetails={reviewState} StyleTextArea={StyleTextArea} DetailTextHeader={DetailTextHeader} />
+      {!loading ? (
+        <Fragment>
+          <HeaderContainerDetails
+            selectedMovie={selectedMovie}
+            onPress={handleGoBack}
+            existWatchlist={existWatchlist}
+            handleWatchlist={handleWatchList}
+            postRatingDisable={postRatingDisable}
+            setRating={setRatingVal}
+            setPostRatingDisable={setPostRatingDisable}
+            ratingVal={ratingVal}
+          />
 
-                  <View style={{ backgroundColor: color.SECONDARY_COLOR }}>
-                    <ItemSeparator height={setHeight(4)} />
-                  </View>
-                  {/* Recommendation sections */}
-                  <View style={{ paddingHorizontal: 16, backgroundColor: color.SECONDARY_COLOR, flex: 1 }}>
-                    <Text style={{ ...DetailTextHeader }}>Recommendations</Text>
-                    {selectedMovie?.recommendations.results.length !== 0 ? (
-                      <FlatList
-                        data={selectedMovie?.recommendations.results}
-                        horizontal
-                        showsHorizontalScrollIndicator={true}
-                        ItemSeparatorComponent={() => <ItemSeparator width={setWidth(4)} />}
-                        ListFooterComponent={() => <ItemSeparator width={setWidth(4)} />}
-                        renderItem={({ item, index }) => {
-                          const handleActive = () => {
-                            handlePressRecommendations(item.id);
-                          };
+          <ItemSeparator height={setHeight(8)} />
+          {/* bottom container of details screen */}
 
-                          return (
-                            <TouchableOpacity onPress={handleActive} key={index}>
-                              <View
+          <BottomDrawer onDrawerStateChange={setDefaultHeight}>
+            <View style={{ flex: 1 }}>
+              <View style={{ ...bottomCardContainer, backgroundColor: color.SECONDARY_COLOR, flex: 1 }}>
+                <SubContainerDetail
+                  DetailTextHeader={DetailTextHeader}
+                  overviewDetails={MovieDetailsState?.overview}
+                  setShowMore={setShowmore}
+                  showMore={showMore}
+                  StyleTextArea={StyleTextArea}
+                />
+                <ReviewContainerDetails reviewDetails={reviewState} StyleTextArea={StyleTextArea} DetailTextHeader={DetailTextHeader} />
+
+                <View style={{ backgroundColor: color.SECONDARY_COLOR }}>
+                  <ItemSeparator height={setHeight(4)} />
+                </View>
+                {/* Recommendation sections */}
+                <View style={{ paddingHorizontal: 16, backgroundColor: color.SECONDARY_COLOR, flex: 1 }}>
+                  <Text style={{ ...DetailTextHeader }}>Recommendations</Text>
+                  {selectedMovie?.recommendations.results.length !== 0 ? (
+                    <FlatList
+                      data={selectedMovie?.recommendations.results}
+                      horizontal
+                      showsHorizontalScrollIndicator={true}
+                      ItemSeparatorComponent={() => <ItemSeparator width={setWidth(4)} />}
+                      ListFooterComponent={() => <ItemSeparator width={setWidth(4)} />}
+                      renderItem={({ item, index }) => {
+                        const handleActive = () => {
+                          handlePressRecommendations(item.id);
+                        };
+
+                        return (
+                          <TouchableOpacity onPress={handleActive} key={index}>
+                            <View
+                              style={{
+                                alignItems: "center",
+                                flexDirection: "column",
+                                borderRadius: 5,
+                                justifyContent: "space-between",
+                                padding: 8,
+                                width: "auto",
+                              }}>
+                              <FastImage
+                                source={{
+                                  uri: `${POSTER_BASE_URL}original/${item.backdrop_path ? item.backdrop_path : item.poster_path}`,
+                                }}
+                                style={{ height: setHeight(8), width: setWidth(32), alignContent: "center", borderRadius: 10 }}
+                                resizeMode="cover"
+                              />
+                              <Text
                                 style={{
-                                  alignItems: "center",
-                                  flexDirection: "column",
-                                  borderRadius: 5,
-                                  justifyContent: "space-between",
-                                  padding: 8,
-                                  width: "auto",
-                                }}>
-                                <FastImage
-                                  source={{
-                                    uri: `${POSTER_BASE_URL}original/${item.backdrop_path ? item.backdrop_path : item.poster_path}`,
-                                  }}
-                                  style={{ height: setHeight(8), width: setWidth(32), alignContent: "center", borderRadius: 10 }}
-                                  resizeMode="cover"
-                                />
-                                <Text
-                                  style={{
-                                    fontFamily: Font.BOLD,
-                                    fontSize: 14,
-                                    color: color.ACTIVE,
-                                    width: 120,
-                                    textAlign: "center",
-                                  }}
-                                  numberOfLines={2}>
-                                  {item.title}
-                                </Text>
-                              </View>
-                            </TouchableOpacity>
-                          );
-                        }}
-                      />
-                    ) : (
-                      <Text style={{ ...normalText, color: color.ACTIVE }}> no recommendations availables</Text>
-                    )}
-                  </View>
+                                  fontFamily: Font.BOLD,
+                                  fontSize: 14,
+                                  color: color.ACTIVE,
+                                  width: 120,
+                                  textAlign: "center",
+                                }}
+                                numberOfLines={2}>
+                                {item.title}
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
+                        );
+                      }}
+                    />
+                  ) : (
+                    <Text style={{ ...normalText, color: color.ACTIVE }}> no recommendations availables</Text>
+                  )}
                 </View>
               </View>
-            </BottomDrawer>
-          </Fragment>
-        ) : (
+            </View>
+          </BottomDrawer>
+        </Fragment>
+      ) : (
+        <View style={{ padding: "80%", alignItems: "center", alignSelf: "center" }}>
           <Loader />
-        )}
-      </ScrollView>
+        </View>
+      )}
     </Fragment>
   );
 };

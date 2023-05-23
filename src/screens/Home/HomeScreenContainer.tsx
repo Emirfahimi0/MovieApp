@@ -5,6 +5,7 @@ import {
   ListPreviewMovie,
   movieContainer,
   sectionStyle,
+  setWidth,
   subDetail,
   subHeader,
   subTitle,
@@ -93,6 +94,7 @@ export const BottomScreenCardContainer = ({
       <Animated.View
         style={{
           ...bottomCardContainer,
+          width: setWidth(103),
           transform: [{ translateY: scaleUpAnim }],
         }}>
         <ListCardButtons data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />

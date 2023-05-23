@@ -10,6 +10,7 @@
     "install:pods": "cd ios && pod install",
     "start": "react-native start",
     "ios:14": "react-native run-ios --simulator=\"iPhone 14\"",
+    "ios:Xr": "react-native run-ios --simulator=\"iPhone Xr\"",
     "ios:plus:14": "react-native run-ios --simulator=\"iPhone 14 Plus\"",
     "ios:pro:14": "react-native run-ios --simulator=\"iPhone 14 Pro\"",
     "ios:pro:11": "react-native run-ios --simulator=\"iPad Pro (11-inch) (3rd generation)\"",
