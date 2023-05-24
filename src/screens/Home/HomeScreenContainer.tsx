@@ -16,10 +16,11 @@ import { POSTER_BASE_URL } from "../../constants/utilities";
 import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
-import React, { Dispatch, Fragment, SetStateAction, useRef, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useContext, useRef, useState } from "react";
 import Loader from "../../components/loader/Loader";
 import { ItemSeparator } from "../../components";
 import { animateMove } from "../Details/detail-component";
+import { GlobalContext } from "src/contextStore/GlobalState";
 
 interface IBottomScreenCardContainer {
   searchInput: string;
@@ -56,7 +57,6 @@ export const BottomScreenCardContainer = ({
 }: IBottomScreenCardContainer) => {
   const [active, setActive] = useState<number>(0);
   const navigation: RootNavigationProp = useNavigation();
-  loading = false;
 
   const subContainer: ViewStyle = {
     alignItems: "flex-start",
@@ -94,7 +94,7 @@ export const BottomScreenCardContainer = ({
       <Animated.View
         style={{
           ...bottomCardContainer,
-          width: setWidth(103),
+          width: setWidth(100),
           transform: [{ translateY: scaleUpAnim }],
         }}>
         <ListCardButtons data={Genres} handlePress={handlePressGenre} active={active} setActive={setActive} />

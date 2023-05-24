@@ -77,14 +77,17 @@ export const HeaderContainerDetails = ({
           style={{ ...headerContainerStyle, height: setHeight(100) }}
           source={{ uri: `${POSTER_BASE_URL}original/${selectedMovie?.poster_path}` }}
           resizeMode="cover">
-          <View style={{ position: "absolute", zIndex: playTrailer ? -1 : 1, left: 8, top: 46 }}>
+          <View
+            style={{
+              backgroundColor: color.OVERLAY,
+              borderRadius: 100,
+              left: 8,
+              position: "absolute",
+              top: 46,
+              zIndex: playTrailer ? -1 : 1,
+            }}>
             <TouchableOpacity onPress={onPress}>
-              <Icon
-                name="chevron-back-outline"
-                size={32}
-                color={color.SECONDARY_COLOR}
-                style={{ backgroundColor: "red", borderRadius: 50, textAlign: "center" }}
-              />
+              <Icon name="chevron-back-outline" size={32} color={color.SECONDARY_COLOR} style={{ borderRadius: 50, textAlign: "center" }} />
             </TouchableOpacity>
           </View>
 

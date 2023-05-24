@@ -5,7 +5,6 @@ export const animateMove = (y: Animated.Value, toValue: number | Animated.Value,
   Animated.spring(y, {
     toValue: -toValue,
     tension: 20,
-
     useNativeDriver: false,
   }).start((finished) => {
     /* Optional: But the purpose is to call this after the the animation has finished. Eg. Fire an event that will be listened to by the parent component */

@@ -3,7 +3,7 @@ import { Animated, Pressable, Text, TextInput, TouchableOpacity, Easing, ViewSty
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { normalText, primaryTitle, color, width } from "../../constants";
-import { animateMove } from "../../screens/Details";
+import { animateMove } from "../../screens/Details/detail-component";
 
 interface ICustomDropDown {
   movieType: Array<{ label: string; value: string }>;
@@ -76,12 +76,11 @@ export const CustomDropDown: FunctionComponent<ICustomDropDown> = ({
 
   useEffect(() => {
     if (clicked) {
-      // animateMove(dropScale, 0);
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 500,
+        duration: 700,
         useNativeDriver: true,
-        easing: Easing.circle,
+        easing: Easing.bounce,
       }).start();
     }
   }, [clicked, search]);
