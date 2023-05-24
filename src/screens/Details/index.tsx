@@ -129,7 +129,6 @@ const DetailsMovieScreen = ({ navigation }: IDetailsMovieScreenProps) => {
             ratingVal={ratingVal}
           />
 
-          <ItemSeparator height={setHeight(8)} />
           {/* bottom container of details screen */}
 
           <BottomDrawer onDrawerStateChange={setDefaultHeight}>

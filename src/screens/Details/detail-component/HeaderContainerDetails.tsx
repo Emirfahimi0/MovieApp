@@ -93,10 +93,10 @@ export const HeaderContainerDetails = ({
 
           <Fragment>
             {selectedMovie?.videos && playTrailer ? (
-              <View style={{ justifyContent: "center", flexDirection: "column", paddingHorizontal: 32 }}>
+              <View style={{ justifyContent: "center", flexDirection: "column" }}>
                 <YoutubeIframe
                   webViewStyle={{ ...youtubePlayerView }}
-                  height={300}
+                  height={500}
                   width={500}
                   play={playTrailer}
                   videoId={trailer?.key}
@@ -120,7 +120,7 @@ export const HeaderContainerDetails = ({
                 ? { ...playButton, padding: 10 }
                 : {
                     ...playButton,
-
+                    margin: 160,
                     height: 32,
                     width: 32,
                     backgroundColor: color.TRANSPARENT,
