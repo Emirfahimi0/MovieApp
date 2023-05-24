@@ -3,14 +3,14 @@ import { fetchGenreItem, handleShowDetailScreen } from "../../components/utils";
 import { getAccountDetails, getMovieType, getTrendingmovie } from "../../services/api-services";
 import { MovieContext } from "../../contextStore/movie-context/MovieContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Animated, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import { ToastMessage } from "../../components/toastMessage";
 import Loader from "../../components/loader/Loader";
-import React, { Fragment, useContext, useEffect, useRef, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { HeaderComponent } from "./HeaderComponent";
 import { BottomScreenCardContainer } from "./HomeScreenContainer";
 import { CustomDropDown, ItemSeparator } from "../../components";
-import { height, setHeight } from "../../constants";
+import { setHeight } from "../../constants";
 
 interface IHomeScreenProps extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {}
 
